@@ -96,6 +96,27 @@ def build() -> Path:
               f"{blob['totals']['countries']} کشور / {len(groups)} گروه منتخب")
     else:
         out = out.replace("__WORLD_CATALOG__", '{"countries":{},"curated_groups":[]}')
+
+    # --- داده‌های تازه (استان/شهر، اپراتورها، بازی‌ها، آی‌پی تمیز، متادیتای رزولور، اسکن) ---
+    def _inject(placeholder: str, path, fallback: str, label: str):
+        nonlocal out
+        if path.exists():
+            try:
+                blob = json.loads(path.read_text(encoding="utf-8"))
+                out = out.replace(placeholder, json.dumps(blob, ensure_ascii=False, separators=(",", ":")))
+                print(f"   {label}: تزریق شد ({path.stat().st_size:,} بایت)")
+                return
+            except Exception as e:
+                print(f"   ⚠️ {label}: خطا در خواندن ({e})")
+        out = out.replace(placeholder, fallback)
+        print(f"   ⚠️ {label}: فایل نبود → مقدار خالی")
+
+    _inject("__IR_PROVINCES__", ROOT / "data" / "ir" / "provinces.json", '{"provinces":[],"note":""}', "📍 استان/شهر")
+    _inject("__IR_CARRIERS__", ROOT / "data" / "ir" / "carriers.json", '{"mobile":[],"mvno":[],"fixed":[],"note":""}', "📶 اپراتورها")
+    _inject("__GAMES_CATALOG__", ROOT / "data" / "games" / "servers.json", '{"games":{},"regions_fa":{},"source":{}}', "🎮 بازی‌ها")
+    _inject("__CF_IR__", ROOT / "data" / "ir" / "cf-domains.json", '{"ips":[],"domains_total":0,"unique_ips":0,"source":{}}', "🔥 آی‌پی تمیز")
+    _inject("__RESOLVERS_META__", ROOT / "data" / "resolvers" / "meta.json", '{"resolvers":[],"count":0,"source":{}}', "🧪 متادیتای رزولور")
+    _inject("__SCAN_SUMMARY__", ROOT / "data" / "dns_world" / "scan-summary.json", '{"effect_targets":[],"note":""}', "📊 نتیجهٔ اسکن")
     DIST.mkdir(exist_ok=True)
     target = DIST / "worker.mjs"
     target.write_text(out, encoding="utf-8")
@@ -173,6 +194,10 @@ def deploy(env: dict) -> bool:
     # فعال‌سازی workers.dev
     st, j = api(f"{url}/subdomain", token, "POST", {"enabled": True, "previews_enabled": True})
     print(f"🌐 فعال‌سازی workers.dev → {st} success={j.get('success')} {str(j.get('errors') or '')[:160]}")
+
+    # کرون: پایش‌گرها هر ۱۵ دقیقه (scheduled handler)
+    st, j = api(f"{url}/schedules", token, "PUT", [{"cron": "*/15 * * * *"}])
+    print(f"⏱ کرون هر ۱۵ دقیقه → {st} success={j.get('success')} {str(j.get('errors') or '')[:160]}")
 
     # ذخیرهٔ کلیدها در .env برای استفادهٔ بعدی
     txt = (ROOT / ".env").read_text(encoding="utf-8")
@@ -252,6 +277,22 @@ def test(env: dict):
         print("  ❌ save:", raw)
     if sid:
         check("صفحهٔ اشتراک نتیجه", f"{SITE}/r/{sid}")
+
+    # --- بخش‌های تازه (پوشش ایران، بازی، رزولورها، آی‌پی تمیز، Globalping، ابزار) ---
+    check("/api/geo (خط من)", f"{SITE}/api/geo")
+    check("/api/ir (۳۱ استان/۲۴ اپراتور)", f"{SITE}/api/ir")
+    check("/api/games (کاتالوگ بازی)", f"{SITE}/api/games")
+    check("/api/resolvers (متادیتا)", f"{SITE}/api/resolvers?n=5&flags=dnssec,nolog")
+    check("/api/cfip (آی‌پی تمیز)", f"{SITE}/api/cfip?n=3")
+    check("/api/scan (نتیجهٔ اسکن ما)", f"{SITE}/api/scan")
+    check("/api/dnssec (AD/EDE)", f"{SITE}/api/dnssec?name=cloudflare.com")
+    check("/api/ping (RTT سبک)", f"{SITE}/api/ping")
+    check("/api/stats (آمار بی‌نام)", f"{SITE}/api/stats")
+    check("/api/leaderboard", f"{SITE}/api/leaderboard")
+    check("/api/gen (اسکریپت ویندوز)", f"{SITE}/api/gen?kind=windows-game")
+    check("/api/gen (CAKE لینوکس)", f"{SITE}/api/gen?kind=linux-cake&iface=eth0&rate=20mbit")
+    # سنجش از ایران (Globalping) — کمی کندتر
+    check("/api/gp (سنجش از ایران)", f"{SITE}/api/gp?type=ping&target=1.1.1.1&cc=IR&limit=1")
 
     good = sum(1 for _, ok, _ in results if ok)
     print(f"\nنتیجه: {good}/{len(results)} بررسی موفق")

@@ -1,0 +1,3277 @@
+{
+ "source": {
+  "repo": "hossein-mohseni/CF-Web",
+  "url": "https://github.com/hossein-mohseni/CF-Web",
+  "license": "MIT",
+  "note": "لیست دامنه‌های ایرانی روی کلادفلر؛ آی‌پی‌های یکتا استخراج شد (TODO: سنجش از پروب‌های ایران سرورساید)."
+ },
+ "domains_total": 709,
+ "unique_ips": 629,
+ "ips": [
+  {
+   "ip": "104.21.18.228",
+   "v6": "2606:4700:3031::6815:12e4",
+   "domains": 9,
+   "sample": [
+    "hid10.elementorhub.ir",
+    "hid2.elementorhub.ir",
+    "hid3.elementorhub.ir"
+   ]
+  },
+  {
+   "ip": "104.21.52.175",
+   "v6": "2606:4700:3033::6815:34af",
+   "domains": 7,
+   "sample": [
+    "apt.mylimoo.ir",
+    "arx.mylimoo.ir",
+    "mbt.mylimoo.ir"
+   ]
+  },
+  {
+   "ip": "172.67.172.179",
+   "v6": "2606:4700:3037::6815:1e5c",
+   "domains": 6,
+   "sample": [
+    "1com.ir",
+    "abianariha.1com.ir",
+    "catalog.1com.ir"
+   ]
+  },
+  {
+   "ip": "172.67.134.126",
+   "v6": "2606:4700:3036::6815:19c0",
+   "domains": 4,
+   "sample": [
+    "download3.11gig.ir",
+    "downloadbook.11gig.ir",
+    "downloaddd.11gig.ir"
+   ]
+  },
+  {
+   "ip": "104.21.18.165",
+   "v6": "2606:4700:3034::ac43:b6bf",
+   "domains": 4,
+   "sample": [
+    "labtdruser.tonder.ir",
+    "tdr4free.tonder.ir",
+    "tdr4user.tonder.ir"
+   ]
+  },
+  {
+   "ip": "104.21.27.230",
+   "v6": "2606:4700:3031::6815:1be6",
+   "domains": 3,
+   "sample": [
+    "2apples.ir",
+    "br101.2apples.ir",
+    "new101.2apples.ir"
+   ]
+  },
+  {
+   "ip": "172.67.138.171",
+   "v6": "2606:4700:3032::ac43:8aab",
+   "domains": 3,
+   "sample": [
+    "aghil.gamse.ir",
+    "mohsen.gamse.ir",
+    "siam.gamse.ir"
+   ]
+  },
+  {
+   "ip": "104.21.37.199",
+   "v6": "2606:4700:3030::6815:25c7",
+   "domains": 3,
+   "sample": [
+    "bast.xomali.ir",
+    "bcdn.xomali.ir",
+    "bsht.xomali.ir"
+   ]
+  },
+  {
+   "ip": "172.67.175.23",
+   "v6": "2606:4700:3037::6815:482f",
+   "domains": 3,
+   "sample": [
+    "cdn.akbarihelia.ir",
+    "sub.akbarihelia.ir",
+    "test.akbarihelia.ir"
+   ]
+  },
+  {
+   "ip": "104.21.72.102",
+   "v6": "2606:4700:3034::6815:4866",
+   "domains": 3,
+   "sample": [
+    "gioogle.ir",
+    "nikanlink.gioogle.ir",
+    "sabzfile.gioogle.ir"
+   ]
+  },
+  {
+   "ip": "104.21.12.206",
+   "v6": "2606:4700:3033::ac43:8466",
+   "domains": 2,
+   "sample": [
+    "11.my7mhg.ir",
+    "15.my7mhg.ir"
+   ]
+  },
+  {
+   "ip": "172.67.216.71",
+   "v6": "2606:4700:3031::ac43:d847",
+   "domains": 2,
+   "sample": [
+    "1tcharter.ir",
+    "www.1tcharter.ir"
+   ]
+  },
+  {
+   "ip": "104.21.57.86",
+   "v6": "2606:4700:3036::6815:3956",
+   "domains": 2,
+   "sample": [
+    "a2c.ir",
+    "cpanel.a2c.ir"
+   ]
+  },
+  {
+   "ip": "104.21.70.184",
+   "v6": "2606:4700:3035::6815:46b8",
+   "domains": 2,
+   "sample": [
+    "aliemami.gamse.ir",
+    "nextmobile.gamse.ir"
+   ]
+  },
+  {
+   "ip": "104.21.24.151",
+   "v6": "2606:4700:3030::ac43:db46",
+   "domains": 2,
+   "sample": [
+    "amirali.id.ir",
+    "www.amirali.id.ir"
+   ]
+  },
+  {
+   "ip": "104.21.30.92",
+   "v6": "2606:4700:3036::ac43:acb3",
+   "domains": 2,
+   "sample": [
+    "android.1com.ir",
+    "farscloob.1com.ir"
+   ]
+  },
+  {
+   "ip": "172.67.160.95",
+   "v6": "2606:4700:3031::ac43:a05f",
+   "domains": 2,
+   "sample": [
+    "api-tr-one-hs.hajsafarinetwork.ir",
+    "api-vm-one-hs.hajsafarinetwork.ir"
+   ]
+  },
+  {
+   "ip": "104.21.88.134",
+   "v6": "2606:4700:3035::6815:5886",
+   "domains": 2,
+   "sample": [
+    "app.igshop.ir",
+    "igshop.ir"
+   ]
+  },
+  {
+   "ip": "172.67.185.178",
+   "v6": "2606:4700:3032::6815:1358",
+   "domains": 2,
+   "sample": [
+    "asalauto.irankala88.ir",
+    "kalaauto.irankala88.ir"
+   ]
+  },
+  {
+   "ip": "172.67.140.250",
+   "v6": "2606:4700:3033::ac43:8cfa",
+   "domains": 2,
+   "sample": [
+    "asaradco.ir",
+    "webmail.hmstyle.ir"
+   ]
+  },
+  {
+   "ip": "172.67.194.187",
+   "v6": "2606:4700:3034::ac43:c2bb",
+   "domains": 2,
+   "sample": [
+    "bauto.batochi.ir",
+    "bcdn.batochi.ir"
+   ]
+  },
+  {
+   "ip": "172.67.212.179",
+   "v6": "2606:4700:3036::ac43:d4b3",
+   "domains": 2,
+   "sample": [
+    "bauto.xomali.ir",
+    "bsub.xomali.ir"
+   ]
+  },
+  {
+   "ip": "104.21.4.222",
+   "v6": "2606:4700:3036::ac43:848b",
+   "domains": 2,
+   "sample": [
+    "bonyad-sharif.ir",
+    "wk4.architectt.ir"
+   ]
+  },
+  {
+   "ip": "104.21.0.253",
+   "v6": "2606:4700:3033::6815:fd",
+   "domains": 2,
+   "sample": [
+    "booking.forvend.ir",
+    "startups.forvend.ir"
+   ]
+  },
+  {
+   "ip": "104.21.38.84",
+   "v6": "2606:4700:3037::ac43:dcc6",
+   "domains": 2,
+   "sample": [
+    "ca-gt.yellowwebservices.ir",
+    "uk2-gt.yellowwebservices.ir"
+   ]
+  },
+  {
+   "ip": "172.67.203.74",
+   "v6": "2606:4700:3031::6815:2519",
+   "domains": 2,
+   "sample": [
+    "captchafa.ir",
+    "sub.captchafa.ir"
+   ]
+  },
+  {
+   "ip": "104.21.58.224",
+   "v6": "2606:4700:3035::6815:3ae0",
+   "domains": 2,
+   "sample": [
+    "cdn5rtl.cdn.jacobism.ir",
+    "cdntr.cdn.jacobism.ir"
+   ]
+  },
+  {
+   "ip": "104.21.38.22",
+   "v6": "2606:4700:3031::ac43:da08",
+   "domains": 2,
+   "sample": [
+    "cf1.elec103.ir",
+    "cf4.elec103.ir"
+   ]
+  },
+  {
+   "ip": "172.67.142.236",
+   "v6": "2606:4700:3037::ac43:8eec",
+   "domains": 2,
+   "sample": [
+    "co.btpay.ir",
+    "q7qztmcfoxvzx.btpay.ir"
+   ]
+  },
+  {
+   "ip": "172.67.138.79",
+   "v6": "2606:4700:3032::6815:26c9",
+   "domains": 2,
+   "sample": [
+    "cpanel.azinsaraco.ir",
+    "webmail.azinsaraco.ir"
+   ]
+  },
+  {
+   "ip": "172.67.151.133",
+   "v6": "2606:4700:3032::ac43:9785",
+   "domains": 2,
+   "sample": [
+    "cpanel.kimiavp.ir",
+    "ipv6.kimiavp.ir"
+   ]
+  },
+  {
+   "ip": "104.21.43.63",
+   "v6": "2606:4700:3037::6815:2b3f",
+   "domains": 2,
+   "sample": [
+    "cpanel.stocksales.ir",
+    "webmail.stocksales.ir"
+   ]
+  },
+  {
+   "ip": "104.21.53.83",
+   "v6": "2606:4700:3035::ac43:d2b5",
+   "domains": 2,
+   "sample": [
+    "demo.fullfreelearn.ir",
+    "fullfreelearn.ir"
+   ]
+  },
+  {
+   "ip": "104.21.25.192",
+   "v6": "2606:4700:3036::6815:19c0",
+   "domains": 2,
+   "sample": [
+    "download1.11gig.ir",
+    "download2.11gig.ir"
+   ]
+  },
+  {
+   "ip": "104.21.32.166",
+   "v6": "2606:4700:3036::6815:20a6",
+   "domains": 2,
+   "sample": [
+    "energy.wallet.ir",
+    "wallet.ir"
+   ]
+  },
+  {
+   "ip": "104.21.84.84",
+   "v6": "2606:4700:3030::6815:5454",
+   "domains": 2,
+   "sample": [
+    "falatacademy.ir",
+    "www.falatacademy.ir"
+   ]
+  },
+  {
+   "ip": "172.67.167.88",
+   "v6": "2606:4700:3030::ac43:a758",
+   "domains": 2,
+   "sample": [
+    "freedigitalmoney.ir",
+    "ras1.freedigitalmoney.ir"
+   ]
+  },
+  {
+   "ip": "104.21.9.241",
+   "v6": "2606:4700:3037::6815:9f1",
+   "domains": 2,
+   "sample": [
+    "ftp.appleid-card.ir",
+    "pop.appleid-card.ir"
+   ]
+  },
+  {
+   "ip": "172.67.176.34",
+   "v6": "2606:4700:3031::6815:301a",
+   "domains": 2,
+   "sample": [
+    "git.parafacc.ir",
+    "sentry.parafacc.ir"
+   ]
+  },
+  {
+   "ip": "172.67.197.181",
+   "v6": "2606:4700:3033::6815:5ccd",
+   "domains": 2,
+   "sample": [
+    "grin.ir",
+    "www.yagoutsanat.ir"
+   ]
+  },
+  {
+   "ip": "172.67.146.49",
+   "v6": "2606:4700:3034::6815:1c81",
+   "domains": 2,
+   "sample": [
+    "khatebastan.nitrocode.ir",
+    "nitrocode.ir"
+   ]
+  },
+  {
+   "ip": "104.21.12.39",
+   "v6": "2606:4700:3034::6815:c27",
+   "domains": 2,
+   "sample": [
+    "mail.kimiavp.ir",
+    "www.kimiavp.ir"
+   ]
+  },
+  {
+   "ip": "104.21.65.143",
+   "v6": "2606:4700:3032::ac43:a3e8",
+   "domains": 2,
+   "sample": [
+    "mail.loolehservice.ir",
+    "www.loolehservice.ir"
+   ]
+  },
+  {
+   "ip": "172.67.197.179",
+   "v6": "2606:4700:3033::6815:5ccb",
+   "domains": 2,
+   "sample": [
+    "mail.ppep.ir",
+    "whm.ppep.ir"
+   ]
+  },
+  {
+   "ip": "172.67.202.87",
+   "v6": "2606:4700:3030::ac43:ca57",
+   "domains": 2,
+   "sample": [
+    "mci.mylimoo.ir",
+    "smt.mylimoo.ir"
+   ]
+  },
+  {
+   "ip": "104.21.26.125",
+   "v6": "2606:4700:3035::6815:1a7d",
+   "domains": 2,
+   "sample": [
+    "me1.obbvie.ir",
+    "metsa2.obbvie.ir"
+   ]
+  },
+  {
+   "ip": "172.67.167.241",
+   "v6": "2606:4700:3035::ac43:a7f1",
+   "domains": 2,
+   "sample": [
+    "mrkyogseobinggoogledigiir.tarafe3vm.ir",
+    "sha.vf.mrk-best.apple.ssl.digi-iranonline.ir.tarafe3vm.ir"
+   ]
+  },
+  {
+   "ip": "104.21.79.218",
+   "v6": "2606:4700:3033::ac43:ab8e",
+   "domains": 2,
+   "sample": [
+    "myg.alirezaallahverdifiles.ir",
+    "webroo.alirezaallahverdifiles.ir"
+   ]
+  },
+  {
+   "ip": "104.21.13.123",
+   "v6": "2606:4700:3033::ac43:a7f5",
+   "domains": 2,
+   "sample": [
+    "no-av.ir",
+    "old.no-av.ir"
+   ]
+  },
+  {
+   "ip": "104.21.15.151",
+   "v6": "2606:4700:3031::6815:f97",
+   "domains": 2,
+   "sample": [
+    "one-api.ir",
+    "panel.one-api.ir"
+   ]
+  },
+  {
+   "ip": "104.21.16.38",
+   "v6": "2606:4700:3035::ac43:a615",
+   "domains": 2,
+   "sample": [
+    "panel.20follow.ir",
+    "vpn.20follow.ir"
+   ]
+  },
+  {
+   "ip": "104.21.49.205",
+   "v6": "2606:4700:3033::ac43:a71a",
+   "domains": 2,
+   "sample": [
+    "pop.gheldelivery.ir",
+    "smtp.gheldelivery.ir"
+   ]
+  },
+  {
+   "ip": "104.21.11.252",
+   "v6": "2606:4700:3037::ac43:96e2",
+   "domains": 2,
+   "sample": [
+    "sftp10.xiaomicloud.ir",
+    "sftp4.xiaomicloud.ir"
+   ]
+  },
+  {
+   "ip": "172.67.131.20",
+   "v6": "2606:4700:3031::ac43:8314",
+   "domains": 2,
+   "sample": [
+    "smtp.appleid-card.ir",
+    "www.appleid-card.ir"
+   ]
+  },
+  {
+   "ip": "104.21.67.23",
+   "v6": "2606:4700:3033::6815:4317",
+   "domains": 2,
+   "sample": [
+    "www.yasuj-carpet-cleaning.ir",
+    "yasuj-carpet-cleaning.ir"
+   ]
+  },
+  {
+   "ip": "104.21.24.70",
+   "v6": "2606:4700:3031::ac43:d95b",
+   "domains": 1,
+   "sample": [
+    "01d.ir"
+   ]
+  },
+  {
+   "ip": "104.21.75.58",
+   "v6": "2606:4700:3037::6815:4b3a",
+   "domains": 1,
+   "sample": [
+    "09122108011.ir"
+   ]
+  },
+  {
+   "ip": "172.67.172.95",
+   "v6": "2606:4700:3036::ac43:ac5f",
+   "domains": 1,
+   "sample": [
+    "0nlysms.ir"
+   ]
+  },
+  {
+   "ip": "104.21.15.156",
+   "v6": "2606:4700:3036::6815:f9c",
+   "domains": 1,
+   "sample": [
+    "0seo.ir"
+   ]
+  },
+  {
+   "ip": "172.67.151.34",
+   "v6": "2606:4700:3030::6815:2072",
+   "domains": 1,
+   "sample": [
+    "10az10.ir"
+   ]
+  },
+  {
+   "ip": "104.21.60.85",
+   "v6": "2606:4700:3032::ac43:c2fb",
+   "domains": 1,
+   "sample": [
+    "110book.ir"
+   ]
+  },
+  {
+   "ip": "104.21.85.45",
+   "v6": "2606:4700:3037::ac43:ca49",
+   "domains": 1,
+   "sample": [
+    "123chat.ir"
+   ]
+  },
+  {
+   "ip": "104.21.53.8",
+   "v6": "2606:4700:3033::6815:3508",
+   "domains": 1,
+   "sample": [
+    "123project.ir"
+   ]
+  },
+  {
+   "ip": "104.21.91.52",
+   "v6": "2606:4700:3036::6815:5b34",
+   "domains": 1,
+   "sample": [
+    "18arcims.ir"
+   ]
+  },
+  {
+   "ip": "172.67.169.33",
+   "v6": "2606:4700:3036::6815:1b6e",
+   "domains": 1,
+   "sample": [
+    "18m.ir"
+   ]
+  },
+  {
+   "ip": "172.67.148.146",
+   "v6": "2606:4700:3031::6815:1d47",
+   "domains": 1,
+   "sample": [
+    "1car.ir"
+   ]
+  },
+  {
+   "ip": "172.67.162.169",
+   "v6": "2606:4700:3031::ac43:a2a9",
+   "domains": 1,
+   "sample": [
+    "1hashtag.ir"
+   ]
+  },
+  {
+   "ip": "104.21.45.141",
+   "v6": "2606:4700:3035::ac43:d730",
+   "domains": 1,
+   "sample": [
+    "2079498.ir"
+   ]
+  },
+  {
+   "ip": "172.67.132.170",
+   "v6": "2606:4700:3031::ac43:84aa",
+   "domains": 1,
+   "sample": [
+    "20amar.ir"
+   ]
+  },
+  {
+   "ip": "172.67.166.21",
+   "v6": "2606:4700:3035::ac43:a615",
+   "domains": 1,
+   "sample": [
+    "20follow.ir"
+   ]
+  },
+  {
+   "ip": "104.21.49.208",
+   "v6": "2606:4700:3031::ac43:c18a",
+   "domains": 1,
+   "sample": [
+    "24cafe.ir"
+   ]
+  },
+  {
+   "ip": "104.21.16.160",
+   "v6": "2606:4700:3035::6815:10a0",
+   "domains": 1,
+   "sample": [
+    "24janebi.ir"
+   ]
+  },
+  {
+   "ip": "104.21.9.26",
+   "v6": "2606:4700:3031::6815:91a",
+   "domains": 1,
+   "sample": [
+    "24lancer.ir"
+   ]
+  },
+  {
+   "ip": "104.21.16.194",
+   "v6": "2606:4700:3030::ac43:d792",
+   "domains": 1,
+   "sample": [
+    "271f.ir"
+   ]
+  },
+  {
+   "ip": "104.21.81.100",
+   "v6": "2606:4700:3030::ac43:8da3",
+   "domains": 1,
+   "sample": [
+    "2topic.ir"
+   ]
+  },
+  {
+   "ip": "172.67.181.100",
+   "v6": "2606:4700:3034::ac43:b564",
+   "domains": 1,
+   "sample": [
+    "4kia.gioogle.ir"
+   ]
+  },
+  {
+   "ip": "104.21.94.178",
+   "v6": "2606:4700:3032::6815:5eb2",
+   "domains": 1,
+   "sample": [
+    "5.freedownloadn1.ir"
+   ]
+  },
+  {
+   "ip": "104.21.71.190",
+   "v6": "2606:4700:3033::ac43:9415",
+   "domains": 1,
+   "sample": [
+    "6450134997243104287.01o1.ir"
+   ]
+  },
+  {
+   "ip": "172.67.171.44",
+   "v6": "2606:4700:3030::ac43:ab2c",
+   "domains": 1,
+   "sample": [
+    "abannew.ir"
+   ]
+  },
+  {
+   "ip": "172.67.139.36",
+   "v6": "2606:4700:3037::6815:570d",
+   "domains": 1,
+   "sample": [
+    "account.maliclub.ir"
+   ]
+  },
+  {
+   "ip": "104.21.35.49",
+   "v6": "2606:4700:3035::6815:2331",
+   "domains": 1,
+   "sample": [
+    "accounta.ir"
+   ]
+  },
+  {
+   "ip": "172.67.133.175",
+   "v6": "2606:4700:3032::ac43:85af",
+   "domains": 1,
+   "sample": [
+    "accountdb.ir"
+   ]
+  },
+  {
+   "ip": "172.67.174.34",
+   "v6": "2606:4700:3031::ac43:ae22",
+   "domains": 1,
+   "sample": [
+    "accountor.ir"
+   ]
+  },
+  {
+   "ip": "104.21.35.168",
+   "v6": "2606:4700:3033::ac43:b1ae",
+   "domains": 1,
+   "sample": [
+    "accounttop.ir"
+   ]
+  },
+  {
+   "ip": "172.67.155.41",
+   "v6": "2606:4700:3031::6815:692",
+   "domains": 1,
+   "sample": [
+    "acidkhoraki.ir"
+   ]
+  },
+  {
+   "ip": "172.67.165.243",
+   "v6": "2606:4700:3033::ac43:a5f3",
+   "domains": 1,
+   "sample": [
+    "adderall.ir"
+   ]
+  },
+  {
+   "ip": "104.21.72.25",
+   "v6": "2606:4700:3031::ac43:ae20",
+   "domains": 1,
+   "sample": [
+    "admin.arexhub.ir"
+   ]
+  },
+  {
+   "ip": "104.21.16.237",
+   "v6": "2606:4700:3033::6815:10ed",
+   "domains": 1,
+   "sample": [
+    "admin.aryanix.ir"
+   ]
+  },
+  {
+   "ip": "172.67.216.252",
+   "v6": "2606:4700:3036::ac43:d8fc",
+   "domains": 1,
+   "sample": [
+    "admin.ehsanranjer.ir"
+   ]
+  },
+  {
+   "ip": "104.21.83.239",
+   "v6": "2606:4700:3037::ac43:b775",
+   "domains": 1,
+   "sample": [
+    "admin.storyideas.ir"
+   ]
+  },
+  {
+   "ip": "172.67.173.36",
+   "v6": "2606:4700:3037::6815:37d1",
+   "domains": 1,
+   "sample": [
+    "admin.trial-test.ir"
+   ]
+  },
+  {
+   "ip": "104.21.43.12",
+   "v6": "2606:4700:3030::ac43:d7b3",
+   "domains": 1,
+   "sample": [
+    "admoby.ir"
+   ]
+  },
+  {
+   "ip": "104.21.35.125",
+   "v6": "2606:4700:3034::6815:237d",
+   "domains": 1,
+   "sample": [
+    "ahpub.ir"
+   ]
+  },
+  {
+   "ip": "104.21.43.230",
+   "v6": "2606:4700:3034::ac43:bae0",
+   "domains": 1,
+   "sample": [
+    "airia.ir"
+   ]
+  },
+  {
+   "ip": "104.21.25.236",
+   "v6": "2606:4700:3035::ac43:86e4",
+   "domains": 1,
+   "sample": [
+    "akotechnologies.ir"
+   ]
+  },
+  {
+   "ip": "104.21.93.245",
+   "v6": "2606:4700:3032::6815:5df5",
+   "domains": 1,
+   "sample": [
+    "aletrah.ir"
+   ]
+  },
+  {
+   "ip": "172.67.176.38",
+   "v6": "2606:4700:3032::ac43:b026",
+   "domains": 1,
+   "sample": [
+    "alibakhshi.id.ir"
+   ]
+  },
+  {
+   "ip": "104.21.82.253",
+   "v6": "2606:4700:3036::6815:52fd",
+   "domains": 1,
+   "sample": [
+    "alizabetpour.ir"
+   ]
+  },
+  {
+   "ip": "104.21.84.53",
+   "v6": "2606:4700:3037::ac43:ba94",
+   "domains": 1,
+   "sample": [
+    "alltravel.ir"
+   ]
+  },
+  {
+   "ip": "172.67.152.156",
+   "v6": "2606:4700:3036::6815:58c3",
+   "domains": 1,
+   "sample": [
+    "alroll.ir"
+   ]
+  },
+  {
+   "ip": "172.67.151.104",
+   "v6": "2606:4700:3032::6815:f2",
+   "domains": 1,
+   "sample": [
+    "am-ahmadi.ir"
+   ]
+  },
+  {
+   "ip": "172.67.195.191",
+   "v6": "2606:4700:3030::ac43:c3bf",
+   "domains": 1,
+   "sample": [
+    "amajgroup.ir"
+   ]
+  },
+  {
+   "ip": "104.21.15.143",
+   "v6": "2606:4700:3035::ac43:a2c7",
+   "domains": 1,
+   "sample": [
+    "amaryardashbord.anamshop.ir"
+   ]
+  },
+  {
+   "ip": "172.67.181.226",
+   "v6": "2606:4700:3035::6815:1ffe",
+   "domains": 1,
+   "sample": [
+    "amintejaratco.ir"
+   ]
+  },
+  {
+   "ip": "104.21.95.236",
+   "v6": "2606:4700:3034::ac43:95a0",
+   "domains": 1,
+   "sample": [
+    "amoseshkhan.ir"
+   ]
+  },
+  {
+   "ip": "104.21.30.26",
+   "v6": "2606:4700:3030::ac43:966f",
+   "domains": 1,
+   "sample": [
+    "and-share.ir"
+   ]
+  },
+  {
+   "ip": "172.67.141.68",
+   "v6": "2606:4700:3037::6815:4708",
+   "domains": 1,
+   "sample": [
+    "andromedaa-support.ir"
+   ]
+  },
+  {
+   "ip": "104.21.4.146",
+   "v6": "2606:4700:3036::ac43:9a24",
+   "domains": 1,
+   "sample": [
+    "ansarianedu.ir"
+   ]
+  },
+  {
+   "ip": "104.21.38.239",
+   "v6": "2606:4700:3033::6815:26ef",
+   "domains": 1,
+   "sample": [
+    "antivirusa.ir"
+   ]
+  },
+  {
+   "ip": "172.67.175.45",
+   "v6": "2606:4700:3037::6815:2826",
+   "domains": 1,
+   "sample": [
+    "apple.hadronconsulting.ir"
+   ]
+  },
+  {
+   "ip": "172.67.162.101",
+   "v6": "2606:4700:3032::6815:3aaf",
+   "domains": 1,
+   "sample": [
+    "applegallery.ir"
+   ]
+  },
+  {
+   "ip": "172.67.160.159",
+   "v6": "2606:4700:3031::ac43:a09f",
+   "domains": 1,
+   "sample": [
+    "applepico.ir"
+   ]
+  },
+  {
+   "ip": "172.67.161.173",
+   "v6": "2606:4700:3031::6815:228d",
+   "domains": 1,
+   "sample": [
+    "applypedia.ir"
+   ]
+  },
+  {
+   "ip": "104.21.38.34",
+   "v6": "2606:4700:3032::6815:2622",
+   "domains": 1,
+   "sample": [
+    "aprd.ir"
+   ]
+  },
+  {
+   "ip": "172.67.218.169",
+   "v6": "2606:4700:3032::6815:4352",
+   "domains": 1,
+   "sample": [
+    "arabic-translation.ir"
+   ]
+  },
+  {
+   "ip": "104.21.29.178",
+   "v6": "2606:4700:3037::6815:1db2",
+   "domains": 1,
+   "sample": [
+    "arad.ir"
+   ]
+  },
+  {
+   "ip": "104.21.19.194",
+   "v6": "2606:4700:3037::6815:13c2",
+   "domains": 1,
+   "sample": [
+    "arafutsal.ir"
+   ]
+  },
+  {
+   "ip": "104.21.28.237",
+   "v6": "2606:4700:3036::6815:1ced",
+   "domains": 1,
+   "sample": [
+    "ariaieboy.ir"
+   ]
+  },
+  {
+   "ip": "104.21.73.135",
+   "v6": "2606:4700:3031::6815:4987",
+   "domains": 1,
+   "sample": [
+    "aslanbilit.ir"
+   ]
+  },
+  {
+   "ip": "104.21.61.155",
+   "v6": "2606:4700:3033::6815:3d9b",
+   "domains": 1,
+   "sample": [
+    "asnu.ir"
+   ]
+  },
+  {
+   "ip": "104.21.25.109",
+   "v6": "2606:4700:3033::ac43:8608",
+   "domains": 1,
+   "sample": [
+    "asooartland.alirezaghassemi.ir"
+   ]
+  },
+  {
+   "ip": "104.21.10.43",
+   "v6": "2606:4700:3034::ac43:bdeb",
+   "domains": 1,
+   "sample": [
+    "assisteam.ir"
+   ]
+  },
+  {
+   "ip": "172.67.195.69",
+   "v6": "2606:4700:3033::6815:1505",
+   "domains": 1,
+   "sample": [
+    "atibooking.ir"
+   ]
+  },
+  {
+   "ip": "104.21.42.122",
+   "v6": "2606:4700:3033::ac43:a1dc",
+   "domains": 1,
+   "sample": [
+    "atkerman.ir"
+   ]
+  },
+  {
+   "ip": "104.21.68.131",
+   "v6": "2606:4700:3031::6815:4483",
+   "domains": 1,
+   "sample": [
+    "atlasleaks.ir"
+   ]
+  },
+  {
+   "ip": "104.21.39.219",
+   "v6": "2606:4700:3030::6815:27db",
+   "domains": 1,
+   "sample": [
+    "autocdn.aiki-apps.ir"
+   ]
+  },
+  {
+   "ip": "104.21.28.46",
+   "v6": "2606:4700:3036::ac43:903c",
+   "domains": 1,
+   "sample": [
+    "autocdn.aiki-ticket.ir"
+   ]
+  },
+  {
+   "ip": "172.67.158.89",
+   "v6": "2606:4700:3037::ac43:9e59",
+   "domains": 1,
+   "sample": [
+    "autoir.sefsoor.ir"
+   ]
+  },
+  {
+   "ip": "104.21.13.132",
+   "v6": "2606:4700:3030::ac43:84d6",
+   "domains": 1,
+   "sample": [
+    "azadmodir.ir"
+   ]
+  },
+  {
+   "ip": "104.21.57.84",
+   "v6": "2606:4700:3030::6815:3954",
+   "domains": 1,
+   "sample": [
+    "azkhoneh.ir"
+   ]
+  },
+  {
+   "ip": "172.67.177.171",
+   "v6": "2606:4700:3030::6815:11a4",
+   "domains": 1,
+   "sample": [
+    "b.amozeshebargh.ir"
+   ]
+  },
+  {
+   "ip": "104.21.93.182",
+   "v6": "2606:4700:3037::ac43:d5b4",
+   "domains": 1,
+   "sample": [
+    "b2n.ir"
+   ]
+  },
+  {
+   "ip": "104.21.75.247",
+   "v6": "2606:4700:3032::6815:4bf7",
+   "domains": 1,
+   "sample": [
+    "bakieh.ir"
+   ]
+  },
+  {
+   "ip": "104.21.31.197",
+   "v6": "2606:4700:3030::6815:1fc5",
+   "domains": 1,
+   "sample": [
+    "balochpayam.ir"
+   ]
+  },
+  {
+   "ip": "104.21.71.248",
+   "v6": "2606:4700:3031::6815:47f8",
+   "domains": 1,
+   "sample": [
+    "bank.msojd.ir"
+   ]
+  },
+  {
+   "ip": "172.67.190.50",
+   "v6": "2606:4700:3035::ac43:be32",
+   "domains": 1,
+   "sample": [
+    "banobartar.ir"
+   ]
+  },
+  {
+   "ip": "172.67.135.102",
+   "v6": "2606:4700:3033::ac43:8766",
+   "domains": 1,
+   "sample": [
+    "barghedison.ir"
+   ]
+  },
+  {
+   "ip": "104.21.59.165",
+   "v6": "2606:4700:3034::ac43:b4ee",
+   "domains": 1,
+   "sample": [
+    "bdok.ir"
+   ]
+  },
+  {
+   "ip": "172.67.210.28",
+   "v6": "2606:4700:3035::6815:1033",
+   "domains": 1,
+   "sample": [
+    "beheism.ir"
+   ]
+  },
+  {
+   "ip": "104.21.29.235",
+   "v6": "2606:4700:3036::ac43:abe3",
+   "domains": 1,
+   "sample": [
+    "best-class.ir"
+   ]
+  },
+  {
+   "ip": "172.67.208.226",
+   "v6": "2606:4700:3035::6815:55b6",
+   "domains": 1,
+   "sample": [
+    "bestcable.ir"
+   ]
+  },
+  {
+   "ip": "172.67.193.59",
+   "v6": "2606:4700:3031::ac43:c13b",
+   "domains": 1,
+   "sample": [
+    "bestclassic.ir"
+   ]
+  },
+  {
+   "ip": "172.67.204.232",
+   "v6": "2606:4700:3035::6815:4536",
+   "domains": 1,
+   "sample": [
+    "bestp.ir"
+   ]
+  },
+  {
+   "ip": "104.21.25.227",
+   "v6": "2606:4700:3031::ac43:a82c",
+   "domains": 1,
+   "sample": [
+    "bestpo.ir"
+   ]
+  },
+  {
+   "ip": "172.67.216.142",
+   "v6": "2606:4700:3035::6815:5647",
+   "domains": 1,
+   "sample": [
+    "bi.instanow.ir"
+   ]
+  },
+  {
+   "ip": "172.67.155.136",
+   "v6": "2606:4700:3033::ac43:9b88",
+   "domains": 1,
+   "sample": [
+    "biaun.ir"
+   ]
+  },
+  {
+   "ip": "104.21.21.202",
+   "v6": "2606:4700:3030::6815:15ca",
+   "domains": 1,
+   "sample": [
+    "bigdev.ir"
+   ]
+  },
+  {
+   "ip": "172.67.178.196",
+   "v6": "2606:4700:3031::6815:383a",
+   "domains": 1,
+   "sample": [
+    "bimoshkel.ir"
+   ]
+  },
+  {
+   "ip": "172.67.141.95",
+   "v6": "2606:4700:3033::ac43:8d5f",
+   "domains": 1,
+   "sample": [
+    "bisabt.ir"
+   ]
+  },
+  {
+   "ip": "104.21.17.220",
+   "v6": "2606:4700:3035::ac43:b29a",
+   "domains": 1,
+   "sample": [
+    "blog.hadi7546.ir"
+   ]
+  },
+  {
+   "ip": "172.67.134.170",
+   "v6": "2606:4700:3033::ac43:86aa",
+   "domains": 1,
+   "sample": [
+    "blufoxmarket.ir"
+   ]
+  },
+  {
+   "ip": "172.67.200.228",
+   "v6": "2606:4700:3037::6815:2c95",
+   "domains": 1,
+   "sample": [
+    "bmbgk.ir"
+   ]
+  },
+  {
+   "ip": "172.67.187.178",
+   "v6": "2606:4700:3030::ac43:bbb2",
+   "domains": 1,
+   "sample": [
+    "bonyadtabari.ir"
+   ]
+  },
+  {
+   "ip": "104.21.82.165",
+   "v6": "2606:4700:3036::6815:52a5",
+   "domains": 1,
+   "sample": [
+    "book.fanka.ir"
+   ]
+  },
+  {
+   "ip": "172.67.218.164",
+   "v6": "2606:4700:3030::ac43:daa4",
+   "domains": 1,
+   "sample": [
+    "booktaabmarket.ir"
+   ]
+  },
+  {
+   "ip": "104.21.93.50",
+   "v6": "2606:4700:3032::ac43:cc97",
+   "domains": 1,
+   "sample": [
+    "boshkekade.ir"
+   ]
+  },
+  {
+   "ip": "104.21.82.157",
+   "v6": "2606:4700:3031::6815:529d",
+   "domains": 1,
+   "sample": [
+    "bridge2.anydev.ir"
+   ]
+  },
+  {
+   "ip": "104.21.88.153",
+   "v6": "2606:4700:3033::6815:5899",
+   "domains": 1,
+   "sample": [
+    "businessofsoftware.ir"
+   ]
+  },
+  {
+   "ip": "104.21.56.3",
+   "v6": "2606:4700:3034::ac43:af1d",
+   "domains": 1,
+   "sample": [
+    "bz.cod33.ir"
+   ]
+  },
+  {
+   "ip": "172.67.144.144",
+   "v6": "2606:4700:3032::6815:276b",
+   "domains": 1,
+   "sample": [
+    "carbox.ir"
+   ]
+  },
+  {
+   "ip": "104.21.42.105",
+   "v6": "2606:4700:3031::ac43:a13d",
+   "domains": 1,
+   "sample": [
+    "catlink.awinet.ir"
+   ]
+  },
+  {
+   "ip": "104.21.46.161",
+   "v6": "2606:4700:3035::ac43:8cb2",
+   "domains": 1,
+   "sample": [
+    "cellulite.ir"
+   ]
+  },
+  {
+   "ip": "104.21.61.239",
+   "v6": "2606:4700:3033::6815:3def",
+   "domains": 1,
+   "sample": [
+    "cf-ger-proxy.ehsanranjer.ir"
+   ]
+  },
+  {
+   "ip": "104.21.60.81",
+   "v6": "2606:4700:3034::6815:3c51",
+   "domains": 1,
+   "sample": [
+    "cf.thunar.ir"
+   ]
+  },
+  {
+   "ip": "104.21.23.106",
+   "v6": "2606:4700:3034::ac43:d280",
+   "domains": 1,
+   "sample": [
+    "chefai.ir"
+   ]
+  },
+  {
+   "ip": "172.67.164.61",
+   "v6": "2606:4700:3037::ac43:a43d",
+   "domains": 1,
+   "sample": [
+    "ckk.ir"
+   ]
+  },
+  {
+   "ip": "172.67.190.205",
+   "v6": "2606:4700:3031::6815:140e",
+   "domains": 1,
+   "sample": [
+    "classori.ir"
+   ]
+  },
+  {
+   "ip": "172.67.169.229",
+   "v6": "2606:4700:3035::6815:5791",
+   "domains": 1,
+   "sample": [
+    "client.ci-cd.ir"
+   ]
+  },
+  {
+   "ip": "104.21.77.222",
+   "v6": "2606:4700:3032::6815:4dde",
+   "domains": 1,
+   "sample": [
+    "clientarea.live98.ir"
+   ]
+  },
+  {
+   "ip": "172.67.130.248",
+   "v6": "2606:4700:3034::6815:3ab",
+   "domains": 1,
+   "sample": [
+    "clipu.ir"
+   ]
+  },
+  {
+   "ip": "104.21.48.87",
+   "v6": "2606:4700:3037::6815:3057",
+   "domains": 1,
+   "sample": [
+    "cloud.cl.mabani-eghtesad.ir"
+   ]
+  },
+  {
+   "ip": "104.21.54.17",
+   "v6": "2606:4700:3033::ac43:de80",
+   "domains": 1,
+   "sample": [
+    "cloudflare.marun1.ir"
+   ]
+  },
+  {
+   "ip": "104.21.87.21",
+   "v6": "2606:4700:3031::ac43:a8aa",
+   "domains": 1,
+   "sample": [
+    "cloudflare.miladpaykar.ir"
+   ]
+  },
+  {
+   "ip": "104.21.76.37",
+   "v6": "2606:4700:3032::ac43:ba98",
+   "domains": 1,
+   "sample": [
+    "codento.ir"
+   ]
+  },
+  {
+   "ip": "172.67.153.146",
+   "v6": "2606:4700:3030::6815:50ce",
+   "domains": 1,
+   "sample": [
+    "codyar.ir"
+   ]
+  },
+  {
+   "ip": "172.67.129.184",
+   "v6": "2606:4700:3032::6815:2d8",
+   "domains": 1,
+   "sample": [
+    "community.ir"
+   ]
+  },
+  {
+   "ip": "104.21.83.26",
+   "v6": "2606:4700:3033::ac43:d2e4",
+   "domains": 1,
+   "sample": [
+    "controlprojeh.ir"
+   ]
+  },
+  {
+   "ip": "162.159.142.17",
+   "v6": "2606:4700:7::205",
+   "domains": 1,
+   "sample": [
+    "courses.zigapacademy.ir"
+   ]
+  },
+  {
+   "ip": "172.67.211.202",
+   "v6": "2606:4700:3033::ac43:d3ca",
+   "domains": 1,
+   "sample": [
+    "cpanel.chococoffee.ir"
+   ]
+  },
+  {
+   "ip": "104.21.66.76",
+   "v6": "2606:4700:3035::ac43:9d80",
+   "domains": 1,
+   "sample": [
+    "cpanel.imsania.ir"
+   ]
+  },
+  {
+   "ip": "104.21.29.86",
+   "v6": "2606:4700:3035::ac43:94b1",
+   "domains": 1,
+   "sample": [
+    "cpanel.riracharity.ir"
+   ]
+  },
+  {
+   "ip": "104.21.65.37",
+   "v6": "2606:4700:3032::ac43:bcc2",
+   "domains": 1,
+   "sample": [
+    "cpanel.sazefoamgostar.ir"
+   ]
+  },
+  {
+   "ip": "104.21.95.40",
+   "v6": "2606:4700:3033::6815:5f28",
+   "domains": 1,
+   "sample": [
+    "creative-themes.ir"
+   ]
+  },
+  {
+   "ip": "104.21.76.6",
+   "v6": "2606:4700:3031::6815:4c06",
+   "domains": 1,
+   "sample": [
+    "daf53.ir"
+   ]
+  },
+  {
+   "ip": "104.21.8.9",
+   "v6": "2606:4700:3031::6815:809",
+   "domains": 1,
+   "sample": [
+    "dailybulletin.ir"
+   ]
+  },
+  {
+   "ip": "172.67.180.152",
+   "v6": "2606:4700:3034::6815:43cf",
+   "domains": 1,
+   "sample": [
+    "dameware.ir"
+   ]
+  },
+  {
+   "ip": "104.21.63.242",
+   "v6": "2606:4700:3034::ac43:ad5d",
+   "domains": 1,
+   "sample": [
+    "danostudio.ir"
+   ]
+  },
+  {
+   "ip": "104.21.12.32",
+   "v6": "2606:4700:3034::6815:c20",
+   "domains": 1,
+   "sample": [
+    "darsadgir.ir"
+   ]
+  },
+  {
+   "ip": "172.67.206.113",
+   "v6": "2606:4700:3035::ac43:ce71",
+   "domains": 1,
+   "sample": [
+    "datalifeengine.ir"
+   ]
+  },
+  {
+   "ip": "104.21.7.70",
+   "v6": "2606:4700:3030::6815:746",
+   "domains": 1,
+   "sample": [
+    "denizvps.ir"
+   ]
+  },
+  {
+   "ip": "172.67.201.220",
+   "v6": "2606:4700:3035::ac43:c9dc",
+   "domains": 1,
+   "sample": [
+    "deprem.ir"
+   ]
+  },
+  {
+   "ip": "104.21.48.64",
+   "v6": "2606:4700:3035::6815:3040",
+   "domains": 1,
+   "sample": [
+    "digiclassor.ir"
+   ]
+  },
+  {
+   "ip": "104.21.9.237",
+   "v6": "2606:4700:3031::ac43:8312",
+   "domains": 1,
+   "sample": [
+    "digicloudy.ir"
+   ]
+  },
+  {
+   "ip": "104.21.24.149",
+   "v6": "2606:4700:3031::ac43:db43",
+   "domains": 1,
+   "sample": [
+    "digimusic7.ir"
+   ]
+  },
+  {
+   "ip": "104.21.18.24",
+   "v6": "2606:4700:3037::6815:1218",
+   "domains": 1,
+   "sample": [
+    "dimagold.ir"
+   ]
+  },
+  {
+   "ip": "172.67.204.199",
+   "v6": "2606:4700:3035::ac43:ccc7",
+   "domains": 1,
+   "sample": [
+    "discourse.ir"
+   ]
+  },
+  {
+   "ip": "172.67.174.144",
+   "v6": "2606:4700:3035::ac43:ae90",
+   "domains": 1,
+   "sample": [
+    "dl.downlooad.ir"
+   ]
+  },
+  {
+   "ip": "104.21.67.80",
+   "v6": "2606:4700:3031::ac43:daa7",
+   "domains": 1,
+   "sample": [
+    "dl.teslaacademy.ir"
+   ]
+  },
+  {
+   "ip": "172.67.189.140",
+   "v6": "2606:4700:3033::6815:9c7",
+   "domains": 1,
+   "sample": [
+    "dlcddt.ir"
+   ]
+  },
+  {
+   "ip": "104.21.39.70",
+   "v6": "2606:4700:3033::6815:2746",
+   "domains": 1,
+   "sample": [
+    "dml.ir"
+   ]
+  },
+  {
+   "ip": "104.21.28.129",
+   "v6": "2606:4700:3033::ac43:9231",
+   "domains": 1,
+   "sample": [
+    "dorsia.ir"
+   ]
+  },
+  {
+   "ip": "104.21.23.51",
+   "v6": "2606:4700:3031::6815:1733",
+   "domains": 1,
+   "sample": [
+    "dotus.ir"
+   ]
+  },
+  {
+   "ip": "104.21.2.90",
+   "v6": "2606:4700:3032::ac43:8101",
+   "domains": 1,
+   "sample": [
+    "dscdn.ir"
+   ]
+  },
+  {
+   "ip": "172.67.162.170",
+   "v6": "2606:4700:3036::6815:f89",
+   "domains": 1,
+   "sample": [
+    "eana.ir"
+   ]
+  },
+  {
+   "ip": "104.21.9.63",
+   "v6": "2606:4700:3031::6815:93f",
+   "domains": 1,
+   "sample": [
+    "ecanet.ir"
+   ]
+  },
+  {
+   "ip": "172.67.189.47",
+   "v6": "2606:4700:3036::ac43:bd2f",
+   "domains": 1,
+   "sample": [
+    "ecpp.ir"
+   ]
+  },
+  {
+   "ip": "104.21.9.150",
+   "v6": "2606:4700:3033::6815:996",
+   "domains": 1,
+   "sample": [
+    "egraphy.ir"
+   ]
+  },
+  {
+   "ip": "172.67.177.44",
+   "v6": "2606:4700:3032::6815:5065",
+   "domains": 1,
+   "sample": [
+    "eksun.ir"
+   ]
+  },
+  {
+   "ip": "104.21.20.159",
+   "v6": "2606:4700:3033::6815:149f",
+   "domains": 1,
+   "sample": [
+    "elana.ir"
+   ]
+  },
+  {
+   "ip": "104.21.50.199",
+   "v6": "2606:4700:3030::6815:32c7",
+   "domains": 1,
+   "sample": [
+    "elite-window.ir"
+   ]
+  },
+  {
+   "ip": "104.21.55.246",
+   "v6": "2606:4700:3033::6815:37f6",
+   "domains": 1,
+   "sample": [
+    "encycolorpedia.ir"
+   ]
+  },
+  {
+   "ip": "104.21.94.51",
+   "v6": "2606:4700:3037::ac43:dbd1",
+   "domains": 1,
+   "sample": [
+    "energyplus.ir"
+   ]
+  },
+  {
+   "ip": "172.67.198.82",
+   "v6": "2606:4700:3033::ac43:c652",
+   "domains": 1,
+   "sample": [
+    "enriqueiran.ir"
+   ]
+  },
+  {
+   "ip": "172.67.218.205",
+   "v6": "2606:4700:3036::ac43:dacd",
+   "domains": 1,
+   "sample": [
+    "ergofix.ir"
+   ]
+  },
+  {
+   "ip": "172.67.152.85",
+   "v6": "2606:4700:3032::ac43:9855",
+   "domains": 1,
+   "sample": [
+    "esam2.ir"
+   ]
+  },
+  {
+   "ip": "172.67.169.139",
+   "v6": "2606:4700:3032::6815:2ef9",
+   "domains": 1,
+   "sample": [
+    "esfahan-dental-clinic.ir"
+   ]
+  },
+  {
+   "ip": "104.21.90.34",
+   "v6": "2606:4700:3034::6815:5a22",
+   "domains": 1,
+   "sample": [
+    "esfahan-translation.ir"
+   ]
+  },
+  {
+   "ip": "172.67.157.22",
+   "v6": "2606:4700:3035::ac43:9d16",
+   "domains": 1,
+   "sample": [
+    "ethniciran.ir"
+   ]
+  },
+  {
+   "ip": "104.21.75.125",
+   "v6": "2606:4700:3036::ac43:af99",
+   "domains": 1,
+   "sample": [
+    "exam24.ir"
+   ]
+  },
+  {
+   "ip": "104.21.92.65",
+   "v6": "2606:4700:3035::6815:5c41",
+   "domains": 1,
+   "sample": [
+    "exchangeland.ir"
+   ]
+  },
+  {
+   "ip": "172.67.128.162",
+   "v6": "2606:4700:3034::6815:13a",
+   "domains": 1,
+   "sample": [
+    "exergate.musicloud.ir"
+   ]
+  },
+  {
+   "ip": "172.67.167.149",
+   "v6": "2606:4700:3036::ac43:a795",
+   "domains": 1,
+   "sample": [
+    "family.shamshamfree.ir"
+   ]
+  },
+  {
+   "ip": "172.67.166.215",
+   "v6": "2606:4700:3032::6815:29c5",
+   "domains": 1,
+   "sample": [
+    "farhangian91.ir"
+   ]
+  },
+  {
+   "ip": "104.21.27.109",
+   "v6": "2606:4700:3032::6815:1b6d",
+   "domains": 1,
+   "sample": [
+    "farshid.id.ir"
+   ]
+  },
+  {
+   "ip": "172.67.202.113",
+   "v6": "2606:4700:3036::6815:5aa0",
+   "domains": 1,
+   "sample": [
+    "farshidrezaei.ir"
+   ]
+  },
+  {
+   "ip": "104.21.28.32",
+   "v6": "2606:4700:3037::6815:1c20",
+   "domains": 1,
+   "sample": [
+    "fastesco.ir"
+   ]
+  },
+  {
+   "ip": "172.67.185.172",
+   "v6": "2606:4700:3033::6815:1353",
+   "domains": 1,
+   "sample": [
+    "fastwebhost.ir"
+   ]
+  },
+  {
+   "ip": "172.67.130.90",
+   "v6": "2606:4700:3032::ac43:825a",
+   "domains": 1,
+   "sample": [
+    "fcbchat.ir"
+   ]
+  },
+  {
+   "ip": "104.21.8.151",
+   "v6": "2606:4700:3035::6815:897",
+   "domains": 1,
+   "sample": [
+    "fgsfans.ir"
+   ]
+  },
+  {
+   "ip": "104.21.35.195",
+   "v6": "2606:4700:3036::6815:23c3",
+   "domains": 1,
+   "sample": [
+    "fiff.ir"
+   ]
+  },
+  {
+   "ip": "104.21.28.43",
+   "v6": "2606:4700:3034::6815:1c2b",
+   "domains": 1,
+   "sample": [
+    "film-irani.ir"
+   ]
+  },
+  {
+   "ip": "172.67.158.65",
+   "v6": "2606:4700:3031::6815:4935",
+   "domains": 1,
+   "sample": [
+    "film.peetak.ir"
+   ]
+  },
+  {
+   "ip": "104.21.75.80",
+   "v6": "2606:4700:3035::ac43:d991",
+   "domains": 1,
+   "sample": [
+    "flw1.ir"
+   ]
+  },
+  {
+   "ip": "172.67.208.149",
+   "v6": "2606:4700:3034::6815:3d5e",
+   "domains": 1,
+   "sample": [
+    "footballdaily.ir"
+   ]
+  },
+  {
+   "ip": "172.67.141.8",
+   "v6": "2606:4700:3030::ac43:8d08",
+   "domains": 1,
+   "sample": [
+    "footpars.ir"
+   ]
+  },
+  {
+   "ip": "172.67.137.19",
+   "v6": "2606:4700:3031::ac43:8913",
+   "domains": 1,
+   "sample": [
+    "fouladyazdfc.ir"
+   ]
+  },
+  {
+   "ip": "172.67.170.106",
+   "v6": "2606:4700:3033::6815:1c51",
+   "domains": 1,
+   "sample": [
+    "fragment001101010101010110101001011.loomana.ir"
+   ]
+  },
+  {
+   "ip": "104.21.62.5",
+   "v6": "2606:4700:3031::ac43:d97b",
+   "domains": 1,
+   "sample": [
+    "freecrmsana3dgrp.ir"
+   ]
+  },
+  {
+   "ip": "172.67.146.105",
+   "v6": "2606:4700:3037::6815:2192",
+   "domains": 1,
+   "sample": [
+    "freenode.test.hamid.appleidfix.ir"
+   ]
+  },
+  {
+   "ip": "172.67.154.183",
+   "v6": "2606:4700:3032::6815:594",
+   "domains": 1,
+   "sample": [
+    "fsaf.jamfresh.ir"
+   ]
+  },
+  {
+   "ip": "104.21.38.3",
+   "v6": "2606:4700:3035::6815:2603",
+   "domains": 1,
+   "sample": [
+    "ftp.atienergy.ir"
+   ]
+  },
+  {
+   "ip": "172.67.167.26",
+   "v6": "2606:4700:3037::6815:31cd",
+   "domains": 1,
+   "sample": [
+    "ftp.gheldelivery.ir"
+   ]
+  },
+  {
+   "ip": "104.21.2.178",
+   "v6": "2606:4700:3033::ac43:8185",
+   "domains": 1,
+   "sample": [
+    "furnilux.ir"
+   ]
+  },
+  {
+   "ip": "172.67.177.215",
+   "v6": "2606:4700:3030::ac43:b1d7",
+   "domains": 1,
+   "sample": [
+    "futuretheme.ir"
+   ]
+  },
+  {
+   "ip": "104.21.15.81",
+   "v6": "2606:4700:3034::6815:f51",
+   "domains": 1,
+   "sample": [
+    "g3niusn2.ir"
+   ]
+  },
+  {
+   "ip": "172.67.209.85",
+   "v6": "2606:4700:3035::6815:3ae0",
+   "domains": 1,
+   "sample": [
+    "g5.cdn.jacobism.ir"
+   ]
+  },
+  {
+   "ip": "104.21.29.53",
+   "v6": "2606:4700:3032::ac43:ab5f",
+   "domains": 1,
+   "sample": [
+    "g5.hassandoodiyan.ir"
+   ]
+  },
+  {
+   "ip": "104.21.60.98",
+   "v6": "2606:4700:3031::6815:3c62",
+   "domains": 1,
+   "sample": [
+    "galaxydm.ir"
+   ]
+  },
+  {
+   "ip": "172.67.188.22",
+   "v6": "2606:4700:3037::ac43:bc16",
+   "domains": 1,
+   "sample": [
+    "galleryata.ir"
+   ]
+  },
+  {
+   "ip": "172.67.130.213",
+   "v6": "2606:4700:3036::ac43:82d5",
+   "domains": 1,
+   "sample": [
+    "gameserver01.bingbongbung.ir"
+   ]
+  },
+  {
+   "ip": "172.67.199.48",
+   "v6": "2606:4700:3037::6815:4219",
+   "domains": 1,
+   "sample": [
+    "gaper.ir"
+   ]
+  },
+  {
+   "ip": "172.67.211.21",
+   "v6": "2606:4700:3035::6815:177c",
+   "domains": 1,
+   "sample": [
+    "genial.ir"
+   ]
+  },
+  {
+   "ip": "104.21.9.143",
+   "v6": "2606:4700:3030::ac43:a086",
+   "domains": 1,
+   "sample": [
+    "getadobe.ir"
+   ]
+  },
+  {
+   "ip": "104.21.50.200",
+   "v6": "2606:4700:3034::6815:32c8",
+   "domains": 1,
+   "sample": [
+    "ghadimi.id.ir"
+   ]
+  },
+  {
+   "ip": "172.67.149.158",
+   "v6": "2606:4700:3036::ac43:959e",
+   "domains": 1,
+   "sample": [
+    "gholipasandi.ir"
+   ]
+  },
+  {
+   "ip": "172.67.185.54",
+   "v6": "2606:4700:3037::ac43:b936",
+   "domains": 1,
+   "sample": [
+    "giamazone.ir"
+   ]
+  },
+  {
+   "ip": "172.67.190.216",
+   "v6": "2606:4700:3030::6815:1414",
+   "domains": 1,
+   "sample": [
+    "giftistore.ir"
+   ]
+  },
+  {
+   "ip": "104.21.67.85",
+   "v6": "2606:4700:3030::6815:4355",
+   "domains": 1,
+   "sample": [
+    "git.andalibi.ir"
+   ]
+  },
+  {
+   "ip": "104.21.51.132",
+   "v6": "2606:4700:3035::ac43:b49f",
+   "domains": 1,
+   "sample": [
+    "gmailfarsi.ir"
+   ]
+  },
+  {
+   "ip": "172.67.142.2",
+   "v6": "2606:4700:3031::6815:5741",
+   "domains": 1,
+   "sample": [
+    "go.partcfgw.ir"
+   ]
+  },
+  {
+   "ip": "104.21.54.60",
+   "v6": "2606:4700:3030::ac43:a81b",
+   "domains": 1,
+   "sample": [
+    "gold-team.ir"
+   ]
+  },
+  {
+   "ip": "172.67.162.153",
+   "v6": "2606:4700:3034::6815:f7a",
+   "domains": 1,
+   "sample": [
+    "golpana.ir"
+   ]
+  },
+  {
+   "ip": "104.21.64.29",
+   "v6": "2606:4700:3037::6815:401d",
+   "domains": 1,
+   "sample": [
+    "google-ad-manager.linkedmart.ir"
+   ]
+  },
+  {
+   "ip": "104.21.8.163",
+   "v6": "2606:4700:3030::ac43:828e",
+   "domains": 1,
+   "sample": [
+    "googleads.ir"
+   ]
+  },
+  {
+   "ip": "172.67.181.153",
+   "v6": "2606:4700:3035::ac43:b599",
+   "domains": 1,
+   "sample": [
+    "grabcad.ir"
+   ]
+  },
+  {
+   "ip": "104.21.93.147",
+   "v6": "2606:4700:3031::ac43:d320",
+   "domains": 1,
+   "sample": [
+    "grpmng.guftall.ir"
+   ]
+  },
+  {
+   "ip": "104.21.59.143",
+   "v6": "2606:4700:3031::ac43:b34a",
+   "domains": 1,
+   "sample": [
+    "gsilo.ir"
+   ]
+  },
+  {
+   "ip": "172.67.176.223",
+   "v6": "2606:4700:3037::ac43:b0df",
+   "domains": 1,
+   "sample": [
+    "hamid0740.ir"
+   ]
+  },
+  {
+   "ip": "104.21.71.176",
+   "v6": "2606:4700:3030::ac43:ab18",
+   "domains": 1,
+   "sample": [
+    "havoc.ir"
+   ]
+  },
+  {
+   "ip": "172.67.196.105",
+   "v6": "2606:4700:3035::ac43:c469",
+   "domains": 1,
+   "sample": [
+    "herbality.ir"
+   ]
+  },
+  {
+   "ip": "104.21.68.74",
+   "v6": "2606:4700:3037::6815:444a",
+   "domains": 1,
+   "sample": [
+    "hermesbooks.ir"
+   ]
+  },
+  {
+   "ip": "172.67.200.219",
+   "v6": "2606:4700:3036::ac43:c8db",
+   "domains": 1,
+   "sample": [
+    "hesarak-carpet.ir"
+   ]
+  },
+  {
+   "ip": "104.21.18.66",
+   "v6": "2606:4700:3034::ac43:b4b7",
+   "domains": 1,
+   "sample": [
+    "heyko.ir"
+   ]
+  },
+  {
+   "ip": "104.21.8.43",
+   "v6": "2606:4700:3037::6815:82b",
+   "domains": 1,
+   "sample": [
+    "heysite.ir"
+   ]
+  },
+  {
+   "ip": "172.67.194.73",
+   "v6": "2606:4700:3034::ac43:c249",
+   "domains": 1,
+   "sample": [
+    "hibooking24.ir"
+   ]
+  },
+  {
+   "ip": "104.21.2.100",
+   "v6": "2606:4700:3036::6815:264",
+   "domains": 1,
+   "sample": [
+    "hid.readyfile.ir"
+   ]
+  },
+  {
+   "ip": "172.67.183.221",
+   "v6": "2606:4700:3032::ac43:b7dd",
+   "domains": 1,
+   "sample": [
+    "hid1.elementorhub.ir"
+   ]
+  },
+  {
+   "ip": "172.67.200.110",
+   "v6": "2606:4700:3032::ac43:c86e",
+   "domains": 1,
+   "sample": [
+    "hivadata.ir"
+   ]
+  },
+  {
+   "ip": "172.67.165.202",
+   "v6": "2606:4700:3032::6815:49c1",
+   "domains": 1,
+   "sample": [
+    "holejat.ir"
+   ]
+  },
+  {
+   "ip": "172.67.153.17",
+   "v6": "2606:4700:3036::6815:20a6",
+   "domains": 1,
+   "sample": [
+    "honare2.ir"
+   ]
+  },
+  {
+   "ip": "172.67.201.231",
+   "v6": "2606:4700:3037::ac43:c9e7",
+   "domains": 1,
+   "sample": [
+    "hoseinwave.ir"
+   ]
+  },
+  {
+   "ip": "104.21.85.253",
+   "v6": "2606:4700:3034::ac43:d54c",
+   "domains": 1,
+   "sample": [
+    "host.qomhigloss.ir"
+   ]
+  },
+  {
+   "ip": "172.67.129.18",
+   "v6": "2606:4700:3032::6815:265",
+   "domains": 1,
+   "sample": [
+    "htb.allpanel.ir"
+   ]
+  },
+  {
+   "ip": "172.67.158.10",
+   "v6": "2606:4700:3034::ac43:9e0a",
+   "domains": 1,
+   "sample": [
+    "iabdola.ir"
+   ]
+  },
+  {
+   "ip": "104.21.50.79",
+   "v6": "2606:4700:3037::ac43:9f79",
+   "domains": 1,
+   "sample": [
+    "iarll.ir"
+   ]
+  },
+  {
+   "ip": "172.67.219.194",
+   "v6": "2606:4700:3035::ac43:dbc2",
+   "domains": 1,
+   "sample": [
+    "iau.wtechteam.ir"
+   ]
+  },
+  {
+   "ip": "104.21.76.105",
+   "v6": "2606:4700:3037::6815:4c69",
+   "domains": 1,
+   "sample": [
+    "igame.ir"
+   ]
+  },
+  {
+   "ip": "172.67.171.130",
+   "v6": "2606:4700:3034::ac43:ab82",
+   "domains": 1,
+   "sample": [
+    "ijcce.ac.ir"
+   ]
+  },
+  {
+   "ip": "104.21.3.56",
+   "v6": "2606:4700:3036::ac43:8246",
+   "domains": 1,
+   "sample": [
+    "ije.ir"
+   ]
+  },
+  {
+   "ip": "172.67.214.149",
+   "v6": "2606:4700:3032::ac43:d695",
+   "domains": 1,
+   "sample": [
+    "imarketshop.ir"
+   ]
+  },
+  {
+   "ip": "172.67.131.126",
+   "v6": "2606:4700:3033::ac43:837e",
+   "domains": 1,
+   "sample": [
+    "imobotech.ir"
+   ]
+  },
+  {
+   "ip": "172.67.184.184",
+   "v6": "2606:4700:3033::ac43:b8b8",
+   "domains": 1,
+   "sample": [
+    "infinity-service.ir"
+   ]
+  },
+  {
+   "ip": "104.21.53.218",
+   "v6": "2606:4700:3034::6815:35da",
+   "domains": 1,
+   "sample": [
+    "instagram.ir"
+   ]
+  },
+  {
+   "ip": "104.21.72.174",
+   "v6": "2606:4700:3037::ac43:9953",
+   "domains": 1,
+   "sample": [
+    "instapico.ir"
+   ]
+  },
+  {
+   "ip": "172.67.187.29",
+   "v6": "2606:4700:3030::6815:543b",
+   "domains": 1,
+   "sample": [
+    "instasho.ir"
+   ]
+  },
+  {
+   "ip": "172.67.201.44",
+   "v6": "2606:4700:3036::6815:2c9f",
+   "domains": 1,
+   "sample": [
+    "instashopers.ir"
+   ]
+  },
+  {
+   "ip": "172.67.154.182",
+   "v6": "2606:4700:3031::ac43:9ab6",
+   "domains": 1,
+   "sample": [
+    "intl-auth.mohammadlatifi.ir"
+   ]
+  },
+  {
+   "ip": "104.21.60.70",
+   "v6": "2606:4700:3037::6815:3c46",
+   "domains": 1,
+   "sample": [
+    "ipv4.baghestan-carpet-cleaning.ir"
+   ]
+  },
+  {
+   "ip": "104.21.46.249",
+   "v6": "2606:4700:3032::6815:2ef9",
+   "domains": 1,
+   "sample": [
+    "ipv4.esfahan-dental-clinic.ir"
+   ]
+  },
+  {
+   "ip": "172.67.203.51",
+   "v6": "2606:4700:3036::6815:451f",
+   "domains": 1,
+   "sample": [
+    "ipv4.hashtgerd-carpet-cleaning.ir"
+   ]
+  },
+  {
+   "ip": "172.67.205.200",
+   "v6": "2606:4700:3037::ac43:cdc8",
+   "domains": 1,
+   "sample": [
+    "ipv4.qom-clinic.ir"
+   ]
+  },
+  {
+   "ip": "104.21.9.182",
+   "v6": "2606:4700:3031::ac43:8f53",
+   "domains": 1,
+   "sample": [
+    "ipv4.shiraz-clinic.ir"
+   ]
+  },
+  {
+   "ip": "172.67.211.144",
+   "v6": "2606:4700:3033::6815:4317",
+   "domains": 1,
+   "sample": [
+    "ipv4.yasuj-carpet-cleaning.ir"
+   ]
+  },
+  {
+   "ip": "172.67.134.195",
+   "v6": "2606:4700:3033::6815:672",
+   "domains": 1,
+   "sample": [
+    "iran365rooz.ir"
+   ]
+  },
+  {
+   "ip": "172.67.146.67",
+   "v6": "2606:4700:3032::6815:49a3",
+   "domains": 1,
+   "sample": [
+    "iranigoogle.ir"
+   ]
+  },
+  {
+   "ip": "172.67.206.182",
+   "v6": "2606:4700:3030::6815:4d69",
+   "domains": 1,
+   "sample": [
+    "iransoicalsec.ir"
+   ]
+  },
+  {
+   "ip": "172.67.198.106",
+   "v6": "2606:4700:3037::ac43:c66a",
+   "domains": 1,
+   "sample": [
+    "irdns.alisharj.ir"
+   ]
+  },
+  {
+   "ip": "104.21.77.187",
+   "v6": "2606:4700:3037::6815:4dbb",
+   "domains": 1,
+   "sample": [
+    "irebar.ir"
+   ]
+  },
+  {
+   "ip": "172.67.174.198",
+   "v6": "2606:4700:3033::6815:437c",
+   "domains": 1,
+   "sample": [
+    "irfsa.ir"
+   ]
+  },
+  {
+   "ip": "172.67.216.148",
+   "v6": "2606:4700:3033::ac43:d894",
+   "domains": 1,
+   "sample": [
+    "isfahanglassind.ir"
+   ]
+  },
+  {
+   "ip": "104.21.5.239",
+   "v6": "2606:4700:3031::6815:5ef",
+   "domains": 1,
+   "sample": [
+    "isoverify.ir"
+   ]
+  },
+  {
+   "ip": "104.21.23.71",
+   "v6": "2606:4700:3032::6815:1747",
+   "domains": 1,
+   "sample": [
+    "issnoor.ir"
+   ]
+  },
+  {
+   "ip": "172.67.204.48",
+   "v6": "2606:4700:3032::ac43:cc30",
+   "domains": 1,
+   "sample": [
+    "itresearches.ir"
+   ]
+  },
+  {
+   "ip": "104.21.64.113",
+   "v6": "2606:4700:3037::6815:4071",
+   "domains": 1,
+   "sample": [
+    "iujbc.ir"
+   ]
+  },
+  {
+   "ip": "104.21.41.128",
+   "v6": "2606:4700:3031::6815:2980",
+   "domains": 1,
+   "sample": [
+    "iveal.ir"
+   ]
+  },
+  {
+   "ip": "104.21.49.213",
+   "v6": "2606:4700:3030::ac43:c18f",
+   "domains": 1,
+   "sample": [
+    "jadi.ir"
+   ]
+  },
+  {
+   "ip": "172.67.189.80",
+   "v6": "2606:4700:3034::ac43:bd50",
+   "domains": 1,
+   "sample": [
+    "jeejow.ir"
+   ]
+  },
+  {
+   "ip": "104.21.85.144",
+   "v6": "2606:4700:3032::6815:5590",
+   "domains": 1,
+   "sample": [
+    "jewellery-ariaei.ir"
+   ]
+  },
+  {
+   "ip": "104.21.82.149",
+   "v6": "2606:4700:3033::ac43:9eb0",
+   "domains": 1,
+   "sample": [
+    "kakxer.ir"
+   ]
+  },
+  {
+   "ip": "172.67.146.88",
+   "v6": "2606:4700:3036::6815:3753",
+   "domains": 1,
+   "sample": [
+    "kala.z8kala.ir"
+   ]
+  },
+  {
+   "ip": "172.67.133.68",
+   "v6": "2606:4700:3034::6815:561",
+   "domains": 1,
+   "sample": [
+    "kamalshahr-carpet-cleaning.ir"
+   ]
+  },
+  {
+   "ip": "104.21.33.89",
+   "v6": "2606:4700:3030::6815:2159",
+   "domains": 1,
+   "sample": [
+    "karaaks.ir"
+   ]
+  },
+  {
+   "ip": "172.67.188.214",
+   "v6": "2606:4700:3032::6815:8f2",
+   "domains": 1,
+   "sample": [
+    "karaj-escaperoom.ir"
+   ]
+  },
+  {
+   "ip": "104.21.95.96",
+   "v6": "2606:4700:3035::6815:5f60",
+   "domains": 1,
+   "sample": [
+    "kasebionline.ir"
+   ]
+  },
+  {
+   "ip": "172.67.174.224",
+   "v6": "2606:4700:3036::ac43:aee0",
+   "domains": 1,
+   "sample": [
+    "kasebshoo.ir"
+   ]
+  },
+  {
+   "ip": "104.21.28.201",
+   "v6": "2606:4700:3030::6815:1cc9",
+   "domains": 1,
+   "sample": [
+    "kbca.ir"
+   ]
+  },
+  {
+   "ip": "104.21.95.66",
+   "v6": "2606:4700:3031::ac43:8f7a",
+   "domains": 1,
+   "sample": [
+    "kcnc.ir"
+   ]
+  },
+  {
+   "ip": "104.21.5.4",
+   "v6": "2606:4700:3032::6815:504",
+   "domains": 1,
+   "sample": [
+    "kishstars.ir"
+   ]
+  },
+  {
+   "ip": "172.67.193.182",
+   "v6": "2606:4700:3033::ac43:c1b6",
+   "domains": 1,
+   "sample": [
+    "kiwi.co.ir"
+   ]
+  },
+  {
+   "ip": "172.67.161.96",
+   "v6": "2606:4700:3030::ac43:a160",
+   "domains": 1,
+   "sample": [
+    "kmokaberan.ir"
+   ]
+  },
+  {
+   "ip": "172.67.221.173",
+   "v6": "2606:4700:3030::ac43:ddad",
+   "domains": 1,
+   "sample": [
+    "konkorium.ir"
+   ]
+  },
+  {
+   "ip": "172.67.190.118",
+   "v6": "2606:4700:3033::6815:13e9",
+   "domains": 1,
+   "sample": [
+    "koroshr.ir"
+   ]
+  },
+  {
+   "ip": "172.67.163.193",
+   "v6": "2606:4700:3031::6815:fb6",
+   "domains": 1,
+   "sample": [
+    "krdt.ir"
+   ]
+  },
+  {
+   "ip": "172.67.179.209",
+   "v6": "2606:4700:3030::ac43:b3d1",
+   "domains": 1,
+   "sample": [
+    "kwna.ir"
+   ]
+  },
+  {
+   "ip": "104.21.11.80",
+   "v6": "2606:4700:3035::6815:b50",
+   "domains": 1,
+   "sample": [
+    "lake.aminsam.ir"
+   ]
+  },
+  {
+   "ip": "172.67.175.86",
+   "v6": "2606:4700:3034::6815:5b9d",
+   "domains": 1,
+   "sample": [
+    "laptopdid.ir"
+   ]
+  },
+  {
+   "ip": "172.67.133.225",
+   "v6": "2606:4700:3034::ac43:85e1",
+   "domains": 1,
+   "sample": [
+    "lastrate.ir"
+   ]
+  },
+  {
+   "ip": "104.21.39.212",
+   "v6": "2606:4700:3033::ac43:94e3",
+   "domains": 1,
+   "sample": [
+    "lavazzas.ir"
+   ]
+  },
+  {
+   "ip": "172.67.143.45",
+   "v6": "2606:4700:3031::6815:2eef",
+   "domains": 1,
+   "sample": [
+    "lawtraining.ir"
+   ]
+  },
+  {
+   "ip": "172.67.220.163",
+   "v6": "2606:4700:3037::6815:3e3c",
+   "domains": 1,
+   "sample": [
+    "learn-adobe.ir"
+   ]
+  },
+  {
+   "ip": "104.21.58.118",
+   "v6": "2606:4700:3035::ac43:9f6a",
+   "domains": 1,
+   "sample": [
+    "lessonhub.ir"
+   ]
+  },
+  {
+   "ip": "172.67.190.91",
+   "v6": "2606:4700:3036::6815:3977",
+   "domains": 1,
+   "sample": [
+    "lessonup.ir"
+   ]
+  },
+  {
+   "ip": "172.67.215.94",
+   "v6": "2606:4700:3033::ac43:d75e",
+   "domains": 1,
+   "sample": [
+    "lgtvs.ir"
+   ]
+  },
+  {
+   "ip": "104.21.13.23",
+   "v6": "2606:4700:3030::ac43:c505",
+   "domains": 1,
+   "sample": [
+    "livarfars.ir"
+   ]
+  },
+  {
+   "ip": "104.21.61.89",
+   "v6": "2606:4700:3034::6815:3d59",
+   "domains": 1,
+   "sample": [
+    "lnglounge.ir"
+   ]
+  },
+  {
+   "ip": "104.21.2.30",
+   "v6": "2606:4700:3030::ac43:80a5",
+   "domains": 1,
+   "sample": [
+    "lotic.ir"
+   ]
+  },
+  {
+   "ip": "104.21.19.245",
+   "v6": "2606:4700:3037::6815:13f5",
+   "domains": 1,
+   "sample": [
+    "lunar.space.cassiopeia.ir"
+   ]
+  },
+  {
+   "ip": "104.21.63.90",
+   "v6": "2606:4700:3036::ac43:9115",
+   "domains": 1,
+   "sample": [
+    "lunaservice.ir"
+   ]
+  },
+  {
+   "ip": "104.21.69.64",
+   "v6": "2606:4700:3037::6815:4540",
+   "domains": 1,
+   "sample": [
+    "mag.5eresoft.ir"
+   ]
+  },
+  {
+   "ip": "172.67.190.64",
+   "v6": "2606:4700:3034::ac43:be40",
+   "domains": 1,
+   "sample": [
+    "mahdi-saberi.ir"
+   ]
+  },
+  {
+   "ip": "104.21.88.178",
+   "v6": "2606:4700:3032::6815:58b2",
+   "domains": 1,
+   "sample": [
+    "mahdiakbarizarkesh.ir"
+   ]
+  },
+  {
+   "ip": "172.67.135.33",
+   "v6": "2606:4700:3033::ac43:8721",
+   "domains": 1,
+   "sample": [
+    "maheeyousefi.ir"
+   ]
+  },
+  {
+   "ip": "172.67.133.142",
+   "v6": "2606:4700:3031::ac43:858e",
+   "domains": 1,
+   "sample": [
+    "mahyachat.ir"
+   ]
+  },
+  {
+   "ip": "172.67.132.54",
+   "v6": "2606:4700:3030::ac43:8436",
+   "domains": 1,
+   "sample": [
+    "mail.barbodmarine.ir"
+   ]
+  },
+  {
+   "ip": "172.67.199.186",
+   "v6": "2606:4700:3035::6815:2a20",
+   "domains": 1,
+   "sample": [
+    "mail.buylikeinstagram.ir"
+   ]
+  },
+  {
+   "ip": "104.21.92.86",
+   "v6": "2606:4700:3037::6815:5c56",
+   "domains": 1,
+   "sample": [
+    "mail.downloadsocial.ir"
+   ]
+  },
+  {
+   "ip": "104.21.31.90",
+   "v6": "2606:4700:3034::ac43:b028",
+   "domains": 1,
+   "sample": [
+    "mail.foroshfuri.ir"
+   ]
+  },
+  {
+   "ip": "172.67.154.236",
+   "v6": "2606:4700:3036::ac43:9aec",
+   "domains": 1,
+   "sample": [
+    "mail.khademoreza.org.ir"
+   ]
+  },
+  {
+   "ip": "172.67.132.116",
+   "v6": "2606:4700:3031::6815:d07",
+   "domains": 1,
+   "sample": [
+    "mail.zaroj.ir"
+   ]
+  },
+  {
+   "ip": "172.67.158.226",
+   "v6": "2606:4700:3035::6815:2262",
+   "domains": 1,
+   "sample": [
+    "mainadmin.h4u-servers.ir"
+   ]
+  },
+  {
+   "ip": "104.21.49.22",
+   "v6": "2606:4700:3036::6815:3116",
+   "domains": 1,
+   "sample": [
+    "majidataee.id.ir"
+   ]
+  },
+  {
+   "ip": "104.21.1.126",
+   "v6": "2606:4700:3034::ac43:8139",
+   "domains": 1,
+   "sample": [
+    "makisite.ir"
+   ]
+  },
+  {
+   "ip": "172.67.133.245",
+   "v6": "2606:4700:3035::6815:195c",
+   "domains": 1,
+   "sample": [
+    "markop.ir"
+   ]
+  },
+  {
+   "ip": "104.21.94.2",
+   "v6": "2606:4700:3034::6815:5e02",
+   "domains": 1,
+   "sample": [
+    "masafmokeb.ir"
+   ]
+  },
+  {
+   "ip": "104.21.13.39",
+   "v6": "2606:4700:3034::ac43:c5ac",
+   "domains": 1,
+   "sample": [
+    "mashhad-dental-clinic.ir"
+   ]
+  },
+  {
+   "ip": "172.67.177.29",
+   "v6": "2606:4700:3031::6815:5bb2",
+   "domains": 1,
+   "sample": [
+    "mashhadescaperoom.ir"
+   ]
+  },
+  {
+   "ip": "104.21.3.74",
+   "v6": "2606:4700:3033::ac43:8276",
+   "domains": 1,
+   "sample": [
+    "masterstream.ir"
+   ]
+  },
+  {
+   "ip": "172.67.205.14",
+   "v6": "2606:4700:3035::ac43:cd0e",
+   "domains": 1,
+   "sample": [
+    "masterwow.ir"
+   ]
+  },
+  {
+   "ip": "104.21.35.77",
+   "v6": "2606:4700:3036::6815:234d",
+   "domains": 1,
+   "sample": [
+    "matmodern.ir"
+   ]
+  },
+  {
+   "ip": "172.67.183.115",
+   "v6": "2606:4700:3037::6815:53ed",
+   "domains": 1,
+   "sample": [
+    "mearamesh.ir"
+   ]
+  },
+  {
+   "ip": "172.67.157.159",
+   "v6": "2606:4700:3031::6815:e18",
+   "domains": 1,
+   "sample": [
+    "medilamsrc.ir"
+   ]
+  },
+  {
+   "ip": "104.21.48.26",
+   "v6": "2606:4700:3031::6815:301a",
+   "domains": 1,
+   "sample": [
+    "megax-panel.parafacc.ir"
+   ]
+  },
+  {
+   "ip": "104.21.0.151",
+   "v6": "2606:4700:3033::6815:97",
+   "domains": 1,
+   "sample": [
+    "mehrkh.ir"
+   ]
+  },
+  {
+   "ip": "172.67.136.66",
+   "v6": "2606:4700:3036::ac43:8842",
+   "domains": 1,
+   "sample": [
+    "metsa1.obbvie.ir"
+   ]
+  },
+  {
+   "ip": "104.21.15.228",
+   "v6": "2606:4700:3037::ac43:d029",
+   "domains": 1,
+   "sample": [
+    "mfactor.ir"
+   ]
+  },
+  {
+   "ip": "104.21.50.152",
+   "v6": "2606:4700:3032::ac43:a3ef",
+   "domains": 1,
+   "sample": [
+    "microsoft.mahsad.ir"
+   ]
+  },
+  {
+   "ip": "172.67.155.86",
+   "v6": "2606:4700:3036::6815:30b3",
+   "domains": 1,
+   "sample": [
+    "minecraftvps.ir"
+   ]
+  },
+  {
+   "ip": "172.67.173.218",
+   "v6": "2606:4700:3031::6815:280d",
+   "domains": 1,
+   "sample": [
+    "miradel.ir"
+   ]
+  },
+  {
+   "ip": "172.67.218.124",
+   "v6": "2606:4700:3033::ac43:da7c",
+   "domains": 1,
+   "sample": [
+    "mirror-json.dl-minecraft.ir"
+   ]
+  },
+  {
+   "ip": "104.21.78.62",
+   "v6": "2606:4700:3034::6815:4e3e",
+   "domains": 1,
+   "sample": [
+    "mlb24all.ir"
+   ]
+  },
+  {
+   "ip": "172.67.140.102",
+   "v6": "2606:4700:3036::ac43:8c66",
+   "domains": 1,
+   "sample": [
+    "mlb66.ir"
+   ]
+  },
+  {
+   "ip": "172.67.200.20",
+   "v6": "2606:4700:3035::6815:15c6",
+   "domains": 1,
+   "sample": [
+    "mng.autochat.ir"
+   ]
+  },
+  {
+   "ip": "104.21.69.225",
+   "v6": "2606:4700:3031::ac43:d696",
+   "domains": 1,
+   "sample": [
+    "mobankapp.ir"
+   ]
+  },
+  {
+   "ip": "172.67.186.82",
+   "v6": "2606:4700:3034::6815:4427",
+   "domains": 1,
+   "sample": [
+    "mobile-tracker-free.ir"
+   ]
+  },
+  {
+   "ip": "104.21.75.225",
+   "v6": "2606:4700:3036::ac43:b6e3",
+   "domains": 1,
+   "sample": [
+    "mobl-cover.ir"
+   ]
+  },
+  {
+   "ip": "172.67.218.87",
+   "v6": "2606:4700:3033::ac43:da57",
+   "domains": 1,
+   "sample": [
+    "moeini.id.ir"
+   ]
+  },
+  {
+   "ip": "172.67.213.250",
+   "v6": "2606:4700:3035::6815:17e1",
+   "domains": 1,
+   "sample": [
+    "mohamadahmadi.id.ir"
+   ]
+  },
+  {
+   "ip": "172.67.151.253",
+   "v6": "2606:4700:3033::ac43:97fd",
+   "domains": 1,
+   "sample": [
+    "mohammadmokhtari.ir"
+   ]
+  },
+  {
+   "ip": "104.21.13.119",
+   "v6": "2606:4700:3035::ac43:a7f1",
+   "domains": 1,
+   "sample": [
+    "mohammadrezakamraniseovaneshan.tarafe3vm.ir"
+   ]
+  },
+  {
+   "ip": "172.67.178.213",
+   "v6": "2606:4700:3033::ac43:b2d5",
+   "domains": 1,
+   "sample": [
+    "mohtavazhe.ir"
+   ]
+  },
+  {
+   "ip": "172.67.194.107",
+   "v6": "2606:4700:3035::ac43:c26b",
+   "domains": 1,
+   "sample": [
+    "mojeandisheh.ir"
+   ]
+  },
+  {
+   "ip": "104.21.3.9",
+   "v6": "2606:4700:3031::ac43:81fe",
+   "domains": 1,
+   "sample": [
+    "monoblog.ir"
+   ]
+  },
+  {
+   "ip": "172.67.213.154",
+   "v6": "2606:4700:3037::ac43:d59a",
+   "domains": 1,
+   "sample": [
+    "motamed-ai.ir"
+   ]
+  },
+  {
+   "ip": "172.67.203.81",
+   "v6": "2606:4700:3033::ac43:cb51",
+   "domains": 1,
+   "sample": [
+    "movie.ehsan944.ir"
+   ]
+  },
+  {
+   "ip": "172.67.139.7",
+   "v6": "2606:4700:3037::ac43:8b07",
+   "domains": 1,
+   "sample": [
+    "mp9.ir"
+   ]
+  },
+  {
+   "ip": "104.21.38.62",
+   "v6": "2606:4700:3032::6815:263e",
+   "domains": 1,
+   "sample": [
+    "mssql.shiraz-carpets-cleaning.ir"
+   ]
+  },
+  {
+   "ip": "104.21.42.143",
+   "v6": "2606:4700:3036::ac43:a282",
+   "domains": 1,
+   "sample": [
+    "msvi.uiuxd3signer.ir"
+   ]
+  },
+  {
+   "ip": "172.67.200.152",
+   "v6": "2606:4700:3032::ac43:c898",
+   "domains": 1,
+   "sample": [
+    "musicdeal.ir"
+   ]
+  },
+  {
+   "ip": "172.67.141.206",
+   "v6": "2606:4700:3031::ac43:8dce",
+   "domains": 1,
+   "sample": [
+    "musicgtars.ir"
+   ]
+  },
+  {
+   "ip": "172.67.172.31",
+   "v6": "2606:4700:3037::ac43:ac1f",
+   "domains": 1,
+   "sample": [
+    "mvt.ir"
+   ]
+  }
+ ]
+}
