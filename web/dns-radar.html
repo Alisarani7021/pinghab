@@ -108,6 +108,207 @@
     نسخهٔ پایتون (<code>dnsscan.py</code>) را روی گوشی با Termux اجرا کن.
   </div>
 
+<style>
+  .wwin{ padding:9px 10px;border-radius:10px;border:1px solid rgba(127,127,127,.35);
+         background:rgba(127,127,127,.10);color:inherit;font:inherit;font-size:14px }
+  .wwbtn{ padding:8px 12px;border-radius:10px;border:1px solid rgba(127,127,127,.35);
+          background:rgba(127,127,127,.12);color:inherit;font:inherit;font-size:13.5px;cursor:pointer }
+  .wwbtn:hover{ background:rgba(127,127,127,.2) }
+  .wwprimary{ background:#1d4ed8;border-color:#1d4ed8;color:#fff;font-weight:700 }
+  .wwcopy{ padding:4px 8px;font-size:11.5px }
+  .wwrow{ margin:8px 0;padding:10px 12px;border:1px solid rgba(127,127,127,.28);border-radius:12px }
+  .wwbox{ padding:10px 12px;border-radius:12px;background:rgba(29,78,216,.10);
+          border:1px solid rgba(29,78,216,.35) }
+  #ww-groups table,#ww-servers table,#ww-imp-out table,#ww-dev-out table{
+          width:100%;border-collapse:collapse;font-size:13px }
+  #ww-groups td,#ww-servers td,#ww-imp-out td,#ww-dev-out td,
+  #ww-groups th,#ww-servers th,#ww-imp-out th,#ww-dev-out th{
+          padding:4px 3px;border-bottom:1px solid rgba(127,127,127,.18);text-align:right }
+  #ww-info,#ww-dev-out{ margin-top:7px }
+</style>
+  <h2>🌍 DNS جهانی — <span id="ww-count">…</span></h2>
+  <div class="card">
+    <div class="row" style="flex-wrap:wrap;gap:8px">
+      <select id="ww-cc" class="wwin" style="min-width:190px"></select>
+      <label class="row" style="gap:6px;cursor:pointer;font-size:14px">
+        <input type="checkbox" id="ww-v6"> فقط IPv6
+      </label>
+      <button class="wwbtn" id="ww-load">نمایش لیست</button>
+    </div>
+    <div class="sub" id="ww-info">کشور را انتخاب کن و «نمایش لیست» را بزن. ایران پیش‌فرض است.</div>
+    <div id="ww-groups"></div>
+    <div id="ww-servers"></div>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <b>🎯 سنجش اثر (PoP)</b>
+    <div class="sub">هر DNS برای این دامنه <b>کدام آی‌پی</b> را می‌دهد؟ آی‌پی متفاوت = <b>مسیر متفاوت</b>.
+      این همان چیزی است که واقعاً روی پینگ بازی اثر می‌گذارد (نه سرعت خود DNS).</div>
+    <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+      <input id="ww-dom" value="cdn.cloudflare.steamstatic.com" class="wwin" style="flex:1;min-width:220px;direction:ltr">
+      <button class="wwbtn wwprimary" id="ww-imp">بسنج (از لبهٔ کلادفلر)</button>
+      <button class="wwbtn" id="ww-device">📱 از گوشی خودم بسنج</button>
+    </div>
+    <div id="ww-imp-out"></div>
+    <div class="sub" id="ww-dev-out"></div>
+  </div>
+
+<script>
+/* ================= DNS جهانی (WorldScan) — مستقل و بی‌طرف ================= */
+(function(){
+  "use strict";
+  const q = id => document.getElementById(id);
+  // در اپ اندروید، صفحه از assets محلی می‌آید → API باید مطلق باشد
+  const ABS = (location.protocol === "file:" || /appassets\.androidplatform\.net$/.test(location.hostname))
+    ? "https://pinghab.catclient-59gk2mui.workers.dev" : "";
+  const fa = s => String(s).replace(/[0-9]/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+  let META = null, LAST = null;
+
+  async function jget(path){
+    const r = await fetch(ABS + path, { cache: "no-store" });
+    if(!r.ok) throw new Error("HTTP " + r.status);
+    return r.json();
+  }
+  function copy(btn, txt){
+    const done = () => { btn.textContent = "✅ کپی شد"; setTimeout(()=>{ btn.textContent = "کپی"; }, 1400); };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done).catch(()=>{ prompt("کپی کن:", txt); });
+    } else { prompt("کپی کن:", txt); }
+  }
+
+  async function loadMeta(){
+    try{
+      META = await jget("/api/dnslist?meta=1");
+      q("ww-count").textContent = `${fa(META.totals.countries)} کشور · ${fa(META.totals.servers.toLocaleString("en-US"))} رزولور`;
+      const cs = (META.countries || []).slice().sort((a,b)=>{
+        if(a.cc === "IR") return -1; if(b.cc === "IR") return 1;
+        return (b.count - a.count);
+      });
+      q("ww-cc").innerHTML = cs.map(c=>`<option value="${c.cc}">${c.name} (${fa(c.count)})</option>`).join("");
+      q("ww-cc").value = "IR";
+    }catch(e){
+      q("ww-info").textContent = "لیست جهانی در دسترس نشد (اتصال؟) — " + (e.message||"");
+    }
+  }
+
+  async function loadList(){
+    const cc = q("ww-cc").value, v6 = q("ww-v6").checked ? "&v6=1" : "";
+    q("ww-info").textContent = "در حال گرفتن لیست…";
+    let d;
+    try { d = await jget(`/api/dnslist?cc=${encodeURIComponent(cc)}&n=25${v6}`); }
+    catch(e){ q("ww-info").textContent = "خطا: " + e.message; return; }
+    if(d.country){
+      q("ww-info").innerHTML = `📍 <b>${d.country.name}</b> — ${fa(d.country.count)} رزولور عمومی ثبت‌شده ` +
+        `(IPv4 ${fa(d.country.v4)} · IPv6 ${fa(d.country.v6)}). ` +
+        `لیست زیر <b>کاندید</b> است؛ بهترین را روی گوشی خودت تست کن.`;
+    } else { q("ww-info").innerHTML = "📍 لیست جهانی (anycast)."; }
+
+    let h = "";
+    (d.groups || []).forEach(g=>{
+      const ips = (g.ips||[]);
+      h += `<div class="wwrow">
+        <div class="row between" style="align-items:center">
+          <b>${g.name}</b>
+          <div class="row" style="gap:6px">
+            ${ips.slice(0,2).map(ip=>`<button class="wwbtn wwcopy" data-ip="${ip}">کپی ${ip}</button>`).join("")}
+          </div>
+        </div>
+        <div class="sub" style="direction:ltr;font-family:ui-monospace,monospace">${ips.join("  ·  ") || "—"}</div>
+        ${g.doh?`<div class="sub" style="direction:ltr;font-size:11px">DoH: ${g.doh}</div>`:""}
+        ${g.note?`<div class="sub">${g.note}</div>`:""}
+      </div>`;
+    });
+    q("ww-groups").innerHTML = h;
+
+    const sv = (d.servers||[]);
+    if(sv.length){
+      q("ww-servers").innerHTML =
+        `<details style="margin-top:6px"><summary style="cursor:pointer">${fa(sv.length)} رزولور برگزیده از کاتالوگ</summary>
+         <table style="width:100%;font-size:13px;margin-top:7px;border-collapse:collapse">
+         <tr style="opacity:.75"><th style="text-align:right">آی‌پی</th><th style="text-align:right">سازمان</th>
+         <th style="text-align:right">اعتبار</th><th style="text-align:right">DNSSEC</th><th></th></tr>` +
+         sv.map(s=>`<tr>
+            <td style="direction:ltr;font-family:ui-monospace,monospace;padding:4px 2px">${s.ip}</td>
+            <td style="padding:4px 2px">${(s.as||"—").slice(0,34)}</td>
+            <td style="padding:4px 2px">${fa(Number(s.reliability||0).toFixed(2))}</td>
+            <td style="padding:4px 2px">${s.dnssec?"✅":"—"}</td>
+            <td><button class="wwbtn wwcopy" data-ip="${s.ip}">کپی</button></td></tr>`).join("") +
+         `</table></details>`;
+    } else { q("ww-servers").innerHTML = ""; }
+
+    document.querySelectorAll(".ww-cp").forEach(b=>{ b.onclick = () => copy(b, b.dataset.ip); });
+  }
+
+  async function impact(){
+    const name = q("ww-dom").value.trim() || "cdn.cloudflare.steamstatic.com";
+    q("ww-imp-out").innerHTML = `<div class="sub">در حال سنجش…</div>`;
+    try{
+      const d = await jget("/api/impact?name=" + encodeURIComponent(name));
+      LAST = d;
+      let h = `<div class="wwbox" style="margin-top:8px">
+        <b>${d.distinct_pops_hint ? "✅ رزولورها PoP متفاوت می‌دهند" : "همه یک آی‌پی دادند"}</b>
+        <div class="sub">${fa(d.answered)} از ${fa(d.total)} رزولور پاسخ دادند ·
+        ${fa(d.distinct_ips)} آی‌پی متمایز · از لبهٔ ${d.from.colo||"—"}</div></div>
+        <table style="width:100%;font-size:13px;margin-top:8px;border-collapse:collapse">
+        <tr style="opacity:.75"><th style="text-align:right">DNS</th><th style="text-align:right">آی‌پی(ها)</th>
+        <th style="text-align:right">زمان پاسخ</th></tr>` +
+        (d.results||[]).map(r=>`<tr>
+          <td style="padding:4px 2px">${r.label}</td>
+          <td style="direction:ltr;font-family:ui-monospace,monospace;padding:4px 2px">${(r.ips||[]).join(" · ")||"—"}</td>
+          <td style="padding:4px 2px">${r.ms==null?"—":fa(r.ms)+"ms"}</td></tr>`).join("") + `</table>
+        <div class="sub">${d.note||""}</div>`;
+      q("ww-imp-out").innerHTML = h;
+    }catch(e){ q("ww-imp-out").innerHTML = `<div class="sub">خطا: ${e.message}</div>`; }
+  }
+
+  // سنجش DoH از خود دستگاه (تنها اندازه‌گیری معتبر، چون مسیر گوشی توست)
+  async function impactOnDevice(){
+    const name = q("ww-dom").value.trim() || "cdn.cloudflare.steamstatic.com";
+    const out = q("ww-dev-out");
+    const targets = [];
+    if(LAST && LAST.results) LAST.results.forEach(r=>{});
+    // از لیست منتخب برای گرفتن آدرس DoH استفاده می‌کنیم
+    try{
+      const d = await jget("/api/dnslist?cc=" + encodeURIComponent(q("ww-cc").value));
+      (d.groups||[]).forEach(g=>{ if(g.doh) targets.push({name:g.name, doh:g.doh}); });
+    }catch(e){}
+    if(!targets.length){ out.textContent = "آدرس DoH پیدا نشد."; return; }
+    out.innerHTML = `<div class="sub">⏱ سنجش از گوشی خودت روی ${fa(targets.length)} رزولور — این عدد «زمان تا دریافت پاسخ از این خط» است:</div>`;
+    const rows = [];
+    await Promise.all(targets.slice(0,10).map(async t=>{
+      const url = t.doh + (t.doh.includes("?") ? "&" : "?") + "name=" + encodeURIComponent(name) + "&type=A";
+      const ctrl = new AbortController(); const to = setTimeout(()=>ctrl.abort(), 4500);
+      const t0 = performance.now();
+      try{
+        const res = await fetch(url, { headers:{ accept: "application/dns-json" }, signal: ctrl.signal, cache:"no-store" });
+        const ms = performance.now() - t0;
+        let ips = [];
+        try{ const j = await res.json(); ips = (j.Answer||[]).filter(a=>a.type===1).map(a=>a.data); }catch(e){}
+        rows.push({ name:t.name, ms: Math.round(ms), ips, ok:true });
+      }catch(e){
+        const ms = performance.now() - t0;
+        rows.push({ name:t.name, ms: Math.round(ms), ips:[], ok:false });
+      } finally { clearTimeout(to); }
+    }));
+    rows.sort((a,b)=> (a.ok===b.ok) ? a.ms-b.ms : (a.ok?-1:1));
+    out.innerHTML += `<table style="width:100%;font-size:13px;margin-top:6px;border-collapse:collapse">
+      <tr style="opacity:.75"><th style="text-align:right">DNS</th><th style="text-align:right">آی‌پی برگشتی</th>
+      <th style="text-align:right">زمان</th></tr>` +
+      rows.map(r=>`<tr>
+        <td style="padding:4px 2px">${r.name}${r.ok?"":" ⚠️"}</td>
+        <td style="direction:ltr;font-family:ui-monospace,monospace;padding:4px 2px">${(r.ips||[]).slice(0,2).join(" · ")||"—"}</td>
+        <td style="padding:4px 2px">${fa(r.ms)}ms</td></tr>`).join("") + `</table>
+      <div class="sub">⚠️ = پاسخ نداد یا در دسترس نبود (که خودش یک یافته است). این عدد مسیر <b>خط خودت</b> را نشان می‌دهد، نه لبهٔ کلادفلر.</div>`;
+  }
+
+  q("ww-load").onclick = loadList;
+  q("ww-imp").onclick = impact;
+  q("ww-device").onclick = impactOnDevice;
+  q("ww-v6").onchange = loadList;
+  loadMeta().then(loadList);
+})();
+</script>
+
   <div class="foot">رادار DNS · نسخهٔ وب ۱.۰ · همه‌چیز محلی و رایگان</div>
 </div>
 

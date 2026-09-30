@@ -8,6 +8,9 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+permissions:
+  contents: write   # برای انتشار فایل APK در بخش Releases
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -34,9 +37,28 @@ jobs:
         run: gradle assembleDebug --no-daemon
         working-directory: android-apk
 
-      - name: Upload APK
+      - name: Upload APK (artifact)
         uses: actions/upload-artifact@v4
         with:
           name: dnsradar-apk
           path: android-apk/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
+
+      # فایل APK را در Releases هم می‌گذاریم تا لینک دانلود ثابت و قابل‌نصب داشته باشی.
+      # لینک همیشه: https://github.com/<user>/<repo>/releases/download/apk-latest/pinghab-latest.apk
+      - name: Rename APK
+        run: |
+          mkdir -p out
+          cp android-apk/app/build/outputs/apk/debug/*.apk out/pinghab-latest.apk
+          ls -la out/
+
+      - name: Publish to Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-latest
+          name: "آخرین نسخهٔ APK (خودکار)"
+          body: |
+            این نسخه به‌طور خودکار از آخرین کد شاخهٔ main ساخته می‌شود.
+            شامل تست DNS زنده، لیست DNS جهانی (۱۹۳ کشور)، سنجش اثر PoP و سنجش DoH از خود گوشی.
+          files: out/pinghab-latest.apk
+          make_latest: true

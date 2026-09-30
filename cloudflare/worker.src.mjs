@@ -27,10 +27,17 @@ const SITE = "https://pinghab.catclient-59gk2mui.workers.dev";
 
 /* ------------------------------------------------------------------ ابزارها */
 
+const CORS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, X-Admin-Key",
+  "Access-Control-Max-Age": "86400",
+};
 const json = (obj, status = 200, extra = {}) =>
   new Response(JSON.stringify(obj), {
     status,
-    headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", ...extra },
+    headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store",
+               ...CORS, ...extra },
   });
 
 const html = (body, status = 200) =>
@@ -365,11 +372,66 @@ async function botHandleUpdate(env, update) {
       reply_markup: mainKeyboard(), disable_web_page_preview: true });
     return;
   }
+  if (cmd === "/dnslist" || cmd === "/list") {
+    const cc = (arg || "").toUpperCase().slice(0, 2) || "IR";
+    const c = (WORLD_CATALOG.countries || {})[cc];
+    const groups = (WORLD_CATALOG.curated_groups || []).filter((g) => g.cc === (c ? cc : "GL"));
+    const lines = [`🌍 <b>DNS پیشنهادی</b> ${c ? `— ${c.name_fa}` : "— جهانی"}`];
+    if (c) {
+      lines.push(`<i>${c.count} رزولور عمومی از این کشور در کاتالوگ ما ثبت است (v4=${c.v4}، v6=${c.v6}).</i>`);
+    }
+    for (const g of groups.slice(0, 3)) {
+      lines.push("");
+      for (const e of g.entries.slice(0, 8)) {
+        const ips = [...(e.v4 || []), ...(e.v6 || [])].slice(0, 3).join(" · ");
+        lines.push(`<b>${e.name}</b>\n<code>${ips}</code>`);
+      }
+    }
+    lines.push("");
+    lines.push("⚠️ این‌ها «کاندید»‌اند نه توصیه: بهترین DNS هر خط را باید روی گوشی خودت تست کنی.");
+    lines.push("کشور دیگر: <code>/dnslist DE</code> — یا دکمهٔ اپ را بزن.");
+    await tg(env, "sendMessage", { chat_id: chatId, text: lines.join("\n"), parse_mode: "HTML",
+      reply_markup: mainKeyboard(), disable_web_page_preview: true });
+    return;
+  }
+  if (cmd === "/impact") {
+    const name = (arg || "cdn.cloudflare.steamstatic.com").slice(0, 80);
+    await tg(env, "sendChatAction", { chat_id: chatId, action: "typing" });
+    const one = async (r) => {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 5000);
+      try {
+        const res = await fetch(r.url, {
+          method: "POST",
+          headers: { "Content-Type": "application/dns-message", "Accept": "application/dns-message" },
+          body: dnsPacket(name), signal: ctrl.signal,
+        });
+        const p2 = parseDns(new Uint8Array(await res.arrayBuffer()));
+        return { label: r.name, ips: p2.a.slice(0, 2) };
+      } catch (e) { return { label: r.name, ips: [] }; }
+      finally { clearTimeout(t); }
+    };
+    const rs = await Promise.all(EDGE_RESOLVERS.slice(0, 8).map(one));
+    const uniq = new Set(rs.flatMap((r) => r.ips));
+    const lines = [`🎯 <b>سنجش اثر</b> — <code>${name}</code>`,
+                   `<i>هر رزولور چه آی‌پی می‌دهد؟ آی‌پی متفاوت = PoP متفاوت.</i>`, ""];
+    for (const r of rs) lines.push(`${r.label}: <code>${r.ips.join(" · ") || "—"}</code>`);
+    lines.push("");
+    lines.push(uniq.size > 1
+      ? `✅ ${uniq.size} آی‌پی متمایز پیدا شد — یعنی انتخاب DNS واقعاً مسیر را عوض می‌کند.`
+      : "همه یک آی‌پی دادند.");
+    lines.push("تأخیر تا هر PoP را از گوشی خودت در اپ بسنج.");
+    await tg(env, "sendMessage", { chat_id: chatId, text: lines.join("\n"), parse_mode: "HTML",
+      reply_markup: mainKeyboard(), disable_web_page_preview: true });
+    return;
+  }
   if (cmd === "/help") {
     await tg(env, "sendMessage", { chat_id: chatId, parse_mode: "HTML", disable_web_page_preview: true,
       text: `📖 <b>دستورها</b>\n\n/start — شروع و باز کردن اپ\n/app — باز کردن مینی‌اپ تست\n` +
             `/guide — راهنمای واقعی کم کردن پینگ\n/dns 1.1.1.1 — بررسی یک DNS مشخص (از دید اینترنت)\n` +
             `/health — سلامت سرورهای DNS\n/site — لینک سایت و کد منبع\n\n` +
+            `/dnslist IR — لیست DNS یک کشور (نمونه: /dnslist DE)\n` +
+            `/impact رایانش PoP: /impact cdn.cloudflare.steamstatic.com\n\n` +
             `💡 نتیجهٔ تست <b>روی گوشی خودت</b> است؛ چون هر خط اینترنت بهترین DNS خودش را دارد.`,
       reply_markup: mainKeyboard() });
     return;
@@ -629,6 +691,8 @@ export default {
             { command: "guide", description: "راهنمای واقعی کم کردن پینگ" },
             { command: "health", description: "سلامت سرورهای DNS" },
             { command: "dns", description: "بررسی یک DNS مشخص: /dns 1.1.1.1" },
+            { command: "dnslist", description: "لیست DNS یک کشور: /dnslist IR" },
+            { command: "impact", description: "سنجش PoP برای یک دامنه: /impact <domain>" },
             { command: "site", description: "لینک سایت و کد منبع" },
           ],
         });
