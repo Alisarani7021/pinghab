@@ -9,3 +9,8 @@ node_modules/
 .wrangler/
 
 dist-apk/
+
+# --- WorldScan ---
+data/dns_world/raw/
+data/dns_world/scan-*.json
+data/dns_world/scan-*.csv

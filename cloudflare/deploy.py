@@ -65,6 +65,37 @@ def build() -> Path:
     app = (HERE / "app.html").read_text(encoding="utf-8")
     src = (HERE / "worker.src.mjs").read_text(encoding="utf-8")
     out = src.replace("__APP_HTML__", json.dumps(app, ensure_ascii=False))
+
+    # --- کاتالوگ DNS جهانی (WorldScan) در زمان build تزریق می‌شود ---
+    cat_path = ROOT / "data" / "dns_world" / "catalog.json"
+    cur_path = ROOT / "data" / "dns_world" / "curated.json"
+    if cat_path.exists() and cur_path.exists():
+        cat = json.loads(cat_path.read_text(encoding="utf-8"))
+        cur = json.loads(cur_path.read_text(encoding="utf-8"))
+        # فقط آنچه در Worker لازم است (حجم را کم نگه می‌داریم)
+        small = {
+            "generated_at": cat.get("generated_at"),
+            "source": cat.get("source_url"),
+            "totals": cat.get("totals"),
+            "countries": {k: {"name_fa": v["name_fa"], "count": v["count"], "v4": v["v4"],
+                              "v6": v["v6"], "top": v["top"][:25]}
+                          for k, v in cat.get("countries", {}).items()},
+        }
+        groups = []
+        for g in cur.get("groups", []):
+            cc = "IR" if g["id"] == "iran" else "GL"
+            groups.append({"id": g["id"], "cc": cc, "entries": [
+                {"name": e["name"], "v4": e.get("v4") or [], "v6": e.get("v6") or [],
+                 "doh": e.get("doh"), "dot": e.get("dot"), "note": e.get("note", "")}
+                for e in g.get("entries", [])]})
+        blob = {"generated_at": cur.get("generated_at"), "source": cat.get("source_url"),
+                "totals": cat.get("totals"), "curated_counts": cur.get("counts"),
+                "countries": small["countries"], "curated_groups": groups}
+        out = out.replace("__WORLD_CATALOG__", json.dumps(blob, ensure_ascii=False, separators=(",", ":")))
+        print(f"   📚 کاتالوگ جهانی تزریق شد: {blob['totals']['servers']:,} سرور / "
+              f"{blob['totals']['countries']} کشور / {len(groups)} گروه منتخب")
+    else:
+        out = out.replace("__WORLD_CATALOG__", '{"countries":{},"curated_groups":[]}')
     DIST.mkdir(exist_ok=True)
     target = DIST / "worker.mjs"
     target.write_text(out, encoding="utf-8")

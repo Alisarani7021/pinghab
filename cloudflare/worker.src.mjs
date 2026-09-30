@@ -203,6 +203,7 @@ async function tcpDnsQuery(ip, name = "www.wikipedia.org", timeoutMs = 4000) {
 
 /* ------------------------------------------------------------------ بررسی لبه‌ای DoH */
 
+const WORLD_CATALOG = __WORLD_CATALOG__;
 const EDGE_RESOLVERS = [
   { id: "cloudflare", name: "کلودفلر", url: "https://cloudflare-dns.com/dns-query", dns: "1.1.1.1" },
   { id: "google", name: "گوگل", url: "https://dns.google/dns-query", dns: "8.8.8.8" },
@@ -447,6 +448,86 @@ export default {
           colo: cf.colo || null,
           timezone: cf.timezone || null,
           httpProtocol: cf.httpProtocol || null,
+        });
+      }
+
+      /* --- فهرست DNS جهان (کاتالوگ WorldScan) --- */
+      if (p === "/api/dnslist") {
+        const cc = (url.searchParams.get("cc") || "").trim().toUpperCase();
+        const n = Math.min(60, Math.max(1, parseInt(url.searchParams.get("n") || "25", 10) || 25));
+        const v6only = url.searchParams.get("v6") === "1";
+        if (url.searchParams.get("meta") === "1") {
+          return json({
+            generated_at: WORLD_CATALOG.generated_at, source: WORLD_CATALOG.source,
+            totals: WORLD_CATALOG.totals, curated: WORLD_CATALOG.curated_counts,
+            countries: Object.entries(WORLD_CATALOG.countries || {}).map(([k, v]) => ({
+              cc: k, name: v.name_fa, count: v.count, v4: v.v4, v6: v.v6,
+            })),
+          });
+        }
+        const out = { cc: cc || null, source: "public-dns.info + curated", groups: [], servers: [] };
+        const groupsAll = WORLD_CATALOG.curated_groups || [];
+        const hasCountry = cc && groupsAll.some((g) => g.cc === cc);
+        for (const g of groupsAll) {
+          if (cc) { if (g.cc !== (hasCountry ? cc : "GL")) continue; }
+          else if (g.cc !== "GL") continue;
+          for (const e of g.entries) {
+            const ips = v6only ? (e.v6 || []) : [...(e.v4 || []), ...(e.v6 || [])];
+            if (!ips.length) continue;
+            out.groups.push({
+              name: e.name, group: g.id, country: g.cc, ips, doh: e.doh || null,
+              dot: e.dot || null, note: e.note || "",
+            });
+          }
+        }
+        const c = (WORLD_CATALOG.countries || {})[cc];
+        if (c) {
+          out.country = { cc, name: c.name_fa, count: c.count, v4: c.v4, v6: c.v6 };
+          out.servers = (c.top || [])
+            .filter((s) => (v6only ? s.v === 6 : true))
+            .slice(0, n)
+            .map((s) => ({ ip: s.ip, v: s.v, as: s.as, city: s.city, dnssec: s.dnssec, reliability: s.rel }));
+          out.servers.sort((a, b) => (b.reliability || 0) - (a.reliability || 0));
+        }
+        return json(out);
+      }
+
+      /* --- سنجش اثر از لبهٔ کلادفلر: رزولور → آی‌پی → کدام PoP --- */
+      if (p === "/api/impact") {
+        const name = (url.searchParams.get("name") || "cdn.cloudflare.steamstatic.com").trim().slice(0, 80);
+        if (!/^[a-z0-9.\-]+$/i.test(name)) return json({ ok: false, error: "نام دامنهٔ نامعتبر" }, 400);
+        const list = EDGE_RESOLVERS.slice(0, 10);
+        const one = async (r) => {
+          const ctrl = new AbortController();
+          const t = setTimeout(() => ctrl.abort(), 5000);
+          const t0 = Date.now();
+          try {
+            const res = await fetch(r.url, {
+              method: "POST",
+              headers: { "Content-Type": "application/dns-message", "Accept": "application/dns-message" },
+              body: dnsPacket(name),
+              signal: ctrl.signal,
+            });
+            const ab = await res.arrayBuffer();
+            const p2 = parseDns(new Uint8Array(ab));
+            return { resolver: r.id, label: r.name, dns_ip: r.dns, ms: Date.now() - t0,
+                     rcode: p2.rcode, ips: p2.a.slice(0, 3), ttl: p2.minTtl };
+          } catch (e) {
+            return { resolver: r.id, label: r.name, dns_ip: r.dns, ms: null, rcode: null, ips: [],
+                     err: e.name };
+          } finally { clearTimeout(t); }
+        };
+        const results = await Promise.all(list.map(one));
+        const uniq = new Set(results.flatMap((r) => r.ips));
+        const answered = results.filter((r) => r.ips.length);
+        return json({
+          name, from: { colo: request.cf?.colo || null, country: request.cf?.country || null },
+          answered: answered.length, total: results.length,
+          distinct_ips: uniq.size, distinct_pops_hint: uniq.size > 1,
+          results,
+          note: uniq.size > 1
+            ? "رزولورهای مختلف آی‌پی‌های متفاوتی دادند = PoPهای متفاوت. تأخیر تا هر PoP را از دستگاه خودت بسنج (این endpoint فقط PoP را نشان می‌دهد، نه پینگ دستگاه تو)."
+            : "همهٔ رزولورها یک آی‌پی دادند.",
         });
       }
 

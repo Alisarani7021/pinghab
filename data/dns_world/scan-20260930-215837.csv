@@ -1,0 +1,365 @@
+ip,cc,as_org,name,source,v,ok,rcode,rtt_p50,rtt_p95,rtt_min,jitter,loss,n_ok,cold_p50,cold_ok,a_example,edns,edns_payload,dnssec_ad,min_ttl,consensus,hijack,hijack_detail,divergent,divergent_detail,impact,error
+8.8.4.4,GL,Google Public DNS,Google Public DNS,curated,4,True,NOERROR,1.4,17.02,1.19,5.33,0.0,4,3.15,True,"104.20.23.154,172.66.147.243",True,512,False,244,"{""google.com"": [""142.250.99.113"", ""142.250.99.100"", ""142.250.99.102""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.135.232"", ""162.159.128.233"", ""162.159.136.232""], ""ea.com"": [""23.45.72.178""]}",False,,False,,"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""23.1.255.201"", ""dns_ms"": 9.7, ""conn_ms"": 0.64, ""total_ms"": 10.3, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""2.22.234.142"", ""dns_ms"": 8.0, ""conn_ms"": 0.37, ""total_ms"": 8.3, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.128.233"", ""dns_ms"": 1.2, ""conn_ms"": 0.76, ""total_ms"": 2.0, ""label"": ""دیسکورد""}}",
+8.8.8.8,GL,Google Public DNS,Google Public DNS,curated,4,True,NOERROR,1.43,16.98,1.1,5.49,0.0,4,3.04,True,"172.66.147.243,104.20.23.154",True,512,False,220,"{""google.com"": [""142.250.99.101"", ""142.250.99.100"", ""142.250.99.139""], ""cloudflare.com"": [""104.16.133.229"", ""104.16.132.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.128.233"", ""162.159.136.232"", ""162.159.137.232""], ""ea.com"": [""23.45.72.178""]}",False,,False,,"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""23.1.255.206"", ""dns_ms"": 15.6, ""conn_ms"": 1.16, ""total_ms"": 16.7, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""2.22.234.142"", ""dns_ms"": 24.0, ""conn_ms"": 0.37, ""total_ms"": 24.4, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.136.232"", ""dns_ms"": 1.4, ""conn_ms"": 0.39, ""total_ms"": 1.8, ""label"": ""دیسکورد""}}",
+9.9.9.9,GL,Quad9,Quad9,curated,4,True,NOERROR,5.92,17.11,5.72,3.8,0.0,4,7.35,True,"104.20.23.154,172.66.147.243",True,512,False,261,"{""google.com"": [""142.251.45.142""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.137.232"", ""162.159.135.232"", ""162.159.128.233""], ""ea.com"": [""23.37.16.177""]}",False,,False,,"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""2.22.234.119"", ""dns_ms"": 6.9, ""conn_ms"": 0.45, ""total_ms"": 7.3, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""2.22.234.142"", ""dns_ms"": 9.4, ""conn_ms"": 0.37, ""total_ms"": 9.7, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.137.232"", ""dns_ms"": 6.8, ""conn_ms"": 0.39, ""total_ms"": 7.2, ""label"": ""دیسکورد""}}",
+208.67.220.220,GL,OpenDNS,OpenDNS,curated,4,True,NOERROR,6.61,16.91,5.81,3.79,0.0,4,6.84,True,"104.20.23.154,172.66.147.243",True,1410,False,84,"{""google.com"": [""142.250.99.138"", ""142.250.99.139"", ""142.250.99.100""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.137.232"", ""162.159.138.232"", ""162.159.128.233""], ""ea.com"": [""23.45.72.178""]}",False,,False,,"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""23.1.255.201"", ""dns_ms"": 25.2, ""conn_ms"": 0.64, ""total_ms"": 25.8, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""2.22.234.153"", ""dns_ms"": 6.5, ""conn_ms"": 0.39, ""total_ms"": 6.9, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.136.232"", ""dns_ms"": 5.8, ""conn_ms"": 0.39, ""total_ms"": 6.2, ""label"": ""دیسکورد""}}",
+149.112.112.112,GL,Quad9,Quad9,curated,4,True,NOERROR,6.95,16.95,5.89,4.04,0.0,4,6.5,True,"104.20.23.154,172.66.147.243",True,512,False,261,"{""google.com"": [""142.250.73.78""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.137.232"", ""162.159.135.232"", ""162.159.128.233""], ""ea.com"": [""23.37.16.177""]}",False,,True,google.com→142.250.73.78 (CDN),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""2.22.234.102"", ""dns_ms"": 7.0, ""conn_ms"": 0.52, ""total_ms"": 7.5, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""2.22.234.153"", ""dns_ms"": 6.7, ""conn_ms"": 0.39, ""total_ms"": 7.1, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.137.232"", ""dns_ms"": 7.9, ""conn_ms"": 0.39, ""total_ms"": 8.3, ""label"": ""دیسکورد""}}",
+208.67.222.222,GL,OpenDNS,OpenDNS,curated,4,True,NOERROR,6.99,16.83,6.25,4.01,0.0,4,7.31,True,"172.66.147.243,104.20.23.154",True,1410,False,109,"{""google.com"": [""142.250.99.113"", ""142.250.99.138"", ""142.250.99.139""], ""cloudflare.com"": [""104.16.133.229"", ""104.16.132.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.128.233"", ""162.159.135.232"", ""162.159.136.232""], ""ea.com"": [""23.45.72.178""]}",False,,False,,"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""23.1.255.206"", ""dns_ms"": 43.1, ""conn_ms"": 1.16, ""total_ms"": 44.2, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""2.22.234.142"", ""dns_ms"": 31.2, ""conn_ms"": 0.37, ""total_ms"": 31.5, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.135.232"", ""dns_ms"": 6.9, ""conn_ms"": 0.41, ""total_ms"": 7.3, ""label"": ""دیسکورد""}}",
+45.90.30.0,GL,NextDNS (anycast),NextDNS (anycast),curated,4,True,NOERROR,7.26,15.59,6.57,3.15,0.0,4,6.09,True,"172.66.147.243,104.20.23.154",True,1232,False,244,"{""google.com"": [""74.125.195.139"", ""74.125.195.102"", ""74.125.195.113""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.138.232"", ""162.159.137.232"", ""162.159.135.232""], ""ea.com"": [""2.18.100.190""]}",False,,True,google.com→74.125.195.139 (?) | ea.com→2.18.100.190 (CDN),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""23.53.122.73"", ""dns_ms"": 9.5, ""conn_ms"": 1.13, ""total_ms"": 10.6, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""2.22.234.142"", ""dns_ms"": 8.7, ""conn_ms"": 0.37, ""total_ms"": 9.1, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.136.232"", ""dns_ms"": 8.0, ""conn_ms"": 0.39, ""total_ms"": 8.4, ""label"": ""دیسکورد""}}",
+45.90.28.0,GL,NextDNS (anycast),NextDNS (anycast),curated,4,True,NOERROR,7.68,15.56,7.02,3.15,0.0,4,8.15,True,"172.66.147.243,104.20.23.154",True,1232,False,86,"{""google.com"": [""142.251.34.206""], ""cloudflare.com"": [""104.16.133.229"", ""104.16.132.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.138.232"", ""162.159.136.232"", ""162.159.135.232""], ""ea.com"": [""23.0.204.209""]}",False,,True,google.com→142.251.34.206 (CDN) | ea.com→23.0.204.209 (CDN),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""23.1.255.201"", ""dns_ms"": 10.3, ""conn_ms"": 0.64, ""total_ms"": 10.9, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""2.22.234.142"", ""dns_ms"": 8.1, ""conn_ms"": 0.37, ""total_ms"": 8.4, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.135.232"", ""dns_ms"": 6.6, ""conn_ms"": 0.41, ""total_ms"": 7.0, ""label"": ""دیسکورد""}}",
+1.1.1.1,GL,Cloudflare,Cloudflare,curated,4,True,NOERROR,7.96,17.58,7.72,3.4,0.0,4,8.22,True,"104.20.23.154,172.66.147.243",True,1232,False,28,"{""google.com"": [""142.251.46.78""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.137.232"", ""162.159.138.232"", ""162.159.128.233""], ""ea.com"": [""23.0.192.191""]}",False,,True,ea.com→23.0.192.191 (CDN),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""23.53.122.138"", ""dns_ms"": 12.0, ""conn_ms"": 0.39, ""total_ms"": 12.4, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""2.22.234.153"", ""dns_ms"": 8.6, ""conn_ms"": 0.39, ""total_ms"": 9.0, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.135.232"", ""dns_ms"": 8.6, ""conn_ms"": 0.41, ""total_ms"": 9.0, ""label"": ""دیسکورد""}}",
+8.26.56.26,GL,Comodo Secure,Comodo Secure,curated,4,True,NOERROR,8.34,15.2,6.88,2.81,0.0,4,8.32,True,"172.66.147.243,104.20.23.154",True,4096,False,81,"{""google.com"": [""142.250.73.142""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.135.232"", ""162.159.137.232"", ""162.159.128.233""], ""ea.com"": [""23.45.72.178""]}",False,,True,google.com→142.250.73.142 (CDN),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""104.96.163.87"", ""dns_ms"": 8.7, ""conn_ms"": 0.93, ""total_ms"": 9.6, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""23.53.122.76"", ""dns_ms"": 9.4, ""conn_ms"": 0.82, ""total_ms"": 10.2, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.135.232"", ""dns_ms"": 8.1, ""conn_ms"": 0.41, ""total_ms"": 8.5, ""label"": ""دیسکورد""}}",
+74.82.42.42,GL,Hurricane Electric,Hurricane Electric,curated,4,True,NOERROR,8.13,15.38,6.84,4.04,0.0,4,7.04,True,"104.20.23.154,172.66.147.243",True,512,False,191,"{""google.com"": [""142.251.214.78""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""208.80.154.224""], ""discord.com"": [""162.159.137.232"", ""162.159.136.232"", ""162.159.138.232""], ""ea.com"": [""23.45.72.178""]}",False,,True,google.com→142.251.214.78 (CDN) | wikipedia.org→208.80.154.224 (?),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""23.44.175.36"", ""dns_ms"": 9.8, ""conn_ms"": 0.88, ""total_ms"": 10.7, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""2.22.234.142"", ""dns_ms"": 78.6, ""conn_ms"": 0.37, ""total_ms"": 79.0, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.137.232"", ""dns_ms"": 9.3, ""conn_ms"": 0.39, ""total_ms"": 9.7, ""label"": ""دیسکورد""}}",
+1.0.0.1,GL,Cloudflare,Cloudflare,curated,4,True,NOERROR,8.72,17.51,6.48,4.86,0.0,4,8.11,True,"104.20.23.154,172.66.147.243",True,1232,False,52,"{""google.com"": [""142.250.73.78""], ""cloudflare.com"": [""104.16.133.229"", ""104.16.132.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.136.232"", ""162.159.137.232"", ""162.159.138.232""], ""ea.com"": [""23.0.192.191""]}",False,,True,google.com→142.250.73.78 (CDN) | ea.com→23.0.192.191 (CDN),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""23.219.78.197"", ""dns_ms"": 9.1, ""conn_ms"": 0.89, ""total_ms"": 10.0, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""2.22.234.153"", ""dns_ms"": 9.6, ""conn_ms"": 0.39, ""total_ms"": 10.0, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.136.232"", ""dns_ms"": 9.4, ""conn_ms"": 0.39, ""total_ms"": 9.7, ""label"": ""دیسکورد""}}",
+8.20.247.20,GL,Comodo Secure,Comodo Secure,curated,4,True,NOERROR,8.48,15.02,7.79,2.57,0.0,4,6.87,True,"172.66.147.243,104.20.23.154",True,4096,False,81,"{""google.com"": [""142.250.73.142""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.135.232"", ""162.159.137.232"", ""162.159.128.233""], ""ea.com"": [""23.0.204.209""]}",False,,True,google.com→142.250.73.142 (CDN) | ea.com→23.0.204.209 (CDN),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""23.1.255.206"", ""dns_ms"": 9.3, ""conn_ms"": 1.16, ""total_ms"": 10.5, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""2.22.234.142"", ""dns_ms"": 65.3, ""conn_ms"": 0.37, ""total_ms"": 65.6, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.135.232"", ""dns_ms"": 8.3, ""conn_ms"": 0.41, ""total_ms"": 8.8, ""label"": ""دیسکورد""}}",
+185.222.222.222,GL,dns.sb,dns.sb,curated,4,True,NOERROR,17.12,17.47,16.88,0.26,0.0,4,18.36,True,"104.20.23.154,172.66.147.243",True,512,False,9,"{""google.com"": [""142.251.218.238""], ""cloudflare.com"": [""104.16.133.229"", ""104.16.132.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.128.233"", ""162.159.136.232"", ""162.159.137.232""], ""ea.com"": [""23.37.16.177""]}",False,,True,google.com→142.251.218.238 (CDN),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""23.214.95.205"", ""dns_ms"": 20.0, ""conn_ms"": 0.49, ""total_ms"": 20.5, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""23.44.229.218"", ""dns_ms"": 17.9, ""conn_ms"": 0.32, ""total_ms"": 18.2, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.128.233"", ""dns_ms"": 17.3, ""conn_ms"": 0.76, ""total_ms"": 18.0, ""label"": ""دیسکورد""}}",
+45.11.45.11,GL,dns.sb,dns.sb,curated,4,True,NOERROR,17.08,17.73,16.82,0.46,0.0,4,17.59,True,"104.20.23.154,172.66.147.243",True,512,False,9,"{""google.com"": [""142.251.218.238""], ""cloudflare.com"": [""104.16.133.229"", ""104.16.132.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.128.233"", ""162.159.136.232"", ""162.159.137.232""], ""ea.com"": [""23.37.16.177""]}",False,,True,google.com→142.251.218.238 (CDN),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""23.214.95.207"", ""dns_ms"": 18.8, ""conn_ms"": 0.47, ""total_ms"": 19.3, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""23.44.229.218"", ""dns_ms"": 18.0, ""conn_ms"": 0.32, ""total_ms"": 18.3, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.128.233"", ""dns_ms"": 16.9, ""conn_ms"": 0.76, ""total_ms"": 17.7, ""label"": ""دیسکورد""}}",
+4.2.2.1,GL,Level3 / CenturyLink,Level3 / CenturyLink,curated,4,True,NOERROR,19.96,20.27,19.6,0.44,0.0,4,20.68,True,"104.20.23.154,172.66.147.243",True,4096,False,159,"{""google.com"": [""142.251.218.110""], ""cloudflare.com"": [""104.16.133.229"", ""104.16.132.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.137.232"", ""162.159.135.232"", ""162.159.136.232""], ""ea.com"": [""23.37.16.177""]}",False,,True,google.com→142.251.218.110 (CDN),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""96.16.55.101"", ""dns_ms"": 23.6, ""conn_ms"": 0.31, ""total_ms"": 23.9, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""23.44.229.228"", ""dns_ms"": 20.2, ""conn_ms"": 0.43, ""total_ms"": 20.6, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.137.232"", ""dns_ms"": 19.7, ""conn_ms"": 0.39, ""total_ms"": 20.1, ""label"": ""دیسکورد""}}",
+4.2.2.2,GL,Level3 / CenturyLink,Level3 / CenturyLink,curated,4,True,NOERROR,20.34,21.18,20.02,0.53,0.0,4,19.95,True,"172.66.147.243,104.20.23.154",True,4096,False,244,"{""google.com"": [""142.251.219.174""], ""cloudflare.com"": [""104.16.133.229"", ""104.16.132.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.135.232"", ""162.159.128.233"", ""162.159.138.232""], ""ea.com"": [""23.37.16.177""]}",False,,True,google.com→142.251.219.174 (CDN),{},
+64.6.64.6,GL,Verisign Public DNS,Verisign Public DNS,curated,4,True,NOERROR,22.25,22.34,21.47,0.36,0.0,4,21.11,True,"172.66.147.243,104.20.23.154",True,4096,False,253,"{""google.com"": [""74.125.195.102"", ""74.125.195.138"", ""74.125.195.101""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""208.80.154.224""], ""discord.com"": [""162.159.137.232"", ""162.159.135.232"", ""162.159.136.232""], ""ea.com"": [""23.37.16.177""]}",False,,True,google.com→74.125.195.102 (?) | wikipedia.org→208.80.154.224 (?),{},
+64.6.65.6,GL,Verisign Public DNS,Verisign Public DNS,curated,4,True,NOERROR,24.94,26.93,24.71,0.95,0.0,4,27.62,True,"172.66.147.243,104.20.23.154",True,4096,False,257,"{""google.com"": [""142.251.215.206""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""208.80.154.224""], ""discord.com"": [""162.159.128.233"", ""162.159.138.232"", ""162.159.137.232""], ""ea.com"": [""23.61.208.177""]}",False,,True,google.com→142.251.215.206 (CDN) | wikipedia.org→208.80.154.224 (?) | ea.com→23.61.208.177 (CDN),{},
+141.1.1.1,DE,CW Vodafone Group PLC,,catalog,4,True,NOERROR,25.02,25.66,24.91,0.36,0.0,4,25.96,True,"172.66.147.243,104.20.23.154",True,8192,False,151,"{""google.com"": [""142.251.128.142""], ""cloudflare.com"": [""104.16.133.229"", ""104.16.132.229""], ""wikipedia.org"": [""208.80.154.224""], ""discord.com"": [""162.159.128.233"", ""162.159.138.232"", ""162.159.135.232""], ""ea.com"": [""23.222.204.187""]}",False,,True,google.com→142.251.128.142 (CDN) | wikipedia.org→208.80.154.224 (?) | ea.com→23.222.204.187 (CDN),{},
+94.140.15.15,GL,AdGuard DNS,AdGuard DNS,curated,4,True,NOERROR,47.33,65.24,28.7,24.26,0.0,4,30.55,True,"172.66.147.243,104.20.23.154",True,0,False,161,"{""google.com"": [""173.194.206.113"", ""173.194.206.100"", ""173.194.206.138""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""208.80.154.224""], ""discord.com"": [""162.159.135.232"", ""162.159.137.232"", ""162.159.128.233""], ""ea.com"": [""23.48.8.174""]}",False,,True,google.com→173.194.206.113 (?) | wikipedia.org→208.80.154.224 (?) | ea.com→23.48.8.174 (CDN),{},
+94.140.14.14,GL,AdGuard DNS,AdGuard DNS,curated,4,True,NOERROR,65.6,66.21,64.88,0.81,0.0,4,64.93,True,"172.66.147.243,104.20.23.154",True,0,False,161,"{""google.com"": [""173.194.206.101"", ""173.194.206.139"", ""173.194.206.113""], ""cloudflare.com"": [""104.16.133.229"", ""104.16.132.229""], ""wikipedia.org"": [""208.80.154.224""], ""discord.com"": [""162.159.138.232"", ""162.159.135.232"", ""162.159.137.232""], ""ea.com"": [""2.18.72.190""]}",False,,True,google.com→173.194.206.101 (?) | wikipedia.org→208.80.154.224 (?) | ea.com→2.18.72.190 (CDN),{},
+80.80.80.80,GL,Freenom World,Freenom World,curated,4,True,NOERROR,78.38,232.44,64.12,72.74,0.0,4,65.2,True,"172.66.147.243,104.20.23.154",True,1232,False,299,"{""google.com"": [""142.251.38.238""], ""cloudflare.com"": [""104.16.133.229"", ""104.16.132.229""], ""wikipedia.org"": [""208.80.154.224""], ""discord.com"": [""162.159.138.232"", ""162.159.136.232"", ""162.159.135.232""], ""ea.com"": [""23.222.244.193""]}",False,,True,google.com→142.251.38.238 (CDN) | wikipedia.org→208.80.154.224 (?) | ea.com→23.222.244.193 (CDN),{},
+109.228.1.132,GB,IONOS SE,,catalog,4,True,NOERROR,139.08,140.18,138.1,1.23,0.0,4,139.64,True,"172.66.147.243,104.20.23.154",True,4000,False,161,"{""google.com"": [""142.251.29.139"", ""142.251.29.138"", ""142.251.29.113""], ""cloudflare.com"": [""104.16.133.229"", ""104.16.132.229""], ""wikipedia.org"": [""185.15.59.224""], ""discord.com"": [""162.159.137.232"", ""162.159.138.232"", ""162.159.135.232""]}",False,,True,google.com→142.251.29.139 (CDN) | wikipedia.org→185.15.59.224 (CDN),{},
+80.78.132.79,DE,SkyLink Data Center BV,,catalog,4,True,NOERROR,141.07,142.31,140.71,0.54,0.0,4,141.3,True,"104.20.23.154,172.66.147.243",True,1232,False,280,"{""google.com"": [""192.178.24.142""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""185.15.59.224""], ""discord.com"": [""162.159.137.232"", ""162.159.136.232"", ""162.159.138.232""]}",False,,True,google.com→192.178.24.142 (?) | wikipedia.org→185.15.59.224 (CDN),{},
+193.34.166.34,NL,Snel.com B.V.,,catalog,4,True,REFUSED,143.17,143.86,142.92,0.31,0.0,4,,False,,True,1232,False,,{},False,,False,,{},
+84.200.70.40,GL,DNS.WATCH,DNS.WATCH,curated,4,True,NOERROR,148.55,149.03,148.3,0.26,0.0,4,,False,"104.20.23.154,172.66.147.243",True,1232,False,219,{},False,,False,,{},
+84.200.69.80,GL,DNS.WATCH,DNS.WATCH,curated,4,True,NOERROR,148.9,161.47,148.57,4.45,0.0,4,,False,"172.66.147.243,104.20.23.154",True,1232,False,107,{},False,,False,,{},
+176.9.1.117,DE,Hetzner Online GmbH,,catalog,4,True,NOERROR,153.16,153.47,152.7,0.51,0.0,4,,False,"172.66.147.243,104.20.23.154",True,1232,False,197,{},False,,False,,{},
+159.69.114.157,DE,Hetzner Online GmbH,Nuremberg,catalog,4,True,NOERROR,153.93,154.24,153.62,0.31,0.0,4,,False,"104.20.23.154,172.66.147.243",True,1232,False,197,{},False,,False,,{},
+88.198.92.222,DE,Hetzner Online GmbH,,catalog,4,True,NOERROR,155.75,155.87,155.72,0.09,0.0,4,,False,"172.66.147.243,104.20.23.154",True,512,False,57,{},False,,False,,{},
+195.10.195.195,DE,meerfarbig GmbH & Co. KG,,catalog,4,True,NOERROR,155.82,157.57,153.19,3.94,0.0,4,,False,"172.66.147.243,104.20.23.154",True,1232,False,150,{},False,,False,,{},
+81.3.27.54,DE,Hostway Deutschland GmbH,Hemmingen,catalog,4,True,NOERROR,156.6,156.9,155.84,0.52,0.0,4,,False,"172.66.147.243,104.20.23.154",True,512,False,150,{},False,,False,,{},
+5.1.66.255,DE,Freie Netze Muenchen e.V.,Ebersberg,catalog,4,True,NOERROR,159.86,160.04,159.66,0.15,0.0,4,,False,"104.20.23.154,172.66.147.243",True,512,False,85,{},False,,False,,{},
+94.247.43.254,DE,Lennart Seitz,,catalog,4,True,NOERROR,168.77,169.47,168.26,0.72,0.0,4,,False,"172.66.147.243,104.20.23.154",True,1232,False,150,{},False,,False,,{},
+194.25.0.60,DE,Deutsche Telekom AG,Rehau,catalog,4,True,NOERROR,169.62,169.76,169.48,0.24,0.0,4,,False,"104.20.23.154,172.66.147.243",True,512,False,107,{},False,,False,,{},
+77.88.8.1,GL,Yandex DNS,Yandex DNS,curated,4,True,NOERROR,176.16,180.12,175.14,2.04,0.0,4,,False,"8.47.69.0,8.6.112.0",True,4096,False,264,{},False,,False,,{},
+77.88.8.8,GL,Yandex DNS,Yandex DNS,curated,4,True,NOERROR,176.16,179.98,175.07,2.38,0.0,4,,False,"8.47.69.0,8.6.112.0",True,4096,False,120,{},False,,False,,{},
+77.88.8.88,GL,Yandex Safe,Yandex Safe,curated,4,True,NOERROR,176.07,181.42,175.76,2.14,0.0,4,,False,"8.6.112.0,8.47.69.0",True,4096,False,300,{},False,,False,,{},
+77.88.8.7,GL,Yandex Safe,Yandex Safe,curated,4,True,NOERROR,181.33,190.16,176.83,5.99,0.0,4,,False,"8.6.112.0,8.47.69.0",True,4096,False,300,{},False,,False,,{},
+31.7.37.37,TR,Teknet Yazlim Ve Bilgisayar Teknolojileri,Antalya,catalog,4,True,NOERROR,200.34,203.93,195.78,4.6,0.0,4,,False,"172.66.147.243,104.20.23.154",True,512,False,154,{},False,,False,,{},
+195.208.5.1,RU,Joint-stock company Internet Exchange MSK-IX,,catalog,4,True,NOERROR,173.68,173.94,173.29,0.23,0.0,4,,False,"8.47.69.0,8.6.112.0",True,1232,False,281,{},False,,False,,{},
+94.158.96.2,RU,OOO Scientific-Production Enterprise Edma,Moscow,catalog,4,True,REFUSED,176.65,187.93,172.36,10.88,0.0,4,,False,,True,4096,False,,{},False,,False,,{},
+77.88.8.3,RU,YANDEX LLC,,catalog,4,True,NOERROR,185.48,190.03,175.95,7.51,0.0,4,,False,"8.47.69.0,8.6.112.0",True,4096,False,300,{},False,,False,,{},
+88.249.41.163,TR,Turk Telekom,,catalog,4,True,NOERROR,217.13,227.43,207.26,19.79,0.0,4,,False,"172.66.147.243,104.20.23.154",False,,False,189,{},False,,False,,{},
+217.150.35.129,RU,Joint Stock Company TransTeleCom,Rostov-on-Don,catalog,4,True,NOERROR,221.26,223.56,220.25,1.98,0.0,4,,False,"8.47.69.0,8.6.112.0",True,4096,False,191,{},False,,False,,{},
+194.242.2.2,GL,Mullvad,Mullvad,curated,4,True,REFUSED,64.94,65.27,64.79,0.24,0.25,3,64.67,False,,True,1232,False,,{},True,google.com→REFUSED (بعد از تلاش دوباره) | cloudflare.com→REFUSED (بعد از تلاش دوباره) | discord.com→REFUSED (بعد از تلاش دوباره),False,,{},timeout
+194.242.2.3,GL,Mullvad,Mullvad,curated,4,True,REFUSED,65.13,65.19,64.89,0.27,0.25,3,64.68,False,,True,1232,False,,{},True,cloudflare.com→REFUSED (بعد از تلاش دوباره) | wikipedia.org→REFUSED (بعد از تلاش دوباره) | ea.com→REFUSED (بعد از تلاش دوباره),False,,{},timeout
+95.143.220.5,RU,Iskratelecom CJSC,Moscow,catalog,4,True,NOERROR,176.09,178.17,175.62,0.99,0.0,4,,False,"8.6.112.6,8.47.69.6",False,,False,110,{},False,,False,,{},
+202.134.52.105,IN,PhillipCapital India Private Limited,,catalog,4,True,REFUSED,218.55,218.75,218.08,0.36,0.0,4,,False,,True,1232,False,,{},False,,False,,{},
+31.7.36.36,TR,Teknet Yazlim Ve Bilgisayar Teknolojileri,Antalya,catalog,4,True,NOERROR,221.37,221.37,221.37,0.0,0.75,1,,False,"104.20.23.154,172.66.147.243",True,512,False,300,{},False,,False,,{},timeout
+76.76.2.0,GL,Control D,Control D,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+76.76.10.0,GL,Control D,Control D,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+193.110.81.0,GL,DNS0.eu,DNS0.eu,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+185.253.5.0,GL,DNS0.eu,DNS0.eu,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+91.239.100.100,GL,UncensoredDNS,UncensoredDNS,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+89.233.43.71,GL,UncensoredDNS,UncensoredDNS,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+149.112.121.10,GL,CIRA Canadian Shield,CIRA Canadian Shield,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+149.112.122.10,GL,CIRA Canadian Shield,CIRA Canadian Shield,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+81.81.81.81,GL,Freenom World,Freenom World,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+10.202.10.10,IR,رادار (Radar),رادار (Radar),curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+10.202.10.11,IR,رادار (Radar),رادار (Radar),curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+78.157.42.100,IR,الکترو (Electro),الکترو (Electro),curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+78.157.42.101,IR,الکترو (Electro),الکترو (Electro),curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+178.22.122.100,IR,شکن (Shecan),شکن (Shecan),curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+185.51.200.2,IR,شکن (Shecan),شکن (Shecan),curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+185.55.226.26,IR,بگزار (Begzar),بگزار (Begzar),curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+185.55.225.25,IR,بگزار (Begzar),بگزار (Begzar),curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+10.202.10.202,IR,۴۰۳ (403),۴۰۳ (403),curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+10.202.10.102,IR,۴۰۳ (403),۴۰۳ (403),curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+10.139.177.21,IR,Vanilla,Vanilla,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+10.139.177.22,IR,Vanilla,Vanilla,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+37.32.5.60,IR,Zeus,Zeus,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+37.32.5.61,IR,Zeus,Zeus,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+94.103.125.157,IR,Shelter,Shelter,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+94.103.125.158,IR,Shelter,Shelter,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+85.15.1.14,IR,شاتل (Shatel),شاتل (Shatel),curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+85.15.1.15,IR,شاتل (Shatel),شاتل (Shatel),curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+194.104.158.48,IR,سرورایران (ServerIR),سرورایران (ServerIR),curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+194.104.158.78,IR,سرورایران (ServerIR),سرورایران (ServerIR),curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+46.224.1.221,IR,پارس‌آنلاین,پارس‌آنلاین,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+46.224.1.220,IR,پارس‌آنلاین,پارس‌آنلاین,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+172.29.2.100,IR,هاست‌ایران,هاست‌ایران,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+172.29.0.100,IR,هاست‌ایران,هاست‌ایران,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+81.218.119.11,IR,GreenTeam,GreenTeam,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+209.88.198.133,IR,GreenTeam,GreenTeam,curated,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+185.231.182.126,IR,Noyan Abr Arvan Co. ( Private Joint Stock),,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+46.224.1.42,IR,Dadeh Gostar Asr Novin P.J.S. Co.,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+194.225.62.80,IR,Tehran University of Medical Science,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+213.176.123.5,IR,Iranian Research Organization for Science & Technology,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+185.187.84.15,IR,Hamkaran System Co. PJS,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+37.156.145.229,IR,Asiatech Data Transmission company,Tehran,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+185.97.117.187,IR,Noyan Abr Arvan Co. ( Private Joint Stock),,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+80.191.40.41,IR,Iran Telecommunication Company PJS,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+194.225.73.141,IR,Institute for Research in Fundamental Sciences,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+37.156.145.21,IR,Asiatech Data Transmission company,Tehran,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+217.218.155.155,IR,Information Technology Company (ITC),,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.189.44.44,IR,Telecommunication Infrastructure Company,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.188.21.131,IR,Information Technology Company (ITC),,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.188.21.132,IR,Information Technology Company (ITC),,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.188.21.130,IR,Information Technology Company (ITC),,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+92.119.56.162,IR,Nrp Teknoloji Limited Sirketi,Isfahan,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+185.51.200.10,IR,Sefroyek Pardaz Engineering Co. LTD,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+185.51.200.50,IR,Sefroyek Pardaz Engineering Co. LTD,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+81.91.144.116,IR,Farabord Dadeh Haye Iranian Co.,Tehran,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+185.161.112.34,IR,Parvaz System Information Technology Company (Ltd),,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+91.245.229.1,IR,Kish Cell Pars Co. (PJS),,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+91.99.101.12,IR,Pars Online PJS,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+185.161.112.33,IR,Parvaz System Information Technology Company (Ltd),,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+185.113.59.253,IR,Rayankadeh Apadana Company Ltd,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+95.9.194.13,TR,Turk Telekom,Konyaalti,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+92.45.59.195,TR,Tellcom Iletisim Hizmetleri A.s.,Istanbul,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+93.184.144.5,TR,FIXNET Telekomunikasyon Limited Sirketi,Edirne,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+94.54.47.200,TR,Turksat Uydu Haberlesme ve Kablo TV Isletme A.S.,Ankara,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+176.53.92.22,TR,Radore Veri Merkezi Hizmetleri A.S.,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+185.250.193.165,TR,AKA Bilisim Yazilim Arge Ins. Taah. San. Tic. A.S.,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+213.14.10.165,TR,Tellcom Iletisim Hizmetleri A.s.,Istanbul,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+62.248.9.91,TR,Turk Telekom,Istanbul,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+176.235.200.91,TR,Tellcom Iletisim Hizmetleri A.s.,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+212.98.235.50,TR,Vodafone Net Iletisim Hizmetleri Anonim Sirketi,Istanbul,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.59.119.25,TR,Talha Bogaz,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+5.25.56.138,TR,Turkcell Iletisim Hizmetleri A.s.,Istanbul,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+5.25.82.30,TR,Turkcell Iletisim Hizmetleri A.s.,Istanbul,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+5.25.98.224,TR,Turkcell Iletisim Hizmetleri A.s.,Istanbul,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+5.25.116.109,TR,Turkcell Iletisim Hizmetleri A.s.,Istanbul,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+5.25.113.223,TR,Turkcell Iletisim Hizmetleri A.s.,Istanbul,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+45.195.77.74,TR,Dgn Teknoloji A.s.,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+193.192.113.130,TR,TurkNet Iletisim Hizmetleri A.S.,Istanbul,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+78.135.69.51,TR,NAZNET Bilisim ve Telekomunikasyon Elektronik Haberlesme Hiz. ith. ihr. San. ve Tic. Ltd. s,Nazilli,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+45.195.77.57,TR,Dgn Teknoloji A.s.,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+176.235.165.91,TR,Superonline Iletisim Hizmetleri A.S.,Istanbul,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+212.125.13.61,TR,TurkNet Iletisim Hizmetleri A.S.,Istanbul,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+193.123.68.154,AE,ORACLE-BMC-31898,Dubai,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+87.200.60.14,AE,Emirates Integrated Telecommunications Company PJSC,Dubai,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+94.203.253.156,AE,Emirates Integrated Telecommunications Company PJSC,Dubai,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+5.30.176.77,AE,Emirates Integrated Telecommunications Company PJSC,Dubai,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.50.3.15,AE,Emirates Telecommunications Corporation,Dubai,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.50.21.91,AE,Emirates Telecommunications Corporation,Dubai,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.50.132.79,AE,Emirates Telecommunications Corporation,Abu Dhabi,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.50.50.45,AE,Emirates Telecommunications Corporation,Dubai,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.50.134.190,AE,Emirates Telecommunications Corporation,Abu Dhabi,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.50.134.183,AE,Emirates Telecommunications Corporation,Abu Dhabi,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.50.135.72,AE,Emirates Telecommunications Corporation,Abu Dhabi,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.50.148.72,AE,Emirates Telecommunications Corporation,Abu Dhabi,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.50.155.186,AE,Emirates Telecommunications Corporation,Abu Dhabi,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.50.157.87,AE,Emirates Telecommunications Corporation,Al Ain City,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.50.157.50,AE,Emirates Telecommunications Corporation,Al Ain City,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.50.165.182,AE,Emirates Telecommunications Corporation,Sharjah,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.50.155.152,AE,Emirates Telecommunications Corporation,Abu Dhabi,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.50.184.237,AE,Emirates Telecommunications Corporation,Abu Dhabi,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+5.32.123.118,AE,Emirates Integrated Telecommunications Company PJSC,Sharjah,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+5.192.21.168,AE,Emirates Telecommunications Corporation,Ajman,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+5.193.23.153,AE,Emirates Telecommunications Corporation,Sharjah,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+5.193.27.5,AE,Emirates Telecommunications Corporation,Sharjah,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+5.193.37.192,AE,Emirates Telecommunications Corporation,Sharjah,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+5.193.88.149,AE,Emirates Telecommunications Corporation,Sharjah,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+5.193.103.103,AE,Emirates Telecommunications Corporation,Ajman,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+144.76.173.169,DE,Hetzner Online GmbH,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+80.78.134.11,DE,Cheyenne Technologies LLC,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+192.76.144.66,DE,UUNET,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+78.47.243.3,DE,Hetzner Online GmbH,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+80.241.218.68,DE,Contabo GmbH,Munich,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+46.4.165.226,DE,Hetzner Online GmbH,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+148.251.249.251,DE,Hetzner Online GmbH,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+45.9.63.233,DE,netcup GmbH,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+89.163.140.67,DE,myLoc managed IT AG,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+167.71.34.223,DE,DIGITALOCEAN-ASN,Frankfurt am Main,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+178.238.231.8,DE,Contabo GmbH,Munich,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+95.89.197.109,DE,Vodafone GmbH,Erfurt,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+89.246.11.112,DE,1&1 Versatel Deutschland GmbH,Frankfurt am Main,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+85.14.222.66,DE,myLoc managed IT AG,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+139.59.141.34,DE,DIGITALOCEAN-ASN,Frankfurt am Main,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+195.129.12.83,NL,UUNET,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+5.2.75.75,NL,The Infrastructure Group B.V.,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+195.129.12.114,NL,UUNET,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+46.166.189.68,NL,NForce Entertainment B.V.,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+185.66.250.42,NL,PCextreme B.V.,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+185.216.163.129,NL,ExtraIP B.V.,Heerhugowaard,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+94.212.61.7,NL,Vodafone Libertel B.V.,Groningen,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+85.144.58.185,NL,T-Mobile Thuis BV,Bussum,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+51.15.39.119,NL,Online S.a.s.,Haarlem,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+161.35.82.53,NL,DIGITALOCEAN-ASN,Amsterdam,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+64.225.81.226,NL,DIGITALOCEAN-ASN,Amsterdam,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+40.67.192.110,NL,MICROSOFT-CORP-MSN-AS-BLOCK,Amsterdam,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+86.91.39.141,NL,KPN B.V.,Enschede,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+134.122.50.50,NL,DIGITALOCEAN-ASN,Amsterdam,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+95.168.170.31,NL,LeaseWeb Netherlands B.V.,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+213.93.96.233,NL,Vodafone Libertel B.V.,Asten,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+45.128.27.180,NL,LeaseWeb Netherlands B.V.,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+188.166.125.27,NL,DIGITALOCEAN-ASN,Amsterdam,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+185.209.22.157,NL,Zomro B.V.,Dronten,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+134.209.195.179,NL,DIGITALOCEAN-ASN,Amsterdam,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+45.152.209.145,NL,LeaseWeb Netherlands B.V.,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+174.138.13.88,NL,DIGITALOCEAN-ASN,Amsterdam,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+87.210.167.106,NL,T-Mobile Thuis BV,Moordrecht,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+143.176.18.30,NL,T-mobile Netherlands B.V.,Groningen,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+158.43.128.72,GB,UUNET,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+158.43.240.3,GB,UUNET,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+88.208.244.225,GB,IONOS SE,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.224.233.174,GB,Gradwell Communications Limited,Hampstead,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.224.233.180,GB,Gradwell Communications Limited,Hampstead,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.224.233.190,GB,Gradwell Communications Limited,Hampstead,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.228.0.226,GB,IONOS SE,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.228.1.112,GB,IONOS SE,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.228.11.95,GB,IONOS SE,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.228.16.122,GB,IONOS SE,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.228.16.38,GB,IONOS SE,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.228.16.39,GB,IONOS SE,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.228.16.41,GB,IONOS SE,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.228.17.201,GB,IONOS SE,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.228.18.200,GB,IONOS SE,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.228.18.201,GB,IONOS SE,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+178.79.134.196,GB,"Linode, LLC",London,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.228.18.3,GB,IONOS SE,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.228.18.5,GB,IONOS SE,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.228.18.71,GB,IONOS SE,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.228.2.183,GB,IONOS SE,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.228.20.25,GB,IONOS SE,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+109.228.20.39,GB,IONOS SE,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+199.85.127.20,US,SECURITYSERVICES,,catalog,4,True,NOERROR,7.13,7.83,6.58,1.01,0.0,4,6.39,True,"104.20.23.154,172.66.147.243",True,4096,False,97,"{""google.com"": [""142.251.46.78""], ""cloudflare.com"": [""104.16.133.229"", ""104.16.132.229""], ""wikipedia.org"": [""208.80.154.224""], ""discord.com"": [""162.159.136.232"", ""162.159.128.233"", ""162.159.137.232""], ""ea.com"": [""23.45.72.178""]}",False,,True,wikipedia.org→208.80.154.224 (?),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""104.96.163.87"", ""dns_ms"": 86.1, ""conn_ms"": 0.93, ""total_ms"": 87.1, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""23.53.122.76"", ""dns_ms"": 36.4, ""conn_ms"": 0.82, ""total_ms"": 37.2, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.135.232"", ""dns_ms"": 8.1, ""conn_ms"": 0.41, ""total_ms"": 8.5, ""label"": ""دیسکورد""}}",
+156.154.70.22,US,SECURITYSERVICES,,catalog,4,True,NOERROR,7.0,8.15,6.21,0.9,0.0,4,7.21,True,"172.66.147.243,104.20.23.154",True,4096,False,104,"{""google.com"": [""142.251.46.78""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""208.80.154.224""], ""discord.com"": [""162.159.137.232"", ""162.159.135.232"", ""162.159.138.232""], ""ea.com"": [""23.45.72.178""]}",False,,True,wikipedia.org→208.80.154.224 (?),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""104.96.163.87"", ""dns_ms"": 87.0, ""conn_ms"": 0.93, ""total_ms"": 87.9, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""23.53.122.76"", ""dns_ms"": 36.0, ""conn_ms"": 0.82, ""total_ms"": 36.8, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.137.232"", ""dns_ms"": 7.7, ""conn_ms"": 0.39, ""total_ms"": 8.1, ""label"": ""دیسکورد""}}",
+156.154.70.1,US,ULTRADNS,,catalog,4,True,NOERROR,7.66,8.38,6.71,0.69,0.0,4,7.79,True,"172.66.147.243,104.20.23.154",True,4096,False,104,"{""google.com"": [""142.251.46.78""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""208.80.154.224""], ""discord.com"": [""162.159.128.233"", ""162.159.137.232"", ""162.159.135.232""], ""ea.com"": [""23.45.72.178""]}",False,,True,wikipedia.org→208.80.154.224 (?),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""104.96.163.87"", ""dns_ms"": 87.6, ""conn_ms"": 0.93, ""total_ms"": 88.5, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""23.53.122.73"", ""dns_ms"": 87.2, ""conn_ms"": 1.13, ""total_ms"": 88.4, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.128.233"", ""dns_ms"": 6.5, ""conn_ms"": 0.76, ""total_ms"": 7.3, ""label"": ""دیسکورد""}}",
+195.46.39.40,US,"SafeDNS, Inc.",,catalog,4,True,NOERROR,7.7,8.36,6.62,0.93,0.0,4,7.82,True,"104.20.23.154,172.66.147.243",True,1232,False,98,"{""google.com"": [""108.177.98.139"", ""108.177.98.138"", ""108.177.98.102""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.136.232"", ""162.159.138.232"", ""162.159.128.233""], ""ea.com"": [""23.0.204.209""]}",False,,True,google.com→108.177.98.139 (?) | ea.com→23.0.204.209 (CDN),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""23.53.122.73"", ""dns_ms"": 11.3, ""conn_ms"": 1.13, ""total_ms"": 12.5, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""23.53.122.73"", ""dns_ms"": 8.7, ""conn_ms"": 1.13, ""total_ms"": 9.8, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.128.233"", ""dns_ms"": 6.6, ""conn_ms"": 0.76, ""total_ms"": 7.3, ""label"": ""دیسکورد""}}",
+109.228.20.82,GB,IONOS SE,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+195.112.96.34,RU,MAXnet Systems Ltd.,Obninsk,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+165.87.201.244,US,ATT-INTERNET4,,catalog,4,True,NOERROR,19.06,19.65,18.95,0.45,0.0,4,23.88,True,"104.20.23.154,172.66.147.243",True,1232,False,216,"{""google.com"": [""64.233.177.138"", ""64.233.177.139"", ""64.233.177.113""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.137.232"", ""162.159.136.232"", ""162.159.128.233""], ""ea.com"": [""23.37.16.177""]}",False,,True,google.com→64.233.177.138 (?),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""23.1.255.201"", ""dns_ms"": 27.5, ""conn_ms"": 0.64, ""total_ms"": 28.2, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""2.22.234.142"", ""dns_ms"": 31.5, ""conn_ms"": 0.37, ""total_ms"": 31.9, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.135.232"", ""dns_ms"": 19.4, ""conn_ms"": 0.41, ""total_ms"": 19.8, ""label"": ""دیسکورد""}}",
+12.127.17.72,US,ATT-INTERNET4,Washington,catalog,4,True,NOERROR,19.41,19.65,19.22,0.17,0.0,4,24.7,True,"104.20.23.154,172.66.147.243",True,1232,False,216,"{""google.com"": [""64.233.177.138"", ""64.233.177.139"", ""64.233.177.113""], ""cloudflare.com"": [""104.16.133.229"", ""104.16.132.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.138.232"", ""162.159.136.232"", ""162.159.137.232""], ""ea.com"": [""23.37.16.177""]}",False,,True,google.com→64.233.177.138 (?),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""23.1.255.206"", ""dns_ms"": 37.2, ""conn_ms"": 1.16, ""total_ms"": 38.4, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""2.22.234.153"", ""dns_ms"": 31.5, ""conn_ms"": 0.39, ""total_ms"": 31.9, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.137.232"", ""dns_ms"": 19.6, ""conn_ms"": 0.39, ""total_ms"": 20.0, ""label"": ""دیسکورد""}}",
+165.87.13.129,US,ATT-INTERNET4,,catalog,4,True,NOERROR,19.63,19.76,18.9,0.51,0.0,4,36.36,True,"104.20.23.154,172.66.147.243",True,1232,False,216,"{""google.com"": [""64.233.177.138"", ""64.233.177.139"", ""64.233.177.113""], ""cloudflare.com"": [""104.16.133.229"", ""104.16.132.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.135.232"", ""162.159.138.232"", ""162.159.137.232""], ""ea.com"": [""23.37.16.177""]}",False,,True,google.com→64.233.177.138 (?),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""23.1.255.206"", ""dns_ms"": 28.1, ""conn_ms"": 1.16, ""total_ms"": 29.2, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""2.22.234.142"", ""dns_ms"": 32.7, ""conn_ms"": 0.37, ""total_ms"": 33.1, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.135.232"", ""dns_ms"": 19.7, ""conn_ms"": 0.41, ""total_ms"": 20.1, ""label"": ""دیسکورد""}}",
+129.250.35.250,US,NTT-LTD-2914,,catalog,4,True,NOERROR,19.85,21.29,19.58,0.66,0.0,4,21.12,True,"172.66.147.243,104.20.23.154",True,1232,False,154,"{""google.com"": [""74.125.138.102"", ""74.125.138.139"", ""74.125.138.138""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""208.80.153.224""], ""discord.com"": [""162.159.138.232"", ""162.159.128.233"", ""162.159.135.232""], ""ea.com"": [""23.45.72.178""]}",False,,True,google.com→74.125.138.102 (?) | wikipedia.org→208.80.153.224 (?),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""23.53.122.73"", ""dns_ms"": 47.8, ""conn_ms"": 1.13, ""total_ms"": 48.9, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""2.22.234.142"", ""dns_ms"": 45.9, ""conn_ms"": 0.37, ""total_ms"": 46.2, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.137.232"", ""dns_ms"": 20.0, ""conn_ms"": 0.39, ""total_ms"": 20.4, ""label"": ""دیسکورد""}}",
+209.244.0.4,US,LEVEL3,,catalog,4,True,NOERROR,20.19,20.65,20.07,0.25,0.0,4,19.99,True,"104.20.23.154,172.66.147.243",True,4096,False,117,"{""google.com"": [""142.251.219.46""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""198.35.26.224""], ""discord.com"": [""162.159.128.233"", ""162.159.138.232"", ""162.159.137.232""], ""ea.com"": [""23.37.16.177""]}",False,,True,google.com→142.251.219.46 (CDN),"{""cdn.cloudflare.steamstatic.com"": {""ip"": ""96.16.55.101"", ""dns_ms"": 39.9, ""conn_ms"": 0.31, ""total_ms"": 40.2, ""label"": ""استیم CDN (کلودفلر)""}, ""steamcdn-a.akamaihd.net"": {""ip"": ""23.44.229.218"", ""dns_ms"": 31.7, ""conn_ms"": 0.32, ""total_ms"": 32.1, ""label"": ""استیم (آکامای)""}, ""discord.com"": {""ip"": ""162.159.135.232"", ""dns_ms"": 20.3, ""conn_ms"": 0.41, ""total_ms"": 20.7, ""label"": ""دیسکورد""}}",
+178.161.150.190,RU,JSC ER-Telecom Holding,Perm,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+156.154.71.2,US,SECURITYSERVICES,,catalog,4,True,NOERROR,25.07,25.1,24.69,0.15,0.0,4,27.1,True,"172.66.147.243,104.20.23.154",True,4096,False,285,"{""google.com"": [""142.251.45.14""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""208.80.154.224""], ""discord.com"": [""162.159.138.232"", ""162.159.135.232"", ""162.159.137.232""], ""ea.com"": [""23.61.208.177""]}",False,,True,google.com→142.251.45.14 (CDN) | wikipedia.org→208.80.154.224 (?) | ea.com→23.61.208.177 (CDN),{},
+185.51.61.101,RU,ZAO ElectronTelecom,St Petersburg,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+37.193.226.251,RU,Novotelecom Ltd,Berdsk,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+64.9.50.67,US,LEVEL3,Hershey,catalog,4,True,NOERROR,71.23,71.9,68.7,1.94,0.0,4,78.63,True,"172.66.147.243,104.20.23.154",True,4000,False,99,"{""google.com"": [""142.251.41.174""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""208.80.154.224""], ""discord.com"": [""162.159.138.232"", ""162.159.137.232"", ""162.159.135.232""], ""ea.com"": [""23.48.8.174""]}",False,,True,google.com→142.251.41.174 (CDN) | wikipedia.org→208.80.154.224 (?) | ea.com→23.48.8.174 (CDN),{},
+158.51.134.53,US,NONEXISTE-AS,,catalog,4,True,NOERROR,80.14,97.28,79.07,11.48,0.0,4,192.57,True,"104.20.23.154,172.66.147.243",True,512,False,153,"{""google.com"": [""142.251.116.101"", ""142.251.116.138"", ""142.251.116.113""], ""cloudflare.com"": [""104.16.132.229"", ""104.16.133.229""], ""wikipedia.org"": [""208.80.154.224""], ""discord.com"": [""162.159.135.232"", ""162.159.137.232"", ""162.159.136.232""], ""ea.com"": [""23.213.44.163""]}",False,,True,google.com→142.251.116.101 (CDN) | wikipedia.org→208.80.154.224 (?) | ea.com→23.213.44.163 (CDN),{},
+46.73.33.253,RU,Net By Net Holding LLC,Belgorod,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+92.222.117.114,FR,OVH SAS,Paris,catalog,4,True,NOERROR,140.18,140.31,139.91,0.26,0.0,4,140.86,True,"172.66.147.243,104.20.23.154",True,1232,False,162,"{""google.com"": [""172.217.20.46""], ""cloudflare.com"": [""104.16.133.229"", ""104.16.132.229""], ""wikipedia.org"": [""185.15.58.224""], ""discord.com"": [""162.159.135.232"", ""162.159.137.232"", ""162.159.138.232""], ""ea.com"": [""2.20.236.177""]}",False,,True,google.com→172.217.20.46 (CDN) | wikipedia.org→185.15.58.224 (CDN) | ea.com→2.20.236.177 (CDN),{},
+212.46.255.78,RU,PVimpelCom,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+62.176.12.111,RU,Rial Com JSC,Serpukhov,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+81.211.101.154,RU,PVimpelCom,St Petersburg,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+46.254.217.54,RU,Ivanteevskie telecommunicacii Ltd,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+62.76.161.12,RU,Federal State Educational Institution of Higher Professional Education Voronezh State Agricu,Voronezh,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+94.140.208.226,RU,Prometey LLC,St Petersburg,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+86.62.120.68,RU,JSC ER-Telecom Holding,Moscow,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+195.209.131.19,RU,Megacom-it LLC,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+85.172.19.214,RU,Rostelecom,Labinsk,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+185.175.119.206,RU,Beltelecom LLC,Belorechensk,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+193.42.159.2,SE,Tele2 SWIPnet,,catalog,4,True,NOERROR,160.4,160.81,160.3,0.2,0.0,4,,False,"104.20.23.154,172.66.147.243",True,4000,False,164,{},False,,False,,{},
+109.195.194.79,RU,JSC ER-Telecom Holding,Ulyanovsk,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+193.27.192.15,SE,"Patrik Lagerman WEB, Enskild Firma",,catalog,4,True,SERVFAIL,164.12,164.57,163.17,0.67,0.0,4,,False,,False,,False,,{},False,,False,,{},
+91.144.139.3,RU,JSC ER-Telecom Holding,Orenburg,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+185.123.194.28,RU,OOO Kurier,Kursk,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+31.15.89.51,RU,MTS PJSC,Anapa,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+46.146.209.132,RU,JSC ER-Telecom Holding,Perm,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+103.23.150.89,IN,4th Floor New Administrative Building,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+202.138.120.87,IN,Reliance Communications Ltd.DAKC MUMBAI,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+103.23.150.88,IN,4th Floor New Administrative Building,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+119.235.52.2,IN,"VAINAVI INDUSTIES LTD, INTERNET SERVICE PROVIDER, INDIA",Hyderabad,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+45.79.120.233,IN,"Linode, LLC",Mumbai,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+61.5.134.35,PK,Cyber Internet Services Pvt Ltd.,Karachi,catalog,4,True,NOERROR,249.35,277.63,248.23,10.64,0.0,4,,False,"172.66.147.243,104.20.23.154",True,4096,False,159,{},False,,False,,{},
+202.83.175.188,PK,National Telecommunication Corporation HQ,Karachi,catalog,4,True,NOERROR,246.33,287.0,245.64,13.79,0.0,4,,False,"172.66.147.243,104.20.23.154",True,4096,False,191,{},False,,False,,{},
+103.103.212.222,IN,Five network Broadband Solution Pvt Ltd,Indore,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+210.56.8.8,PK,Commission on Science and Technology for,Islamabad,catalog,4,True,NOERROR,275.37,284.54,271.53,9.26,0.0,4,,False,"104.20.23.154,172.66.147.243",False,,False,274,{},False,,False,,{},
+106.51.72.222,IN,Atria Convergence Technologies Pvt. Ltd. Broadband Internet Service Provider INDIA,Bengaluru,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+183.87.70.210,IN,Syscon Infoway Pvt. Ltd.,Pune,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+3.6.210.233,IN,AMAZON-02,Mumbai,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+14.102.19.50,IN,ELXIRE DATA SERVICES PVT. LTD.,Roorkee,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+202.142.189.98,PK,Multinet Pakistan Pvt. Ltd.,,catalog,4,True,NOERROR,272.62,278.12,267.13,10.99,0.5,2,,False,"172.66.147.243,104.20.23.154",False,,False,272,{},False,,False,,{},timeout
+15.207.59.162,IN,AMAZON-02,Mumbai,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+194.195.119.4,IN,"Linode, LLC",Mumbai,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+152.67.163.136,IN,ORACLE-BMC-31898,Hyderabad,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+140.238.225.30,IN,ORACLE-BMC-31898,Mumbai,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+3.108.235.244,IN,AMAZON-02,Mumbai,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+15.207.52.93,IN,AMAZON-02,Mumbai,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+34.93.138.246,IN,GOOGLE,Mumbai,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+159.89.173.198,IN,DIGITALOCEAN-ASN,Bengaluru,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+3.108.201.238,IN,AMAZON-02,Mumbai,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+152.70.64.229,IN,ORACLE-BMC-31898,Hyderabad,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+159.89.170.101,IN,DIGITALOCEAN-ASN,Bengaluru,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+65.1.139.6,IN,AMAZON-02,Mumbai,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+34.93.140.196,IN,GOOGLE,Mumbai,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+143.244.134.191,IN,DIGITALOCEAN-ASN,Bengaluru,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+125.209.66.170,PK,Multinet Broadband,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+59.103.243.83,PK,Pakistan Telecommunication Company Limited,Islamabad,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+59.103.138.123,PK,Connect Communications,Karachi,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+180.178.189.118,PK,KK Networks Pvt Ltd.,Lahore,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+110.38.57.243,PK,National WiMAXIMS environment,Lahore,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+118.103.236.13,PK,Connect Communications,Karachi,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+110.36.213.38,PK,National WiMAXIMS environment,Khanewal,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+103.189.127.102,PK,WAYLINK,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+203.135.5.90,PK,Pakistan Telecommunication Company Limited,Karachi,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+103.152.117.145,PK,KK Networks Pvt Ltd.,Lahore,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+103.166.102.21,PK,Grand Tel Private Limited,Multan,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+203.175.76.129,PK,141-143 Maulana Shaukat Ali Road,Lahore,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+202.163.76.123,PK,Cyber Internet Services Pvt Ltd.,Lahore,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+43.246.225.217,PK,Ebone Network PVT. Limited,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+121.52.157.202,PK,"PERN AS Content Servie Provider, Islamabad, Pakistan",Multan,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+58.27.249.124,PK,National WiMAXIMS environment,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+103.152.100.142,PK,KK Networks Pvt Ltd.,Lahore,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+103.153.15.79,PK,Netze Technology Private Limited,Lahore,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+103.62.235.10,PK,Superior Connections private limited,Kasur,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+137.59.192.182,PK,House # 39 Street 38 F10 4,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+103.189.127.107,PK,WAYLINK,Haripur,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+213.188.153.178,SE,"ACTIVE 24, s.r.o.",,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+13.51.179.100,SE,AMAZON-02,Stockholm,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+158.174.105.226,SE,Bahnhof AB,Taby,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+13.53.206.191,SE,AMAZON-02,Stockholm,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+89.160.81.34,SE,Bredband2 AB,Sigtuna,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+158.174.113.182,SE,Bahnhof AB,Uppsala,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+85.230.246.152,SE,Telenor Norge AS,Gothenburg,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+46.162.67.102,SE,Bredband2 AB,Halmstad,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+94.254.93.162,SE,Bahnhof AB,Skellefteå,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+16.170.15.149,SE,AMAZON-02,Stockholm,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+13.53.184.67,SE,AMAZON-02,Stockholm,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+80.78.22.179,SE,ab stract,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+213.112.21.64,SE,Telenor Norge AS,Sundbyberg,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+94.254.103.248,SE,Bahnhof AB,Skellefteå,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+13.48.194.123,SE,AMAZON-02,Stockholm,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+85.228.123.252,SE,Telenor Norge AS,Kista,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+92.32.36.226,SE,Telenor Norge AS,Boden,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+13.53.184.235,SE,AMAZON-02,Stockholm,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+85.8.43.18,SE,A3 Sverige AB,Södertälje,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+194.1.154.37,SE,GlobalConnect AB,Billdal,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+128.127.104.108,SE,AltusHost B.V.,Stockholm,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.57.245.35,SE,FastBit AB,Mariestad,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+2.64.7.199,SE,Hi3G Access AB,Stockholm,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+51.254.25.115,FR,OVH SAS,Paris,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+89.2.2.234,FR,Societe Francaise Du Radiotelephone - SFR SA,Paris,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+80.67.169.12,FR,Association Gitoyen,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+163.172.107.158,FR,Online S.a.s.,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+82.65.95.79,FR,Free SAS,Paris,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+194.98.65.165,FR,UUNET,Lagny-sur-Marne,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+163.172.168.171,FR,Online S.a.s.,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+195.68.61.198,FR,COLT Technology Services Group Limited,Paris,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+35.181.51.126,FR,AMAZON-02,Paris,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+78.198.167.137,FR,Free SAS,Le Plessis-Robinson,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+86.242.105.118,FR,Orange,Boulogne-Billancourt,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+104.238.191.9,FR,AS-CHOOPA,Aubervilliers,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+149.91.89.84,FR,Datawire SAS,Nanterre,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+86.216.76.72,FR,Orange,Thionville,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+35.180.5.239,FR,AMAZON-02,Paris,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+82.121.248.54,FR,Orange,Élancourt,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+82.65.40.123,FR,Free SAS,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+176.31.254.191,FR,OVH SAS,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+37.59.252.92,FR,OVH SAS,Versailles,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+51.178.119.154,FR,OVH SAS,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+13.36.215.127,FR,AMAZON-02,Paris,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+15.237.94.106,FR,AMAZON-02,Paris,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+54.36.162.119,FR,OVH SAS,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+90.90.167.70,FR,Orange,Boulogne-Billancourt,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+199.255.137.34,US,DACEN-2,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+199.2.252.10,US,SPRINTLINK,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+8.0.7.0,US,LEVEL3,Atlanta,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+151.196.0.37,US,UUNET,Crofton,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+151.197.0.37,US,UUNET,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+151.197.0.38,US,UUNET,Philadelphia,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+151.198.0.38,US,UUNET,Plainsboro,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+151.198.0.39,US,UUNET,Plainsboro,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+151.199.0.39,US,UUNET,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+151.201.0.38,US,UUNET,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+151.201.0.39,US,UUNET,,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+151.202.0.84,US,UUNET,New York,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout
+151.202.0.85,US,UUNET,New York,catalog,4,False,,,,,,1.0,0,,False,,False,,False,,{},False,,False,,{},timeout

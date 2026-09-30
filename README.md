@@ -248,3 +248,21 @@ cd /home/user/dnsradar && python3 -m ncf.run_all    # همه‌چیز + گزار
 - گزارش نهایی: `ncf/report.html`
 - مستند: `ncf/README.md` (شامل نتیجهٔ بک‌تست، باگ‌های کشف‌شده و **مرزهای امتناع**)
 - قید فیزیک در همه‌جا تکرار شده: **هیچ سیستمی ۱۵۰ms فیبر را ۲۰ms نمی‌کند.**
+
+---
+
+## 🌍 WorldScan · اسکنر DNS جهانی با «سنجش اثر»
+
+کاتالوگ **۶۲٬۷۹۰ رزولور از ۱۹۳ کشور** + اسکنر فعال با متریکی که هیچ ابزار دیگری ندارد:
+رزولور را با پینگ خودش نمی‌سنجد، بلکه می‌سنجد **کدام آی‌پی را برای دامنهٔ بازی برمی‌گرداند و
+تأخیر تا همان آی‌پی چقدر است**.
+
+```bash
+python3 tools/dns_catalog.py --query IR      # ساخت کاتالوگ (کشور → سرورها)
+python3 tools/worldscan.py --curated --countries IR --limit-per-country 24 --v6
+python3 tools/worldreport.py                 # گزارش HTML
+```
+
+- گزارش: `data/dns_world/worldscan-report.html` · مستند: `tools/README.md`
+- اندپوینت‌های زندهٔ ورکر: `/api/dnslist?cc=IR` · `/api/dnslist?meta=1` · `/api/impact?name=<domain>`
+- یافتهٔ کلیدی: رزولورهای رادار/۴۰۳ روی `10.0.0.0/8` هستند → **فقط از داخل ایران** قابل‌سنجش‌اند.
