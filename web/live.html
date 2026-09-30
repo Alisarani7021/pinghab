@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>رادار DNS — پایش زنده بر اساس منطقه</title>
+<style>
+  :root{
+    --bg:#070c18; --card:#101b30; --card2:#0d1729; --line:#1d2c48; --tx:#e9effb; --mut:#8ba0c4;
+    --great:#12b981; --good:#4ade80; --ok:#a3e635; --meh:#f59e0b; --weak:#f97316; --dead:#ef4444;
+    --acc:#38bdf8; --violet:#8b5cf6;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:radial-gradient(1100px 420px at 50% -120px,#12233f 0%,#070c18 60%);
+       color:var(--tx);font-family:Tahoma,Vazirmatn,"Segoe UI",system-ui,sans-serif;line-height:1.7;font-size:14.5px}
+  .wrap{max-width:1000px;margin:0 auto;padding:16px 13px 60px}
+  a{color:var(--acc)}
+  h1{font-size:21px;margin:0}
+  .sub{color:var(--mut);font-size:12.5px}
+  .head{background:linear-gradient(150deg,#122343,#0d1729);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .between{justify-content:space-between}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px 13px}
+  .kpi{min-width:130px;flex:1}
+  .kpi b{display:block;font-size:20px;font-variant-numeric:tabular-nums}
+  .kpi span{color:var(--mut);font-size:11.5px}
+  button{border:1px solid var(--line);background:#152340;color:var(--tx);border-radius:11px;padding:8px 12px;
+         font-size:13.5px;font-family:inherit;cursor:pointer;transition:.15s}
+  button:hover{background:#1b2c52;border-color:#2b4470}
+  button.primary{background:linear-gradient(135deg,#0ea5e9,#2563eb);border:none;font-weight:700}
+  button.mini{padding:4px 9px;font-size:12px;border-radius:9px}
+  input,select{background:#0d1729;color:var(--tx);border:1px solid var(--line);border-radius:10px;
+               padding:7px 9px;font-family:inherit;font-size:13px}
+  .pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#0f1c31;
+        border-radius:999px;padding:6px 11px;font-size:12.5px;cursor:pointer;transition:.15s;white-space:nowrap}
+  .pill:hover{border-color:#2b4470;background:#16264a}
+  .pill.on{background:linear-gradient(135deg,#123c5a,#0f2f46);border-color:#2a7fa8;color:#d8f1ff}
+  .pill .m{font-variant-numeric:tabular-nums;font-weight:700}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--great);box-shadow:0 0 0 0 rgba(18,185,129,.7);
+       animation:pulse 1.8s infinite}
+  @keyframes pulse{70%{box-shadow:0 0 0 9px rgba(18,185,129,0)}100%{box-shadow:0 0 0 0 rgba(18,185,129,0)}}
+  table{width:100%;border-collapse:separate;border-spacing:0 5px;font-size:13px}
+  th{color:var(--mut);font-size:11.5px;font-weight:600;text-align:right;padding:4px 7px;white-space:nowrap}
+  td{background:var(--card);padding:8px 7px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  td:first-child{border-right:1px solid var(--line);border-radius:0 11px 11px 0}
+  td:last-child{border-left:1px solid var(--line);border-radius:11px 0 0 11px}
+  .num{font-variant-numeric:tabular-nums;direction:ltr;text-align:center;white-space:nowrap}
+  .ping{font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;direction:ltr}
+  .badge{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;border:1px solid var(--line);
+         margin-left:4px;background:#0e1a2e;color:#cbd5e1}
+  .b-great{border-color:#1d7a5f;color:#7ff0c0}.b-good{border-color:#2d7a2d;color:#b6f2b6}
+  .b-ok{border-color:#5a7a1d;color:#e2f7a8}.b-meh{border-color:#b45309;color:#fcd34d}
+  .b-weak{border-color:#c2410c;color:#fdba74}.b-dead{border-color:#7f1d1d;color:#fca5a5;background:#2a1113}
+  .barwrap{position:relative;height:16px;background:#0d1729;border:1px solid var(--line);border-radius:6px;
+           overflow:hidden;min-width:64px}
+  .bar{height:100%;transition:width .45s ease,background .45s}
+  .barval{position:absolute;inset:0;text-align:center;font-size:11px;font-variant-numeric:tabular-nums}
+  .g-great{background:linear-gradient(90deg,#0d9488,#12b981)}
+  .g-good{background:linear-gradient(90deg,#15803d,#4ade80)}
+  .g-ok{background:linear-gradient(90deg,#4d7c0f,#a3e635)}
+  .g-meh{background:linear-gradient(90deg,#b45309,#f59e0b)}
+  .g-weak{background:linear-gradient(90deg,#c2410c,#f97316)}
+  .g-dead{background:#3f1d1d}
+  .spark{display:block}
+  .note{background:#0d1729;border:1px dashed var(--line);border-radius:13px;padding:11px 13px;color:#c3d3ee;font-size:12.5px}
+  .warn{border-color:#7c2d12;background:#1f1206}
+  .info{border-color:#1e40af;background:#0b1a33}
+  .foot{color:var(--mut);font-size:11.5px;text-align:center;margin-top:26px}
+  code{direction:ltr;display:inline-block;background:#0d1729;padding:1px 5px;border-radius:5px;
+       font-family:ui-monospace,Consolas,monospace;font-size:12px}
+  .live-mini{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--great)}
+  .hint{font-size:11.5px;color:var(--mut)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:560px){.grid2{grid-template-columns:1fr}.hide-s{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <div class="row between">
+      <div class="row">
+        <h1>📡 رادار DNS</h1>
+        <span class="pill on" style="cursor:default"><span class="dot"></span> زنده</span>
+      </div>
+      <div class="row">
+        <span class="hint" id="clock">—</span>
+        <button class="mini" id="pauseBtn">⏸ توقف</button>
+        <select id="speed" class="mini" style="padding:5px 8px">
+          <option value="2000">هر ۲ ثانیه</option>
+          <option value="3000" selected>هر ۳ ثانیه</option>
+          <option value="6000">هر ۶ ثانیه</option>
+          <option value="15000">هر ۱۵ ثانیه</option>
+        </select>
+      </div>
+    </div>
+    <div class="sub" style="margin-top:6px">
+      پینگ لحظه‌ای واقعی (کوئری UDP/53) به سرورهای DNS، جدا‌شده بر اساس <b>منطقه</b> — به‌همراه «قدرت» هر سرور.
+      هرچه سرور بهت نزدیک‌تر باشد، پینگ کمتر و جواب بازی/لابی سریع‌تر.
+    </div>
+
+    <div class="row" style="margin-top:12px">
+      <div class="card kpi"><b id="k-best">—</b><span>بهترین انتخاب الان</span><div class="hint" id="k-best-ip">—</div></div>
+      <div class="card kpi"><b id="k-alive">—</b><span>سرور پاسخ‌ده</span><div class="hint" id="k-cycle">—</div></div>
+      <div class="card kpi"><b id="k-jitter">—</b><span>میانگین جیتر</span><div class="hint">نوسان = لگ</div></div>
+      <div class="card kpi"><b id="k-region">—</b><span>بهترین منطقه</span><div class="hint" id="k-region-ip">—</div></div>
+    </div>
+  </div>
+
+  <div id="banner" style="margin-top:12px"></div>
+
+  <h2 style="font-size:16px;margin:22px 0 8px">🌍 وضعیت مناطق (زنده)</h2>
+  <div class="row" id="regionPills"></div>
+
+  <h2 style="font-size:16px;margin:22px 0 8px" id="chartTitle">📈 نمودار زنده</h2>
+  <div class="card" id="chartCard" style="padding:8px 10px">
+    <svg id="chart" viewBox="0 0 720 130" preserveAspectRatio="none" style="width:100%;height:130px"></svg>
+    <div class="row between" style="margin-top:2px">
+      <span class="hint" id="chartLegend">—</span>
+      <span class="hint">آخرین ۶۰ نمونه</span>
+    </div>
+  </div>
+
+  <h2 style="font-size:16px;margin:22px 0 8px">📊 جزئیات سرورها <span class="hint" id="filterHint"></span></h2>
+  <table>
+    <thead><tr>
+      <th>سرور</th><th>پینگ</th><th class="hide-s">قدرت</th><th class="hide-s">روند</th>
+      <th>جیتر</th><th>افت</th><th class="hide-s">آی‌پی</th>
+    </tr></thead>
+    <tbody id="rows"><tr><td colspan="7" class="hint">در حال دریافت داده…</td></tr></tbody>
+  </table>
+
+  <h2 style="font-size:16px;margin:24px 0 8px">🎮 سرور بازی خودم را اضافه کن</h2>
+  <div class="card">
+    <div class="sub" style="margin-bottom:8px">
+      آی‌پی سرورِ بازی‌ات را وارد کن تا پینگش <b>زنده</b> اینجا نشان داده شود.
+      (برای پیدا کردنش از اپ <b>PCAPdroid</b> یا <b>NetGuard</b> استفاده کن؛ اول تلاش می‌کند با UDP/53 و اگر جواب نداد با TCP/443 می‌سنجد.)
+    </div>
+    <div class="row">
+      <input id="c-label" placeholder="نام (مثلاً PUBG دبی)" style="flex:1;min-width:150px">
+      <input id="c-ip" placeholder="آی‌پی: 1.2.3.4" style="direction:ltr;min-width:130px">
+      <input id="c-port" placeholder="پورت" value="443" style="width:80px;direction:ltr">
+      <button class="primary" id="addBtn">➕ افزودن و پایش زنده</button>
+    </div>
+    <div id="c-msg" class="hint" style="margin-top:8px"></div>
+    <div id="c-list" class="row" style="margin-top:8px"></div>
+  </div>
+
+  <h2 style="font-size:16px;margin:24px 0 8px">📌 چطور بخوانم؟</h2>
+  <div class="grid2">
+    <div class="note">
+      <b>پینگ</b> = زمان رفت‌وبرگشت واقعی به آن سرور (میلی‌ثانیه). <b>جیتر</b> = نوسان؛ جیتر بالا یعنی لگ و
+      «تلپورت» حریف. <b>افت</b> = چند درصد پاسخ‌ها نرسیده؛ از پینگ مهم‌تر است.
+    </div>
+    <div class="note">
+      <b>قدرت</b> = امتیاز ترکیبی ۰ تا ۱۰۰ از پینگ + جیتر + افت. ۸۵+ عالی، ۷۰+ خیلی خوب،
+      زیر ۵۵ یعنی برای بازی مناسب نیست.
+    </div>
+  </div>
+  <div class="note warn" style="margin-top:10px">
+    ⚠️ <b>صادقانه:</b> پینگِ داخل مچ بازی را DNS عوض نمی‌کند. این داشبورد «فاصلهٔ شبکه‌ات تا هر منطقه» را
+    نشان می‌دهد تا بفهمی کدام DNS برای <b>ورود، لابی، دانلود آپدیت و رفع تحریم</b> بهتر است و کدام منطقه
+    (ترکیه / اروپا / خاورمیانه) به خط تو نزدیک‌تر است. اگر خواستی سرور بازی‌ات را هم زنده ببینی، بالا آی‌پی‌اش را اضافه کن.
+  </div>
+
+  <div class="foot" id="foot">رادار DNS · پایش زنده · داده‌ها محلی و بدون ارسال به بیرون</div>
+</div>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const FA = s => String(s).replace(/[0-9]/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+const fmt = (v,d=1) => (v===null||v===undefined) ? "—" : FA(Number(v).toFixed(d));
+const COLORS = {great:"#12b981", good:"#4ade80", ok:"#a3e635", meh:"#f59e0b", weak:"#f97316", dead:"#ef4444"};
+
+let paused = false, timer = null, selectedRegion = "all", lastState = null;
+
+/* ---------- نمودارها ---------- */
+function sparkline(hist, color, w=110, h=24){
+  const vals = (hist||[]).filter(v => v !== null && v !== undefined);
+  if(vals.length < 2) return `<svg class="spark" width="${w}" height="${h}"></svg>`;
+  const min = Math.min(...vals), max = Math.max(...vals), span = (max-min)||1;
+  const pts = vals.map((v,i)=>{
+    const x = 2 + i/(vals.length-1)*(w-4);
+    const y = h - 3 - (1-(v-min)/span)*(h-7);
+    return [x,y];
+  });
+  const line = pts.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ");
+  const area = `2,${h-2} ` + line + ` ${(w-2).toFixed(1)},${h-2}`;
+  return `<svg class="spark" width="${w}" height="${h}">
+    <polygon points="${area}" fill="${color}" opacity="0.16"></polygon>
+    <polyline points="${line}" fill="none" stroke="${color}" stroke-width="1.8" stroke-linejoin="round"></polyline>
+    <circle cx="${pts[pts.length-1][0].toFixed(1)}" cy="${pts[pts.length-1][1].toFixed(1)}" r="2.4" fill="${color}"></circle>
+  </svg>`;
+}
+function bigChart(hist, color){
+  const svg = $("chart"), W = 720, H = 130;
+  const vals = (hist||[]).filter(v => v !== null && v !== undefined);
+  if(vals.length < 2){
+    svg.innerHTML = `<text x="360" y="70" fill="#8ba0c4" font-size="13" text-anchor="middle">در حال جمع‌آوری داده… (چند نمونه لازم است)</text>`;
+    return;
+  }
+  const min = Math.min(...vals), max = Math.max(...vals), span = (max-min)||1;
+  const pad = 8;
+  const pts = vals.map((v,i)=>{
+    const x = pad + i/(vals.length-1)*(W-2*pad);
+    const y = H - pad - ((v-min)/span)*(H-2*pad);
+    return [x,y];
+  });
+  const line = pts.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ");
+  const area = `${pad},${H-pad} ` + line + ` ${W-pad},${H-pad}`;
+  const grid = [0,0.25,0.5,0.75,1].map(f=>{
+    const y = (pad + f*(H-2*pad)).toFixed(1);
+    const val = max - f*span;
+    return `<line x1="${pad}" y1="${y}" x2="${W-pad}" y2="${y}" stroke="#1d2c48" stroke-width="1" stroke-dasharray="3 5"/>
+            <text x="${W-pad-4}" y="${(y-4)}" fill="#5f7396" font-size="10" text-anchor="end">${FA(val.toFixed(0))}ms</text>`;
+  }).join("");
+  svg.innerHTML = grid +
+    `<polygon points="${area}" fill="${color}" opacity="0.14"></polygon>
+     <polyline points="${line}" fill="none" stroke="${color}" stroke-width="2.2" stroke-linejoin="round"></polyline>
+     <circle cx="${pts[pts.length-1][0].toFixed(1)}" cy="${pts[pts.length-1][1].toFixed(1)}" r="4" fill="${color}">
+       <animate attributeName="r" values="3.4;5.2;3.4" dur="1.6s" repeatCount="indefinite"/>
+     </circle>`;
+}
+
+/* ---------- رندر ---------- */
+function render(st){
+  lastState = st;
+  const s = st.summary;
+
+  $("k-best").innerHTML = s.best_name ? `${fmt(s.best_median)}<span class="hint" style="font-size:12px"> ms</span>` : "—";
+  $("k-best-ip").textContent = s.best_name ? `${s.best_name} · ${s.best_ip}` : "چیزی پاسخ نداد";
+  $("k-alive").textContent = FA(s.alive) + " / " + FA(s.total);
+  $("k-cycle").textContent = `دور ${FA(st.cycle)} · هر ${FA(st.cycle_seconds)} ثانیه`;
+  $("k-jitter").textContent = fmt(s.avg_jitter) + " ms";
+
+  const bestRegion = (st.regions.find(r => r.best_median !== null) || null);
+  $("k-region").innerHTML = bestRegion ? `${bestRegion.flag} ${fmt(bestRegion.best_median)}<span class="hint" style="font-size:12px"> ms</span>` : "—";
+  $("k-region-ip").textContent = bestRegion ? bestRegion.label : "—";
+
+  // نوار مناطق
+  $("regionPills").innerHTML =
+    `<span class="pill ${selectedRegion==='all'?'on':''}" onclick="pick('all')">
+       همه <span class="m">${FA(st.targets.filter(t=>t.median!==null).length)}</span></span>` +
+    st.regions.map(r=>`<span class="pill ${selectedRegion===r.key?'on':''}" onclick="pick('${r.key}')" title="${r.note||''}">
+        ${r.flag} ${r.label}
+        <span class="m">${r.best_median!==null?fmt(r.best_median,0)+' ms':'قطع'}</span>
+        <span class="hint">${FA(r.alive)}/${FA(r.count)}</span>
+      </span>`).join("");
+
+  // بنرها
+  let banner = "";
+  if(s.outside_iran_banner){
+    banner = `<div class="note info">ℹ️ سرورهای ایرانی از این شبکه پاسخ نمی‌دهند (طبیعی است اگر این داشبورد
+      <b>خارج از ایران</b> اجرا شده). برای نتیجهٔ واقعی، همین داشبورد را روی گوشی/کامپیوتر خودت داخل ایران اجرا کن:
+      <code>python3 dnsserve.py --open</code></div>`;
+  } else if(s.made_for_iran){
+    banner = `<div class="note info">✅ سرورهای ایرانی جواب می‌دهند و سرورهای خارجی در دسترس نیستند — یعنی
+      <b>از داخل ایران</b> اجرا شده. پیشنهادها برای همین شرایط است.</div>`;
+  }
+  if(s.alive === 0){
+    banner = `<div class="note warn">⚠️ هیچ سروری پاسخ نداد. اگر در «پیش‌نمایش» برنامه هستی، مشکل از اینترنت
+      پیش‌نمایش است؛ داشبورد را روی سیستم خودت اجرا کن.</div>`;
+  }
+  $("banner").innerHTML = banner;
+
+  // جدول
+  let list = st.targets.slice();
+  if(selectedRegion !== "all") list = list.filter(t => t.region === selectedRegion);
+  list.sort((a,b)=> (a.median===null) - (b.median===null) || (a.median??9e9) - (b.median??9e9));
+
+  $("rows").innerHTML = list.length ? list.map(t=>{
+    const region = st.regions.find(r=>r.key===t.region) || {flag:"⚪",label:t.region};
+    const color = COLORS[t.color] || "#8ba0c4";
+    const q = t.quality || 0;
+    const grade = t.grade || "قطع";
+    const dead = t.median === null;
+    return `<tr>
+      <td>
+        <b>${t.label}</b> <span class="hint">${region.flag}</span>
+        <div class="hint">${dead?"پاسخی نگرفت":"به‌روز"}</div>
+      </td>
+      <td class="num"><span class="ping" style="color:${color}">${dead?"—":fmt(t.median)}</span>
+        <div><span class="badge b-${t.color}">${grade}</span></div></td>
+      <td class="hide-s">
+        <div class="barwrap"><div class="bar g-${t.color}" style="width:${Math.max(3,q)}%"></div>
+          <span class="barval">${FA(q)}</span></div>
+      </td>
+      <td class="hide-s">${sparkline(t.history, color)}</td>
+      <td class="num">${fmt(t.jitter)}<div class="hint">ms</div></td>
+      <td class="num" style="color:${(t.loss??1)>0.25?"#fca5a5":"inherit"}">${t.loss===null?"—":FA(Math.round(t.loss*100))+"٪"}</td>
+      <td class="num hide-s hint" style="direction:ltr">${t.ip}</td>
+    </tr>`;
+  }).join("") : `<tr><td colspan="7" class="hint">در این منطقه سروری نیست.</td></tr>`;
+
+  // نمودار بزرگ برای منطقهٔ انتخابی (یا بهترین سرور کلی)
+  let subject = null, label = "";
+  if(selectedRegion === "all"){
+    const best = st.targets.filter(t=>t.median!==null).sort((a,b)=>a.median-b.median)[0];
+    subject = best; label = best ? `بهترین سرور الان: ${best.label}` : "هیچ سروری پاسخ نداد";
+  } else {
+    const reg = st.regions.find(r=>r.key===selectedRegion);
+    subject = reg && reg.best_id ? st.targets.find(t=>t.id===reg.best_id) : null;
+    label = reg ? `بهترین سرور ${reg.label}: ${reg.best_name||"—"}` : "";
+  }
+  $("chartTitle").textContent = "📈 نمودار زنده";
+  $("chartLegend").textContent = label + (subject && subject.median!==null ? ` · الان ${fmt(subject.median)} ms` : "");
+  bigChart(subject ? subject.history : [], subject ? (COLORS[subject.color]||"#38bdf8") : "#38bdf8");
+
+  $("filterHint").textContent = selectedRegion === "all" ? "" :
+    "— فیلتر: " + ((st.regions.find(r=>r.key===selectedRegion)||{}).label||"");
+  $("foot").textContent = `رادار DNS · پایش زنده · دور ${FA(st.cycle)} · بالا ${FA(Math.round(st.uptime/60))} دقیقه · ${FA(st.targets.length)} هدف`;
+  renderCustom(st);
+}
+
+function pick(key){ selectedRegion = key; if(lastState) render(lastState); }
+
+/* ---------- اهداف دلخواه ---------- */
+function renderCustom(st){
+  const mine = st.targets.filter(t=>t.family==="custom");
+  $("c-list").innerHTML = mine.map(t=>`<span class="pill">
+      🎮 ${t.label} <span class="m" style="direction:ltr">${t.ip}</span>
+      <span class="badge b-${t.color}">${t.median===null?"قطع":fmt(t.median)+" ms"}</span>
+      <button class="mini" onclick="removeTarget('${t.id}')">✕</button></span>`).join("");
+}
+async function addTarget(){
+  const ip = $("c-ip").value.trim(), label = $("c-label").value.trim(), port = $("c-port").value.trim()||"443";
+  $("c-msg").textContent = "در حال افزودن…";
+  try{
+    const r = await fetch("api/targets", {method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ip, label, port})});
+    const j = await r.json();
+    $("c-msg").textContent = j.ok ? "✅ اضافه شد؛ چند ثانیه بعد پینگش را در جدول ببین." : ("❌ " + (j.error||"خطا"));
+    if(j.ok){ $("c-ip").value=""; $("c-label").value=""; await tick(); }
+  }catch(e){ $("c-msg").textContent = "❌ " + e.message; }
+}
+async function removeTarget(id){
+  try{ await fetch("api/targets/remove", {method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({id})}); await tick(); }catch(e){}
+}
+
+/* ---------- حلقهٔ تازه‌سازی ---------- */
+async function tick(){
+  if(paused) return;
+  try{
+    const r = await fetch("api/state", {cache:"no-store"});
+    const st = await r.json();
+    render(st);
+    $("clock").textContent = "آخرین به‌روزرسانی: " + new Date().toLocaleTimeString("fa-IR");
+  }catch(e){
+    $("clock").textContent = "اتصال به سرور پایش قطع شد";
+  }
+}
+function schedule(){
+  clearInterval(timer);
+  const ms = parseInt($("speed").value, 10);
+  timer = setInterval(tick, ms);
+}
+$("speed").onchange = schedule;
+$("pauseBtn").onclick = () => {
+  paused = !paused;
+  $("pauseBtn").textContent = paused ? "▶ ادامه" : "⏸ توقف";
+};
+$("addBtn").onclick = addTarget;
+$("c-ip").addEventListener("keydown", e => { if(e.key === "Enter") addTarget(); });
+
+tick();
+schedule();
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+.env
+.env.*
+*.env
+custom_targets.json
+reports/
+__pycache__/
+*.pyc
+node_modules/
+.wrangler/

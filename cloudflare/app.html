@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>پینگ‌هاب — کدام DNS برای اینترنت تو بهتر است؟</title>
+<meta property="og:title" content="پینگ‌هاب | تست و انتخاب بهترین DNS">
+<meta property="og:description" content="تست زندهٔ DNS روی گوشی خودت + مقایسهٔ منطقه‌ای. رایگان و بدون فیلترشکن.">
+<style>
+  :root{
+    --bg:#070c18; --card:#101b30; --card2:#0d1729; --line:#1d2c48; --tx:#e9effb; --mut:#8ba0c4;
+    --great:#12b981; --good:#4ade80; --ok:#a3e635; --meh:#f59e0b; --weak:#f97316; --dead:#ef4444;
+    --acc:#38bdf8; --violet:#8b5cf6; --pink:#e879f9;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{background:radial-gradient(1100px 480px at 50% -140px,#12233f 0%,#070c18 62%);color:var(--tx);
+       font-family:Tahoma,Vazirmatn,"Segoe UI",system-ui,sans-serif;line-height:1.75;font-size:14.5px;
+       min-height:100vh;padding-bottom:30px}
+  .wrap{max-width:760px;margin:0 auto;padding:14px 12px 40px}
+  h1{font-size:20px;margin:0;letter-spacing:.2px}
+  h2{font-size:15.5px;margin:20px 0 8px;padding-right:8px;border-right:4px solid var(--acc)}
+  h3{font-size:14px;margin:14px 0 6px}
+  .sub{color:var(--mut);font-size:12.5px;line-height:1.6}
+  .mut{color:var(--mut)}
+  .head{background:linear-gradient(150deg,#122343,#0d1729);border:1px solid var(--line);border-radius:16px;padding:13px 14px}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .between{justify-content:space-between}
+  button{border:1px solid var(--line);background:#152340;color:var(--tx);border-radius:11px;padding:9px 13px;
+         font-size:13.5px;font-family:inherit;cursor:pointer;transition:.15s}
+  button:hover{background:#1b2c52;border-color:#2b4470}
+  button:active{transform:scale(.98)}
+  button.primary{background:linear-gradient(135deg,#0ea5e9,#2563eb);border:none;font-weight:700;font-size:15px;
+                 padding:11px 18px;box-shadow:0 10px 24px -12px #0ea5e9}
+  button.ghost{background:transparent}
+  button:disabled{opacity:.55;cursor:not-allowed}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px 12px}
+  .kpi{flex:1;min-width:120px}
+  .kpi b{display:block;font-size:19px;font-variant-numeric:tabular-nums}
+  .kpi span{color:var(--mut);font-size:11.5px}
+  .badge{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;border:1px solid var(--line);
+         margin-left:4px;background:#0e1a2e;color:#cbd5e1;white-space:nowrap}
+  .b-great{border-color:#1d7a5f;color:#7ff0c0}.b-good{border-color:#2d7a2d;color:#b6f2b6}
+  .b-ok{border-color:#5a7a1d;color:#e2f7a8}.b-meh{border-color:#b45309;color:#fcd34d}
+  .b-weak{border-color:#c2410c;color:#fdba74}.b-dead{border-color:#7f1d1d;color:#fca5a5;background:#2a1113}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--great);display:inline-block;
+       box-shadow:0 0 0 0 rgba(18,185,129,.7);animation:pulse 1.7s infinite}
+  @keyframes pulse{70%{box-shadow:0 0 0 9px rgba(18,185,129,0)}100%{box-shadow:0 0 0 0 rgba(18,185,129,0)}}
+  .pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#0f1c31;
+        border-radius:999px;padding:6px 11px;font-size:12px;cursor:pointer;transition:.15s;white-space:nowrap}
+  .pill:hover{border-color:#2b4470;background:#16264a}
+  .pill.on{background:linear-gradient(135deg,#123c5a,#0f2f46);border-color:#2a7fa8;color:#d8f1ff}
+  .pill .m{font-variant-numeric:tabular-nums;font-weight:700}
+  table{width:100%;border-collapse:separate;border-spacing:0 5px;font-size:12.8px}
+  th{color:var(--mut);font-size:11px;font-weight:600;text-align:right;padding:3px 6px;white-space:nowrap}
+  td{background:var(--card);padding:8px 6px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);vertical-align:top}
+  td:first-child{border-right:1px solid var(--line);border-radius:0 11px 11px 0}
+  td:last-child{border-left:1px solid var(--line);border-radius:11px 0 0 11px}
+  .num{font-variant-numeric:tabular-nums;direction:ltr;text-align:center;white-space:nowrap}
+  .ping{font-size:16.5px;font-weight:700;font-variant-numeric:tabular-nums;direction:ltr}
+  .barwrap{position:relative;height:15px;background:#0d1729;border:1px solid var(--line);border-radius:6px;overflow:hidden;min-width:58px}
+  .bar{height:100%;transition:width .5s ease}
+  .barval{position:absolute;inset:0;text-align:center;font-size:10.5px;font-variant-numeric:tabular-nums}
+  .g-great{background:linear-gradient(90deg,#0d9488,#12b981)}.g-good{background:linear-gradient(90deg,#15803d,#4ade80)}
+  .g-ok{background:linear-gradient(90deg,#4d7c0f,#a3e635)}.g-meh{background:linear-gradient(90deg,#b45309,#f59e0b)}
+  .g-weak{background:linear-gradient(90deg,#c2410c,#f97316)}.g-dead{background:#3f1d1d}
+  .note{background:#0d1729;border:1px dashed var(--line);border-radius:13px;padding:11px 12px;color:#c3d3ee;font-size:12.5px}
+  .warn{border-color:#7c2d12;background:#1f1206}
+  .info{border-color:#1e40af;background:#0b1a33}
+  .good{border-color:#1d7a5f;background:#0b2a22}
+  code{direction:ltr;display:inline-block;background:#0d1729;padding:1px 6px;border-radius:6px;
+       font-family:ui-monospace,Consolas,monospace;font-size:12px}
+  .foot{color:var(--mut);font-size:11.5px;text-align:center;margin-top:24px;line-height:1.9}
+  a{color:var(--acc)}
+  .hide-s{display:table-cell}
+  @media(max-width:520px){.hide-s{display:none}}
+  .spark{display:block}
+  .idcard{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:7px;margin-top:9px}
+  .idcell{background:#0d1729;border:1px solid var(--line);border-radius:10px;padding:6px 9px}
+  .idcell span{display:block;color:var(--mut);font-size:10.5px}
+  .idcell b{font-size:12.8px}
+  .adv{background:linear-gradient(150deg,#0e2a22,#0d1729);border:1px solid #1d7a5f;border-radius:14px;padding:11px 13px}
+  .adv.bad{background:linear-gradient(150deg,#2a1414,#0d1729);border-color:#7f1d1d}
+  .tabs{display:flex;gap:6px;margin:10px 0 4px}
+  .tab{flex:1;text-align:center;border:1px solid var(--line);border-radius:11px;padding:7px 4px;font-size:12.5px;
+       cursor:pointer;background:#0f1c31}
+  .tab.on{background:linear-gradient(135deg,#123c5a,#0f2f46);border-color:#2a7fa8}
+  #toast{position:fixed;bottom:16px;right:50%;transform:translateX(50%);background:#0d9488;color:#04211a;
+         font-weight:700;padding:9px 16px;border-radius:12px;font-size:13px;opacity:0;pointer-events:none;
+         transition:.25s;z-index:99}
+  #toast.show{opacity:1;bottom:26px}
+  .inline{display:inline}
+</style>
+<script src="https://telegram.org/js/telegram-web-app.js" onerror="window.__noTgSdk=1"></script>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <div class="row between">
+      <div class="row">
+        <h1>📡 پینگ‌هاب</h1>
+        <span class="badge b-great" id="liveBadge"><span class="dot"></span> زنده</span>
+      </div>
+      <div class="row">
+        <button class="ghost" id="tgTheme" title="تم" style="display:none">🌓</button>
+      </div>
+    </div>
+    <div class="sub" style="margin-top:5px">
+      تست <b>واقعی</b> روی گوشی خودت: پینگ، جیتر و افت بستهٔ هر DNS + مقایسهٔ <b>منطقه‌ای</b>.
+      هیچ VPN و هیچ فیلترشکنی لازم نیست.
+    </div>
+    <div class="idcard" id="idcard">
+      <div class="idcell"><span>خط اینترنت تو</span><b id="isp">در حال تشخیص…</b></div>
+      <div class="idcell"><span>شبکه / ASN</span><b id="asn">—</b></div>
+      <div class="idcell"><span>موقعیت</span><b id="geo">—</b></div>
+      <div class="idcell"><span>نزدیک‌ترین لبهٔ کلادفلر</span><b id="colo">—</b></div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:12px">
+    <button class="primary" id="run">▶ تست کن (۲۰ ثانیه)</button>
+    <button id="auto">🔁 تست زنده خودکار</button>
+    <button id="save">💾 ذخیره و اشتراک</button>
+  </div>
+  <div class="sub" id="status" style="margin-top:7px">آماده — دکمهٔ تست را بزن.</div>
+
+  <div class="row" style="margin-top:12px">
+    <div class="card kpi"><b id="k-best">—</b><span>بهترین انتخاب الان</span><div class="sub" id="k-best-ip">—</div></div>
+    <div class="card kpi"><b id="k-quality">—</b><span>قدرت آن سرور</span><div class="sub">امتیاز ۰ تا ۱۰۰</div></div>
+    <div class="card kpi"><b id="k-region">—</b><span>سریع‌ترین منطقه</span><div class="sub" id="k-region-name">—</div></div>
+  </div>
+
+  <div class="adv" id="advice" style="margin-top:12px">
+    <b>🎯 نتیجه اینجا می‌آید</b>
+    <div class="sub">بعد از تست، بهترین DNS برای خط تو، با دلیل و نحوهٔ تنظیمش، همین‌جا نوشته می‌شود.</div>
+  </div>
+
+  <h2>🌐 نتیجهٔ سرورهای DNS</h2>
+  <div class="row" id="regionPills"></div>
+  <table>
+    <thead><tr>
+      <th>سرور</th><th>پینگ</th><th>قدرت</th><th class="hide-s">روند</th><th class="hide-s">جیتر</th><th class="hide-s">افت</th>
+    </tr></thead>
+    <tbody id="rows"><tr><td colspan="6" class="sub">هنوز تستی اجرا نشده.</td></tr></tbody>
+  </table>
+
+  <h2>🌍 تأخیر مسیر تا هر منطقه (تقریبی)</h2>
+  <div class="note" style="margin-bottom:8px">
+    این بخش نشان می‌دهد از <b>خط اینترنت تو</b> تا هر منطقه چند میلی‌ثانیه فاصله است.
+    مرورگر نمی‌تواند پینگ خام بزند، پس این اعداد شامل زمان گشایش اتصال امن (TLS) هستند و <b>تقریبی</b>اند —
+    اما نسبتشان به هم درست است: هر جا کمتر بود، سرورهای بازی همان منطقه برایت نزدیک‌ترند.
+  </div>
+  <table><tbody id="regionRows"><tr><td class="sub">در حال اندازه‌گیری…</td></tr></tbody></table>
+
+  <h2>🩺 سلامت سرورها از دید اینترنت (مرجع)</h2>
+  <div class="note" style="margin-bottom:8px">
+    این اعداد از <b>لبهٔ شبکهٔ کلادفلر</b> گرفته می‌شوند، نه از گوشی تو — برای همین فقط می‌گویند یک DNS
+    «سالم و در دسترس» است یا نه. (سرورهای ایرانی از بیرون ایران جواب نمی‌دهند؛ این طبیعی است.)
+  </div>
+  <div id="edgeBox" class="card sub">برای دیدن، دکمهٔ زیر را بزن.</div>
+  <div class="row" style="margin-top:8px"><button id="edgeBtn">🩺 بررسی سلامت</button></div>
+
+  <h2>📘 راهنمای واقعی (بدون شایعه)</h2>
+  <div class="note">
+    <b>۱) DNS پینگ داخل مچ بازی را کم نمی‌کند.</b> بازی بعد از پیدا کردن سرور، با IP بازی وصل می‌شود.
+    DNS این‌ها را بهتر می‌کند: ورود به بازی، رفع تحریم، سرعت دانلود آپدیت، خطاهای لابی.<br>
+    <b>۲) برای پینگ واقعی:</b> خروجی تونل نزدیک سرور بازی (دبی/بحرین → ترکیه/عراق)، پروتکل UDP/WireGuard،
+    MTU درست، وای‌فای ۵GHz، بستن اپ‌های پس‌زمینه، خنک بودن گوشی.<br>
+    <b>۳) افت بسته از پینگ مهم‌تر است.</b> اگر ستون «افت» بالا بود، آن DNS را استفاده نکن حتی اگر سریع باشد.<br>
+    <b>۴) DNS خصوصی اندروید:</b> تنظیمات › شبکه و اینترنت › DNS خصوصی › «نام میزبان ارائه‌دهنده» →
+    مثل <code>shecan.ir</code> یا <code>dns.google</code> یا <code>one.one.one.one</code><br>
+    <b>۵) امنیت:</b> از DNS ناشناس استفاده نکن؛ می‌تواند تو را به سایت جعلی ببرد.
+  </div>
+
+  <div class="foot">
+    پینگ‌هاب · اندازه‌گیری محلی در مرورگر خودت · بدون ذخیره‌سازی داده‌های شخصی<br>
+    <span id="links"></span>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+"use strict";
+/* ============================ ابزارها ============================ */
+const $ = id => document.getElementById(id);
+const FA = s => String(s).replace(/[0-9]/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+const fmt = (v,d=1) => (v===null||v===undefined||isNaN(v)) ? "—" : FA(Number(v).toFixed(d));
+const COLORS = {great:"#12b981", good:"#4ade80", ok:"#a3e635", meh:"#f59e0b", weak:"#f97316", dead:"#ef4444"};
+const TG = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
+function toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),2200); }
+function setupTelegram(){
+  if(!TG) return;
+  try{
+    TG.ready(); TG.expand();
+    if(TG.setHeaderColor) TG.setHeaderColor("#0b1120");
+    if(TG.setBackgroundColor) TG.setBackgroundColor("#070c18");
+    if(TG.colorScheme === "light") document.documentElement.style.filter = "none";
+  }catch(e){}
+}
+function getInitData(){
+  if(TG && TG.initData) return TG.initData;
+  const h = new URLSearchParams(location.hash.replace(/^#/, ""));
+  return (h.get("tgWebAppData") || "").replace(/^tgWebAppData=/, "");
+}
+function tgUser(){
+  if(TG && TG.initDataUnsafe && TG.initDataUnsafe.user) return TG.initDataUnsafe.user;
+  try{
+    const d = new URLSearchParams(getInitData());
+    const u = d.get("user"); return u ? JSON.parse(u) : null;
+  }catch(e){ return null; }
+}
+
+/* ============================ سرورهای DoH ============================ */
+const RESOLVERS = [
+  {id:"cloudflare", name:"کلودفلر", url:"https://cloudflare-dns.com/dns-query", region:"anycast", dns:"1.1.1.1 / 1.0.0.1", tag:"بدون سانسور، سریع"},
+  {id:"google",     name:"گوگل",     url:"https://dns.google/dns-query",        region:"anycast", dns:"8.8.8.8 / 8.8.4.4", tag:"پایدار"},
+  {id:"quad9",      name:"کوآد۹",    url:"https://dns.quad9.net/dns-query",     region:"anycast", dns:"9.9.9.9", tag:"ضد بدافزار، بدون لاگ"},
+  {id:"adguard",    name:"ادگارد",   url:"https://dns.adguard-dns.com/dns-query",region:"anycast", dns:"94.140.14.14", tag:"ضد تبلیغ"},
+  {id:"dnssb",      name:"DNS.SB",   url:"https://doh.dns.sb/dns-query",        region:"anycast", dns:"185.222.222.222", tag:"بدون لاگ"},
+  {id:"controld",   name:"ControlD", url:"https://freedns.controld.com/p0",    region:"anycast", dns:"76.76.2.0", tag:"سریع"},
+  {id:"dns0",       name:"DNS0.eu",  url:"https://dns0.eu/dns-query",          region:"anycast", dns:"193.110.81.0", tag:"اروپایی، بدون لاگ"},
+  {id:"nextdns",    name:"NextDNS",  url:"https://dns.nextdns.io",             region:"anycast", dns:"45.90.28.0", tag:"قابل شخصی‌سازی"},
+  {id:"mullvad",    name:"Mullvad",  url:"https://dns.mullvad.net/dns-query",  region:"anycast", dns:"194.242.2.2", tag:"حریم خصوصی"},
+  {id:"cffamily",   name:"کلودفلر خانواده", url:"https://family.cloudflare-dns.com/dns-query", region:"family", dns:"1.1.1.3", tag:"فیلتر بزرگسال"},
+  {id:"adguardfam", name:"ادگارد خانواده", url:"https://family.adguard-dns.com/dns-query",     region:"family", dns:"94.140.14.15", tag:"تبلیغ+بزرگسال"},
+  {id:"cleanbr",    name:"CleanBrowsing",  url:"https://doh.cleanbrowsing.org/doh/security-filter/", region:"family", dns:"185.228.168.9", tag:"امنیتی"}
+];
+const REGION_LABEL = {anycast:"🌐 نزدیک‌ترین لبه", family:"🛡 خانواده", iran:"🇮🇷 ایران"};
+const REGION_NOTE  = {
+  anycast:"این‌ها هرجای دنیا «لبهٔ» نزدیک به خودت را جواب می‌دهند؛ عددشان یعنی فاصله‌ات تا نزدیک‌ترین مرکز CDN.",
+  family:"نسخه‌های فیلترشده برای محتوای نامناسب (مناسب دستگاه بچه‌ها).",
+  iran:"سرویس‌های داخلی مخصوص رفع تحریم."
+};
+
+/* مقصدهای منطقه‌ای برای سنجش تقریبی مسیر */
+const REGION_TARGETS = [
+  {region:"ایران",        flag:"🇮🇷", url:"https://www.aparat.com/favicon.ico"},
+  {region:"ترکیه",        flag:"🇹🇷", url:"https://www.ttnet.com.tr/favicon.ico"},
+  {region:"امارات/خلیج",  flag:"🇦🇪", url:"https://www.etisalat.ae/favicon.ico"},
+  {region:"اروپا (آلمان)",flag:"🇩🇪", url:"https://www.hetzner.com/favicon.ico"},
+  {region:"آسیا (شرق)",   flag:"🌏", url:"https://www.twnic.tw/favicon.ico"},
+  {region:"آمریکا",       flag:"🇺🇸", url:"https://www.verisign.com/favicon.ico"}
+];
+
+/* ============================ موتور DNS در مرورگر ============================ */
+function buildQuery(name, txid){
+  const labels = name.split(".").filter(Boolean);
+  let len = 17; labels.forEach(l => len += 1 + l.length);
+  const buf = new Uint8Array(len), dv = new DataView(buf.buffer);
+  dv.setUint16(0, txid); dv.setUint16(2, 0x0100); dv.setUint16(4, 1);
+  let o = 12;
+  for(const l of labels){ buf[o++] = l.length; for(const ch of l) buf[o++] = ch.charCodeAt(0); }
+  buf[o++] = 0; dv.setUint16(o, 1); dv.setUint16(o+2, 1);
+  return buf;
+}
+function parseDns(buf){
+  const out = {rcode:null, a:[], minTtl:null};
+  const dv = new DataView(buf.buffer, buf.byteOffset, buf.byteLength);
+  if(buf.byteLength < 12) return out;
+  out.rcode = dv.getUint16(2) & 0xF;
+  const qd = dv.getUint16(4), an = dv.getUint16(6);
+  let i = 12;
+  const skipName = () => {
+    while(i < buf.byteLength){
+      const l = buf[i];
+      if(l === 0){ i++; return; }
+      if((l & 0xC0) === 0xC0){ i += 2; return; }
+      i += l + 1;
+    }
+  };
+  for(let q=0;q<qd;q++){ skipName(); i += 4; }
+  for(let r=0;r<an && i+10<=buf.byteLength;r++){
+    skipName();
+    const type = dv.getUint16(i), ttl = dv.getUint32(i+4), rdlen = dv.getUint16(i+8);
+    i += 10;
+    if(type === 1 && rdlen === 4){
+      out.a.push(`${buf[i]}.${buf[i+1]}.${buf[i+2]}.${buf[i+3]}`);
+      out.minTtl = out.minTtl === null ? ttl : Math.min(out.minTtl, ttl);
+    }
+    i += rdlen;
+  }
+  return out;
+}
+const TEST_DOMAINS = ["www.wikipedia.org","www.google.com","www.instagram.com","www.youtube.com","www.microsoft.com"];
+async function dohQuery(server, name, timeoutMs){
+  const ctrl = new AbortController();
+  const timer = setTimeout(()=>ctrl.abort(), timeoutMs);
+  const t0 = performance.now();
+  try{
+    const res = await fetch(server.url, {
+      method:"POST",
+      headers:{"Content-Type":"application/dns-message","Accept":"application/dns-message"},
+      body: buildQuery(name, Math.floor(Math.random()*65535)),
+      signal: ctrl.signal, cache:"no-store", mode:"cors", redirect:"follow"
+    });
+    const ab = await res.arrayBuffer();
+    const ms = performance.now() - t0;
+    if(!res.ok) return {ok:false, ms, err:"HTTP "+res.status};
+    const dns = parseDns(new Uint8Array(ab));
+    if(dns.rcode !== 0 && dns.rcode !== 3) return {ok:false, ms, err:"rcode "+dns.rcode};
+    return {ok:true, ms, dns};
+  }catch(e){
+    return {ok:false, ms:null, err: e.name === "AbortError" ? "تایم‌اوت" : "مسدود/شبکه"};
+  }finally{ clearTimeout(timer); }
+}
+const median = a => { if(!a.length) return null; const s=[...a].sort((x,y)=>x-y), m=s.length>>1;
+  return s.length%2 ? s[m] : (s[m-1]+s[m])/2; };
+
+function quality(st){
+  if(st.med === null) return {score:0, grade:"قطع", color:"dead"};
+  let s = 100;
+  s -= Math.min(55, st.med * 0.45);
+  if(st.jit !== null) s -= Math.min(20, st.jit * 1.2);
+  if(st.loss) s -= st.loss * 60;
+  const score = Math.max(0, Math.min(100, Math.round(s)));
+  const grade = score>=85?"عالی":score>=70?"خیلی خوب":score>=55?"خوب":score>=38?"متوسط":"ضعیف";
+  const color = score>=85?"great":score>=70?"good":score>=55?"ok":score>=38?"meh":"weak";
+  return {score, grade, color};
+}
+function sparkline(hist, color, w=92, h=22){
+  const vals = (hist||[]).filter(v => v !== null && v !== undefined);
+  if(vals.length < 2) return `<svg width="${w}" height="${h}"></svg>`;
+  const min = Math.min(...vals), max = Math.max(...vals), span = (max-min)||1;
+  const pts = vals.map((v,i)=>[2 + i/(vals.length-1)*(w-4), h-3-(1-(v-min)/span)*(h-7)]);
+  const line = pts.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ");
+  return `<svg class="spark" width="${w}" height="${h}">
+    <polygon points="2,${h-2} ${line} ${(w-2)},${h-2}" fill="${color}" opacity=".15"></polygon>
+    <polyline points="${line}" fill="none" stroke="${color}" stroke-width="1.7"></polyline>
+    <circle cx="${pts.at(-1)[0].toFixed(1)}" cy="${pts.at(-1)[1].toFixed(1)}" r="2.2" fill="${color}"></circle></svg>`;
+}
+
+/* ============================ وضعیت برنامه ============================ */
+const state = {
+  results: new Map(),      // id -> {med,jit,loss,ok,total,history:[]}
+  regions: [],             // نتایج منطقه‌ای
+  me: null,
+  running: false,
+  auto: false,
+  filter: "all",
+  lastRun: null
+};
+
+/* ============================ تشخیص خط اینترنت ============================ */
+async function detectMe(){
+  try{
+    const r = await fetch("api/me", {cache:"no-store"});
+    const j = await r.json();
+    state.me = j;
+    const org = (j.asOrganization || "").trim();
+    const persian = mapISP(org, j.asn);
+    $("isp").textContent = persian || (org || "ناشناس");
+    $("asn").textContent  = j.asn ? ("AS" + j.asn) : "—";
+    $("geo").textContent  = [j.city, j.country].filter(Boolean).join("، ") || "—";
+    $("colo").textContent = j.colo ? (j.colo + " (" + (COLO[j.colo] || "لبهٔ کلادفلر") + ")") : "—";
+  }catch(e){
+    $("isp").textContent = "در دسترس نیست";
+  }
+}
+const COLO = {DXB:"دبی", FRA:"فرانکفورت", IST:"استانبول", AMS:"آمستردام", LHR:"لندن", CDG:"پاریس",
+              BOM:"بمبئی", SIN:"سنگاپور", IAD:"واشینگتن", DME:"مسکو", WAW:"ورشو", ARN:"استکهلم", ZRH:"زوریخ"};
+function mapISP(org, asn){
+  const o = (org || "").toLowerCase();
+  if(/irancell|iran cell/.test(o)) return "ایرانسل";
+  if(/mobile communication|mcci|mci\b|همراه/.test(o)) return "همراه اول";
+  if(/rightel/.test(o)) return "رایتل";
+  if(/telecommunication company of iran|tci\b/.test(o)) return "مخابرات (TCI)";
+  if(/shatel/.test(o)) return "شاتل";
+  if(/asiatech/.test(o)) return "آسیاتک";
+  if(/pars ?online/.test(o)) return "پارس‌آنلاین";
+  if(/hiweb/.test(o)) return "های‌وب";
+  if(/respina/.test(o)) return "رسپینا";
+  if(/mobile telecommunication|mtn/.test(o)) return "MTN/ایرانسل";
+  return null;
+}
+
+/* ============================ اجرای تست ============================ */
+function setStatus(t){ $("status").textContent = t; }
+
+async function runOnce(silent){
+  if(state.running) return;
+  state.running = true;
+  $("run").disabled = true;
+  setStatus("در حال تست " + FA(RESOLVERS.length) + " سرور DNS روی گوشی تو…");
+
+  // نتایج منطقه‌ای (موازی با تست DNS)
+  measureRegions();
+
+  const results = [];
+  let done = 0;
+  const CONC = 3;
+  const queue = [...RESOLVERS];
+  async function worker(){
+    while(queue.length){
+      const srv = queue.shift();
+      const prev = state.results.get(srv.id) || {med:null, jit:null, loss:1, ok:0, total:0, history:[]};
+      const lats = [];
+      let tried = 0, losses = 0;
+      const warm = await dohQuery(srv, TEST_DOMAINS[0], 7000);   // گرم‌کردن اتصال TLS
+      if(!warm.ok) losses++;
+      tried++;
+      for(let i=0;i<5;i++){
+        const name = TEST_DOMAINS[Math.floor(Math.random()*TEST_DOMAINS.length)];
+        const r = await dohQuery(srv, name, 7000);
+        tried++;
+        if(r.ok) lats.push(r.ms); else losses++;
+        await new Promise(x=>setTimeout(x,35));
+      }
+      const med = median(lats);
+      const jit = lats.length ? lats.reduce((a,b)=>a+Math.abs(b-med),0)/lats.length : null;
+      const st = {
+        med, jit,
+        loss: tried ? losses/tried : 1,
+        ok: lats.length, total: tried,
+        history: [...(prev.history||[]), med].slice(-30)
+      };
+      state.results.set(srv.id, st);
+      results.push({srv, st});
+      done++;
+      setStatus(`تست شد: ${FA(done)} از ${FA(RESOLVERS.length)} — ${srv.name}…`);
+      renderTable();
+    }
+  }
+  await Promise.all(Array.from({length:CONC}, worker));
+
+  state.lastRun = {when: Date.now(), results: results.map(r=>({...r.srv, ...r.st}))};
+  renderAll(true);
+  $("run").disabled = false;
+  state.running = false;
+  setStatus(silent ? "به‌روزرسانی زنده انجام شد ✓" : "تست تمام شد ✓ — نتیجهٔ زیر را ببین و ذخیره کن.");
+}
+
+/* سنجش تقریبی مسیر منطقه‌ای با no-cors */
+async function measureRegions(){
+  const out = [];
+  for(const t of REGION_TARGETS){
+    const lats = [];
+    for(let i=0;i<3;i++){
+      const ctrl = new AbortController();
+      const timer = setTimeout(()=>ctrl.abort(), 6000);
+      const t0 = performance.now();
+      try{
+        await fetch(t.url + "?cb=" + Math.random(), {mode:"no-cors", cache:"no-store", signal:ctrl.signal});
+        lats.push(performance.now() - t0);
+      }catch(e){ /* ناموفق */ }
+      clearTimeout(timer);
+      await new Promise(x=>setTimeout(x,50));
+    }
+    out.push({...t, ms: median(lats), ok: lats.length});
+  }
+  state.regions = out;
+  renderRegions();
+}
+
+/* ============================ رندر ============================ */
+function renderAll(final){
+  const alive = [...state.results.entries()]
+    .map(([id, st]) => ({srv: RESOLVERS.find(r=>r.id===id), st}))
+    .filter(x => x.st.med !== null)
+    .sort((a,b) => a.st.med - b.st.med);
+
+  if(alive.length){
+    const best = alive[0], q = quality(best.st);
+    $("k-best").innerHTML = fmt(best.st.med) + '<span class="sub" style="font-size:11px"> ms</span>';
+    $("k-best-ip").innerHTML = best.srv.name + '<div class="sub" style="direction:ltr">' + best.srv.dns + '</div>';
+    $("k-quality").innerHTML = FA(q.score) + '<span class="sub" style="font-size:11px">/۱۰۰</span>';
+  }
+  const fastestRegion = state.regions.filter(r=>r.ms!==null).sort((a,b)=>a.ms-b.ms)[0];
+  if(fastestRegion){
+    $("k-region").innerHTML = fmt(fastestRegion.ms, 0) + '<span class="sub" style="font-size:11px"> ms</span>';
+    $("k-region-name").textContent = fastestRegion.flag + " " + fastestRegion.region;
+  }
+  $("best-holder")?.remove();
+  renderRegions(); renderTable(); renderPills(); if(final) renderAdvice(alive);
+}
+
+function renderPills(){
+  const keys = ["all", ...new Set([...state.results.keys()].map(id => (RESOLVERS.find(r=>r.id===id)||{}).region))];
+  const order = ["all","anycast","family"];
+  keys.sort((a,b)=>order.indexOf(a)-order.indexOf(b));
+  $("regionPills").innerHTML = keys.map(k=>{
+    const label = k==="all" ? "همه" : (REGION_LABEL[k] || k);
+    const arr = k==="all" ? [...state.results.values()]
+      : [...state.results.entries()].filter(([id])=> (RESOLVERS.find(r=>r.id===id)||{}).region===k).map(([,v])=>v);
+    const good = arr.filter(s=>s.med!==null);
+    const bestMs = good.length ? Math.min(...good.map(s=>s.med)) : null;
+    return `<span class="pill ${state.filter===k?'on':''}" data-k="${k}" title="${REGION_NOTE[k]||''}">
+      ${label} <span class="m">${bestMs!==null?fmt(bestMs,0)+' ms':'—'}</span></span>`;
+  }).join("");
+  $("regionPills").querySelectorAll(".pill").forEach(p=>p.onclick=()=>{ state.filter=p.dataset.k; renderPills(); renderTable(); });
+}
+
+function renderTable(){
+  let list = [...state.results.entries()].map(([id, st]) => ({srv: RESOLVERS.find(r=>r.id===id), st}));
+  if(state.filter !== "all") list = list.filter(x => x.srv && x.srv.region === state.filter);
+  list.sort((a,b)=> (a.st.med===null)-(b.st.med===null) || (a.st.med??9e9)-(b.st.med??9e9));
+  if(!list.length){ $("rows").innerHTML = `<tr><td colspan="6" class="sub">داده‌ای برای این فیلتر نیست.</td></tr>`; return; }
+  $("rows").innerHTML = list.map(({srv, st})=>{
+    const q = quality(st), c = COLORS[q.color];
+    const dead = st.med === null;
+    return `<tr>
+      <td><b>${srv.name}</b><div class="sub" style="direction:ltr">${srv.dns}</div>
+          <div class="sub">${srv.tag}</div></td>
+      <td class="num"><span class="ping" style="color:${c}">${dead?"—":fmt(st.med)}</span>
+          <div><span class="badge b-${q.color}">${q.grade}</span></div></td>
+      <td><div class="barwrap"><div class="bar g-${q.color}" style="width:${Math.max(3,q.score)}%"></div>
+          <span class="barval">${FA(q.score)}</span></div></td>
+      <td class="hide-s">${sparkline(st.history, c)}</td>
+      <td class="num hide-s">${fmt(st.jit)}</td>
+      <td class="num hide-s" style="color:${st.loss>0.25?'#fca5a5':'inherit'}">${FA(Math.round(st.loss*100))}٪</td>
+    </tr>`;
+  }).join("");
+}
+
+function renderRegions(){
+  if(!state.regions.length){ $("regionRows").innerHTML = `<tr><td class="sub">در حال اندازه‌گیری…</td></tr>`; return; }
+  const max = Math.max(...state.regions.map(r=>r.ms||0), 1);
+  $("regionRows").innerHTML = state.regions.map(r=>{
+    const dead = r.ms === null;
+    const pct = dead ? 0 : Math.max(4, 100 - (r.ms/max)*100);
+    const col = dead ? "var(--dead)" : r.ms<80?"linear-gradient(90deg,#0d9488,#12b981)"
+              : r.ms<160?"linear-gradient(90deg,#4d7c0f,#a3e635)":"linear-gradient(90deg,#c2410c,#f97316)";
+    return `<tr><td style="min-width:150px">${r.flag} <b>${r.region}</b>
+        <div class="sub">${dead?"دسترسی نداشت":"تقریبی (شامل TLS)"}</div></td>
+      <td class="num" style="width:64px"><span class="ping" style="color:${dead?'#ef4444':'inherit'}">${dead?"—":fmt(r.ms,0)}</span></td>
+      <td><div class="barwrap"><div class="bar" style="width:${pct}%;background:${col}"></div>
+          <span class="barval">${dead?"":FA(Math.round(r.ms))+" ms"}</span></div></td></tr>`;
+  }).join("");
+}
+
+function renderAdvice(alive){
+  const box = $("advice");
+  if(!alive.length){
+    box.className = "adv";
+    box.innerHTML = `<b>😕 هیچ سروری جواب نداد</b>
+      <div class="sub" style="margin-top:6px">اگر اینترنت داری ولی همه قطع‌اند، احتمالاً شبکه‌ات DoH را می‌بندد.
+      با این حال نتیجهٔ منطقه‌ای پایین صفحه هنوز معتبر است. برای تست کامل (UDP/53) نسخهٔ پایتون پینگ‌هاب را روی
+      کامپیوتر/ترموکس اجرا کن — لینک در پایین صفحه.</div>`;
+    return;
+  }
+  const best = alive[0], q = quality(best.st);
+  const famBest = alive.find(x=>x.srv.region==="family");
+  const fastestRegion = state.regions.filter(r=>r.ms!==null).sort((a,b)=>a.ms-b.ms)[0];
+  const isp = state.me ? (mapISP(state.me.asOrganization, state.me.asn) || state.me.asOrganization) : null;
+  const privateDns = best.srv.id === "cloudflare" ? "one.one.one.one"
+    : best.srv.id === "google" ? "dns.google"
+    : best.srv.id === "adguard" ? "dns.adguard-dns.com"
+    : best.srv.id === "quad9" ? "dns.quad9.net"
+    : best.srv.id === "dnssb" ? "dns.sb"
+    : best.srv.id === "controld" ? "p2.freedns.controld.com"
+    : best.srv.id === "mullvad" ? "dns.mullvad.net"
+    : best.srv.id === "nextdns" ? "dns.nextdns.io"
+    : best.srv.id === "cffamily" ? "family.cloudflare-dns.com"
+    : best.srv.id === "adguardfam" ? "family.adguard-dns.com"
+    : best.srv.id === "cleanbr" ? "security-filter-dns.cleanbrowsing.org"
+    : best.srv.dns.split(" / ")[0];
+  box.className = "adv";
+  box.innerHTML = `<b>🎯 بهترین DNS برای خط تو الان: ${best.srv.name}</b>
+    <div class="row" style="margin-top:8px">
+      <span class="badge b-${q.color}">${q.grade} · قدرت ${FA(q.score)}/۱۰۰</span>
+      <span class="badge">پینگ ${fmt(best.st.med)} ms</span>
+      <span class="badge">جیتر ${fmt(best.st.jit)} ms</span>
+      <span class="badge ${best.st.loss>0.1?'b-meh':'b-great'}">افت ${FA(Math.round(best.st.loss*100))}٪</span>
+    </div>
+    <div style="margin-top:10px">
+      <b>چطور تنظیمش کنم؟</b>
+      <div class="sub">اندروید ۹+: تنظیمات › شبکه و اینترنت › <b>DNS خصوصی</b> › «نام میزبان ارائه‌دهندهٔ DNS» →
+      <code>${privateDns}</code></div>
+      <div class="sub">آیفون: تنظیمات › وای‌فای › (i) › Configure DNS › Manual →
+      <code>${best.srv.dns.split(" / ")[0]}</code></div>
+      <div class="row" style="margin-top:6px">
+        <button class="ghost" id="copyDns">📋 کپی ${privateDns}</button>
+      </div>
+    </div>
+    ${isp ? `<div class="sub" style="margin-top:9px">خط تو: <b>${isp}</b>${state.me.colo?` · نزدیک‌ترین لبه: ${state.me.colo}`:""}</div>`:""}
+    ${fastestRegion ? `<div class="sub">نزدیک‌ترین منطقه به تو: <b>${fastestRegion.flag} ${fastestRegion.region}</b>
+        (${fmt(fastestRegion.ms,0)} ms) — سرور بازی را از همین منطقه انتخاب کن.</div>`:""}
+    ${best.srv.id === "cloudflare" || best.srv.id === "google" ? `<div class="note warn" style="margin-top:9px;font-size:12px">
+       ⚠️ اگر داخل ایران هستی و این سرور در عمل کار نکرد، احتمالاً ISP آن را مخدوش می‌کند؛
+       در اپ اندروید/ویندوز می‌توانی DNS-over-HTTPS را روشن کنی، یا از DNS داخلی (شکن/رادار/الکترو) استفاده کنی.</div>`:""}
+    ${famBest ? `<div class="sub" style="margin-top:8px">🛡 برای دستگاه بچه‌ها: <b>${famBest.srv.name}</b> (${fmt(famBest.st.med)} ms)</div>`:""}
+    ${best.st.loss > 0.25 ? `<div class="note warn" style="margin-top:9px">⚠️ افت بستهٔ این سرور بالاست؛ اگر پینگ دیگری نزدیک همین بود، آن را انتخاب کن.</div>`:""}`;
+  const btn = $("copyDns");
+  if(btn) btn.onclick = () => { navigator.clipboard?.writeText(privateDns); toast("کپی شد: " + privateDns); };
+}
+
+/* ============================ سلامت از لبهٔ کلادفلر ============================ */
+async function edgeCheck(){
+  $("edgeBox").innerHTML = "در حال بررسی…";
+  try{
+    const r = await fetch("api/edge", {cache:"no-store"});
+    const j = await r.json();
+    $("edgeBox").innerHTML = `<div class="sub" style="margin-bottom:6px">
+        از لبهٔ <code>${(j.from&&j.from.colo)||"?"}</code> — ${FA(j.results.length)} سرور بررسی شد</div>` +
+      j.results.map(x=>`<div class="row between" style="border-top:1px solid var(--line);padding:4px 0">
+        <span>${x.name} <span class="sub" style="direction:ltr">${x.dns||""}</span></span>
+        <span class="num">${x.ok ? `<b style="color:${x.ms<100?'var(--great)':'var(--meh)'}">${FA(x.ms)} ms</b>`
+                                 : `<span class="badge b-dead">پاسخ نداد</span>`}</span></div>`).join("");
+  }catch(e){
+    $("edgeBox").innerHTML = "بررسی ناموفق بود: " + e.message;
+  }
+}
+
+/* ============================ ذخیره و اشتراک ============================ */
+async function saveResult(){
+  if(!state.lastRun){ toast("اول تست بگیر!"); return; }
+  const payload = {
+    initData: getInitData(),
+    me: state.me,
+    results: state.lastRun.results.map(r=>({id:r.id, name:r.name, dns:r.dns, med:r.med, jit:r.jit,
+                                            loss:r.loss, quality: (r.med===null?0:quality(r).score)})),
+    regions: state.regions.map(r=>({region:r.region, flag:r.flag, ms:r.ms}))
+  };
+  toast("در حال ذخیره…");
+  try{
+    const r = await fetch("api/save", {method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify(payload)});
+    const j = await r.json();
+    if(!j.ok) throw new Error(j.error || "خطا");
+    if(TG && TG.openTelegramLink && j.tgShare){
+      TG.openTelegramLink(j.tgShare);
+    } else if(navigator.share){
+      await navigator.share({title:"نتیجهٔ پینگ‌هاب من", url:j.url});
+    } else {
+      await navigator.clipboard?.writeText(j.url);
+      toast("لینک کپی شد ✓");
+    }
+    const linkRow = `<div class="note" style="margin-top:10px">🔗 لینک نتیجهٔ تو:
+      <a href="${j.url}" target="_blank" rel="noopener">${j.url}</a>
+      <div class="row" style="margin-top:6px">
+        <button class="ghost" onclick="navigator.clipboard.writeText('${j.url}');">📋 کپی لینک</button>
+        <a href="${j.tgShare||'#'}" target="_blank" rel="noopener"><button class="ghost">📤 اشتراک در تلگرام</button></a>
+      </div></div>`;
+    $("advice").insertAdjacentHTML("beforeend", linkRow);
+  }catch(e){ toast("خطا: " + e.message); }
+}
+
+/* ============================ راه‌اندازی ============================ */
+setupTelegram();
+if(TG){ $("tgTheme").style.display = "inline-block";
+        $("tgTheme").onclick = () => TG.showPopup ? toast("توی تلگرام تم را عوض کن") : null; }
+detectMe();
+$("run").onclick = () => runOnce(false);
+$("save").onclick = saveResult;
+$("edgeBtn").onclick = edgeCheck;
+$("auto").onclick = () => {
+  state.auto = !state.auto;
+  $("auto").textContent = state.auto ? "⏸ توقف تست زنده" : "🔁 تست زنده خودکار";
+  $("auto").style.borderColor = state.auto ? "var(--great)" : "";
+  if(state.auto){
+    runOnce(false);
+    state.timer = setInterval(()=>{ if(!state.running) runOnce(true); }, 20000);
+  } else {
+    clearInterval(state.timer);
+    setStatus("تست خودکار خاموش شد.");
+  }
+};
+const repo = "Alisarani7021/pinghab";
+$("links").innerHTML = `کد منبع: <a href="https://github.com/${repo}" target="_blank" rel="noopener">github.com/${repo}</a>`;
+// در تلگرام: پاک‌کردن حالت لودینگ
+if(TG){ setTimeout(()=>{ try{TG.expand()}catch(e){} }, 300); }
+</script>
+</body>
+</html>

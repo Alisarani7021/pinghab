@@ -1,0 +1,60 @@
+{
+  "note": "نگاشت سرورهای DNS به منطقه‌ی واقعی‌شان. نحوهٔ اندازه‌گیری: کوئری واقعی UDP/53 به همان سرور (بدون روت، روی هر گوشی کار می‌کند) و زمان رفت‌وبرگشت اندازه‌گیری می‌شود.",
+  "regions": [
+    {
+      "key": "anycast",
+      "label": "anycast — نزدیک‌ترین لبه",
+      "flag": "🌐",
+      "note": "این‌ها هرجای دنیا لبهٔ نزدیک به خودت را جواب می‌دهند؛ عددشان یعنی «فاصله‌ات تا نزدیک‌ترین مرکز CDN».",
+      "servers": ["cloudflare", "cloudflare-malware", "cloudflare-family", "google", "quad9", "quad9-unsec", "nextdns", "dnssb"]
+    },
+    {
+      "key": "iran",
+      "label": "ایران (داخلی و رفع تحریم)",
+      "flag": "🇮🇷",
+      "note": "فقط از داخل ایران جواب می‌دهند. سریع‌ترین راه رسیدن به بازی‌های تحریم‌شده و CDN داخلی.",
+      "servers": ["radar", "electro", "shecan", "403online", "begzar", "vanilla", "zeus", "shelter", "tci", "shatel", "hostiran", "serverir", "parsonline", "greenteam"]
+    },
+    {
+      "key": "turkey",
+      "label": "ترکیه",
+      "flag": "🇹🇷",
+      "note": "خروجی ترکیه برای بازی‌های سرور خاورمیانه (دبی/بحرین) معمولاً نزدیک‌ترین مسیر است.",
+      "servers": ["ttnet"]
+    },
+    {
+      "key": "europe",
+      "label": "اروپا",
+      "flag": "🇪🇺",
+      "note": "خروجی آلمان/هلند/فرانسه: برای سرورهای اروپایی خوب، برای خاورمیانه دور و پرپینگ.",
+      "servers": ["adguard", "adguard-unfiltered", "adguard-family", "dns0", "dns0-kids", "mullvad", "fdn", "dnswatch", "seznam", "uncensored"]
+    },
+    {
+      "key": "america",
+      "label": "آمریکا و کانادا",
+      "flag": "🇺🇸",
+      "note": "بیشترین فاصله از ایران؛ فقط برای سرویس‌های آمریکایی معنی دارد.",
+      "servers": ["level3", "verisign", "neustar", "opendns", "opendns-family", "comodo", "cleanbrowsing", "controld", "he", "safedns"]
+    },
+    {
+      "key": "asia",
+      "label": "آسیا",
+      "flag": "🌏",
+      "note": "برای سرورهای بازی آسیای شرقی (سنگاپور/ژاپن/کره) مسیر بهتری می‌دهد.",
+      "servers": ["alidns", "dnspod", "dns114", "quad101"]
+    },
+    {
+      "key": "russia",
+      "label": "روسیه",
+      "flag": "🌍",
+      "note": "مسیر غیرمتعارف اما گاهی سریع‌تر از اروپا برای کاربران شمال ایران.",
+      "servers": ["yandex"]
+    }
+  ],
+  "custom_region": {
+    "key": "mine",
+    "label": "سرورهای بازی من",
+    "flag": "🎮",
+    "note": "آی‌پی‌هایی که خودت اضافه می‌کنی (از اپ PCAPdroid پیدا کن)."
+  }
+}
