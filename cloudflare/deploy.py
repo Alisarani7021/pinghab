@@ -107,8 +107,10 @@ def deploy(env: dict) -> bool:
         print("❌ ساخت فضای KV ناموفق:", str(j)[:300]); return False
     print(f"🗄 KV: {ns['title']} = {ns['id']}")
 
-    webhook_secret = uuid.uuid4().hex + uuid.uuid4().hex[:16]
-    admin_key = uuid.uuid4().hex
+    webhook_secret = env.get("TG_WEBHOOK_SECRET") or (uuid.uuid4().hex + uuid.uuid4().hex[:16])
+    admin_key = env.get("ADMIN_KEY") or uuid.uuid4().hex
+    print("🔑 کلید وب‌هوک:", "بازاستفاده از .env" if env.get("TG_WEBHOOK_SECRET") else "تولید جدید",
+          "| کلید مدیریت:", "بازاستفاده از .env" if env.get("ADMIN_KEY") else "تولید جدید")
     compat = (date.today() - timedelta(days=5)).isoformat()
 
     metadata = {

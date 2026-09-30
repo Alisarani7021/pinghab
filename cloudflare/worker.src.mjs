@@ -194,7 +194,8 @@ async function tcpDnsQuery(ip, name = "www.wikipedia.org", timeoutMs = 4000) {
     const parsed = parseDns(body);
     return { ok: true, ms, ...parsed };
   } catch (e) {
-    return { ok: false, err: e.message || "ناموفق" };
+    const m = String(e?.message || e);
+    return { ok: false, err: /cancel|timed? ?out/i.test(m) ? "پاسخی نداد (تایم‌اوت)" : m };
   } finally {
     try { await sock?.close(); } catch {}
   }
@@ -460,6 +461,17 @@ export default {
         }
         const results = await edgeCheckDoh(list.slice(0, 12));
         return json({ from: { colo: request.cf?.colo || null, asn: request.cf?.asn || null }, results });
+      }
+
+      /* --- بررسی زندهٔ یک DNS مشخص (TCP/53 از لبهٔ کلادفلر) --- */
+      if (p === "/api/dns") {
+        const ip = (url.searchParams.get("ip") || "").trim();
+        const name = (url.searchParams.get("name") || "www.wikipedia.org").trim().slice(0, 60);
+        if (!/^\d{1,3}(\.\d{1,3}){3}$/.test(ip)) {
+          return json({ ok: false, error: "آی‌پی نامعتبر — نمونه: /api/dns?ip=1.1.1.1" }, 400);
+        }
+        const r = await tcpDnsQuery(ip, /^[a-z0-9.\-]+$/i.test(name) ? name : "www.wikipedia.org");
+        return json({ ok: r.ok, ip, name, from: { colo: request.cf?.colo || null }, ...r });
       }
 
       /* --- ذخیرهٔ نتیجه و ساخت لینک اشتراک --- */
