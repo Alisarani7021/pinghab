@@ -16,7 +16,7 @@ android {
     }
 
     // اپ وب بدون کپی‌شدن، مستقیم از پوشه‌ی web داخل assets قرار می‌گیرد
-    sourceSets["main"].assets.srcDirs("src/main/assets", "../web")
+    sourceSets["main"].assets.srcDirs("src/main/assets", "../../web")
 
     buildTypes {
         release {
