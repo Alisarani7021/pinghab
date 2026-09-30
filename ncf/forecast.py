@@ -319,3 +319,18 @@ if __name__ == "__main__":
     for b in rep["bins"]:
         print(f"  {b['bin']:<10} {b['n']:>6} {b['predicted']:>10} {b['observed']:>9}")
     print("\nتفسیر: اگر «پیش‌بینی» و «واقعیت» به هم نزدیک باشند، احتمال‌های سیستم قابل اعتمادند.")
+
+    # --- همان پیش‌بینی‌ها، این بار از فیلتر کالیبراتور آنلاین عبور می‌کنند
+    cal = ProbabilityCalibrator()
+    cal_preds = []
+    for p_raw, y in zip(preds, outcomes):
+        cal_preds.append(cal.calibrate(p_raw))
+        cal.observe(p_raw, y)
+    rep2 = calibration_report(cal_preds, outcomes)
+    print("\nپس از کالیبراسیون آنلاین (همان داده):")
+    print(f"  Brier: {rep['brier']} → {rep2['brier']}   |   "
+          f"مهارت: {rep['skill']} → {rep2['skill']}")
+    for b in rep2["bins"]:
+        print(f"  {b['bin']:<10} {b['n']:>6} {b['predicted']:>10} {b['observed']:>9}")
+    print("\nتفسیر: اگر «پیش‌بینی» و «واقعیت» به هم نزدیک باشند، احتمال‌های سیستم قابل اعتمادند.")
+    print("قاعدهٔ محصول: تا کالیبره نشود، هیچ عدد احتمالی به کاربر نشان داده نمی‌شود.")

@@ -99,6 +99,7 @@ class ExperienceGraph:
     def __init__(self, path: str | Path = "experience.db"):
         self.path = str(path)
         self.db = sqlite3.connect(self.path, check_same_thread=False)
+        self.db.row_factory = sqlite3.Row      # تا خروجی پرس‌وجوها دیکشنری‌شدنی باشد
         self.db.executescript(SCHEMA)
         self.db.commit()
 
@@ -167,9 +168,9 @@ class ExperienceGraph:
             f"""SELECT path_id, COUNT(*) n, AVG({metric}) avg_metric, MIN({metric}) best_metric,
                        AVG(loss) avg_loss, AVG(rtt_p50) avg_p50
                 FROM observations
-                WHERE isp = ? AND app = ? {"" if hours is None else "AND hour IN (%s)" % ",".join("?" * len(hours))}
+                WHERE isp = ? AND app = ? {"" if hours is None else "AND hour IN (" + ",".join(["?"] * len(hours)) + ")"}
                 GROUP BY path_id HAVING n >= 2
-                ORDER BY avg_metric ASC""" % ((),),
+                ORDER BY avg_metric ASC""",
             [isp, app] + (hours or [])).fetchall()
         return [dict(r) for r in rows]
 

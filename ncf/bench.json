@@ -53,13 +53,13 @@
       "regret_pct": 0.0
      },
      "random": {
-      "mean_cost": 175.65,
-      "p95_cost": 362.54,
-      "switches": 603.5,
-      "switch_rate_per_min": 40.23,
-      "bad_frac": 0.023,
-      "fail_frac": 0.015,
-      "regret_pct": 255.32
+      "mean_cost": 173.53,
+      "p95_cost": 362.61,
+      "switches": 602.9,
+      "switch_rate_per_min": 40.19,
+      "bad_frac": 0.022,
+      "fail_frac": 0.014,
+      "regret_pct": 251.04
      }
     },
     "congestion": {
@@ -109,13 +109,13 @@
       "regret_pct": 0.0
      },
      "random": {
-      "mean_cost": 226.89,
-      "p95_cost": 493.33,
-      "switches": 597.3,
-      "switch_rate_per_min": 39.82,
-      "bad_frac": 0.268,
-      "fail_frac": 0.017,
-      "regret_pct": 280.95
+      "mean_cost": 230.86,
+      "p95_cost": 497.77,
+      "switches": 598.9,
+      "switch_rate_per_min": 39.93,
+      "bad_frac": 0.277,
+      "fail_frac": 0.018,
+      "regret_pct": 287.61
      }
     },
     "burst": {
@@ -165,13 +165,13 @@
       "regret_pct": 0.0
      },
      "random": {
-      "mean_cost": 258.85,
-      "p95_cost": 440.09,
-      "switches": 596.2,
-      "switch_rate_per_min": 39.75,
-      "bad_frac": 0.425,
-      "fail_frac": 0.311,
-      "regret_pct": 188.77
+      "mean_cost": 258.78,
+      "p95_cost": 438.61,
+      "switches": 605.6,
+      "switch_rate_per_min": 40.37,
+      "bad_frac": 0.421,
+      "fail_frac": 0.309,
+      "regret_pct": 188.69
      }
     },
     "flappy": {
@@ -221,17 +221,17 @@
       "regret_pct": 0.0
      },
      "random": {
-      "mean_cost": 172.15,
-      "p95_cost": 357.38,
-      "switches": 599.9,
-      "switch_rate_per_min": 39.99,
-      "bad_frac": 0.034,
+      "mean_cost": 172.39,
+      "p95_cost": 357.51,
+      "switches": 601.7,
+      "switch_rate_per_min": 40.11,
+      "bad_frac": 0.033,
       "fail_frac": 0.005,
-      "regret_pct": 192.06
+      "regret_pct": 192.47
      }
     }
    },
-   "runtime_s": 104.5,
+   "runtime_s": 102.94,
    "calibration": {
     "n": 127728,
     "brier": 0.1173,
@@ -323,13 +323,13 @@
       "regret_pct": 0.0
      },
      "random": {
-      "mean_cost": 504.32,
-      "p95_cost": 854.05,
-      "switches": 600.3,
-      "switch_rate_per_min": 40.02,
-      "bad_frac": 0.024,
-      "fail_frac": 0.015,
-      "regret_pct": 887.89
+      "mean_cost": 502.3,
+      "p95_cost": 854.31,
+      "switches": 598.2,
+      "switch_rate_per_min": 39.88,
+      "bad_frac": 0.022,
+      "fail_frac": 0.014,
+      "regret_pct": 883.94
      }
     },
     "congestion": {
@@ -379,13 +379,13 @@
       "regret_pct": 0.0
      },
      "random": {
-      "mean_cost": 556.94,
-      "p95_cost": 974.08,
-      "switches": 599.9,
-      "switch_rate_per_min": 39.99,
-      "bad_frac": 0.272,
-      "fail_frac": 0.017,
-      "regret_pct": 714.27
+      "mean_cost": 554.21,
+      "p95_cost": 975.2,
+      "switches": 592.8,
+      "switch_rate_per_min": 39.52,
+      "bad_frac": 0.271,
+      "fail_frac": 0.015,
+      "regret_pct": 710.27
      }
     },
     "burst": {
@@ -435,13 +435,13 @@
       "regret_pct": 0.0
      },
      "random": {
-      "mean_cost": 590.49,
-      "p95_cost": 931.76,
-      "switches": 605.0,
-      "switch_rate_per_min": 40.33,
-      "bad_frac": 0.422,
-      "fail_frac": 0.31,
-      "regret_pct": 482.78
+      "mean_cost": 586.7,
+      "p95_cost": 931.78,
+      "switches": 594.2,
+      "switch_rate_per_min": 39.62,
+      "bad_frac": 0.429,
+      "fail_frac": 0.315,
+      "regret_pct": 479.03
      }
     },
     "flappy": {
@@ -491,17 +491,17 @@
       "regret_pct": 0.0
      },
      "random": {
-      "mean_cost": 501.26,
-      "p95_cost": 843.85,
-      "switches": 598.6,
-      "switch_rate_per_min": 39.91,
+      "mean_cost": 501.75,
+      "p95_cost": 845.12,
+      "switches": 600.8,
+      "switch_rate_per_min": 40.05,
       "bad_frac": 0.033,
       "fail_frac": 0.005,
-      "regret_pct": 663.72
+      "regret_pct": 664.47
      }
     }
    },
-   "runtime_s": 104.45,
+   "runtime_s": 102.05,
    "calibration": {
     "n": 127728,
     "brier": 0.1173,
