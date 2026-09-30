@@ -3,93 +3,104 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem("pinghab.theme");t&&(document.documentElement.dataset.t=t)}catch(e){}</script>
 <title>پینگ‌هاب — کدام DNS برای اینترنت تو بهتر است؟</title>
 <meta property="og:title" content="پینگ‌هاب | تست و انتخاب بهترین DNS">
 <meta property="og:description" content="تست زندهٔ DNS روی گوشی خودت + مقایسهٔ منطقه‌ای. رایگان و بدون فیلترشکن.">
 <style>
-  :root{
-    --bg:#070c18; --card:#101b30; --card2:#0d1729; --line:#1d2c48; --tx:#e9effb; --mut:#8ba0c4;
-    --great:#12b981; --good:#4ade80; --ok:#a3e635; --meh:#f59e0b; --weak:#f97316; --dead:#ef4444;
-    --acc:#38bdf8; --violet:#8b5cf6; --pink:#e879f9;
-  }
-  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{margin:0;padding:0}
-  body{background:radial-gradient(1100px 480px at 50% -140px,#12233f 0%,#070c18 62%);color:var(--tx);
-       font-family:Tahoma,Vazirmatn,"Segoe UI",system-ui,sans-serif;line-height:1.75;font-size:14.5px;
-       min-height:100vh;padding-bottom:30px}
-  .wrap{max-width:760px;margin:0 auto;padding:14px 12px 40px}
-  h1{font-size:20px;margin:0;letter-spacing:.2px}
-  h2{font-size:15.5px;margin:20px 0 8px;padding-right:8px;border-right:4px solid var(--acc)}
-  h3{font-size:14px;margin:14px 0 6px}
-  .sub{color:var(--mut);font-size:12.5px;line-height:1.6}
-  .mut{color:var(--mut)}
-  .head{background:linear-gradient(150deg,#122343,#0d1729);border:1px solid var(--line);border-radius:16px;padding:13px 14px}
-  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-  .between{justify-content:space-between}
-  button{border:1px solid var(--line);background:#152340;color:var(--tx);border-radius:11px;padding:9px 13px;
-         font-size:13.5px;font-family:inherit;cursor:pointer;transition:.15s}
-  button:hover{background:#1b2c52;border-color:#2b4470}
-  button:active{transform:scale(.98)}
-  button.primary{background:linear-gradient(135deg,#0ea5e9,#2563eb);border:none;font-weight:700;font-size:15px;
-                 padding:11px 18px;box-shadow:0 10px 24px -12px #0ea5e9}
-  button.ghost{background:transparent}
-  button:disabled{opacity:.55;cursor:not-allowed}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px 12px}
-  .kpi{flex:1;min-width:120px}
-  .kpi b{display:block;font-size:19px;font-variant-numeric:tabular-nums}
-  .kpi span{color:var(--mut);font-size:11.5px}
-  .badge{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;border:1px solid var(--line);
-         margin-left:4px;background:#0e1a2e;color:#cbd5e1;white-space:nowrap}
-  .b-great{border-color:#1d7a5f;color:#7ff0c0}.b-good{border-color:#2d7a2d;color:#b6f2b6}
-  .b-ok{border-color:#5a7a1d;color:#e2f7a8}.b-meh{border-color:#b45309;color:#fcd34d}
-  .b-weak{border-color:#c2410c;color:#fdba74}.b-dead{border-color:#7f1d1d;color:#fca5a5;background:#2a1113}
-  .dot{width:8px;height:8px;border-radius:50%;background:var(--great);display:inline-block;
-       box-shadow:0 0 0 0 rgba(18,185,129,.7);animation:pulse 1.7s infinite}
-  @keyframes pulse{70%{box-shadow:0 0 0 9px rgba(18,185,129,0)}100%{box-shadow:0 0 0 0 rgba(18,185,129,0)}}
-  .pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#0f1c31;
-        border-radius:999px;padding:6px 11px;font-size:12px;cursor:pointer;transition:.15s;white-space:nowrap}
-  .pill:hover{border-color:#2b4470;background:#16264a}
-  .pill.on{background:linear-gradient(135deg,#123c5a,#0f2f46);border-color:#2a7fa8;color:#d8f1ff}
-  .pill .m{font-variant-numeric:tabular-nums;font-weight:700}
-  table{width:100%;border-collapse:separate;border-spacing:0 5px;font-size:12.8px}
-  th{color:var(--mut);font-size:11px;font-weight:600;text-align:right;padding:3px 6px;white-space:nowrap}
-  td{background:var(--card);padding:8px 6px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);vertical-align:top}
-  td:first-child{border-right:1px solid var(--line);border-radius:0 11px 11px 0}
-  td:last-child{border-left:1px solid var(--line);border-radius:11px 0 0 11px}
-  .num{font-variant-numeric:tabular-nums;direction:ltr;text-align:center;white-space:nowrap}
-  .ping{font-size:16.5px;font-weight:700;font-variant-numeric:tabular-nums;direction:ltr}
-  .barwrap{position:relative;height:15px;background:#0d1729;border:1px solid var(--line);border-radius:6px;overflow:hidden;min-width:58px}
-  .bar{height:100%;transition:width .5s ease}
-  .barval{position:absolute;inset:0;text-align:center;font-size:10.5px;font-variant-numeric:tabular-nums}
-  .g-great{background:linear-gradient(90deg,#0d9488,#12b981)}.g-good{background:linear-gradient(90deg,#15803d,#4ade80)}
-  .g-ok{background:linear-gradient(90deg,#4d7c0f,#a3e635)}.g-meh{background:linear-gradient(90deg,#b45309,#f59e0b)}
-  .g-weak{background:linear-gradient(90deg,#c2410c,#f97316)}.g-dead{background:#3f1d1d}
-  .note{background:#0d1729;border:1px dashed var(--line);border-radius:13px;padding:11px 12px;color:#c3d3ee;font-size:12.5px}
-  .warn{border-color:#7c2d12;background:#1f1206}
-  .info{border-color:#1e40af;background:#0b1a33}
-  .good{border-color:#1d7a5f;background:#0b2a22}
-  code{direction:ltr;display:inline-block;background:#0d1729;padding:1px 6px;border-radius:6px;
-       font-family:ui-monospace,Consolas,monospace;font-size:12px}
-  .foot{color:var(--mut);font-size:11.5px;text-align:center;margin-top:24px;line-height:1.9}
-  a{color:var(--acc)}
-  .hide-s{display:table-cell}
-  @media(max-width:520px){.hide-s{display:none}}
-  .spark{display:block}
-  .idcard{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:7px;margin-top:9px}
-  .idcell{background:#0d1729;border:1px solid var(--line);border-radius:10px;padding:6px 9px}
-  .idcell span{display:block;color:var(--mut);font-size:10.5px}
-  .idcell b{font-size:12.8px}
-  .adv{background:linear-gradient(150deg,#0e2a22,#0d1729);border:1px solid #1d7a5f;border-radius:14px;padding:11px 13px}
-  .adv.bad{background:linear-gradient(150deg,#2a1414,#0d1729);border-color:#7f1d1d}
-  .tabs{display:flex;gap:6px;margin:10px 0 4px}
-  .tab{flex:1;text-align:center;border:1px solid var(--line);border-radius:11px;padding:7px 4px;font-size:12.5px;
-       cursor:pointer;background:#0f1c31}
-  .tab.on{background:linear-gradient(135deg,#123c5a,#0f2f46);border-color:#2a7fa8}
-  #toast{position:fixed;bottom:16px;right:50%;transform:translateX(50%);background:#0d9488;color:#04211a;
-         font-weight:700;padding:9px 16px;border-radius:12px;font-size:13px;opacity:0;pointer-events:none;
-         transition:.25s;z-index:99}
-  #toast.show{opacity:1;bottom:26px}
-  .inline{display:inline}
+:root{--bg:#000000;--card:#0e0e0e;--line:#2c2c2c;--tx:#ffffff;--mut:#9a9a9a;--acc:#ffc000;--on:#000000;--r:0px;--rb:0px;--sh:none;--brk:2px;--cp:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px));--card2:color-mix(in srgb,var(--card) 90%,var(--tx));--ai:var(--acc);--great:#10a874;--good:#34b04a;--ok:#86ab1a;--meh:#e08a00;--weak:#ea6a10;--dead:#e53935;--violet:#fff;--pink:#fff}
+[data-t=ferrari]{--bg:#181818;--card:#242424;--line:#3a3a3a;--tx:#ffffff;--mut:#969696;--acc:#da291c;--on:#ffffff;--r:2px;--rb:2px;--sh:none;--brk:2px;--cp:none}
+[data-t=renault]{--bg:#ffffff;--card:#f7f7f7;--line:#e0e0e0;--tx:#000000;--mut:#666666;--acc:#ffed00;--on:#000000;--r:0px;--rb:2px;--sh:none;--brk:2px;--cp:none;--ai:#000000}
+[data-t=apple]{--bg:#f5f5f7;--card:#ffffff;--line:#e0e0e0;--tx:#1d1d1f;--mut:#6e6e73;--acc:#0066cc;--on:#ffffff;--r:18px;--rb:999px;--sh:0 14px 34px rgba(0,0,0,.12);--brk:0px;--cp:none}
+[data-t=claude]{--bg:#faf9f5;--card:#f0eadf;--line:#e0d8ca;--tx:#141413;--mut:#6c6a64;--acc:#cc785c;--on:#ffffff;--r:14px;--rb:10px;--sh:0 12px 28px rgba(80,50,30,.14);--brk:0px;--cp:none}
+[data-t=pinterest]{--bg:#ffffff;--card:#f6f6f3;--line:#dadad3;--tx:#211922;--mut:#62625b;--acc:#e60023;--on:#ffffff;--r:24px;--rb:999px;--sh:0 10px 24px rgba(33,25,34,.12);--brk:0px;--cp:none}
+[data-t=spotify]{--bg:#121212;--card:#181818;--line:#2e2e2e;--tx:#ffffff;--mut:#b3b3b3;--acc:#1ed760;--on:#000000;--r:8px;--rb:999px;--sh:0 8px 24px rgba(0,0,0,.5);--brk:0px;--cp:none}
+[data-t=lovable]{--bg:#f7f4ed;--card:#fcfbf8;--line:#ddd9cf;--tx:#1c1c1c;--mut:#5f5f5d;--acc:#1c1c1c;--on:#fcfbf8;--r:6px;--rb:999px;--sh:none;--brk:0px;--cp:none}
+[data-t=webflow]{--bg:#ffffff;--card:#fafafa;--line:#d8d8d8;--tx:#080808;--mut:#5a5a5a;--acc:#7a3dff;--on:#ffffff;--r:8px;--rb:4px;--sh:none;--brk:0px;--cp:none}
+[data-t=dell]{--bg:#ffffff;--card:#ffffff;--line:#000000;--tx:#000000;--mut:#333333;--acc:#e91d2a;--on:#ffffff;--r:0px;--rb:0px;--sh:4px 4px 0 #000;--brk:2px;--cp:none}
+[data-t=nintendo]{--bg:#7a8aba;--card:#c9d9ec;--line:#3d4f97;--tx:#21242e;--mut:#2f3f84;--acc:#e60012;--on:#ffffff;--r:12px;--rb:10px;--sh:0 5px 0 #3d4f97;--brk:0px;--cp:none}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:400 14.5px/1.85 Vazirmatn,Tahoma,"Segoe UI",system-ui,sans-serif;min-height:100vh;padding-bottom:30px}
+body:before{content:"";position:fixed;inset:0;z-index:-1;opacity:.35;pointer-events:none;background:linear-gradient(var(--line) 1px,transparent 1px) 0 0/44px 44px,linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/44px 44px;-webkit-mask:linear-gradient(#000,transparent 70%);mask:linear-gradient(#000,transparent 70%)}
+.wrap{max-width:760px;margin:0 auto;padding:14px 14px 40px;perspective:1400px}
+h1{font-size:22px;margin:0;font-weight:900;line-height:1.2}
+h2{font-size:15.5px;font-weight:900;margin:30px 0 10px}
+h2:before{content:"";display:inline-block;width:8px;height:8px;margin-inline-end:9px;background:var(--acc);transform:rotate(45deg)}
+h3{font-size:14px;margin:14px 0 6px}
+.sub{color:var(--mut);font-size:12.5px;line-height:1.7}.mut{color:var(--mut)}
+a{color:var(--ai)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.between{justify-content:space-between}
+.head,.adv{position:relative;background:var(--card);border:1px solid var(--line);padding:16px;clip-path:var(--cp);border-radius:var(--r);box-shadow:var(--sh)}
+.head:before,.adv:before,.head:after,.adv:after{content:"";position:absolute;width:14px;height:14px;border:var(--brk) solid var(--acc);pointer-events:none}
+.head:before,.adv:before{top:7px;left:7px;border-right:0;border-bottom:0}
+.head:after,.adv:after{bottom:7px;right:7px;border-left:0;border-top:0}
+.adv.bad{border-color:var(--dead)}
+.cube{width:28px;height:28px;position:relative;transform-style:preserve-3d;animation:spin 9s linear infinite;flex:none;margin:6px 8px}
+.cube i{position:absolute;inset:0;border:1.5px solid var(--acc);background:color-mix(in srgb,var(--acc) 12%,transparent)}
+.cube i:nth-child(1){transform:translateZ(14px)}.cube i:nth-child(2){transform:rotateY(90deg) translateZ(14px)}.cube i:nth-child(3){transform:rotateY(180deg) translateZ(14px)}.cube i:nth-child(4){transform:rotateY(-90deg) translateZ(14px)}.cube i:nth-child(5){transform:rotateX(90deg) translateZ(14px)}.cube i:nth-child(6){transform:rotateX(-90deg) translateZ(14px)}
+@keyframes spin{to{transform:rotateX(360deg) rotateY(360deg)}}
+button,.wwbtn{display:inline-block;border:1px solid var(--line);background:var(--card);color:var(--tx);padding:8px 14px;font:700 13px Vazirmatn,Tahoma,sans-serif;cursor:pointer;text-decoration:none;box-shadow:0 3px 0 var(--line);border-radius:var(--rb);transition:transform .12s,background .15s}
+button:hover,.wwbtn:hover{background:var(--card2);border-color:var(--mut)}
+button:active,.wwbtn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--line)}
+button.primary,.wwprimary{background:var(--acc);color:var(--on);border-color:var(--acc);box-shadow:0 3px 0 color-mix(in srgb,var(--acc) 55%,#000)}
+button.primary:hover,.wwprimary:hover{background:color-mix(in srgb,var(--acc) 85%,#fff);border-color:color-mix(in srgb,var(--acc) 85%,#fff)}
+button.primary{font-size:14px;padding:10px 18px}
+button.ghost{background:transparent;box-shadow:none}
+button:disabled{opacity:.5;cursor:not-allowed}
+.wwcopy{padding:3px 9px;font-size:11.5px;box-shadow:none}
+:focus-visible{outline:2px solid var(--ai);outline-offset:2px}
+.card,.ph-card,.wwrow,.wwbox{background:var(--card);border:1px solid var(--line);padding:12px 14px;margin:8px 0;border-radius:var(--r);box-shadow:var(--sh)}
+.wwbox{border-color:var(--acc)}
+.kpi{flex:1;min-width:120px;margin:0}
+.kpi b{display:block;font-size:20px;font-variant-numeric:tabular-nums;color:var(--ai)}
+.kpi span{color:var(--mut);font-size:11.5px}
+.note{border:1px solid var(--line);border-radius:var(--r);padding:11px 13px;color:color-mix(in srgb,var(--tx) 85%,var(--bg));font-size:12.5px}
+.warn{border-color:var(--weak)}.info{border-color:var(--mut)}.good{border-color:var(--great)}
+.badge,.ph-badge{display:inline-block;font-size:10.5px;padding:0 7px;border:1px solid var(--line);margin-left:4px;color:var(--tx);border-radius:var(--rb);white-space:nowrap}
+.b-great{color:var(--great);border-color:var(--great)}.b-good{color:var(--good);border-color:var(--good)}.b-ok{color:var(--ok);border-color:var(--ok)}
+.b-meh{color:var(--meh);border-color:var(--meh)}.b-weak{color:var(--weak);border-color:var(--weak)}.b-dead{color:var(--dead);border-color:var(--dead)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--great);display:inline-block;animation:pulse 1.7s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(18,185,129,0)}0%{box-shadow:0 0 0 0 rgba(18,185,129,.7)}}
+.pill{border-radius:var(--rb);display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card);color:var(--mut);padding:3px 11px;font-size:12px;cursor:pointer;white-space:nowrap}
+.pill:hover{border-color:var(--mut)}.pill.on{border-color:var(--ai);color:var(--ai)}
+.pill .m{color:var(--tx);font-weight:700;font-variant-numeric:tabular-nums}
+.ph-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.ph-tab{color:var(--mut);box-shadow:none}
+.ph-tab.on{background:var(--acc);color:var(--on);border-color:var(--acc)}
+.ph-panel{display:none}.ph-panel.on{display:block}
+table{width:100%;border-collapse:collapse;font-size:12.8px}
+th{color:var(--mut);font-size:11px;font-weight:500;text-align:right;padding:4px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px 6px;border-bottom:1px solid var(--line);vertical-align:top;text-align:right}
+.num{font-variant-numeric:tabular-nums;direction:ltr;text-align:center;white-space:nowrap}
+.ping{font-size:16.5px;font-weight:700;font-variant-numeric:tabular-nums;direction:ltr}
+.barwrap{position:relative;height:14px;background:var(--card2);border:1px solid var(--line);overflow:hidden;min-width:58px;border-radius:calc(var(--r)*.3)}
+.bar{height:100%;transition:width .5s ease}
+.barval{position:absolute;inset:0;text-align:center;font-size:10.5px;line-height:13px;color:#fff;text-shadow:0 0 3px #000,0 0 2px #000}
+.g-great{background:var(--great)}.g-good{background:var(--good)}.g-ok{background:var(--ok)}.g-meh{background:var(--meh)}.g-weak{background:var(--weak)}.g-dead{background:color-mix(in srgb,var(--dead) 30%,var(--bg))}
+.wwin,input,select{background:var(--bg);color:var(--tx);border:1px solid var(--line);border-radius:min(var(--rb),14px);padding:9px 11px;font:14px Vazirmatn,Tahoma,sans-serif}
+input[type=checkbox]{width:16px;height:16px;padding:0;accent-color:var(--acc)}
+summary{cursor:pointer}
+code,.ph-mono{direction:ltr;font-family:ui-monospace,Consolas,monospace;font-size:12.5px}
+code{display:inline-block;background:var(--card2);border:1px solid var(--line);padding:0 6px}
+.ph-kv{font-size:13px;line-height:2}
+.ph-lbl{font-size:12.5px;color:var(--mut);display:block;margin-bottom:3px}
+.ph-grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.ph-good{color:var(--great)}.ph-warn{color:var(--meh)}.ph-bad{color:var(--dead)}
+.idcard{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-top:10px}
+.idcell{background:var(--bg);border:1px solid var(--line);padding:6px 10px;border-radius:calc(var(--r)*.6)}
+.idcell span{display:block;color:var(--mut);font-size:10.5px}.idcell b{font-size:12.8px}
+.foot{color:var(--mut);font-size:11.5px;text-align:center;margin-top:28px;line-height:1.9}
+.hide-s{display:table-cell}@media(max-width:520px){.hide-s{display:none}}
+.spark{display:block}
+#toast{border-radius:var(--rb);position:fixed;bottom:16px;right:50%;transform:translateX(50%);background:var(--acc);color:var(--on);font-weight:700;padding:9px 16px;font-size:13px;opacity:0;pointer-events:none;transition:.25s;z-index:99}
+#toast.show{opacity:1;bottom:26px}
+@media(prefers-reduced-motion:reduce){.cube,.dot{animation:none}}
+.themes{display:flex;gap:8px;overflow-x:auto;padding:12px 2px 2px;scrollbar-width:none}
+.themes button{flex:none;display:flex;align-items:center;gap:7px;padding:4px 12px;font-weight:500;font-size:12.5px;box-shadow:none}
+.themes i{width:14px;height:14px;border-radius:50%;border:1px solid var(--line);background:linear-gradient(135deg,var(--a) 50%,var(--b) 50%)}
+.themes button[aria-pressed=true]{background:var(--tx);color:var(--bg);border-color:var(--tx)}
 </style>
 <script src="https://telegram.org/js/telegram-web-app.js" onerror="window.__noTgSdk=1"></script>
 </head>
@@ -99,7 +110,7 @@
   <div class="head">
     <div class="row between">
       <div class="row">
-        <h1>📡 پینگ‌هاب</h1>
+        <div class="cube"><i></i><i></i><i></i><i></i><i></i><i></i></div><h1>پینگ‌هاب</h1>
         <span class="badge b-great" id="liveBadge"><span class="dot"></span> زنده</span>
       </div>
       <div class="row">
@@ -118,10 +129,11 @@
     </div>
   </div>
 
+  <div class="themes" id="themes" role="group" aria-label="تم"></div>
   <div class="row" style="margin-top:12px">
-    <button class="primary" id="run">▶ تست کن (۲۰ ثانیه)</button>
-    <button id="auto">🔁 تست زنده خودکار</button>
-    <button id="save">💾 ذخیره و اشتراک</button>
+    <button class="primary" id="run">تست کن (۲۰ ثانیه)</button>
+    <button id="auto">تست زنده خودکار</button>
+    <button id="save">ذخیره و اشتراک</button>
   </div>
   <div class="sub" id="status" style="margin-top:7px">آماده — دکمهٔ تست را بزن.</div>
 
@@ -132,11 +144,11 @@
   </div>
 
   <div class="adv" id="advice" style="margin-top:12px">
-    <b>🎯 نتیجه اینجا می‌آید</b>
+    <b>نتیجه اینجا می‌آید</b>
     <div class="sub">بعد از تست، بهترین DNS برای خط تو، با دلیل و نحوهٔ تنظیمش، همین‌جا نوشته می‌شود.</div>
   </div>
 
-  <h2>🌐 نتیجهٔ سرورهای DNS</h2>
+  <h2>نتیجهٔ سرورهای DNS</h2>
   <div class="row" id="regionPills"></div>
   <table>
     <thead><tr>
@@ -145,7 +157,7 @@
     <tbody id="rows"><tr><td colspan="6" class="sub">هنوز تستی اجرا نشده.</td></tr></tbody>
   </table>
 
-  <h2>🌍 تأخیر مسیر تا هر منطقه (تقریبی)</h2>
+  <h2>تأخیر مسیر تا هر منطقه (تقریبی)</h2>
   <div class="note" style="margin-bottom:8px">
     این بخش نشان می‌دهد از <b>خط اینترنت تو</b> تا هر منطقه چند میلی‌ثانیه فاصله است.
     مرورگر نمی‌تواند پینگ خام بزند، پس این اعداد شامل زمان گشایش اتصال امن (TLS) هستند و <b>تقریبی</b>اند —
@@ -153,15 +165,15 @@
   </div>
   <table><tbody id="regionRows"><tr><td class="sub">در حال اندازه‌گیری…</td></tr></tbody></table>
 
-  <h2>🩺 سلامت سرورها از دید اینترنت (مرجع)</h2>
+  <h2>سلامت سرورها از دید اینترنت (مرجع)</h2>
   <div class="note" style="margin-bottom:8px">
     این اعداد از <b>لبهٔ شبکهٔ کلادفلر</b> گرفته می‌شوند، نه از گوشی تو — برای همین فقط می‌گویند یک DNS
     «سالم و در دسترس» است یا نه. (سرورهای ایرانی از بیرون ایران جواب نمی‌دهند؛ این طبیعی است.)
   </div>
   <div id="edgeBox" class="card sub">برای دیدن، دکمهٔ زیر را بزن.</div>
-  <div class="row" style="margin-top:8px"><button id="edgeBtn">🩺 بررسی سلامت</button></div>
+  <div class="row" style="margin-top:8px"><button id="edgeBtn">بررسی سلامت</button></div>
 
-  <h2>📘 راهنمای واقعی (بدون شایعه)</h2>
+  <h2>راهنمای واقعی (بدون شایعه)</h2>
   <div class="note">
     <b>۱) DNS پینگ داخل مچ بازی را کم نمی‌کند.</b> بازی بعد از پیدا کردن سرور، با IP بازی وصل می‌شود.
     DNS این‌ها را بهتر می‌کند: ورود به بازی، رفع تحریم، سرعت دانلود آپدیت، خطاهای لابی.<br>
@@ -173,25 +185,8 @@
     <b>۵) امنیت:</b> از DNS ناشناس استفاده نکن؛ می‌تواند تو را به سایت جعلی ببرد.
   </div>
 
-<style>
-  .wwin{ padding:9px 10px;border-radius:10px;border:1px solid rgba(127,127,127,.35);
-         background:rgba(127,127,127,.10);color:inherit;font:inherit;font-size:14px }
-  .wwbtn{ padding:8px 12px;border-radius:10px;border:1px solid rgba(127,127,127,.35);
-          background:rgba(127,127,127,.12);color:inherit;font:inherit;font-size:13.5px;cursor:pointer }
-  .wwbtn:hover{ background:rgba(127,127,127,.2) }
-  .wwprimary{ background:#1d4ed8;border-color:#1d4ed8;color:#fff;font-weight:700 }
-  .wwcopy{ padding:4px 8px;font-size:11.5px }
-  .wwrow{ margin:8px 0;padding:10px 12px;border:1px solid rgba(127,127,127,.28);border-radius:12px }
-  .wwbox{ padding:10px 12px;border-radius:12px;background:rgba(29,78,216,.10);
-          border:1px solid rgba(29,78,216,.35) }
-  #ww-groups table,#ww-servers table,#ww-imp-out table,#ww-dev-out table{
-          width:100%;border-collapse:collapse;font-size:13px }
-  #ww-groups td,#ww-servers td,#ww-imp-out td,#ww-dev-out td,
-  #ww-groups th,#ww-servers th,#ww-imp-out th,#ww-dev-out th{
-          padding:4px 3px;border-bottom:1px solid rgba(127,127,127,.18);text-align:right }
-  #ww-info,#ww-dev-out{ margin-top:7px }
-</style>
-  <h2>🌍 DNS جهانی — <span id="ww-count">…</span></h2>
+
+  <h2>DNS جهانی — <span id="ww-count">…</span></h2>
   <div class="card">
     <div class="row" style="flex-wrap:wrap;gap:8px">
       <select id="ww-cc" class="wwin" style="min-width:190px"></select>
@@ -206,13 +201,13 @@
   </div>
 
   <div class="card" style="margin-top:12px">
-    <b>🎯 سنجش اثر (PoP)</b>
+    <b>سنجش اثر (PoP)</b>
     <div class="sub">هر DNS برای این دامنه <b>کدام آی‌پی</b> را می‌دهد؟ آی‌پی متفاوت = <b>مسیر متفاوت</b>.
       این همان چیزی است که واقعاً روی پینگ بازی اثر می‌گذارد (نه سرعت خود DNS).</div>
     <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
       <input id="ww-dom" value="cdn.cloudflare.steamstatic.com" class="wwin" style="flex:1;min-width:220px;direction:ltr">
       <button class="wwbtn wwprimary" id="ww-imp">بسنج (از لبهٔ کلادفلر)</button>
-      <button class="wwbtn" id="ww-device">📱 از گوشی خودم بسنج</button>
+      <button class="wwbtn" id="ww-device">از گوشی خودم بسنج</button>
     </div>
     <div id="ww-imp-out"></div>
     <div class="sub" id="ww-dev-out"></div>
@@ -235,7 +230,7 @@
     return r.json();
   }
   function copy(btn, txt){
-    const done = () => { btn.textContent = "✅ کپی شد"; setTimeout(()=>{ btn.textContent = "کپی"; }, 1400); };
+    const done = () => { btn.textContent = "✓ کپی شد"; setTimeout(()=>{ btn.textContent = "کپی"; }, 1400); };
     if(navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(txt).then(done).catch(()=>{ prompt("کپی کن:", txt); });
     } else { prompt("کپی کن:", txt); }
@@ -263,10 +258,10 @@
     try { d = await jget(`/api/dnslist?cc=${encodeURIComponent(cc)}&n=25${v6}`); }
     catch(e){ q("ww-info").textContent = "خطا: " + e.message; return; }
     if(d.country){
-      q("ww-info").innerHTML = `📍 <b>${d.country.name}</b> — ${fa(d.country.count)} رزولور عمومی ثبت‌شده ` +
+      q("ww-info").innerHTML = `<b>${d.country.name}</b> — ${fa(d.country.count)} رزولور عمومی ثبت‌شده ` +
         `(IPv4 ${fa(d.country.v4)} · IPv6 ${fa(d.country.v6)}). ` +
         `لیست زیر <b>کاندید</b> است؛ بهترین را روی گوشی خودت تست کن.`;
-    } else { q("ww-info").innerHTML = "📍 لیست جهانی (anycast)."; }
+    } else { q("ww-info").innerHTML = "لیست جهانی (anycast)."; }
 
     let h = "";
     (d.groups || []).forEach(g=>{
@@ -296,7 +291,7 @@
             <td style="direction:ltr;font-family:ui-monospace,monospace;padding:4px 2px">${s.ip}</td>
             <td style="padding:4px 2px">${(s.as||"—").slice(0,34)}</td>
             <td style="padding:4px 2px">${fa(Number(s.reliability||0).toFixed(2))}</td>
-            <td style="padding:4px 2px">${s.dnssec?"✅":"—"}</td>
+            <td style="padding:4px 2px">${s.dnssec?"✓":"—"}</td>
             <td><button class="wwbtn wwcopy" data-ip="${s.ip}">کپی</button></td></tr>`).join("") +
          `</table></details>`;
     } else { q("ww-servers").innerHTML = ""; }
@@ -311,7 +306,7 @@
       const d = await jget("/api/impact?name=" + encodeURIComponent(name));
       LAST = d;
       let h = `<div class="wwbox" style="margin-top:8px">
-        <b>${d.distinct_pops_hint ? "✅ رزولورها PoP متفاوت می‌دهند" : "همه یک آی‌پی دادند"}</b>
+        <b>${d.distinct_pops_hint ? "✓ رزولورها PoP متفاوت می‌دهند" : "همه یک آی‌پی دادند"}</b>
         <div class="sub">${fa(d.answered)} از ${fa(d.total)} رزولور پاسخ دادند ·
         ${fa(d.distinct_ips)} آی‌پی متمایز · از لبهٔ ${d.from.colo||"—"}</div></div>
         <table style="width:100%;font-size:13px;margin-top:8px;border-collapse:collapse">
@@ -338,7 +333,7 @@
       (d.groups||[]).forEach(g=>{ if(g.doh) targets.push({name:g.name, doh:g.doh}); });
     }catch(e){}
     if(!targets.length){ out.textContent = "آدرس DoH پیدا نشد."; return; }
-    out.innerHTML = `<div class="sub">⏱ سنجش از گوشی خودت روی ${fa(targets.length)} رزولور — این عدد «زمان تا دریافت پاسخ از این خط» است:</div>`;
+    out.innerHTML = `<div class="sub">سنجش از گوشی خودت روی ${fa(targets.length)} رزولور — این عدد «زمان تا دریافت پاسخ از این خط» است:</div>`;
     const rows = [];
     await Promise.all(targets.slice(0,10).map(async t=>{
       const url = t.doh + (t.doh.includes("?") ? "&" : "?") + "name=" + encodeURIComponent(name) + "&type=A";
@@ -360,10 +355,10 @@
       <tr style="opacity:.75"><th style="text-align:right">DNS</th><th style="text-align:right">آی‌پی برگشتی</th>
       <th style="text-align:right">زمان</th></tr>` +
       rows.map(r=>`<tr>
-        <td style="padding:4px 2px">${r.name}${r.ok?"":" ⚠️"}</td>
+        <td style="padding:4px 2px">${r.name}${r.ok?"":" ▲"}</td>
         <td style="direction:ltr;font-family:ui-monospace,monospace;padding:4px 2px">${(r.ips||[]).slice(0,2).join(" · ")||"—"}</td>
         <td style="padding:4px 2px">${fa(r.ms)}ms</td></tr>`).join("") + `</table>
-      <div class="sub">⚠️ = پاسخ نداد یا در دسترس نبود (که خودش یک یافته است). این عدد مسیر <b>خط خودت</b> را نشان می‌دهد، نه لبهٔ کلادفلر.</div>`;
+      <div class="sub">▲ = پاسخ نداد یا در دسترس نبود (که خودش یک یافته است). این عدد مسیر <b>خط خودت</b> را نشان می‌دهد، نه لبهٔ کلادفلر.</div>`;
   }
 
   q("ww-load").onclick = loadList;
@@ -374,26 +369,9 @@
 })();
 </script>
 
-  <style>
-  .ph-tabs{ display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 }
-  .ph-tab{ padding:7px 11px;border-radius:999px;border:1px solid rgba(127,127,127,.35);
-           background:rgba(127,127,127,.10);color:inherit;font:inherit;font-size:13px;cursor:pointer }
-  .ph-tab.on{ background:#1d4ed8;border-color:#1d4ed8;color:#fff;font-weight:700 }
-  .ph-panel{ display:none } .ph-panel.on{ display:block }
-  .ph-card{ padding:10px 12px;border:1px solid rgba(127,127,127,.28);border-radius:12px;
-            background:rgba(127,127,127,.06);margin:8px 0 }
-  .ph-kv{ font-size:13px;line-height:2 }
-  .ph-mono{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace;direction:ltr;font-size:12.5px }
-  .ph-badge{ display:inline-block;padding:1px 7px;border-radius:999px;font-size:11px;
-             background:rgba(29,78,216,.16);border:1px solid rgba(29,78,216,.35);margin:0 2px }
-  .ph-good{ color:#16a34a } .ph-warn{ color:#d97706 } .ph-bad{ color:#dc2626 }
-  .ph table{ width:100%;border-collapse:collapse;font-size:13px }
-  .ph th,.ph td{ padding:4px 3px;border-bottom:1px solid rgba(127,127,127,.18);text-align:right }
-  .ph-lbl{ font-size:12.5px;opacity:.75;display:block;margin-bottom:3px }
-  .ph-grid2{ display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px }
-</style>
+  
 
-  <h2>🧰 جعبهٔ ابزار پینگ‌هاب</h2>
+  <h2>جعبهٔ ابزار پینگ‌هاب</h2>
   <div class="sub" style="margin-bottom:6px">
     هر ابزار با <b>منبع و مجوز</b> مشخص: کاتالوگ بازی (MIT — pingdiff) · متادیتای رزولورها (ISC — dnscrypt-resolvers) ·
     آی‌پی‌های کلادفلر ایرانی (MIT — CF-Web) · سنجش از داخل ایران (Globalping).
@@ -403,7 +381,7 @@
 
   <div class="ph-panel" id="ph-p1">
     <div class="ph-card">
-      <b>📍 خط من — ثبت استان، شهر و اپراتور</b>
+      <b>خط من — ثبت استان، شهر و اپراتور</b>
       <div class="sub">اپراتور از ASN تشخیص داده می‌شود (دقیق). شهر از IP تقریبی است؛ اگر غلط بود خودت انتخاب کن — انتخاب تو بر حدس IP اولویت دارد.</div>
       <div class="ph-grid2" style="margin-top:8px">
         <div><span class="ph-lbl">استان</span><select class="wwin" id="ph-prov"></select></div>
@@ -416,19 +394,19 @@
           </select></div>
       </div>
       <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
-        <button class="wwbtn" id="ph-detect">🔎 تشخیص خودکار</button>
-        <button class="wwbtn wwprimary" id="ph-save">💾 ذخیره روی این دستگاه</button>
+        <button class="wwbtn" id="ph-detect">تشخیص خودکار</button>
+        <button class="wwbtn wwprimary" id="ph-save">ذخیره روی این دستگاه</button>
       </div>
       <div class="ph-kv" id="ph-me-out"></div>
     </div>
 
     <div class="ph-card">
-      <b>📶 سنجش از همین دستگاه + ثبت بی‌نام</b>
+      <b>سنجش از همین دستگاه + ثبت بی‌نام</b>
       <div class="sub">هر رزولور ۳ بار سنجیده می‌شود تا p95 و نوسان (jitter) به دست بیاید. عدد، مسیر <b>خط خودت</b> است — نه لبهٔ سرور ما.</div>
       <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
         <input id="ph-dom" class="wwin" value="cdn.cloudflare.steamstatic.com" style="flex:1;min-width:220px;direction:ltr">
-        <button class="wwbtn wwprimary" id="ph-run">▶️ سنجش</button>
-        <button class="wwbtn" id="ph-report">📤 ثبت بی‌نام برای آمار</button>
+        <button class="wwbtn wwprimary" id="ph-run">سنجش</button>
+        <button class="wwbtn" id="ph-report">ثبت بی‌نام برای آمار</button>
       </div>
       <div id="ph-out"></div>
     </div>
@@ -436,7 +414,7 @@
 
   <div class="ph-panel" id="ph-p2">
     <div class="ph-card">
-      <b>🎮 سرورهای بازی — بهترین رجین برای تو</b>
+      <b>سرورهای بازی — بهترین رجین برای تو</b>
       <div class="sub">۹ بازی · ۱۴۱ سرور (داده از پروژهٔ MIT «pingdiff»). اول سرورهای هر رجین را ببین، بعد پینگ «از داخل ایران» را بگیر.</div>
       <div class="ph-grid2" style="margin-top:8px">
         <div><span class="ph-lbl">بازی</span><select class="wwin" id="ph-game"></select></div>
@@ -444,7 +422,7 @@
       </div>
       <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
         <button class="wwbtn wwprimary" id="ph-gload">نمایش سرورها</button>
-        <button class="wwbtn" id="ph-gping">📡 پینگ ۳ سرور اول از ایران</button>
+        <button class="wwbtn" id="ph-gping">پینگ ۳ سرور اول از ایران</button>
       </div>
       <div id="ph-gout"></div>
     </div>
@@ -452,7 +430,7 @@
 
   <div class="ph-panel" id="ph-p3">
     <div class="ph-card">
-      <b>🧪 کاتالوگ رزولورها — با پرچم‌های واقعی</b>
+      <b>کاتالوگ رزولورها — با پرچم‌های واقعی</b>
       <div class="sub">۷۷۲ رزولور با متادیتای DNSSEC / بدون‌لاگ / بدون‌فیلتر و آدرس DoH (منبع: لیست رسمی dnscrypt-proxy، مجوز ISC).</div>
       <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
         <input id="ph-rq" class="wwin" placeholder="جست‌وجو: name / ip / doh" style="flex:1;min-width:170px">
@@ -468,7 +446,7 @@
 
   <div class="ph-panel" id="ph-p4">
     <div class="ph-card">
-      <b>🌐 از ایران و جهان بسنج (Globalping)</b>
+      <b>از ایران و جهان بسنج (Globalping)</b>
       <div class="sub">Globalping پروب‌های عمومی دارد — <b>۶ پروب فعال در تهران</b>. این‌ها دیتاسنتری‌اند نه خط موبایل؛ یعنی تصویر «از داخل ایران» می‌دهند ولی پینگ خط شخصی تو نیست.</div>
       <div class="ph-grid2" style="margin-top:8px">
         <div><span class="ph-lbl">نوع</span>
@@ -483,7 +461,7 @@
         <div><span class="ph-lbl">رزولور (فقط برای DNS)</span><input id="ph-gres" class="wwin" placeholder="1.1.1.1 یا خالی" style="direction:ltr"></div>
       </div>
       <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
-        <button class="wwbtn wwprimary" id="ph-grun">▶️ اجرا</button>
+        <button class="wwbtn wwprimary" id="ph-grun">اجرا</button>
         <button class="wwbtn" data-gp="ping|1.1.1.1|IR">پینگ 1.1.1.1 از ایران</button>
         <button class="wwbtn" data-gp="dns|cdn.cloudflare.steamstatic.com|IR">DNS استیم از ایران</button>
       </div>
@@ -493,12 +471,12 @@
 
   <div class="ph-panel" id="ph-p5">
     <div class="ph-card">
-      <b>🔥 آی‌پی‌های کلادفلر دامنه‌های ایرانی (آی‌پی تمیز)</b>
+      <b>آی‌پی‌های کلادفلر دامنه‌های ایرانی (آی‌پی تمیز)</b>
       <div class="sub">۷۰۹ دامنهٔ ایرانی روی کلادفلر → ۶۲۹ آی‌پی یکتا (منبع MIT — CF-Web). این‌ها «کاندید»اند؛ با دکمهٔ زیر از داخل ایران سنجیده می‌شوند.</div>
       <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
         <input id="ph-cq" class="wwin" placeholder="جست‌وجو: آی‌پی یا بخشی از دامنه" style="flex:1;min-width:200px;direction:ltr">
         <button class="wwbtn" id="ph-cgo">نمایش</button>
-        <button class="wwbtn wwprimary" id="ph-ctest">📡 سنجش ۳ آی‌پی از ایران</button>
+        <button class="wwbtn wwprimary" id="ph-ctest">سنجش ۳ آی‌پی از ایران</button>
       </div>
       <div id="ph-cout"></div>
     </div>
@@ -506,36 +484,36 @@
 
   <div class="ph-panel" id="ph-p6">
     <div class="ph-card">
-      <b>🏠 خانه و شبکه — علتِ واقعیِ جهش پینگ</b>
+      <b>خانه و شبکه — علتِ واقعیِ جهش پینگ</b>
       <div class="sub">«پینگ ۲۰ → ۲۲۰ زیر دانلود» اسمش <b>بافر‌بلاست</b> است (صف روتر پر می‌شود). این آزمون همین را می‌سنجد: RTT بی‌بار در مقابل RTT زیر بار.</div>
       <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
-        <button class="wwbtn wwprimary" id="ph-bb">▶️ آزمون بافر‌بلاست</button>
+        <button class="wwbtn wwprimary" id="ph-bb">آزمون بافر‌بلاست</button>
         <span class="sub" id="ph-bb-note">آزمون ~۱۵ ثانیه طول می‌کشد و ~۵ مگابایت از اتصال مصرف می‌کند.</span>
       </div>
       <div id="ph-bbout"></div>
     </div>
     <div class="ph-card">
-      <b>🛠 اسکریپت‌ها و تنظیمات آماده (تولیدشده در همین لحظه)</b>
+      <b>اسکریپت‌ها و تنظیمات آماده (تولیدشده در همین لحظه)</b>
       <div class="sub">مکانیزم‌ها از پروژه‌های باز: ReducePing/PingTune (ویندوز)، LibreQoS/dscpclassify (CAKE)، bufferbloat-lab (یافتهٔ ۲۰→۲۲۷ms). فایل‌ها متن خام‌اند — اول بخوان، بعد اجرا کن.</div>
       <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
-        <a class="wwbtn" href="/api/gen?kind=windows-game" download>🪟 ویندوز (بازی، TCP)</a>
-        <a class="wwbtn" href="/api/gen?kind=windows-reset" download>↩️ بازگردانی ویندوز</a>
-        <a class="wwbtn" href="/api/gen?kind=linux-cake&iface=eth0&rate=20mbit" download>🐧 لینوکس CAKE</a>
-        <a class="wwbtn" href="/api/gen?kind=router-openwrt&iface=eth1" download>📶 روتر OpenWrt</a>
-        <a class="wwbtn" href="/api/gen?kind=router-mikrotik&rate=20mbit" download>📦 میکروتیک</a>
-        <a class="wwbtn" href="/api/gen?kind=mtu" download>📏 کشف MTU</a>
+        <a class="wwbtn" href="/api/gen?kind=windows-game" download>ویندوز (بازی، TCP)</a>
+        <a class="wwbtn" href="/api/gen?kind=windows-reset" download>بازگردانی ویندوز</a>
+        <a class="wwbtn" href="/api/gen?kind=linux-cake&iface=eth0&rate=20mbit" download>لینوکس CAKE</a>
+        <a class="wwbtn" href="/api/gen?kind=router-openwrt&iface=eth1" download>روتر OpenWrt</a>
+        <a class="wwbtn" href="/api/gen?kind=router-mikrotik&rate=20mbit" download>میکروتیک</a>
+        <a class="wwbtn" href="/api/gen?kind=mtu" download>کشف MTU</a>
       </div>
     </div>
   </div>
 
   <div class="ph-panel" id="ph-p7">
     <div class="ph-card">
-      <b>📊 نتیجهٔ اسکن خودمان (اثر رزولور → آی‌پی → تأخیر واقعی)</b>
+      <b>نتیجهٔ اسکن خودمان (اثر رزولور → آی‌پی → تأخیر واقعی)</b>
       <div class="sub">همین یک جدول است که هیچ‌کدام از ~۲۳۵ پروژهٔ بررسی‌شده نداشتند: تفاوت «بهترین و بدترین رزولور» روی تأخیر واقعی تا سرور بازی.</div>
       <div id="ph-sout"></div>
     </div>
     <div class="ph-card">
-      <b>🏆 آمار بی‌نام استانی / اپراتوری</b>
+      <b>آمار بی‌نام استانی / اپراتوری</b>
       <div class="sub">هر عدد از سنجش کاربران است (فقط استان/اپراتور/رزولور/عدد — بدون هویت). تعداد نمونه (n) را ببین؛ نمونهٔ کم = اعتبار کم.</div>
       <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
         <select class="wwin" id="ph-sp"></select>
@@ -546,7 +524,7 @@
   </div>
 
 <script>
-/* ============ 🧰 جعبهٔ ابزار پینگ‌هاب — ساخته‌شده روی هستهٔ WorldScan ============ */
+/* ============ جعبهٔ ابزار پینگ‌هاب — ساخته‌شده روی هستهٔ WorldScan ============ */
 (function(){
   "use strict";
   var q = function(id){ return document.getElementById(id); };
@@ -562,14 +540,14 @@
   async function jpost(p, body){ var r = await fetch(ABS+p, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body||{})});
       if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); }
   function copy(btn, txt){
-    var done = function(){ btn.textContent = "✅"; setTimeout(function(){ btn.textContent = "کپی"; }, 1200); };
+    var done = function(){ btn.textContent = "✓"; setTimeout(function(){ btn.textContent = "کپی"; }, 1200); };
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, function(){ prompt("کپی کن:", txt); });
     else prompt("کپی کن:", txt);
   }
 
   /* ---------- تب‌ها ---------- */
-  var TABS = [["ph-p1","📍 خط من"],["ph-p2","🎮 بازی"],["ph-p3","🧪 رزولورها"],["ph-p4","🌐 ایران و جهان"],
-              ["ph-p5","🔥 آی‌پی تمیز"],["ph-p6","🏠 خانه و شبکه"],["ph-p7","📊 اسکن و آمار"]];
+  var TABS = [["ph-p1","خط من"],["ph-p2","بازی"],["ph-p3","رزولورها"],["ph-p4","ایران و جهان"],
+              ["ph-p5","آی‌پی تمیز"],["ph-p6","خانه و شبکه"],["ph-p7","اسکن و آمار"]];
   var tabsEl = q("ph-tabs");
   TABS.forEach(function(t, i){
     var b = document.createElement("button");
@@ -613,7 +591,7 @@
   q("ph-save").onclick = function(){
     var w = currentWhere();
     try{ localStorage.setItem("pinghab.where", JSON.stringify(w)); }catch(e){}
-    q("ph-me-out").innerHTML += '<div class="ph-good" style="margin-top:6px">✅ ذخیره شد (روی همین دستگاه): '
+    q("ph-me-out").innerHTML += '<div class="ph-good" style="margin-top:6px">✓ ذخیره شد (روی همین دستگاه): '
       + esc(w.province||"—") + " · " + esc(w.city||"—") + " · " + esc(w.carrier||"—") + '</div>';
   };
   q("ph-detect").onclick = async function(){
@@ -624,9 +602,9 @@
         + 'ASN: <b class="ph-mono">' + esc(ME.asn||"—") + "</b> · سازمان: <b>" + esc(ME.org||"—") + "</b><br>"
         + 'شهرِ IP: <b>' + esc(ME.city||"—") + "</b> · استانِ IP: " + esc(ME.region||"—") + "<br>"
         + 'لبهٔ کلادفلر: <b class="ph-mono">' + esc(ME.colo||"—") + "</b> · RTT خط تو تا لبه: <b>" + (ME.tcpRtt==null?"—":fa(ME.tcpRtt)+" ms") + "</b><br>";
-      if(ME.carrier) html += '📶 اپراتور تشخیص‌داده‌شده: <b>' + esc(ME.carrier.fa) + '</b> <span class="ph-badge">' + esc(ME.carrier.type) + ' · از ' + esc(ME.carrier.match) + "</span><br>";
-      else html += '📶 اپراتور خودکار تشخیص داده نشد — خودت انتخاب کن.<br>';
-      if(ME.province) html += '📍 نزدیک‌ترین استان: <b>' + esc(ME.province.fa) + "</b>" + (ME.province.exact ? "" : " <span class='ph-badge'>تقریبی</span>");
+      if(ME.carrier) html += 'اپراتور تشخیص‌داده‌شده: <b>' + esc(ME.carrier.fa) + '</b> <span class="ph-badge">' + esc(ME.carrier.type) + ' · از ' + esc(ME.carrier.match) + "</span><br>";
+      else html += 'اپراتور خودکار تشخیص داده نشد — خودت انتخاب کن.<br>';
+      if(ME.province) html += 'نزدیک‌ترین استان: <b>' + esc(ME.province.fa) + "</b>" + (ME.province.exact ? "" : " <span class='ph-badge'>تقریبی</span>");
       html += "</div>";
       q("ph-me-out").innerHTML = html;
       if(ME.carrier){ var opts = q("ph-car").options; for(var i=0;i<opts.length;i++){ if(opts[i].text === ME.carrier.fa){ q("ph-car").value = opts[i].value; break; } } }
@@ -683,7 +661,7 @@
     var okRows = rows.filter(function(x){ return x.ok; }).sort(function(a,b){ return a.p50-b.p50; });
     var html = '<table><tr><th>DNS</th><th>میانه</th><th>p95</th><th>نوسان</th><th>آی‌پی برگشتی</th></tr>';
     rows.forEach(function(r2){
-      html += '<tr><td>' + esc(r2.name) + (r2.ok ? "" : ' <span class="ph-bad">⚠️</span>') + "</td>"
+      html += '<tr><td>' + esc(r2.name) + (r2.ok ? "" : ' <span class="ph-bad">▲</span>') + "</td>"
         + "<td>" + (r2.p50==null?"—":fa(r2.p50.toFixed(0))+"ms") + "</td>"
         + "<td>" + (r2.p95==null?"—":fa(r2.p95.toFixed(0))+"ms") + "</td>"
         + "<td>" + fa(r2.jit||0) + "ms</td>"
@@ -694,7 +672,7 @@
       var b = okRows[0], w = okRows[okRows.length-1], gap = (w.p50 - b.p50);
       html += '<div class="ph-card"><b>خلاصه:</b> بهترین <b>' + esc(b.name) + "</b> با میانهٔ <b>" + fa(b.p50.toFixed(0)) + "ms</b>"
         + (okRows.length>1 ? " · اختلاف تا بدترین (" + esc(w.name) + "): <b>" + fa(gap.toFixed(0)) + "ms</b>" : "")
-        + '<div class="sub">⚠️ این عدد «سرعت رسیدن پاسخ DNS» است. اثر واقعی روی پینگ بازی از <b>آی‌پی برگشتی</b> می‌آید — اگر آی‌پی‌ها فرق دارند، مسیر هم فرق دارد (بخش «ایران و جهان» را ببین).</div></div>';
+        + '<div class="sub">▲ این عدد «سرعت رسیدن پاسخ DNS» است. اثر واقعی روی پینگ بازی از <b>آی‌پی برگشتی</b> می‌آید — اگر آی‌پی‌ها فرق دارند، مسیر هم فرق دارد (بخش «ایران و جهان» را ببین).</div></div>';
     }
     out.innerHTML = html;
   };
@@ -710,7 +688,7 @@
         sent++;
       }catch(e){}
     }
-    q("ph-out").innerHTML += '<div class="ph-good" style="margin-top:6px">📤 ' + fa(sent) + " رکورد بی‌نام ثبت شد (فقط استان/اپراتور/رزولور/عدد).</div>";
+    q("ph-out").innerHTML += '<div class="ph-good" style="margin-top:6px">' + fa(sent) + " رکورد بی‌نام ثبت شد (فقط استان/اپراتور/رزولور/عدد).</div>";
   };
 
   /* ---------- بازی ---------- */
@@ -819,7 +797,7 @@
         });
         html += "</table>";
       }
-      html += '<div class="sub">⚠️ پروب‌های ایران دیتاسنتری‌اند (تهران)، نه خط موبایل — عمداً همین را می‌گوییم تا اشتباه نشود.</div>';
+      html += '<div class="sub">▲ پروب‌های ایران دیتاسنتری‌اند (تهران)، نه خط موبایل — عمداً همین را می‌گوییم تا اشتباه نشود.</div>';
       out.innerHTML = html;
     }catch(e){ out.textContent = "خطا: " + e.message; }
   }
@@ -918,7 +896,7 @@
       });
       html += "</table>";
       if ((d.hijacked||[]).length){
-        html += "<div class='sub' style='margin-top:6px'>🚨 رزولورهای مشکوک به دستکاری: ";
+        html += "<div class='sub' style='margin-top:6px'>رزولورهای مشکوک به دستکاری: ";
         html += d.hijacked.map(function(h){ return "<span class='ph-badge'>" + esc(h.ip) + " — " + esc(String(h.name||"").slice(0,18)) + "</span>"; }).join(" ");
         html += "</div>";
       }
@@ -931,7 +909,7 @@
     var out = q("ph-lout"); out.innerHTML = "…";
     try{
       var d = await jget("/api/stats" + (p ? "?province=" + encodeURIComponent(p) : ""));
-      if(!d.rows.length){ out.innerHTML = '<div class="sub">هنوز نمونه‌ای ثبت نشده. اولین نفر باش — در بخش «📍 خط من» یک سنجش انجام بده و «ثبت بی‌نام» را بزن.</div>'; return; }
+      if(!d.rows.length){ out.innerHTML = '<div class="sub">هنوز نمونه‌ای ثبت نشده. اولین نفر باش — در بخش «خط من» یک سنجش انجام بده و «ثبت بی‌نام» را بزن.</div>'; return; }
       var html = '<table><tr><th>رزولور</th><th>استان/اپراتور</th><th>میانگین</th><th>بازه</th><th>n</th></tr>';
       d.rows.forEach(function(r){
         html += "<tr><td>" + esc(r.resolver) + "</td><td>" + esc(r.province) + " / " + esc(r.carrier) + "</td>"
@@ -973,15 +951,15 @@
 const $ = id => document.getElementById(id);
 const FA = s => String(s).replace(/[0-9]/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
 const fmt = (v,d=1) => (v===null||v===undefined||isNaN(v)) ? "—" : FA(Number(v).toFixed(d));
-const COLORS = {great:"#12b981", good:"#4ade80", ok:"#a3e635", meh:"#f59e0b", weak:"#f97316", dead:"#ef4444"};
+const COLORS = {great:"#10a874", good:"#34b04a", ok:"#86ab1a", meh:"#e08a00", weak:"#ea6a10", dead:"#e53935"};
 const TG = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
 function toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),2200); }
 function setupTelegram(){
   if(!TG) return;
   try{
     TG.ready(); TG.expand();
-    if(TG.setHeaderColor) TG.setHeaderColor("#0b1120");
-    if(TG.setBackgroundColor) TG.setBackgroundColor("#070c18");
+    if(TG.setHeaderColor) TG.setHeaderColor("#000000");
+    if(TG.setBackgroundColor) TG.setBackgroundColor("#000000");
     if(TG.colorScheme === "light") document.documentElement.style.filter = "none";
   }catch(e){}
 }
@@ -1013,7 +991,7 @@ const RESOLVERS = [
   {id:"adguardfam", name:"ادگارد خانواده", url:"https://family.adguard-dns.com/dns-query",     region:"family", dns:"94.140.14.15", tag:"تبلیغ+بزرگسال"},
   {id:"cleanbr",    name:"CleanBrowsing",  url:"https://doh.cleanbrowsing.org/doh/security-filter/", region:"family", dns:"185.228.168.9", tag:"امنیتی"}
 ];
-const REGION_LABEL = {anycast:"🌐 نزدیک‌ترین لبه", family:"🛡 خانواده", iran:"🇮🇷 ایران"};
+const REGION_LABEL = {anycast:"نزدیک‌ترین لبه", family:"خانواده", iran:"🇮🇷 ایران"};
 const REGION_NOTE  = {
   anycast:"این‌ها هرجای دنیا «لبهٔ» نزدیک به خودت را جواب می‌دهند؛ عددشان یعنی فاصله‌ات تا نزدیک‌ترین مرکز CDN.",
   family:"نسخه‌های فیلترشده برای محتوای نامناسب (مناسب دستگاه بچه‌ها).",
@@ -1294,7 +1272,7 @@ function renderTable(){
           <span class="barval">${FA(q.score)}</span></div></td>
       <td class="hide-s">${sparkline(st.history, c)}</td>
       <td class="num hide-s">${fmt(st.jit)}</td>
-      <td class="num hide-s" style="color:${st.loss>0.25?'#fca5a5':'inherit'}">${FA(Math.round(st.loss*100))}٪</td>
+      <td class="num hide-s" style="color:${st.loss>0.25?'var(--dead)':'inherit'}">${FA(Math.round(st.loss*100))}٪</td>
     </tr>`;
   }).join("");
 }
@@ -1319,7 +1297,7 @@ function renderAdvice(alive){
   const box = $("advice");
   if(!alive.length){
     box.className = "adv";
-    box.innerHTML = `<b>😕 هیچ سروری جواب نداد</b>
+    box.innerHTML = `<b>هیچ سروری جواب نداد</b>
       <div class="sub" style="margin-top:6px">اگر اینترنت داری ولی همه قطع‌اند، احتمالاً شبکه‌ات DoH را می‌بندد.
       با این حال نتیجهٔ منطقه‌ای پایین صفحه هنوز معتبر است. برای تست کامل (UDP/53) نسخهٔ پایتون پینگ‌هاب را روی
       کامپیوتر/ترموکس اجرا کن — لینک در پایین صفحه.</div>`;
@@ -1342,7 +1320,7 @@ function renderAdvice(alive){
     : best.srv.id === "cleanbr" ? "security-filter-dns.cleanbrowsing.org"
     : best.srv.dns.split(" / ")[0];
   box.className = "adv";
-  box.innerHTML = `<b>🎯 بهترین DNS برای خط تو الان: ${best.srv.name}</b>
+  box.innerHTML = `<b>بهترین DNS برای خط تو الان: ${best.srv.name}</b>
     <div class="row" style="margin-top:8px">
       <span class="badge b-${q.color}">${q.grade} · قدرت ${FA(q.score)}/۱۰۰</span>
       <span class="badge">پینگ ${fmt(best.st.med)} ms</span>
@@ -1356,17 +1334,17 @@ function renderAdvice(alive){
       <div class="sub">آیفون: تنظیمات › وای‌فای › (i) › Configure DNS › Manual →
       <code>${best.srv.dns.split(" / ")[0]}</code></div>
       <div class="row" style="margin-top:6px">
-        <button class="ghost" id="copyDns">📋 کپی ${privateDns}</button>
+        <button class="ghost" id="copyDns">کپی ${privateDns}</button>
       </div>
     </div>
     ${isp ? `<div class="sub" style="margin-top:9px">خط تو: <b>${isp}</b>${state.me.colo?` · نزدیک‌ترین لبه: ${state.me.colo}`:""}</div>`:""}
     ${fastestRegion ? `<div class="sub">نزدیک‌ترین منطقه به تو: <b>${fastestRegion.flag} ${fastestRegion.region}</b>
         (${fmt(fastestRegion.ms,0)} ms) — سرور بازی را از همین منطقه انتخاب کن.</div>`:""}
     ${best.srv.id === "cloudflare" || best.srv.id === "google" ? `<div class="note warn" style="margin-top:9px;font-size:12px">
-       ⚠️ اگر داخل ایران هستی و این سرور در عمل کار نکرد، احتمالاً ISP آن را مخدوش می‌کند؛
+       ▲ اگر داخل ایران هستی و این سرور در عمل کار نکرد، احتمالاً ISP آن را مخدوش می‌کند؛
        در اپ اندروید/ویندوز می‌توانی DNS-over-HTTPS را روشن کنی، یا از DNS داخلی (شکن/رادار/الکترو) استفاده کنی.</div>`:""}
-    ${famBest ? `<div class="sub" style="margin-top:8px">🛡 برای دستگاه بچه‌ها: <b>${famBest.srv.name}</b> (${fmt(famBest.st.med)} ms)</div>`:""}
-    ${best.st.loss > 0.25 ? `<div class="note warn" style="margin-top:9px">⚠️ افت بستهٔ این سرور بالاست؛ اگر پینگ دیگری نزدیک همین بود، آن را انتخاب کن.</div>`:""}`;
+    ${famBest ? `<div class="sub" style="margin-top:8px">برای دستگاه بچه‌ها: <b>${famBest.srv.name}</b> (${fmt(famBest.st.med)} ms)</div>`:""}
+    ${best.st.loss > 0.25 ? `<div class="note warn" style="margin-top:9px">▲ افت بستهٔ این سرور بالاست؛ اگر پینگ دیگری نزدیک همین بود، آن را انتخاب کن.</div>`:""}`;
   const btn = $("copyDns");
   if(btn) btn.onclick = () => { navigator.clipboard?.writeText(privateDns); toast("کپی شد: " + privateDns); };
 }
@@ -1412,11 +1390,11 @@ async function saveResult(){
       await navigator.clipboard?.writeText(j.url);
       toast("لینک کپی شد ✓");
     }
-    const linkRow = `<div class="note" style="margin-top:10px">🔗 لینک نتیجهٔ تو:
+    const linkRow = `<div class="note" style="margin-top:10px">لینک نتیجهٔ تو:
       <a href="${j.url}" target="_blank" rel="noopener">${j.url}</a>
       <div class="row" style="margin-top:6px">
-        <button class="ghost" onclick="navigator.clipboard.writeText('${j.url}');">📋 کپی لینک</button>
-        <a href="${j.tgShare||'#'}" target="_blank" rel="noopener"><button class="ghost">📤 اشتراک در تلگرام</button></a>
+        <button class="ghost" onclick="navigator.clipboard.writeText('${j.url}');">کپی لینک</button>
+        <a href="${j.tgShare||'#'}" target="_blank" rel="noopener"><button class="ghost">اشتراک در تلگرام</button></a>
       </div></div>`;
     $("advice").insertAdjacentHTML("beforeend", linkRow);
   }catch(e){ toast("خطا: " + e.message); }
@@ -1432,7 +1410,7 @@ $("save").onclick = saveResult;
 $("edgeBtn").onclick = edgeCheck;
 $("auto").onclick = () => {
   state.auto = !state.auto;
-  $("auto").textContent = state.auto ? "⏸ توقف تست زنده" : "🔁 تست زنده خودکار";
+  $("auto").textContent = state.auto ? "توقف تست زنده" : "تست زنده خودکار";
   $("auto").style.borderColor = state.auto ? "var(--great)" : "";
   if(state.auto){
     runOnce(false);
@@ -1446,6 +1424,21 @@ const repo = "Alisarani7021/pinghab";
 $("links").innerHTML = `کد منبع: <a href="https://github.com/${repo}" target="_blank" rel="noopener">github.com/${repo}</a>`;
 // در تلگرام: پاک‌کردن حالت لودینگ
 if(TG){ setTimeout(()=>{ try{TG.expand()}catch(e){} }, 300); }
+</script>
+<script>
+(function(){
+var T=[["lamborghini", "لامبورگینی", "#ffc000", "#000000"], ["ferrari", "فراری", "#da291c", "#181818"], ["renault", "رنو", "#ffed00", "#ffffff"], ["apple", "اپل", "#0066cc", "#f5f5f7"], ["claude", "کلود", "#cc785c", "#faf9f5"], ["pinterest", "پینترست", "#e60023", "#ffffff"], ["spotify", "اسپاتیفای", "#1ed760", "#121212"], ["lovable", "لاوبل", "#1c1c1c", "#f7f4ed"], ["webflow", "وب‌فلو", "#7a3dff", "#ffffff"], ["dell", "دل ۱۹۹۶", "#e91d2a", "#ffffff"], ["nintendo", "نینتندو ۲۰۰۱", "#e60012", "#7a8aba"]],root=document.documentElement,box=document.getElementById("themes");
+function set(k,save){
+  root.dataset.t=k;
+  [].forEach.call(box.children,function(b){b.setAttribute("aria-pressed",b.dataset.k===k)});
+  var bg=getComputedStyle(root).getPropertyValue("--bg").trim();
+  try{if(typeof TG!=="undefined"&&TG){TG.setHeaderColor(bg);TG.setBackgroundColor(bg)}}catch(e){}
+  if(save)try{localStorage.setItem("pinghab.theme",k)}catch(e){}
+}
+T.forEach(function(t){var b=document.createElement("button");b.type="button";b.dataset.k=t[0];b.style.cssText="--a:"+t[2]+";--b:"+t[3];b.innerHTML="<i></i>"+t[1];b.onclick=function(){set(t[0],1)};box.appendChild(b)});
+var s=null;try{s=localStorage.getItem("pinghab.theme")}catch(e){}
+set(T.some(function(t){return t[0]===s})?s:"lamborghini");
+})();
 </script>
 </body>
 </html>
