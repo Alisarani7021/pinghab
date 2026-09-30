@@ -1,0 +1,171 @@
+{
+ "cases": [
+  {
+   "case": "مهار UDP توسط اپراتور",
+   "primary": "مهار یا افت عمدی UDP توسط اپراتور",
+   "probability": 0.418,
+   "ranked": [
+    {
+     "hypothesis": "udp_throttle",
+     "label": "مهار یا افت عمدی UDP توسط اپراتور",
+     "p": 0.418
+    },
+    {
+     "hypothesis": "destination_side",
+     "label": "مشکل سمت مقصد (سرور/CDN)",
+     "p": 0.17
+    },
+    {
+     "hypothesis": "payload_filter",
+     "label": "فیلترینگ حجمی/مشکل MTU روی UDP",
+     "p": 0.154
+    },
+    {
+     "hypothesis": "tls_interference",
+     "label": "دستکاری/TLS اجباری در مسیر (Middlebox)",
+     "p": 0.069
+    },
+    {
+     "hypothesis": "transit_peering",
+     "label": "ازدحام ترانزیت یا پیرینگ اپراتور",
+     "p": 0.057
+    }
+   ],
+   "next_probes": [
+    "جاروب ریز حجم (۱۰۰۰..۱۵۰۰) برای پیدا کردن مرز دقیق",
+    "همان مقصد را از resolver دیگر تست کن (تغییر endpoint مسیر)"
+   ],
+   "evidence": [
+    {
+     "rule": "gateway_fast",
+     "weight": -0.5,
+     "detail": "مسیر محلی سالم است (گیت‌وی 3ms)"
+    },
+    {
+     "rule": "isp_dns_ok",
+     "weight": -0.4,
+     "detail": "DNS اپراتور نسبت به بیرون بد نیست"
+    },
+    {
+     "rule": "udp_loss_tcp_ok",
+     "weight": 2.6,
+     "detail": "از دست رفتن UDP 55% در حالی که TCP/TLS کار می‌کند"
+    },
+    {
+     "rule": "tls_extra_mild",
+     "weight": 0.8,
+     "detail": "اضافه‌بار TLS 43ms"
+    }
+   ]
+  },
+  {
+   "case": "سرور مقصد خراب",
+   "primary": "مشکل سمت مقصد (سرور/CDN)",
+   "probability": 0.406,
+   "ranked": [
+    {
+     "hypothesis": "destination_side",
+     "label": "مشکل سمت مقصد (سرور/CDN)",
+     "p": 0.406
+    },
+    {
+     "hypothesis": "udp_throttle",
+     "label": "مهار یا افت عمدی UDP توسط اپراتور",
+     "p": 0.074
+    },
+    {
+     "hypothesis": "payload_filter",
+     "label": "فیلترینگ حجمی/مشکل MTU روی UDP",
+     "p": 0.074
+    },
+    {
+     "hypothesis": "ipv6_degradation",
+     "label": "افت مسیر IPv6",
+     "p": 0.074
+    },
+    {
+     "hypothesis": "transit_peering",
+     "label": "ازدحام ترانزیت یا پیرینگ اپراتور",
+     "p": 0.074
+    }
+   ],
+   "next_probes": [
+    "همان مقصد را از resolver دیگر تست کن (تغییر endpoint مسیر)"
+   ],
+   "evidence": [
+    {
+     "rule": "gateway_fast",
+     "weight": -0.5,
+     "detail": "مسیر محلی سالم است (گیت‌وی 2ms)"
+    },
+    {
+     "rule": "isp_dns_ok",
+     "weight": -0.4,
+     "detail": "DNS اپراتور نسبت به بیرون بد نیست"
+    },
+    {
+     "rule": "dest_specific",
+     "weight": 1.7,
+     "detail": "فقط game-me بد است؛ بقیه خوب‌اند (پراکندگی 206ms)"
+    }
+   ]
+  },
+  {
+   "case": "وای‌فای محلی خراب",
+   "primary": "مشکل دسترسی محلی (وای‌فای/مودم/بار شبکهٔ خانه)",
+   "probability": 0.399,
+   "ranked": [
+    {
+     "hypothesis": "local_access",
+     "label": "مشکل دسترسی محلی (وای‌فای/مودم/بار شبکهٔ خانه)",
+     "p": 0.399
+    },
+    {
+     "hypothesis": "transit_peering",
+     "label": "ازدحام ترانزیت یا پیرینگ اپراتور",
+     "p": 0.296
+    },
+    {
+     "hypothesis": "tls_interference",
+     "label": "دستکاری/TLS اجباری در مسیر (Middlebox)",
+     "p": 0.081
+    },
+    {
+     "hypothesis": "udp_throttle",
+     "label": "مهار یا افت عمدی UDP توسط اپراتور",
+     "p": 0.036
+    },
+    {
+     "hypothesis": "payload_filter",
+     "label": "فیلترینگ حجمی/مشکل MTU روی UDP",
+     "p": 0.036
+    }
+   ],
+   "next_probes": [
+    "پروب‌ها را تکرار کن در ساعت اوج تا الگو تثبیت شود"
+   ],
+   "evidence": [
+    {
+     "rule": "gateway_slow",
+     "weight": 2.4,
+     "detail": "RTT گیت‌وی محلی 22ms است (سالم: زیر ۵ms)"
+    },
+    {
+     "rule": "isp_dns_ok",
+     "weight": -0.4,
+     "detail": "DNS اپراتور نسبت به بیرون بد نیست"
+    },
+    {
+     "rule": "tls_extra_mild",
+     "weight": 0.8,
+     "detail": "اضافه‌بار TLS 32ms"
+    },
+    {
+     "rule": "all_dest_bad",
+     "weight": 1.5,
+     "detail": "همهٔ مقاصد (3) به‌طور یکنواخت کندند → مشکل مسیر بین‌شبکه‌ای"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,125 @@
+{
+ "environment": {
+  "ts": 1790803357.581157,
+  "gateway": {
+   "ts": 1790803357.5797417,
+   "kind": "gateway",
+   "target": "169.254.0.22",
+   "ok": false,
+   "rtt_ms": null,
+   "loss": true,
+   "meta": {
+    "gw": "169.254.0.22",
+    "err": "no_response"
+   }
+  },
+  "ipv6": {
+   "ts": 1790803357.581076,
+   "kind": "ipv6",
+   "target": "dns.google",
+   "ok": false,
+   "rtt_ms": null,
+   "loss": true,
+   "meta": {
+    "err": "OSError"
+   }
+  },
+  "pid": 3198
+ },
+ "ts": 1790803357.581217,
+ "paths": [
+  {
+   "path": "cf",
+   "label": "Cloudflare 1.1.1.1",
+   "n": 8,
+   "ok": 8,
+   "p50": 9.07,
+   "p90": 9.81,
+   "p95": 9.81,
+   "min": 7.45,
+   "max": 9.81,
+   "loss": 0.0,
+   "summary": {
+    "n": 6,
+    "ok": 6,
+    "loss": 0.0,
+    "rtt_p50": 9.03,
+    "rtt_min": 0.42,
+    "rtt_max": 21.9,
+    "urltest_target": "1.1.1.1"
+   }
+  },
+  {
+   "path": "google",
+   "label": "Google 8.8.8.8",
+   "n": 8,
+   "ok": 8,
+   "p50": 1.29,
+   "p90": 1.74,
+   "p95": 1.74,
+   "min": 1.0,
+   "max": 1.74,
+   "loss": 0.0,
+   "summary": {
+    "n": 6,
+    "ok": 6,
+    "loss": 0.0,
+    "rtt_p50": 1.1,
+    "rtt_min": 0.5,
+    "rtt_max": 5.21,
+    "urltest_target": "8.8.8.8"
+   }
+  },
+  {
+   "path": "quad9",
+   "label": "Quad9 9.9.9.9",
+   "n": 8,
+   "ok": 8,
+   "p50": 6.15,
+   "p90": 7.16,
+   "p95": 7.16,
+   "min": 5.76,
+   "max": 7.16,
+   "loss": 0.0,
+   "summary": {
+    "n": 6,
+    "ok": 6,
+    "loss": 0.0,
+    "rtt_p50": 6.14,
+    "rtt_min": 0.57,
+    "rtt_max": 17.99,
+    "urltest_target": "9.9.9.9"
+   }
+  }
+ ],
+ "tcp_ms": 0.28,
+ "tls_ms": 23.88,
+ "tls_minus_tcp_ms": 23.6,
+ "payload_sweep": {
+  "sizes": {
+   "512": {
+    "ok": true,
+    "rtt_ms": 0.96
+   },
+   "900": {
+    "ok": false,
+    "rtt_ms": null
+   },
+   "1232": {
+    "ok": false,
+    "rtt_ms": null
+   },
+   "1400": {
+    "ok": false,
+    "rtt_ms": null
+   },
+   "1500": {
+    "ok": false,
+    "rtt_ms": null
+   }
+  },
+  "max_ok": 512,
+  "min_fail": 900
+ },
+ "notes": "گیت‌وی محلی و IPv6 از این ماشین در دسترس نبودند؛ جاروب حجم نشان می‌دهد UDP بالای 512 بایت پاسخ نمی‌گیرد (RTT نمونه‌های کوچک چند میلی‌ثانیه است). حل‌کننده‌های ایرانی (رادار/الکترو/شکن) از این ماشین قابل‌دسترس نیستند؛ برای همان‌ها لایهٔ سنجش باید از ماشین داخل ایران اجرا شود."
+}
