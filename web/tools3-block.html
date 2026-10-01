@@ -772,10 +772,12 @@
     var pick = q("ph6-sub-src").value;
     if (pick === "paste" || pick === "builtin") return subWords(pick);
     try {
-      var resp = await fetch("data/subdomains-top110k.txt.gz");
+      var resp = await fetch("data/subdomains-top110k.txt");
+      var gz = false;
+      if (!resp.ok) { resp = await fetch("data/subdomains-top110k.txt.gz"); gz = true; }
       if (!resp.ok) throw new Error("asset 404");
       var buf = await resp.arrayBuffer();
-      if (typeof DecompressionStream === "function"){
+      if (gz && typeof DecompressionStream === "function"){
         var ds = new DecompressionStream("gzip");
         var stream = new Blob([buf]).stream().pipeThrough(ds);
         var text = await new Response(stream).text();
@@ -783,6 +785,7 @@
         if (arr.length > 100) return arr;
         throw new Error("empty");
       }
+      if (!gz){ var plain = await resp.text(); var parr = plain.split("\n").filter(Boolean); if (parr.length > 100) return parr; }
       throw new Error("no DecompressionStream");
     } catch (e){
       log("⚠️ فایل کامل داخل اپ خوانده نشد (" + esc(String(e && e.message || e)) + ") — از فهرست پرتکرار استفاده می‌کنم.");

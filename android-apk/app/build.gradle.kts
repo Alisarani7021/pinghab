@@ -18,10 +18,10 @@ android {
     // اپ وب بدون کپی‌شدن، مستقیم از پوشه‌ی web داخل assets قرار می‌گیرد
     sourceSets["main"].assets.srcDirs("src/main/assets", "../../web")
 
-    // پایگاه‌های دادهٔ واقعی (ip2asn / DB-IP / SecLists / فونت) فشرده‌نشده بسته‌بندی می‌شوند:
-    // همان بایت‌های منتشرشدهٔ منبع، بدون دست‌کاری — و بارگذاری سریع‌تر روی گوشی.
+    // فونت (woff2) خودش فشرده است و دوباره فشرده نمی‌شود؛ بقیهٔ داده‌ها با deflate بسته‌بندی می‌شوند
+    // تا حجم دانلود معقول بماند (همان بایت‌های منبع، فقط فشرده‌سازیِ بسته).
     androidResources {
-        noCompress += listOf("gz", "tsv", "csv", "txt", "woff2", "mmdb")
+        noCompress += listOf("woff2")
     }
 
     buildTypes {

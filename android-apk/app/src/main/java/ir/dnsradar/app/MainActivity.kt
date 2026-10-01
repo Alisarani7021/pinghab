@@ -141,13 +141,18 @@ class MainActivity : AppCompatActivity() {
                 if (geoState == 2) return
                 geoState = 1
                 try {
-                    fun stream(name: String): java.io.InputStream {
-                        val raw = assets.open(name)
-                        return if (name.endsWith(".gz")) java.util.zip.GZIPInputStream(raw, 1 shl 20) else raw
+                    // AGP فایل‌های .gz را هنگام بسته‌بندی باز می‌کند؛ پس هر دو نام را امتحان می‌کنیم.
+                    fun openAny(base: String): java.io.InputStream {
+                        try {
+                            return assets.open(base)
+                        } catch (_: Throwable) {
+                            val raw = assets.open(base + ".gz")
+                            return java.util.zip.GZIPInputStream(raw, 1 shl 20)
+                        }
                     }
-                    stream("data/ip2asn-v4.tsv.gz").use { IpTable.loadIp2asn(it, false) }
-                    stream("data/ip2asn-v6.tsv.gz").use { IpTable.loadIp2asn(it, true) }
-                    stream("data/dbip-country.csv.gz").use { IpTable.loadDbipCsv(it) }
+                    openAny("data/ip2asn-v4.tsv").use { IpTable.loadIp2asn(it, false) }
+                    openAny("data/ip2asn-v6.tsv").use { IpTable.loadIp2asn(it, true) }
+                    openAny("data/dbip-country.csv").use { IpTable.loadDbipCsv(it) }
                     geoState = 2
                 } catch (t: Throwable) {
                     geoState = 0
