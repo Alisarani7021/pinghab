@@ -2,8 +2,8 @@ package ir.dnsradar.app
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -40,6 +40,9 @@ class MainActivity : AppCompatActivity() {
             displayZoomControls = false
         }
 
+        // پل نیتیو ← صفحه: ویجت را با آخرین نتیجهٔ سنجش به‌روز می‌کند.
+        webView.addJavascriptInterface(JsBridge(), "phNative")
+
         webView.webViewClient = object : WebViewClientCompat() {
             override fun shouldInterceptRequest(
                 view: WebView, request: WebResourceRequest
@@ -66,4 +69,35 @@ class MainActivity : AppCompatActivity() {
         if (this::webView.isInitialized && webView.canGoBack()) webView.goBack()
         else @Suppress("DEPRECATION") super.onBackPressed()
     }
+
+    /**
+     * پلی که صفحهٔ وب می‌تواند صدا بزند: window.phNative.saveWidget(json)
+     * فقط چند عدد و متن کوتاه ذخیره می‌شود؛ هیچ دادهٔ شناسایی‌کننده‌ای این‌جا رد و بدل نمی‌شود.
+     */
+    inner class JsBridge {
+        @JavascriptInterface
+        fun saveWidget(json: String?): Boolean {
+            return try {
+                val o = org.json.JSONObject(json ?: "{}")
+                val e = getSharedPreferences(PingWidget.PREFS, MODE_PRIVATE).edit()
+                if (o.has("ms")) e.putInt("ms", o.optInt("ms", -1))
+                if (o.has("score")) e.putInt("score", o.optInt("score", -1))
+                if (o.has("status")) e.putString("status", o.optString("status").take(48))
+                if (o.has("sub")) e.putString("sub", o.optString("sub").take(48))
+                e.putLong("at", System.currentTimeMillis())
+                e.apply()
+                PingWidget.updateAll(this@MainActivity)
+                true
+            } catch (t: Throwable) {
+                false
+            }
+        }
+
+        @JavascriptInterface
+        fun isNative(): Boolean = true
+
+        @JavascriptInterface
+        fun version(): String = "2.1"
+    }
+
 }

@@ -355,6 +355,9 @@ def test(env: dict):
     count_in("/app کالبدشکافی فیلترینگ", f"{SITE}/app", "کالبدشکافی فیلترینگ")
     count_in("/sw.js نسخهٔ ۳", f"{SITE}/sw.js", "pinghab-v3")
     count_in("/docs مسیر تازهٔ filter", f"{SITE}/docs", "/api/filter")
+    count_in("/app پنل آزمون و ویجت", f"{SITE}/app", 'id="ph-p19"')
+    count_in("/app پل نیتیو ویجت", f"{SITE}/app", "phNative")
+    count_in("/app آزمون تک‌دستگاهی", f"{SITE}/app", "آزمون تک‌دستگاهی")
 
     # ثبت بی‌نام (تست) — نمونهٔ ساعت طلایی/روند هم ساخته می‌شود
     body = json.dumps({"province": "تست", "carrier": "تست", "resolver": "self-test", "ms": 42, "ok": True}).encode()

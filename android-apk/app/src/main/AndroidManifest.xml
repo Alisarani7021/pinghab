@@ -25,5 +25,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- ویجت صفحهٔ خانه (فاز E): آخرین پینگ/آمادگی خط بدون باز کردن اپ -->
+        <receiver
+            android:name=".PingWidget"
+            android:exported="false"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="ir.dnsradar.app.WIDGET_REFRESH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/ping_widget_info" />
+        </receiver>
     </application>
 </manifest>

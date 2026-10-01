@@ -1147,6 +1147,39 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
       <div id="ph3-map"></div>
     </div>
   </div>
+
+  <div class="ph-panel" id="ph-p19">
+    <div class="ph-card">
+      <b>📱 آزمون دستگاه و ویجت — همان کارهای باقی‌مانده</b>
+      <div class="sub">سه کار که تا امروز به «آزمون روی گوشی واقعی» گره خورده بود، این‌جا یک‌جا انجام می‌شود:
+        (۱) آیا شبکه‌ات <b>UDP به اینترنت</b> می‌دهد؟ (۲) موتور WebRTC/STUN روی همین دستگاه کار می‌کند؟ (۳) ویجت صفحهٔ خانه.</div>
+      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+        <button class="wwbtn wwprimary" id="ph3-dev-self">🧪 آزمون تک‌دستگاهی UDP/STUN</button>
+        <button class="wwbtn" id="ph3-dev-quick">📏 سنجش سریع خط</button>
+        <button class="wwbtn" id="ph3-dev-widget">📌 فرستادن به ویجت</button>
+      </div>
+      <div id="ph3-dev-out"></div>
+    </div>
+    <div class="ph-card">
+      <b>📶 وضعیت شبکهٔ دستگاه</b>
+      <div id="ph3-dev-net"><div class="sub">برای دیدن، دکمهٔ آزمون را بزن.</div></div>
+    </div>
+    <div class="ph-card">
+      <b>🔗 آزمون دو-دستگاهی روی مسیر واقعی (WebRTC)</b>
+      <div class="sub">این یکی به دو دستگاه نیاز دارد و دقیق‌ترین چیز برای گیمر است. ترتیب کار:</div>
+      <div class="sub" style="margin-top:6px">
+        ۱. گوشی اول: تب «🌊 موج و UDP» → «اتاق بساز» → یک کد ۶ حرفی می‌گیری.<br>
+        ۲. گوشی دوم را به همان شبکه یا شبکهٔ دیگر ببر و همان کد را بزن → «وصل شو».<br>
+        ۳. روی هر دو «موج ۴۰ بسته‌ای» را بزن؛ نتیجه روی هر دستگاه جدا محاسبه می‌شود.<br>
+        <b>اگر وصل نشد:</b> یعنی STUN/عبور UDP بسته است — این خودش یک یافتهٔ ارزشمند است.
+      </div>
+      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+        <input id="ph3-dev-code" class="wwin" placeholder="کد اتاق" style="direction:ltr;width:120px">
+        <button class="wwbtn" id="ph3-dev-log">🧾 گزارش آخرین آزمون</button>
+      </div>
+      <div id="ph3-dev-log-out"></div>
+    </div>
+  </div>
 <script>
 /* =========== ⚡ پینگ‌هاب ۲.۰ — مسیر، واقعیت خط، ایران امروز، آمادهٔ رنکد، تیم =========== */
 (function(){
@@ -1531,6 +1564,7 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
     var pred = kalmanish(rtt);
     PREFLIGHT = { game: game, fa: (prof&&prof.fa)||game, result: r, nat: nat, bb: bb, pred: pred, when: Date.now(),
       where: (function(){ try{ return JSON.parse(localStorage.getItem("pinghab.where")||"null"); }catch(e){ return null; } })() };
+    try{ window.phPreflight = PREFLIGHT; }catch(e){}
     var cls = r.score>=80 ? "ph-good" : (r.score>=55 ? "ph-warn" : "ph-bad");
     var html = '<div class="ph-card" style="margin-top:8px">' +
       '<div style="font-size:26px"><b class="' + cls + '">' + fa(r.score) + '/۱۰۰ — ' + esc(r.verdict) + '</b></div>' +
@@ -1953,7 +1987,8 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
       '<div class="mono" style="font-size:11px;opacity:.7;margin-top:4px">'+esc(samples.slice(-24).map(function(x){return x.toFixed(0);}).join(", "))+'</div></div>';
   }
   function hookDc(){
-    dc.onopen = function(){ rlog("کانال داده باز شد ✅ — حالا «موج ۴۰ بسته‌ای» را بزن"); };
+    dc.onopen = function(){ rlog("کانال داده باز شد ✅ — حالا «موج ۴۰ بسته‌ای» را بزن");
+      save("rtc-last", { at: Date.now(), info: "اتصال دو-دستگاهی برقرار شد — کانال دادهٔ UDP باز است" }); };
     dc.onmessage = function(ev){ var t = parseFloat(ev.data); if(!isNaN(t)){ samples.push(performance.now()-t); rlog("نمونهٔ "+fa(samples.length)); } };
     dc.onclose = function(){ rlog("کانال بسته شد"); };
   }
@@ -1991,6 +2026,11 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
     samples = []; rlog("شروع موج ۴۰ بسته‌ای (هر ۵۰ms)…");
     for (var i=0;i<40;i++){ try { dc.send(String(performance.now())); } catch(e){ break; } await sleep(50); }
     await sleep(1200); rlog("موج تمام شد" + (samples.length ? " — "+fa(samples.length)+" پاسخ" : " — پاسخی نیامد (افت کامل؟)"));
+    if (samples.length){
+      var ss = samples.slice().sort(function(a,b){return a-b;});
+      var jj = 0; for (var k2=1;k2<samples.length;k2++) jj += Math.abs(samples[k2]-samples[k2-1]);
+      save("rtc-last", { at: Date.now(), info: fa(samples.length)+" بسته روی کانال UDP · میانه "+fa(Math.round(ss[Math.floor(ss.length/2)]))+"ms · جیتر "+fa(Math.round(jj/Math.max(1,samples.length-1)))+"ms" });
+    }
   };
 
   /* ================== ⚡ رزولوشن تندرو ================== */
@@ -2279,9 +2319,129 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
     ]) + '<div class="sub" style="margin-top:6px">پینگ‌هاب طبق خط قرمز خودش تونل/VPN نمی‌سازد و DNS سیستم را عوض نمی‌کند؛ وظیفه‌اش <b>تشخیص لایه</b> با شاهد است تا وقتت را برای راه‌حلِ درست نگذاری.</div>';
   }
 
+  /* ---------- 📱 آزمون دستگاه، ویجت و دو-دستگاهی ---------- */
+  function maskIp(ip){ if(!ip) return "—"; var p = String(ip).split("."); return p.length===4 ? p[0]+"."+p[1]+".xx.xx" : String(ip).slice(0,12)+"…"; }
+  function candType(c){ var m = / typ (host|srflx|prflx|relay)/.exec(c); return m ? m[1] : "?"; }
+  function phPre(){ try { return window.phPreflight || null; } catch(e){ return null; } }
+  function rtcLoopback(){
+    return new Promise(function(resolve, reject){
+      var a = null, b = null, t = setTimeout(function(){ reject(new Error("مهلت تمام شد")); }, 7000);
+      try {
+        a = new RTCPeerConnection(null); b = new RTCPeerConnection(null);
+        a.onicecandidate = function(e){ if(e.candidate) try{ b.addIceCandidate(e.candidate); }catch(x){} };
+        b.onicecandidate = function(e){ if(e.candidate) try{ a.addIceCandidate(e.candidate); }catch(x){} };
+        var ch = a.createDataChannel("loop");
+        b.ondatachannel = function(ev){ var rx = ev.channel, samples = [], n = 20;
+          rx.onmessage = function(m){ var t0 = parseFloat(m.data); if(!isNaN(t0)) samples.push(performance.now()-t0);
+            if(samples.length >= n){ clearTimeout(t); try{ a.close(); b.close(); }catch(x){}
+              var s = samples.slice().sort(function(p,q2){return p-q2;});
+              var j = 0; for(var i=1;i<samples.length;i++) j += Math.abs(samples[i]-samples[i-1]);
+              resolve({ ok:true, n:samples.length, med:s[Math.floor(s.length/2)], jit: samples.length>1 ? j/(samples.length-1) : 0 }); } };
+          rx.onopen = function(){ for (var i=0;i<n;i++){ (function(k){ setTimeout(function(){ try{ rx.send(String(performance.now())); }catch(x){} }, k*40); })(i); } };
+        };
+        a.createOffer().then(function(off){ return a.setLocalDescription(off); })
+          .then(function(){ return b.setRemoteDescription(a.localDescription); })
+          .then(function(){ return b.createAnswer(); })
+          .then(function(ans){ return b.setLocalDescription(ans); })
+          .then(function(){ return a.setRemoteDescription(b.localDescription); })
+          .catch(function(e){ clearTimeout(t); reject(e); });
+      } catch(e){ clearTimeout(t); reject(e); }
+    });
+  }
+  async function rtcSelfTest(){
+    var out = q("ph3-dev-out");
+    out.innerHTML = '<div class="sub" style="margin-top:8px">⏳ مرحلهٔ ۱/۳: نامزدهای ICE و آزمون STUN…</div>';
+    var cands = [], pc = null, res = { host:[], srflx:[], prflx:[], relay:[] };
+    try {
+      pc = new RTCPeerConnection({ iceServers: [
+        { urls:"stun:stun.cloudflare.com:3478" }, { urls:"stun:stun.l.google.com:19302" } ] });
+      pc.createDataChannel("self");
+      pc.onicecandidate = function(e){ if(e.candidate) cands.push(e.candidate.candidate); };
+      var off = await pc.createOffer(); await pc.setLocalDescription(off);
+      await sleep(2500);
+      cands.forEach(function(c){ res[candType(c)].push(c); });
+      try { pc.close(); } catch(e){}
+    } catch(e){ out.innerHTML = '<div class="sub" style="margin-top:8px;color:#f97316">⚠️ WebRTC روی این دستگاه در دسترس نیست: '+esc(e.message||e)+'</div>'; return; }
+
+    out.innerHTML = '<div class="sub" style="margin-top:8px">⏳ مرحلهٔ ۲/۳: اتصال حلقه‌ای و ۲۰ بسته…</div>';
+    var loop = null;
+    try { loop = await rtcLoopback(); } catch(e){ loop = { err: e.message||String(e) }; }
+
+    out.innerHTML = '<div class="sub" style="margin-top:8px">⏳ مرحلهٔ ۳/۳: جمع‌بندی…</div>';
+    await sleep(100);
+
+    var udpOk = (res.srflx.length + res.prflx.length) > 0;
+    var h = '<div class="ph-card" style="margin-top:8px;border-right:4px solid '+(udpOk?"#12b981":"#f97316")+'">' +
+      '<b>'+(udpOk ? "✅ شبکه‌ات UDP به اینترنت می‌دهد (STUN پاسخ داد)" : "❌ STUN جواب نداد — UDP به بیرون بسته است")+'</b>' +
+      '<div class="sub" style="margin-top:6px">'+(udpOk
+        ? "یعنی کانال دادهٔ UDP (همان چیزی که بازی می‌بیند) از این شبکه باز است. اگر باز هم لگ داری، مقصر «بستهٔ UDP» نیست؛ سراغ صف/مسیر برو (تب 🧪)."
+        : "پس هر چیزی که به UDP بیرونی وابسته است (بازی‌های UDP، WebRTC، بعضی تونل‌های UDP) روی این شبکه از پیش شکست می‌خورد — پیش از هر تنظیمی این را بدان.")+'</div></div>';
+    h += tbl(["نوع نامزد","تعداد","نمونهٔ نشانی (مخفی)"], Object.keys(res).map(function(k){
+      var first = res[k][0] || "";
+      var ip = (/([0-9a-fA-F:.]+)\s/.exec(first) || [])[1];
+      return [esc(k), fa(res[k].length), esc(ip ? maskIp(ip) : "—")];
+    }));
+    if (loop && loop.ok){
+      h += '<div class="sub" style="margin-top:8px">حلقهٔ داخلی دستگاه: '+fa(loop.n)+' بسته · میانه <b>'+rnd(loop.med)+'ms</b> · جیتر '+rnd(loop.jit)+'ms '+
+        '<span class="ph-badge">سقف موتور، نه شبکه</span></div><div class="sub">این عدد «مسیر واقعی» نیست؛ حلقه‌ای روی خودِ دستگاه است و فقط می‌گوید موتور WebRTC سالم است.</div>';
+    } else if (loop && loop.err){
+      h += '<div class="sub" style="margin-top:8px">حلقهٔ داخلی خطا داد: '+esc(loop.err)+'</div>';
+    }
+    var c = navigator.connection || {};
+    h += '<div class="sub" style="margin-top:8px">نوع شبکه: '+esc(c.type||"?")+' · effectiveType: '+esc(c.effectiveType||"?")+
+      ' · برآورد RTT: '+fa(c.rtt==null?"?":c.rtt)+'ms · saveData: '+esc(String(!!c.saveData))+'</div>';
+    out.innerHTML = h;
+
+    if (q("ph3-dev-net")) q("ph3-dev-net").innerHTML = tbl(["آیتم","مقدار"], [
+      ["UDP/STUN", udpOk ? "باز ✅" : "بسته ❌"],
+      ["نامزدها: host / srflx / relay", fa(res.host.length)+" / "+fa(res.srflx.length+res.prflx.length)+" / "+fa(res.relay.length)],
+      ["مرورگر", esc((navigator.userAgent||"").slice(0,52))],
+      ["onLine", esc(String(navigator.onLine))],
+    ]) + '<div class="sub" style="margin-top:6px">همه از خودِ دستگاه تو؛ چیزی به سرور ما نمی‌رود مگر خودت «ثبت بی‌نام» را بزنی.</div>';
+    save("rtcself", { at: Date.now(), udpOk: udpOk, srflx: res.srflx.length+res.prflx.length, loop: loop });
+  }
+  if (q("ph3-dev-self")) q("ph3-dev-self").onclick = rtcSelfTest;
+  if (q("ph3-dev-quick")) q("ph3-dev-quick").onclick = async function(){
+    var out = q("ph3-dev-out");
+    out.innerHTML = '<div class="sub" style="margin-top:8px">⏳ ۶ نمونه پینگ…</div>';
+    var arr = [];
+    for (var i=0;i<6;i++){ var v = await ping(); if (v!=null) arr.push(Math.round(v)); await sleep(160); }
+    if (!arr.length){ out.innerHTML = '<div class="sub" style="margin-top:8px;color:#f97316">خط پاسخ نداد — همین خودش یک نتیجه است (نقطهٔ کور).</div>'; return; }
+    arr.sort(function(x,y){return x-y;});
+    var med = arr[Math.floor(arr.length/2)];
+    var txt = med <= 60 ? "سبز — خط برای بازی مناسب است" : (med <= 120 ? "زرد — مرزی" : "قرمز — کند");
+    var pre = phPre();
+    window.__phQuick = { ms: med, status: txt, sub: (pre && pre.where && pre.where.carrier) || "" };
+    out.innerHTML = tbl(["میانه","کمینه","بیشینه","وضعیت"], [[fa(med)+"ms", fa(arr[0])+"ms", fa(arr[arr.length-1])+"ms", esc(txt)]]) +
+      '<div class="sub" style="margin-top:6px">اگر در اپ هستی، «📌 فرستادن به ویجت» را بزن تا همین عدد روی صفحهٔ خانه بماند.</div>';
+  };
+  if (q("ph3-dev-widget")) q("ph3-dev-widget").onclick = function(){
+    var out = q("ph3-dev-out");
+    var pre = phPre(), quick = window.__phQuick, payload = null;
+    if (pre && pre.result) payload = { ms: Math.round(pre.result.p50), score: pre.result.score,
+      status: pre.result.verdict, sub: [ (pre.where && pre.where.carrier) || "", (pre.where && pre.where.province) || "" ].filter(Boolean).join(" · ") };
+    else if (quick) payload = { ms: quick.ms, status: quick.status, sub: quick.sub };
+    if (!payload){ out.innerHTML = '<div class="sub" style="margin-top:8px">اول «📏 سنجش سریع خط» را بزن، یا در تب «🎮 آمادهٔ رنکد» یک پیش‌پرواز بگیر، بعد بفرست.</div>'; return; }
+    if (window.phNative && window.phNative.saveWidget){
+      var ok = false; try { ok = window.phNative.saveWidget(JSON.stringify(payload)); } catch(e){}
+      out.innerHTML = '<div class="sub" style="margin-top:8px">'+(ok
+        ? "✅ به ویجت فرستاده شد — به صفحهٔ خانه برو، نگه‌داشتن صفحه → Widgets → «پینگ‌هاب» را اضافه کن."
+        : "❌ ویجت نپذیرفت (نسخهٔ اپ قدیمی است؟)")+'</div>';
+    } else {
+      out.innerHTML = '<div class="sub" style="margin-top:8px">این قابلیت فقط در نسخهٔ اندروید (APK) فعال است؛ در مرورگر پل نیتیو وجود ندارد. در اپ، ویجت را از فهرست ویجت‌های صفحهٔ خانه اضافه کن و همین دکمه را بزن.'+
+        '<br><span class="mono" style="font-size:11px">payload: '+esc(JSON.stringify(payload))+'</span></div>';
+    }
+  };
+  if (q("ph3-dev-log")) q("ph3-dev-log").onclick = function(){
+    var out = q("ph3-dev-log-out"); var rec = load("rtc-last");
+    out.innerHTML = rec ? tbl(["زمان","نتیجه"], [[ago(rec.at), esc(rec.info||"—")]]) :
+      '<div class="sub" style="margin-top:6px">هنوز آزمون دو-دستگاهی‌ای ثبت نشده. اتاق در تب «🌊 موج و UDP» ساخته می‌شود.</div>';
+  };
+
   /* ================== تب‌های تازه ================== */
   var NEW3 = [["ph-p13","🕵️ فیلترینگ"],["ph-p14","🌊 موج و UDP"],["ph-p15","⚡ رزولوشن"],
-              ["ph-p16","📡 نقطهٔ کور"],["ph-p17","🧪 صف و سیاست"],["ph-p18","🛠️ نسخهٔ مقاوم"]];
+              ["ph-p16","📡 نقطهٔ کور"],["ph-p17","🧪 صف و سیاست"],["ph-p18","🛠️ نسخهٔ مقاوم"],
+              ["ph-p19","📱 آزمون و ویجت"]];
   var tabsBox = q("ph-tabs");
   if (tabsBox){
     NEW3.forEach(function(t){
@@ -2296,6 +2456,11 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
         [].slice.call(document.querySelectorAll(".ph-panel")).forEach(function(pn){ pn.className = "ph-panel" + (pn.id===t[0] ? " on" : ""); });
         if (t[0]==="ph-p13"){ var c = load("filter:"+((q("ph3-flt-host")||{}).value||"twitter.com"));
           if (c && q("ph3-flt-out") && !q("ph3-flt-out").innerHTML) q("ph3-flt-out").innerHTML = renderFilter(c.data, "از حافظهٔ دستگاه — " + ago(c.at)); }
+        if (t[0]==="ph-p19"){ var rs = load("rtcself");
+          if (rs && q("ph3-dev-out") && !q("ph3-dev-out").innerHTML){
+            q("ph3-dev-out").innerHTML = '<div class="sub" style="margin-top:8px">آخرین آزمون دستگاه — '+ago(rs.at)+' · UDP/STUN: '+
+              (rs.data && rs.data.udpOk ? "باز ✅" : "بسته ❌")+'</div>';
+          } }
         if (t[0]==="ph-p14"){ var w2 = load("wave:"+((q("ph3-wave-host")||{}).value||"1.1.1.1"));
           if (w2 && q("ph3-wave-out") && !q("ph3-wave-out").innerHTML) q("ph3-wave-out").innerHTML = renderWave(w2.data) + '<div class="sub">از حافظهٔ دستگاه — '+ago(w2.at)+'</div>'; }
       };

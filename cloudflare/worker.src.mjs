@@ -1222,6 +1222,13 @@ function gpHttpRows(d) {
 }
 
 /* ------------------------- check-host (شاهد مکمل) ------------------------- */
+async function chAvailable(env) {
+  try { return !(await env.DNSRADAR_KV.get("ch:off")); } catch { return true; }
+}
+async function chMarkOff(env) {
+  try { await env.DNSRADAR_KV.put("ch:off", String(Date.now()), { expirationTtl: 3600 }); } catch {}
+}
+
 async function chBudget(env, n) {
   if (!env || !env.DNSRADAR_KV) return true;
   try {
@@ -1299,7 +1306,8 @@ async function filterProbe(env, host) {
   const key = "flt:v2:" + host.toLowerCase();
   const hit = await env.DNSRADAR_KV.get(key, "json");
   if (hit && Date.now() - (hit.at || 0) < 20 * 60 * 1000) return { ...hit, cache: "hit" };
-  const budget = await chBudget(env, 6);
+  const chOpen = await chAvailable(env);
+  const budget = chOpen && (await chBudget(env, 6));
 
   /* ۱) رزولوشن بی‌طرف از سه DoH مستقل */
   const NEUTRAL = [
@@ -1341,7 +1349,8 @@ async function filterProbe(env, host) {
       const res = await chCollect(ids, 3, 1800);
       const anyDns = CH_IR.some((n) => res.dns && res.dns[n.node + ".node.check-host.net"] !== undefined);
       const anyTcp = CH_IR.some((n) => res.ctl && res.ctl[n.node + ".node.check-host.net"] !== undefined);
-      if (!anyDns && !anyTcp) return { available: false };
+      if (!anyDns && !anyTcp) { await chMarkOff(env); return { available: false, retry_in_min: 60,
+        note: "check-host از مسیر این ورکر سقف/مسدود بود؛ یک ساعت دیگر خودکار دوباره امتحان می‌شود." }; }
       return {
         available: true,
         dns: chDnsRows(res.dns || {}),
@@ -1414,7 +1423,9 @@ async function filterProbe(env, host) {
     neutral, neutral_ips: neutralIps,
     ir_dns: irRows, ir_via_public: tcpRows, ir_http: httpRows,
     sinkhole_ips: [...new Set(sinkLocal.concat(sinkViaPublic))],
-    hijack, checkhost: chAvail ? ch : { available: false },
+    hijack,
+    checkhost: chAvail ? ch : { available: false, retry_in_min: chOpen ? 60 : 60,
+      note: chOpen ? "دادهٔ شهری برنگشت؛ یک ساعت دیگر خودکار دوباره تلاش می‌شود." : "در وضعیت انتظار است (سقف منبع)؛ یک ساعت دیگر خودکار برمی‌گردد." },
     verdict,
     sources: {
       globalping_dns: dDns && dDns.results ? "ok" : ((dDns && dDns.error) || "unavailable"),
@@ -1562,8 +1573,19 @@ async function asnInfo(env, ip) {
 }
 
 /* ==================== /api/ix — PeeringDB ==================== */
+function irCarrierByAsn(asn) {
+  const num = parseInt(asn, 10);
+  for (const grp of ["mobile", "mvno", "fixed"]) {
+    for (const c of (IR_CARRIERS[grp] || [])) {
+      if ((c.asn || []).some((a) => parseInt(String(a).replace(/^AS/i, ""), 10) === num))
+        return { group: grp, id: c.id, fa: c.fa, en: c.en, plmn: c.plmn || [] };
+    }
+  }
+  return null;
+}
+
 async function ixInfo(env, asn) {
-  const key = "ixd:" + asn;
+  const key = "ixd:v2:" + asn;
   const hit = await env.DNSRADAR_KV.get(key, "json");
   if (hit) return { ...hit, cache: "hit" };
   try {
@@ -1573,9 +1595,15 @@ async function ixInfo(env, asn) {
       note: "PeeringDB به درخواست‌های بی‌سرشناس/ابر سقف پاسخ نمی‌دهد؛ از این منبع فقط به‌عنوان مکمل استفاده می‌کنیم." };
     const j = await r.json();
     const rows = (j.data || []).map((x) => ({ name: x.name, speed_mbps: x.speed, ipv4: x.ipaddr4 || null }));
-    const out = { ok: true, asn, count: rows.length, rows: rows.sort((a, b) => (b.speed_mbps || 0) - (a.speed_mbps || 0)).slice(0, 30),
-      at: Date.now(), source: "PeeringDB",
-      note: rows.length ? "" : "این ASN رکورد peering عمومی در PeeringDB ندارد — یعنی داده از این‌جا نمی‌آید، نه این‌که peering ندارد." };
+    const cy = await dohTxt(`AS${asn}.asn.cymru.com`).catch(() => null);
+    const holder = cy ? (cy.split("|").map((x) => x.trim())[4] || null) : null;
+    const iran = irCarrierByAsn(asn);
+    const out = { ok: true, asn, holder, iran, count: rows.length,
+      rows: rows.sort((a, b) => (b.speed_mbps || 0) - (a.speed_mbps || 0)).slice(0, 30),
+      at: Date.now(), sources: ["PeeringDB", "Team Cymru", "جدول محلی اپراتورهای ایران"],
+      note: rows.length ? "" :
+        (iran ? `این ASN متعلق به «${iran.fa}» است${iran.plmn.length ? " (PLMN " + iran.plmn.join("، ") + ")" : ""} و رکورد peering عمومی در PeeringDB ندارد؛ برای این اپراتورها جدول محلی + مسیرهای اندازه‌گیری‌شدهٔ خودمان (/api/path) منبع اصلی است.`
+              : "این ASN رکورد peering عمومی در PeeringDB ندارد — یعنی داده از این‌جا نمی‌آید، نه این‌که peering ندارد.") };
     await env.DNSRADAR_KV.put(key, JSON.stringify(out), { expirationTtl: 7 * 86400 });
     return out;
   } catch { return { ok: false, asn, error: "pdb_net" }; }

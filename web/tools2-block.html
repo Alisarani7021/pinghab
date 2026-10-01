@@ -487,6 +487,7 @@
     var pred = kalmanish(rtt);
     PREFLIGHT = { game: game, fa: (prof&&prof.fa)||game, result: r, nat: nat, bb: bb, pred: pred, when: Date.now(),
       where: (function(){ try{ return JSON.parse(localStorage.getItem("pinghab.where")||"null"); }catch(e){ return null; } })() };
+    try{ window.phPreflight = PREFLIGHT; }catch(e){}
     var cls = r.score>=80 ? "ph-good" : (r.score>=55 ? "ph-warn" : "ph-bad");
     var html = '<div class="ph-card" style="margin-top:8px">' +
       '<div style="font-size:26px"><b class="' + cls + '">' + fa(r.score) + '/۱۰۰ — ' + esc(r.verdict) + '</b></div>' +

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">رادار DNS</string>
+    <string name="app_name">پینگ‌هاب</string>
+    <string name="widget_desc">پینگ و آمادگی خط — ویجت پینگ‌هاب</string>
 </resources>
