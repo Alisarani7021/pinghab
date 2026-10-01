@@ -271,14 +271,20 @@ def test(env: dict):
                           "me": {"asOrganization": "Iran Cell", "colo": "DXB"}, "regions": [{"region": "ترکیه", "flag": "🇹🇷", "ms": 78}]}).encode()
     raw = api(f"{SITE}/api/save", "x", "POST", payload,
               {"Authorization": "", "User-Agent": "PingHab/1.0", "Content-Type": "application/json"}, raw=True, timeout=60)
-    sid = None
+    sid = None; spersist = None
     try:
-        j = json.loads(raw[1]); sid = j.get("id")
-        print(f"  {'✅' if j.get('ok') else '❌'} {'/api/save':34s} {str(raw[0]):>5s}  id={sid}")
+        j = json.loads(raw[1]); sid = j.get("id"); spersist = j.get("persisted")
+        print(f"  {'✅' if j.get('ok') else '❌'} {'/api/save':34s} {str(raw[0]):>5s}  id={sid} persisted={spersist}")
     except Exception as e:
         print("  ❌ save:", raw)
     if sid:
-        check("صفحهٔ اشتراک نتیجه", f"{SITE}/r/{sid}")
+        # قرارداد صداقت (دور ۹ تکمیلی): POST باید persisted بولی بدهد؛ خواندنِ بعدی
+        # یا ۲۰۰ با همان داده است (همان ایزوله، از حافظه) یا ۴۰۴ صادقانه — هر دو قبول.
+        st2, b2 = api(f"{SITE}/r/{sid}", "x", headers={"Authorization": "", "User-Agent": "PingHab/1.0"}, raw=True, timeout=60)
+        txt2 = b2 if isinstance(b2, str) else b2.get("raw", "")
+        ok2 = isinstance(spersist, bool) and ((st2 == 200 and sid in txt2) or (st2 == 404 and ("پیدا نشد" in txt2 or "منقضی" in txt2)))
+        results.append(("صفحهٔ اشتراک نتیجه", ok2, f"{st2}"))
+        print(f"  {'✅' if ok2 else '❌'} {'صفحهٔ اشتراک نتیجه':34s} {str(st2):>5s}  persisted={spersist}")
 
     # --- بخش‌های تازه (پوشش ایران، بازی، رزولورها، آی‌پی تمیز، Globalping، ابزار) ---
     check("/api/geo (خط من)", f"{SITE}/api/geo")
@@ -316,12 +322,16 @@ def test(env: dict):
         body = json.dumps({"action": "create", "name": "تست"}).encode()
         raw = api(f"{SITE}/api/team", "x", "POST", body,
                   {"Authorization": "", "User-Agent": "PingHab/1.0", "Content-Type": "application/json"}, raw=True, timeout=60)
-        j = json.loads(raw[1]); code = j.get("code")
-        ok = raw[0] == 200 and bool(code)
+        j = json.loads(raw[1]); code = j.get("code"); tpersist = j.get("persisted")
+        ok = raw[0] == 200 and bool(code) and isinstance(tpersist, bool)
         results.append(("POST /api/team (ساخت)", ok, str(raw[0])))
-        print(f"  {'✅' if ok else '❌'} {'POST /api/team':34s} {str(raw[0]):>5s}  کد={code}")
+        print(f"  {'✅' if ok else '❌'} {'POST /api/team':34s} {str(raw[0]):>5s}  کد={code} persisted={tpersist}")
         if code:
-            check(f"/api/team?code={code}", f"{SITE}/api/team?code={code}")
+            st3, b3 = api(f"{SITE}/api/team?code={code}", "x", headers={"Authorization": "", "User-Agent": "PingHab/1.0"}, raw=True, timeout=60)
+            txt3 = b3 if isinstance(b3, str) else json.dumps(b3, ensure_ascii=False)
+            ok3 = (st3 == 200 and code in txt3) or (st3 == 404 and "پیدا نشد" in txt3)
+            results.append((f"/api/team?code={code}", ok3, f"{st3}"))
+            print(f"  {'✅' if ok3 else '❌'} {f'/api/team?code={code}':34s} {str(st3):>5s}  {txt3[:120]}")
     except Exception as e:
         print("  ❌ team:", e)
     # --- فاز E: کالبدشکافی فیلترینگ و مهندسیِ نتِ بد ---

@@ -824,6 +824,28 @@ def patch_round9(src):
     return src, True
 
 
+
+def patch_team_persisted(src):
+    """دور ۹ تکمیلی: اگر ساخت/ورود تیم ذخیره نشد، به‌جای خطای گنگ، یادداشت صادقانهٔ سرور نمایش داده شود."""
+    reps = [
+        ("""      var d = await jpost("/api/team", { action:"create", name: q("ph2-team-name").value || "تیم من" });""",
+         """      var d = await jpost("/api/team", { action:"create", name: q("ph2-team-name").value || "تیم من" });
+      if (d.persisted === false){ q("ph2-team-out").innerHTML = '<div class="ph-warn">' + esc(d.note || "تیم ساخته نشد؛ بعداً دوباره بساز.") + '</div>'; return; }"""),
+        ("""      renderTeam({ ...d2, note:"کد را به دوست‌هایت بده؛ هرکس «ورود به تیم» را بزند و یک سنجش ثبت کند، بهترین مشترک ساخته می‌شود." });""",
+         """      renderTeam({ ...d2, note: (d2.persisted === false && d2.note) ? d2.note : "کد را به دوست‌هایت بده؛ هرکس «ورود به تیم» را بزند و یک سنجش ثبت کند، بهترین مشترک ساخته می‌شود." });"""),
+        ("""      await jpost("/api/team", { action:"join", code:code, uid:teamId(), name:(w&&w.city)||"من", province:(w&&w.province)||"", carrier:(w&&w.carrier)||"" });""",
+         """      var dj = await jpost("/api/team", { action:"join", code:code, uid:teamId(), name:(w&&w.city)||"من", province:(w&&w.province)||"", carrier:(w&&w.carrier)||"" });"""),
+        ("""      var d = await jget("/api/team?code=" + encodeURIComponent(code));
+      renderTeam(d);""",
+         """      var d = await jget("/api/team?code=" + encodeURIComponent(code));
+      if (dj.persisted === false && dj.note) d.note = dj.note;
+      renderTeam(d);"""),
+    ]
+    for old, new in reps:
+        assert src.count(old) == 1, old[:70]
+        src = src.replace(old, new, 1)
+    return src, True
+
 def inline_tools3(src):
     block = (ROOT / "web" / "tools3-block.html").read_text(encoding="utf-8")
     parts = block.split("<!--PH3-SCRIPT-->")
@@ -858,10 +880,11 @@ for page in PAGES:
     src, b3b = patch_impact_fallback(src)
     src, b4 = patch_preflight_page(src)
     src, b5 = patch_round9(src)
+    src, b6 = patch_team_persisted(src)
     src = inline_tools3(src)
     page.write_text(src, encoding="utf-8")
     n_panels = len(set(re.findall(r'id="ph-p(\d+)"', src)))
-    report.append(f"{page.name}: {len(src):,} bytes · panels={n_panels} · bgp={b1} doh={b2} games={b3} pf={b4} fit9={b5}")
+    report.append(f"{page.name}: {len(src):,} bytes · panels={n_panels} · bgp={b1} doh={b2} games={b3} pf={b4} fit9={b5} team={b6}")
 
 for r in report:
     print(r)

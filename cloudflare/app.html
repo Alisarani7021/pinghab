@@ -2814,9 +2814,10 @@ table.ph-facts td:first-child{font-weight:800;color:var(--mut);font-size:11.5px}
     var w = null; try{ w = JSON.parse(localStorage.getItem("pinghab.where")||"null"); }catch(e){}
     try{
       var d = await jpost("/api/team", { action:"create", name: q("ph2-team-name").value || "تیم من" });
+      if (d.persisted === false){ q("ph2-team-out").innerHTML = '<div class="ph-warn">' + esc(d.note || "تیم ساخته نشد؛ بعداً دوباره بساز.") + '</div>'; return; }
       try{ localStorage.setItem("pinghab.team", d.code); }catch(e){}
       var d2 = await jpost("/api/team", { action:"join", code:d.code, uid:teamId(), name: (w&&w.city)||"من", province:(w&&w.province)||"", carrier:(w&&w.carrier)||"" });
-      renderTeam({ ...d2, note:"کد را به دوست‌هایت بده؛ هرکس «ورود به تیم» را بزند و یک سنجش ثبت کند، بهترین مشترک ساخته می‌شود." });
+      renderTeam({ ...d2, note: (d2.persisted === false && d2.note) ? d2.note : "کد را به دوست‌هایت بده؛ هرکس «ورود به تیم» را بزند و یک سنجش ثبت کند، بهترین مشترک ساخته می‌شود." });
       q("ph2-team-code").value = d.code;
     }catch(e){ q("ph2-team-out").innerHTML = '<div class="ph-warn">خطا: ' + esc(e.message) + '</div>'; }
   };
@@ -2825,9 +2826,10 @@ table.ph-facts td:first-child{font-weight:800;color:var(--mut);font-size:11.5px}
     var code = (q("ph2-team-code").value||"").toUpperCase().replace(/[^A-Z0-9]/g,"");
     if (!code){ q("ph2-team-out").innerHTML = '<div class="ph-warn">کد تیم را بنویس.</div>'; return; }
     try{
-      await jpost("/api/team", { action:"join", code:code, uid:teamId(), name:(w&&w.city)||"من", province:(w&&w.province)||"", carrier:(w&&w.carrier)||"" });
+      var dj = await jpost("/api/team", { action:"join", code:code, uid:teamId(), name:(w&&w.city)||"من", province:(w&&w.province)||"", carrier:(w&&w.carrier)||"" });
       try{ localStorage.setItem("pinghab.team", code); }catch(e){}
       var d = await jget("/api/team?code=" + encodeURIComponent(code));
+      if (dj.persisted === false && dj.note) d.note = dj.note;
       renderTeam(d);
     }catch(e){ q("ph2-team-out").innerHTML = '<div class="ph-warn">خطا: ' + esc(e.message) + '</div>'; }
   };

@@ -2694,21 +2694,26 @@ async function dohRace(env, name) {
           if (b.action === "create") {
             const code = "T" + shortId().slice(0, 5).toUpperCase();
             const doc = { code, name: String(b.name || "تیم بدون نام").slice(0, 30), created: Date.now(), members: [] };
-            await kvPut(env,`team:${code}`, JSON.stringify(doc), { expirationTtl: 60 * 60 * 24 * 90 });
-            return json({ ok: true, ...doc });
+            const wTeam = await kvPut(env,`team:${code}`, JSON.stringify(doc), { expirationTtl: 60 * 60 * 24 * 90 });
+            return json({ ok: true, ...doc, persisted: !!wTeam,
+              note: wTeam ? "تیم ساخته شد؛ کد را به دوست‌هایت بده."
+                          : "سهمیهٔ روزانهٔ ذخیره‌سازی سرور تمام شد؛ تیم ساخته نشد — بعداً دوباره بساز." });
           }
           if (b.action === "join") {
             const code = String(b.code || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 6);
             const raw = await kvGet(env,`team:${code}`);
             if (!raw) return json({ ok: false, error: "تیم پیدا نشد" }, 404);
-            const doc = JSON.parse(raw);
+            let doc = null; try { doc = JSON.parse(raw); } catch (_) { doc = null; }
+            if (!doc || typeof doc !== "object") return json({ ok: false, error: "تیم پیدا نشد" }, 404);
             const uid = String(b.uid || "").slice(0, 24);
             doc.members = (doc.members || []).filter((m) => m.uid !== uid);
             if (doc.members.length >= 20) return json({ ok: false, error: "تیم پر است (۲۰ نفر)" }, 400);
             doc.members.push({ uid, name: String(b.name || "بازیکن").slice(0, 24),
               province: String(b.province || "").slice(0, 24), carrier: String(b.carrier || "").slice(0, 24), ts: Date.now() });
-            await kvPut(env,`team:${code}`, JSON.stringify(doc), { expirationTtl: 60 * 60 * 24 * 90 });
-            return json({ ok: true, ...doc });
+            const wJoin = await kvPut(env,`team:${code}`, JSON.stringify(doc), { expirationTtl: 60 * 60 * 24 * 90 });
+            return json({ ok: true, ...doc, persisted: !!wJoin,
+              note: wJoin ? "به تیم اضافه شدی."
+                          : "سهمیهٔ روزانهٔ ذخیره‌سازی سرور تمام شد؛ ورودت ثبت نشد — بعداً دوباره وارد شو." });
           }
           return json({ ok: false, error: "action نامعتبر (create|join)" }, 400);
         }
@@ -2716,7 +2721,8 @@ async function dohRace(env, name) {
         if (!code) return json({ ok: false, error: "کد تیم لازم است" }, 400);
         const raw = await kvGet(env,`team:${code}`);
         if (!raw) return json({ ok: false, error: "تیم پیدا نشد" }, 404);
-        const doc = JSON.parse(raw);
+        let doc = null; try { doc = JSON.parse(raw); } catch (_) { doc = null; }
+        if (!doc || typeof doc !== "object") return json({ ok: false, error: "تیم پیدا نشد" }, 404);
         const provs = [...new Set((doc.members || []).map((m) => m.province).filter(Boolean))];
         const carriers = [...new Set((doc.members || []).map((m) => m.carrier).filter(Boolean))];
         const list = await kvList(env,{ prefix: "st:", limit: 800 });
@@ -2931,31 +2937,34 @@ e.respondWith(fetch(req).then(r=>{var cl=r.clone();caches.open(C).then(c=>c.put(
             ms: typeof r.ms === "number" ? Math.round(r.ms) : null,
           })),
         };
-        await kvPut(env,`r:${id}`, JSON.stringify(doc), { expirationTtl: 60 * 60 * 24 * 90 });
+        const wSave = await kvPut(env,`r:${id}`, JSON.stringify(doc), { expirationTtl: 60 * 60 * 24 * 90 });
         const shareUrl = `${url.origin}/r/${id}`;
         const tgShare = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}` +
           `&text=${encodeURIComponent("نتیجهٔ تست DNS من در پینگ‌هاب:")}`;
-        // اگر کاربر از داخل تلگرام آمده، لینک را در چتش هم بفرست
-        if (v.ok && v.user?.id) {
+        // اگر کاربر از داخل تلگرام آمده، لینک را در چتش هم بفرست (فقط وقتی واقعاً ذخیره شد)
+        if (wSave && v.ok && v.user?.id) {
           ctx.waitUntil(tg(env, "sendMessage", {
             chat_id: v.user.id, parse_mode: "HTML", disable_web_page_preview: false,
             text: `✅ نتیجهٔ تست تو ذخیره شد:\n${shareUrl}\n\n<i>می‌توانی همین لینک را در گروه بفرستی تا بقیه هم تست بگیرند.</i>`,
             reply_markup: { inline_keyboard: [[webAppBtn("🔁 تست دوباره")]] },
           }));
         }
-        return json({ ok: true, id, url: shareUrl, tgShare, verified: v.ok });
+        return json({ ok: true, id, url: shareUrl, tgShare, verified: v.ok, persisted: !!wSave,
+          note: wSave ? "نتیجه ذخیره شد؛ لینک ۹۰ روز معتبر است."
+                      : "سهمیهٔ روزانهٔ ذخیره‌سازی سرور تمام شد؛ لینک اشتراک ساخته نشد — عددها را از روی صفحه بخوان." });
       }
 
       /* --- صفحهٔ نتیجه --- */
       if (p.startsWith("/r/")) {
         const id = p.slice(3).replace(/[^a-z0-9]/g, "").slice(0, 12);
         const raw = await kvGet(env,`r:${id}`);
-        if (!raw) return html(`<!DOCTYPE html><html lang="fa" dir="rtl"><body style="background:#070c18;color:#e9effb;
+        let sdoc = null; try { sdoc = raw ? JSON.parse(raw) : null; } catch (_) { sdoc = null; }
+        if (!sdoc) return html(`<!DOCTYPE html><html lang="fa" dir="rtl"><body style="background:#070c18;color:#e9effb;
           font-family:Tahoma;text-align:center;padding:60px 20px">
           <h2>نتیجه پیدا نشد یا منقضی شده 🕐</h2>
           <p style="color:#8ba0c4">نتیجه‌ها ۹۰ روز نگه داشته می‌شوند.</p>
           <a href="${SITE}/app" style="color:#38bdf8">خودت تست بگیر →</a></body></html>`, 404);
-        return html(sharePage(JSON.parse(raw)));
+        return html(sharePage(sdoc));
       }
 
       /* --- وب‌هوک تلگرام --- */
