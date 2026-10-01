@@ -1868,6 +1868,7 @@ body{padding-top:58px !important;padding-bottom:88px !important}
     var extras = [];
     if (r.asn && r.asn.asn) extras.push("AS" + r.asn.asn + (r.asn.holder ? " · " + r.asn.holder : ""));
     if (r.host_note) extras.push(r.host_note);
+    if (r.v6_note) extras.push(r.v6_note);
     var probes = (r.probes || []).filter(function(x){ return x.avg != null; })
       .map(function(x){ return (x.city || "?") + "/AS" + (x.asn || "?"); }).slice(0, 3).join(" · ");
     var reasons = [];

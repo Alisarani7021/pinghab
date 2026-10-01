@@ -92,6 +92,7 @@ async function scannerOne(env, target, mode, cc, from, packets, qname) {
     : [{ country: cc }];
   const limit = from === "world" ? 1 : 3;
   const out = { target, ip, version: isV6 ? "v6" : "v4", host_note: hostNote, mode,
+    v6_note: isV6 ? "کمتر پروب داخل ایران IPv6 دارد؛ عدد v6 را با احتیاط بخوان." : null,
     probes: [], summary: null, dns: null, verdict: null, ok: true, error: null, country: null, asn: null };
   if (mode === "ping" || mode === "both") {
     const d = await gpProbe(env, { type: "ping", target: ip, locations, limit,
@@ -134,7 +135,10 @@ async function scannerOne(env, target, mode, cc, from, packets, qname) {
     const med = out.summary && out.summary.credible ? out.summary.median_ms : null;
     const lossAvg = out.probes.length
       ? Math.round(out.probes.reduce((a, r) => a + (r.loss || 0), 0) / out.probes.length) : null;
-    out.verdict = scanVerdict(med, lossAvg);
+    /* صداقت: اگر عدد داریم ولی پروب معتبر کم است، «نانشنه» نمی‌گوییم — «نامطمئن» می‌گوییم. */
+    out.verdict = (out.summary && out.summary.valid > 0 && !out.summary.credible)
+      ? { code: "thin", fa: "پروب کم — نامطمئن", tone: "warn" }
+      : scanVerdict(med, lossAvg);
     out.loss_avg = lossAvg;
   } else {
     out.verdict = out.dns ? out.dns.verdict : dnsVerdict(null);
