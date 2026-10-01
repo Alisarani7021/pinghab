@@ -223,6 +223,171 @@ HERO_JS = r"""
 """
 
 # ------------------------------------------------------------------ وصله‌های پایه
+
+
+NAV_CSS = r"""
+<style id="ph-nav-css">
+/* ============ پوستهٔ اپ: نوار بالا + منوی پایین ۴ تایی + منوی همبرگری ============ */
+#ph-tabs,.ph-hero{display:none !important}
+body{padding-top:58px !important;padding-bottom:88px !important}
+.ph-appbar{position:fixed;top:0;right:0;left:0;z-index:60;height:56px;display:flex;align-items:center;gap:10px;
+  padding:0 12px;background:color-mix(in srgb,var(--bg) 92%, transparent);backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.ph-appbar b{font-size:15.5px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ph-abtn{min-width:42px;min-height:42px;display:inline-flex;align-items:center;justify-content:center;
+  border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--tx);font-size:19px;cursor:pointer;text-decoration:none}
+.ph-abtn:active{transform:scale(.96)}
+.ph-nav{position:fixed;bottom:0;right:0;left:0;z-index:60;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;
+  padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--bg) 94%, transparent);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+.ph-nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 4px;border:0;
+  background:transparent;color:var(--mut);font:inherit;font-size:11px;font-weight:700;cursor:pointer;border-radius:12px;min-height:52px}
+.ph-nav button i{font-style:normal;font-size:19px;line-height:1}
+.ph-nav button.on{color:var(--acc);background:color-mix(in srgb,var(--acc) 14%, transparent)}
+.ph-drawer{position:fixed;inset:0;z-index:70;display:none}
+.ph-drawer.on{display:block}
+.ph-drawer-bg{position:absolute;inset:0;background:rgba(0,0,0,.55)}
+.ph-drawer aside{position:absolute;top:0;bottom:0;right:0;width:min(86vw,340px);background:var(--card);
+  border-left:1px solid var(--line);padding:14px 14px calc(14px + env(safe-area-inset-bottom,0px));overflow-y:auto}
+.ph-drawer h4{margin:14px 0 6px;font-size:12.5px;color:var(--mut)}
+.ph-ditem{display:flex;align-items:center;gap:10px;padding:11px 10px;border-radius:12px;border:1px solid transparent;
+  cursor:pointer;font-size:14px}
+.ph-ditem:hover{background:color-mix(in srgb,var(--acc) 10%, transparent);border-color:color-mix(in srgb,var(--acc) 30%, var(--line))}
+.ph-ditem.on{background:color-mix(in srgb,var(--acc) 16%, transparent);border-color:var(--acc)}
+.ph-ditem i{font-style:normal;font-size:17px;width:22px;text-align:center}
+.ph-dhead{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.ph-dhead b{font-size:17px;flex:1}
+/* کارت اصلی DNS (سبک دی‌ان‌اس‌چنجر) */
+.ph-dnsmain{border-color:color-mix(in srgb,var(--acc) 42%, var(--line))}
+.ph-dnsbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.ph-dnsbar b{font-size:19px}
+.ph-state{padding:4px 12px;border-radius:999px;font-size:12.5px;font-weight:800;border:1px solid var(--line)}
+.ph-state.on{background:rgba(16,168,116,.18);color:#12b981;border-color:rgba(16,168,116,.5)}
+.ph-state.off{background:color-mix(in srgb,var(--tx) 6%, transparent);color:var(--mut)}
+.ph-dnssrv{text-align:right}
+.ph-ip{font-size:26px;font-weight:800;letter-spacing:.5px;line-height:1.35;word-break:break-all}
+.ph-ip2{font-size:19px;font-weight:700;letter-spacing:.4px;word-break:break-all;color:var(--mut)}
+.ph-startbtn{width:100%;margin-top:14px;min-height:54px;font-size:17px;letter-spacing:.3px}
+.ph-livemetrics{margin-top:4px}
+.ph-metric{display:flex;flex-direction:column;gap:2px;padding:9px 10px;border:1px solid var(--line);border-radius:12px;
+  background:color-mix(in srgb,var(--tx) 3%, transparent)}
+.ph-metric span{font-size:11.5px;color:var(--mut)}
+.ph-metric b{font-size:16px;font-variant-numeric:tabular-nums}
+.ph-resrow{display:flex;align-items:center;gap:10px;padding:10px 8px;border-bottom:1px solid color-mix(in srgb,var(--line) 70%, transparent);cursor:pointer}
+.ph-resrow.on{background:color-mix(in srgb,var(--acc) 12%, transparent);border-radius:10px}
+.ph-resrow .ph-pickmark{font-size:11.5px;color:var(--acc);border:1px solid color-mix(in srgb,var(--acc) 45%, var(--line));
+  border-radius:999px;padding:3px 10px;white-space:nowrap}
+.ph-resrow.on .ph-pickmark::before{content:"✓ "}
+</style>
+"""
+
+# بخش‌ها و گروه‌های منو (تک‌منبع تولید HTML ایستا)
+NAV_SECTIONS = [
+    ("ph-p20", "🚀", "حالت DNS", "اصلی"),
+    ("ph-p1", "📈", "خط من", "اصلی"),
+    ("ph-p2", "🎮", "سرور بازی‌ها", "اصلی"),
+    ("ph-p3", "🧭", "کاتالوگ رزولورها", "سنجش و رزولور"),
+    ("ph-p4", "🌍", "ایران و جهان", "سنجش و رزولور"),
+    ("ph-p5", "✨", "آی‌پی تمیز", "سنجش و رزولور"),
+    ("ph-p9", "🔍", "واقعیت خط", "سنجش و رزولور"),
+    ("ph-p15", "⚡", "رزولوشن و مسابقه", "سنجش و رزولور"),
+    ("ph-p10", "🌡️", "ایران امروز", "سنجش و رزولور"),
+    ("ph-p8", "🛰️", "مسیر من", "شبکه و مسیر"),
+    ("ph-p6", "🏠", "خانه و شبکه", "شبکه و مسیر"),
+    ("ph-p7", "📊", "اسکن و آمار", "شبکه و مسیر"),
+    ("ph-p13", "🕵️", "کالبدشکافی فیلترینگ", "شبکه و مسیر"),
+    ("ph-p14", "🌊", "موج و UDP", "شبکه و مسیر"),
+    ("ph-p11", "🎯", "آمادهٔ رنکد", "ویژهٔ بازی"),
+    ("ph-p12", "🤝", "تیمی و اشتراک", "ویژهٔ بازی"),
+    ("ph-p19", "📱", "آزمون دستگاه و ویجت", "ابزار و اپ"),
+    ("ph-p16", "📡", "نقطهٔ کور (آفلاین)", "ابزار و اپ"),
+    ("ph-p17", "🧪", "صف و سیاست اپراتور", "ابزار و اپ"),
+    ("ph-p18", "🛠️", "نسخهٔ مقاوم", "ابزار و اپ"),
+]
+NAV_GROUPS = ["اصلی", "سنجش و رزولور", "شبکه و مسیر", "ویژهٔ بازی", "ابزار و اپ"]
+
+APK_URL = "https://github.com/Alisarani7021/pinghab/releases/download/apk-latest/pinghab-latest.apk"
+
+
+def _nav_html():
+    items = []
+    for g in NAV_GROUPS:
+        rows = [x for x in NAV_SECTIONS if x[3] == g]
+        if not rows:
+            continue
+        items.append(f'<h4>{g}</h4>')
+        for sid, ic, fa, _g in rows:
+            items.append(f'<div class="ph-ditem" data-item="{sid}"><i>{ic}</i><span>{fa}</span></div>')
+    items.append('<h4>درباره</h4>')
+    items.append(f'<a class="ph-ditem" href="{APK_URL}" style="text-decoration:none;color:inherit"><i>⬇️</i><span>دانلود / به‌روزرسانی APK</span></a>')
+    items.append('<a class="ph-ditem" href="/docs" target="_blank" style="text-decoration:none;color:inherit"><i>📘</i><span>مستندات API و دادهٔ باز</span></a>')
+    items.append('<div class="sub">قانون ما: کاندید، نه توصیه · DNS پینگ داخل مچ بازی را کم نمی‌کند.</div>')
+    return (
+        '<div class="ph-appbar" id="ph-appbar">'
+        '<button class="ph-abtn" id="ph-burger" aria-label="منو">☰</button>'
+        '<b id="ph-appbar-title">🚀 حالت DNS</b>'
+        f'<a class="ph-abtn" id="ph-appbar-apk" href="{APK_URL}" title="دانلود/به‌روزرسانی APK">⬇️</a>'
+        '</div>'
+        '<div class="ph-nav" id="ph-nav">'
+        '<button data-nav="ph-p20"><i>🚀</i><span>DNS</span></button>'
+        '<button data-nav="ph-p1"><i>📈</i><span>خط من</span></button>'
+        '<button data-nav="ph-p2"><i>🎮</i><span>بازی</span></button>'
+        '<button data-nav="__drawer__"><i>☰</i><span>بیشتر</span></button>'
+        '</div>'
+        '<div class="ph-drawer" id="ph-drawer"><div class="ph-drawer-bg" data-close="1"></div><aside>'
+        '<div class="ph-dhead"><b>📡 پینگ‌هاب</b><span class="ph-badge mono">۲.۴</span>'
+        '<button class="wwbtn" data-close="1" style="min-height:36px">✕</button></div>'
+        + "".join(items) +
+        '</aside></div>'
+    )
+
+
+NAV_HTML = '<div id="ph-nav-root">' + _nav_html() + '</div>'
+
+NAV_JS = r"""
+<script id="ph-nav-script">
+(function(){
+  if (window.__phNavReady) return; window.__phNavReady = true;
+  function $(s, r){ return (r || document).querySelector(s); }
+  function $$(s, r){ return [].slice.call((r || document).querySelectorAll(s)); }
+  var nav = $("#ph-nav"), dr = $("#ph-drawer"), ttl = $("#ph-appbar-title");
+  var MAIN = ["ph-p20", "ph-p1", "ph-p2"];
+  function openDrawer(){ if (dr) { dr.classList.add("on"); syncDrawer(); } }
+  function closeDrawer(){ if (dr) dr.classList.remove("on"); }
+  function current(){ var on = $(".ph-panel.on"); return on ? on.id : "ph-p20"; }
+  function titleOf(id){ var it = $('.ph-ditem[data-item="' + id + '"]'); return it ? it.textContent.trim() : "پینگ‌هاب"; }
+  function syncDrawer(id){
+    id = id || current();
+    $$(".ph-ditem[data-item]", dr).forEach(function(x){ x.className = "ph-ditem" + (x.getAttribute("data-item") === id ? " on" : ""); });
+    if (nav) $$("button", nav).forEach(function(b){ b.className = (b.getAttribute("data-nav") === id) ? "on" : ""; });
+    if (ttl){ var it = $('.ph-ditem[data-item="' + id + '"]'); ttl.innerHTML = it ? it.innerHTML.replace(/<i>|<\/i>/g, "") : "پینگ‌هاب"; }
+  }
+  function show(id, silent){
+    var tab = document.querySelector('.ph-tab[data-target="' + id + '"]');
+    if (tab) tab.click();
+    else $$(".ph-panel").forEach(function(pn){ pn.className = "ph-panel" + (pn.id === id ? " on" : ""); });
+    syncDrawer(id);
+    if (!silent) window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  window.phShow = show;
+  if (nav) $$("button", nav).forEach(function(b){
+    b.onclick = function(){
+      var t = b.getAttribute("data-nav");
+      if (t === "__drawer__") openDrawer(); else show(t);
+    };
+  });
+  $$("[data-close]", dr).forEach(function(x){ x.onclick = closeDrawer; });
+  $$(".ph-ditem[data-item]", dr).forEach(function(x){
+    x.onclick = function(){ show(x.getAttribute("data-item")); closeDrawer(); };
+  });
+  var burger = $("#ph-burger"); if (burger) burger.onclick = openDrawer;
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeDrawer(); });
+  window.phOpenDrawer = openDrawer;
+  setTimeout(function(){ show(current(), true); }, 150);
+})();
+</script>
+"""
+
 def patch_bgp(src):
     old = 'var vals = ser.serie_0.values.map(function(v){ return typeof v === "number" ? v : (v && v.value) || 0; });'
     new = ('var vals = ser.serie_0.values.map(function(v){ var n = (typeof v === "number") ? v : Number(v && v.value !== undefined ? v.value : v);'
@@ -546,7 +711,9 @@ report = []
 for page in PAGES:
     src = (ROOT / "cloudflare" / "_tmp_page.html").read_text(encoding="utf-8") if False else page.read_text(encoding="utf-8")
     src = src.replace("</head>", DESIGN_CSS + "</head>", 1)
+    src = src.replace("</head>", NAV_CSS + "</head>", 1)
     src = src.replace("</body>\n</html>", HERO_JS + "</body>\n</html>", 1)
+    src = src.replace("</body>\n</html>", NAV_HTML + NAV_JS + "</body>\n</html>", 1)
     src, b1 = patch_bgp(src)
     src, b2 = patch_doh(src)
     src, b3 = patch_games(src)

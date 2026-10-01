@@ -11,8 +11,8 @@ android {
         applicationId = "ir.dnsradar.app"
         minSdk = 21
         targetSdk = 34
-        versionCode = 3
-        versionName = "2.3"
+        versionCode = 4
+        versionName = "2.4"
     }
 
     // اپ وب بدون کپی‌شدن، مستقیم از پوشه‌ی web داخل assets قرار می‌گیرد

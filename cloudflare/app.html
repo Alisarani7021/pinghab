@@ -245,6 +245,60 @@ tr:last-child td{border-bottom:none}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
+
+<style id="ph-nav-css">
+/* ============ پوستهٔ اپ: نوار بالا + منوی پایین ۴ تایی + منوی همبرگری ============ */
+#ph-tabs,.ph-hero{display:none !important}
+body{padding-top:58px !important;padding-bottom:88px !important}
+.ph-appbar{position:fixed;top:0;right:0;left:0;z-index:60;height:56px;display:flex;align-items:center;gap:10px;
+  padding:0 12px;background:color-mix(in srgb,var(--bg) 92%, transparent);backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.ph-appbar b{font-size:15.5px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ph-abtn{min-width:42px;min-height:42px;display:inline-flex;align-items:center;justify-content:center;
+  border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--tx);font-size:19px;cursor:pointer;text-decoration:none}
+.ph-abtn:active{transform:scale(.96)}
+.ph-nav{position:fixed;bottom:0;right:0;left:0;z-index:60;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;
+  padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--bg) 94%, transparent);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+.ph-nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 4px;border:0;
+  background:transparent;color:var(--mut);font:inherit;font-size:11px;font-weight:700;cursor:pointer;border-radius:12px;min-height:52px}
+.ph-nav button i{font-style:normal;font-size:19px;line-height:1}
+.ph-nav button.on{color:var(--acc);background:color-mix(in srgb,var(--acc) 14%, transparent)}
+.ph-drawer{position:fixed;inset:0;z-index:70;display:none}
+.ph-drawer.on{display:block}
+.ph-drawer-bg{position:absolute;inset:0;background:rgba(0,0,0,.55)}
+.ph-drawer aside{position:absolute;top:0;bottom:0;right:0;width:min(86vw,340px);background:var(--card);
+  border-left:1px solid var(--line);padding:14px 14px calc(14px + env(safe-area-inset-bottom,0px));overflow-y:auto}
+.ph-drawer h4{margin:14px 0 6px;font-size:12.5px;color:var(--mut)}
+.ph-ditem{display:flex;align-items:center;gap:10px;padding:11px 10px;border-radius:12px;border:1px solid transparent;
+  cursor:pointer;font-size:14px}
+.ph-ditem:hover{background:color-mix(in srgb,var(--acc) 10%, transparent);border-color:color-mix(in srgb,var(--acc) 30%, var(--line))}
+.ph-ditem.on{background:color-mix(in srgb,var(--acc) 16%, transparent);border-color:var(--acc)}
+.ph-ditem i{font-style:normal;font-size:17px;width:22px;text-align:center}
+.ph-dhead{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.ph-dhead b{font-size:17px;flex:1}
+/* کارت اصلی DNS (سبک دی‌ان‌اس‌چنجر) */
+.ph-dnsmain{border-color:color-mix(in srgb,var(--acc) 42%, var(--line))}
+.ph-dnsbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.ph-dnsbar b{font-size:19px}
+.ph-state{padding:4px 12px;border-radius:999px;font-size:12.5px;font-weight:800;border:1px solid var(--line)}
+.ph-state.on{background:rgba(16,168,116,.18);color:#12b981;border-color:rgba(16,168,116,.5)}
+.ph-state.off{background:color-mix(in srgb,var(--tx) 6%, transparent);color:var(--mut)}
+.ph-dnssrv{text-align:right}
+.ph-ip{font-size:26px;font-weight:800;letter-spacing:.5px;line-height:1.35;word-break:break-all}
+.ph-ip2{font-size:19px;font-weight:700;letter-spacing:.4px;word-break:break-all;color:var(--mut)}
+.ph-startbtn{width:100%;margin-top:14px;min-height:54px;font-size:17px;letter-spacing:.3px}
+.ph-livemetrics{margin-top:4px}
+.ph-metric{display:flex;flex-direction:column;gap:2px;padding:9px 10px;border:1px solid var(--line);border-radius:12px;
+  background:color-mix(in srgb,var(--tx) 3%, transparent)}
+.ph-metric span{font-size:11.5px;color:var(--mut)}
+.ph-metric b{font-size:16px;font-variant-numeric:tabular-nums}
+.ph-resrow{display:flex;align-items:center;gap:10px;padding:10px 8px;border-bottom:1px solid color-mix(in srgb,var(--line) 70%, transparent);cursor:pointer}
+.ph-resrow.on{background:color-mix(in srgb,var(--acc) 12%, transparent);border-radius:10px}
+.ph-resrow .ph-pickmark{font-size:11.5px;color:var(--acc);border:1px solid color-mix(in srgb,var(--acc) 45%, var(--line));
+  border-radius:999px;padding:3px 10px;white-space:nowrap}
+.ph-resrow.on .ph-pickmark::before{content:"✓ "}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -1456,25 +1510,51 @@ tr:last-child td{border-bottom:none}
   </div>
 
   <div class="ph-panel" id="ph-p20">
-    <div class="ph-card">
-      <b>🚀 حالت DNS روی گوشی — تغییردهندهٔ DNS بدون روت</b>
-      <div class="sub">یک دکمه: کوئری‌های DNS همین گوشی به رزولور انتخابی می‌روند (DoT رمزنگاری‌شده، و UDP برای رزولور بومی ایران)
-        و همین‌جا <b>پینگ، پکت‌لاس، نوسان</b> و وضعیت خط زنده دیده می‌شود.
-        <br>صادقانه: این <b>VPN ترافیکی نیست</b> — هیچ بایتی از بازی/مرور از هیچ سروری (از جمله سرور ما) عبور نمی‌کند؛ فقط مسیر DNS روی خود گوشی عوض می‌شود.
+    <div class="ph-card ph-dnsmain" id="ph-dns-main">
+      <div class="ph-dnsbar">
+        <b>DNS</b>
+        <span class="ph-state off" id="ph4-state">غیرفعال</span>
+      </div>
+      <div class="ph-dnssrv">
+        <div class="ph-lbl">سرور اصلی · Primary</div>
+        <div class="mono ph-ip" id="ph4-primary">—</div>
+        <div class="ph-lbl" style="margin-top:10px">سرور دوم · Secondary</div>
+        <div class="mono ph-ip2" id="ph4-secondary">—</div>
+        <div class="sub" id="ph4-name" style="margin-top:6px">رزولوری انتخاب نشده</div>
+      </div>
+      <button id="ph4-connect" class="wwbtn wwprimary ph-startbtn">شروع</button>
+      <div class="row" style="gap:8px;margin-top:8px;flex-wrap:wrap">
+        <button class="wwbtn" id="ph4-pick">🔄 تغییر رزولور</button>
+        <button class="wwbtn" id="ph4-default">↩️ DNS پیش‌فرض شبکه</button>
+        <button class="wwbtn" id="ph4-extra">🔁 حالت «گرفتن DNS دستی اپ‌ها»</button>
+      </div>
+      <div id="ph4-live" class="ph-livemetrics"></div>
+      <div class="sub" style="margin-top:8px">صادقانه: این <b>VPN ترافیکی نیست</b> — هیچ بایتی از بازی/مرور از هیچ سروری (از جمله ما) عبور نمی‌کند؛
+        فقط کوئری‌های DNS روی همین گوشی به رزولور انتخابی می‌روند (DoT رمزنگاری‌شده، و UDP برای رزولور بومی ایران).
         «DNS پینگ داخل مچ بازی را کم نمی‌کند» — زمان اتصال و پایداری نام‌یابی را بهتر می‌کند.</div>
+    </div>
+
+    <div class="ph-card">
+      <b>🧭 انتخاب رزولور</b>
+      <div class="sub">anycast جهانی (DoT) + بومی ایران (UDP) + رزولورهای کشوری — روی هر کدام بزن تا انتخاب شود.</div>
+      <div id="ph4-dns-list"></div>
+    </div>
+
+    <div class="ph-card">
+      <b>📊 کیفیت اتصال و خط</b>
+      <div class="sub">پینگ DNS، پکت‌لاس، نوسان، تعداد کوئری — وقتی «شروع» را بزنی زنده به‌روز می‌شود. + وضعیت شبکه/اپراتور/موقعیت.</div>
+      <div id="ph4-dns-status"></div>
       <div id="ph4-dns-native"></div>
-      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
-        <button class="wwbtn wwprimary" id="ph4-dns-open">📱 باز کردن صفحهٔ حالت DNS</button>
-        <button class="wwbtn" id="ph4-dns-stop">⛔️ قطع و برگشت به DNS شبکه</button>
-        <button class="wwbtn" id="ph4-dns-extra">🔁 وصل با «گرفتن DNS دستی اپ‌ها» هم</button>
+    </div>
+
+    <div class="ph-card">
+      <b>🏙️ شهرها و بازی‌ها</b>
+      <div class="sub">همین رزولور از گره‌های ایران، و پینگ سرور بازی‌ها از داخل ایران.</div>
+      <div class="row" style="gap:8px;flex-wrap:wrap;margin-top:8px">
+        <button class="wwbtn" id="ph4-cities">🏙️ پینگ رزولور از شهرهای ایران</button>
         <a class="wwbtn" href="/api/changer" target="_blank">🧾 دادهٔ خام رزولورها</a>
       </div>
-      <div id="ph4-dns-status"></div>
-    </div>
-    <div class="ph-card">
-      <b>🧭 رزولورها — وصل‌شدن از همین‌جا</b>
-      <div class="sub">anycast جهانی (DoT) + بومی ایران (UDP) + رزولورهای کشوری. عددها را اپ روی خط خودت می‌سنجد؛ این‌جا فقط انتخاب می‌کنی.</div>
-      <div id="ph4-dns-list"></div>
+      <div id="ph4-more"></div>
     </div>
   </div>
 <script>
@@ -2944,91 +3024,122 @@ tr:last-child td{border-bottom:none}
       };
     });
   }
-  /* ================= 🚀 حالت DNS روی گوشی (اپ اندروید) ================= */
-  var CHANGER = null;
+  /* ================= 🚀 حالت DNS روی گوشی (صفحهٔ اصلی اپ) ================= */
+  var CHANGER = null, PH4_SEL = null;
   function ph4Native(){ try { return (window.phNative && window.phNative.isNative && window.phNative.isNative()) ? window.phNative : null; } catch(e){ return null; } }
-  function ph4StatusJson(){ try { var n = ph4Native(); return JSON.parse(n && n.dnsStatus ? n.dnsStatus() : "{}"); } catch(e){ return {}; } }
-  function renderNativeBox(){
-    var n = ph4Native(), box = q("ph4-dns-native"); if (!box) return;
-    box.innerHTML = n
-      ? '<div class="ph-good">✅ این اپ اندروید است — دکمه‌ها همین‌جا کار می‌کنند (نسخهٔ پل: ' + esc(String(n.version ? n.version() : "?")) + ').</div>'
-      : '<div class="ph-box"><b>این قابلیت داخل اپ اندروید اجرا می‌شود.</b><div class="sub">در مرورگر نمی‌توانیم DNS سیستم را عوض کنیم (خط قرمز پروژه). APK را نصب کن؛ همین صفحه داخل اپ به دکمهٔ واقعی تبدیل می‌شود. لیست رزولورها این‌جا هم برای دیدن و کپی در دسترس است.</div>' +
-        '<a class="wwbtn" style="margin-top:8px" href="https://github.com/Alisarani7021/pinghab/releases/download/apk-latest/pinghab-latest.apk">⬇️ دانلود APK (نسخهٔ تازه)</a></div>';
+  function ph4Status(){ try { var n = ph4Native(); return JSON.parse(n && n.dnsStatus ? n.dnsStatus() : "{}"); } catch(e){ return {}; } }
+  function ph4ShowMain(){
+    var r = PH4_SEL || (CHANGER && (CHANGER.resolvers||[])[0]) || null;
+    if (q("ph4-primary")) q("ph4-primary").textContent = r ? ((r.ips||[])[0] || "—") : "—";
+    if (q("ph4-secondary")) q("ph4-secondary").textContent = r ? ((r.ips||[])[1] || (r.dot || "—")) : "—";
+    if (q("ph4-name")) q("ph4-name").innerHTML = r
+      ? esc(r.fa) + ' · ' + (r.dot ? 'DoT ' + esc(r.dot) : 'UDP/53') + ' · <span class="ph-badge">' +
+        esc(r.kind === "iran" ? "ایران" : (r.kind === "national" ? "بومی" : "جهانی")) + '</span>'
+      : "رزولوری انتخاب نشده";
   }
-  function renderDnsStatus(){
-    var box = q("ph4-dns-status"); if (!box) return;
-    var s = ph4StatusJson();
-    if (!s || !s.running){
-      box.innerHTML = '<div class="sub" style="margin-top:8px">حالا خاموش است — DNS به حالت عادی شبکه برگشته. وقتی وصل شوی، این‌جا زنده می‌بینی: ' +
-        '<span class="ph-badge">پینگ DNS</span> <span class="ph-badge">پکت‌لاس</span> <span class="ph-badge">نوسان</span> <span class="ph-badge">تعداد کوئری</span></div>';
-      return;
-    }
+  function ph4RenderLive(){
+    var s = ph4Status(), on = !!s.running;
+    if (q("ph4-state")){ q("ph4-state").textContent = on ? "فعال" : "غیرفعال"; q("ph4-state").className = "ph-state " + (on ? "on" : "off"); }
+    if (q("ph4-connect")) q("ph4-connect").textContent = on ? "⛔️ قطع کن" : "شروع";
+    var box = q("ph4-live"); if (!box) return;
+    if (!on){ box.innerHTML = ''; return; }
     var sec = s.since ? Math.floor((Date.now() - s.since)/1000) : 0;
-    box.innerHTML = '<div class="ph-card" style="margin-top:8px"><b>🟢 وصل: ' + esc(s.label||"—") + '</b> <span class="ph-badge">' +
-      fa(Math.floor(sec/60)) + ' دقیقه</span><table style="width:100%;font-size:13px;border-collapse:collapse;margin-top:6px">' +
-      '<tr><td>پینگ DNS (آخرین)</td><td><b>' + (s.last>=0 ? fa(s.last)+'ms' : "—") + '</b></td></tr>' +
-      '<tr><td>میانگین</td><td>' + (s.avg>=0 ? fa(s.avg)+'ms' : "—") + '</td></tr>' +
-      '<tr><td>نوسان (جیتر)</td><td>' + (s.jitter>=0 ? fa(s.jitter)+'ms' : "—") + '</td></tr>' +
-      '<tr><td>پکت‌لاس</td><td>' + fa(s.loss||0) + '٪ (' + fa(s.answered||0) + ' از ' + fa(s.sent||0) + ')</td></tr>' +
-      '</table>' + (s.error ? '<div class="ph-warn">' + esc(s.error) + '</div>' : '') + '</div>';
+    box.innerHTML = '<div class="ph-grid2" style="margin-top:10px">' +
+      '<div class="ph-metric"><span>پینگ DNS</span><b>' + (s.last >= 0 ? fa(s.last) + "ms" : "—") + '</b></div>' +
+      '<div class="ph-metric"><span>میانگین</span><b>' + (s.avg >= 0 ? fa(s.avg) + "ms" : "—") + '</b></div>' +
+      '<div class="ph-metric"><span>نوسان</span><b>' + (s.jitter >= 0 ? fa(s.jitter) + "ms" : "—") + '</b></div>' +
+      '<div class="ph-metric"><span>پکت‌لاس</span><b>' + fa(s.loss||0) + '٪</b></div>' +
+      '<div class="ph-metric"><span>کوئری‌ها</span><b>' + fa(s.answered||0) + '/' + fa(s.sent||0) + '</b></div>' +
+      '<div class="ph-metric"><span>مدت</span><b>' + fa(Math.floor(sec/60)) + 'د ' + fa(sec%60) + 'ث</b></div>' +
+      '</div>' + (s.label ? '<div class="sub">رزولور فعال: <b>' + esc(s.label) + '</b></div>' : '') +
+      (s.error ? '<div class="ph-warn">' + esc(s.error) + '</div>' : '');
   }
-  async function loadChanger(){
+  function ph4Connect(r){
+    var n = ph4Native();
+    if (!n){ if (q("ph4-live")) q("ph4-live").innerHTML = '<div class="ph-warn">این دکمه داخل اپ اندروید کار می‌کند — در مرورگر نمی‌توانیم DNS سیستم را عوض کنیم. از دکمهٔ «دانلود APK» استفاده کن.</div>'; return; }
+    if (!r) return;
+    var ok = false;
+    try { ok = n.startDns(r.id, r.fa, (r.ips||[]).join(","), r.dot || "", r.sni || "", false); } catch(e){}
+    if (q("ph4-live")) q("ph4-live").innerHTML = ok
+      ? '<div class="ph-good" style="margin-top:8px">درخواست اتصال فرستاده شد — اگر پیام اجازهٔ اندروید آمد تأیید کن.</div>'
+      : '<div class="ph-warn">اتصال شروع نشد؛ از تنظیمات گوشی اجازهٔ VPN/تونل محلی را بده.</div>';
+    setTimeout(ph4RenderLive, 1200);
+  }
+  async function ph4Load(){
     var box = q("ph4-dns-list"); if (!box) return;
     box.innerHTML = '<div class="sub">در حال گرفتن لیست رزولورها…</div>';
-    try {
+    try{
       var d = await hget("/api/changer", "changer");
-      var j = d.j || {};
-      CHANGER = j;
-      var h = '<div class="sub">' + fa(j.count||0) + ' رزولور — جهانی: ' + fa((j.by_kind||{}).global||0) +
-        ' · ایران: ' + fa((j.by_kind||{}).iran||0) + ' · بومی کشورها: ' + fa((j.by_kind||{}).national||0) + '</div>';
-      h += '<table style="width:100%;font-size:12.5px;border-collapse:collapse"><tr><th>رزولور</th><th>آی‌پی</th><th>روش</th><th></th></tr>';
-      (j.resolvers||[]).forEach(function(r){
-        var kindFa = r.kind === "iran" ? "ایران" : (r.kind === "national" ? "بومی" : "جهانی");
-        h += '<tr><td>' + esc(r.fa) + ' <span class="ph-badge">' + esc(kindFa) + '</span></td>' +
-          '<td class="mono" style="font-size:11.5px">' + esc((r.ips||[]).slice(0,2).join(" · ")) + '</td>' +
-          '<td class="mono" style="font-size:11px">' + esc(r.dot ? ("DoT " + r.dot) : "UDP/53") + '</td>' +
-          '<td><button class="wwbtn wwcopy" data-ph4-connect="' + esc(r.id) + '">وصل شو</button></td></tr>';
+      CHANGER = d.j || {};
+      var rs = CHANGER.resolvers || [];
+      if (!PH4_SEL || !rs.filter(function(x){ return x.id === PH4_SEL.id; }).length) PH4_SEL = rs[0] || null;
+      ph4ShowMain();
+      var h = '<div class="sub">' + fa(rs.length) + ' رزولور — جهانی: ' + fa((CHANGER.by_kind||{}).global||0) +
+        ' · ایران: ' + fa((CHANGER.by_kind||{}).iran||0) + ' · بومی: ' + fa((CHANGER.by_kind||{}).national||0) + '</div>';
+      ["iran","global","national"].forEach(function(kind){
+        var group = rs.filter(function(x){ return x.kind === kind; });
+        if (!group.length) return;
+        h += '<b style="display:block;margin-top:10px">' + (kind === "iran" ? "🇮🇷 بومی ایران (UDP)" : (kind === "national" ? "🌍 بومی کشورها" : "🌐 anycast جهانی (DoT)")) + '</b>';
+        group.forEach(function(r){
+          h += '<div class="ph-resrow" data-r="' + esc(r.id) + '">' +
+            '<div style="flex:1"><b>' + esc(r.fa) + '</b>' + (r.verified ? ' <span class="ph-badge ph-chip-ok">تأییدشده</span>' : '') +
+            '<div class="sub mono" style="font-size:11.5px">' + esc((r.ips||[]).join(" · ")) + ' · ' + esc(r.dot ? ("DoT " + r.dot) : "UDP/53") + '</div></div>' +
+            '<span class="ph-pickmark">انتخاب</span></div>';
+        });
       });
-      h += '</table><div class="sub">' + esc((j.honesty||[])[0]||"") + '</div>';
       box.innerHTML = h;
-      Array.prototype.forEach.call(box.querySelectorAll("[data-ph4-connect]"), function(b){
-        b.onclick = function(){
-          var id = b.getAttribute("data-ph4-connect");
-          var r = ((CHANGER||{}).resolvers||[]).filter(function(x){ return x.id === id; })[0];
-          var n = ph4Native();
-          if (!r) return;
-          if (!n){ box.insertAdjacentHTML("beforeend", '<div class="ph-warn">داخل مرورگر نمی‌شود؛ APK را نصب کن.</div>'); return; }
-          var ok = false;
-          try { ok = n.startDns(r.id, r.fa, (r.ips||[]).join(","), r.dot || "", r.sni || "", false); } catch(e){}
-          box.insertAdjacentHTML("beforeend", ok
-            ? '<div class="ph-good">درخواست اتصال به <b>' + esc(r.fa) + '</b> فرستاده شد (اگر پیام اجازهٔ اندروید آمد، تأیید کن).</div>'
-            : '<div class="ph-warn">اتصال شروع نشد — از صفحهٔ «حالت DNS» اطلاعات دقیق‌تر را ببین.</div>');
-          setTimeout(renderDnsStatus, 1500);
+      Array.prototype.forEach.call(box.querySelectorAll(".ph-resrow"), function(row){
+        row.onclick = function(){
+          var id = row.getAttribute("data-r");
+          PH4_SEL = (CHANGER.resolvers||[]).filter(function(x){ return x.id === id; })[0] || PH4_SEL;
+          Array.prototype.forEach.call(box.querySelectorAll(".ph-resrow"), function(x){ x.classList.remove("on"); });
+          row.classList.add("on");
+          ph4ShowMain();
         };
+        if (PH4_SEL && row.getAttribute("data-r") === PH4_SEL.id) row.classList.add("on");
       });
     } catch(e){ box.innerHTML = '<div class="ph-warn">لیست نیامد: ' + esc(e.message) + '</div>'; }
   }
-  if (q("ph4-dns-open")) q("ph4-dns-open").onclick = function(){
-    var n = ph4Native();
-    if (n && n.openDnsChanger) n.openDnsChanger();
-    else if (q("ph4-dns-status")) q("ph4-dns-status").innerHTML = '<div class="ph-warn">این دکمه داخل اپ اندروید کار می‌کند.</div>';
+  if (q("ph4-connect")) q("ph4-connect").onclick = function(){
+    var s = ph4Status();
+    if (s.running){ var n = ph4Native(); if (n && n.stopDns) n.stopDns(); setTimeout(ph4RenderLive, 800); return; }
+    ph4Connect(PH4_SEL);
   };
-  if (q("ph4-dns-stop")) q("ph4-dns-stop").onclick = function(){
-    var n = ph4Native();
-    if (n && n.stopDns) { n.stopDns(); setTimeout(renderDnsStatus, 800); }
-    else if (q("ph4-dns-status")) q("ph4-dns-status").innerHTML = '<div class="ph-warn">داخل مرورگر چیزی برای قطع‌کردن نیست.</div>';
+  if (q("ph4-pick")) q("ph4-pick").onclick = function(){
+    var l = q("ph4-dns-list"); if (l) l.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-  if (q("ph4-dns-extra")) q("ph4-dns-extra").onclick = function(){
+  if (q("ph4-default")) q("ph4-default").onclick = function(){
     var n = ph4Native();
-    if (!n || !CHANGER) return;
-    var r = ((CHANGER.resolvers)||[])[0]; if (!r) return;
-    try { n.startDns(r.id, r.fa, (r.ips||[]).join(","), r.dot || "", r.sni || "", true); } catch(e){}
-    if (q("ph4-dns-status")) q("ph4-dns-status").innerHTML = '<div class="sub">با حالت «گرفتن DNS دستی اپ‌ها» درخواست رفت — یعنی کوئری‌هایی که به 8.8.8.8/1.1.1.1 هم می‌روند از این مسیر عبور می‌کنند.</div>';
+    if (n && n.stopDns) { n.stopDns(); setTimeout(ph4RenderLive, 800); }
+    else if (q("ph4-live")) q("ph4-live").innerHTML = '<div class="sub">داخل مرورگر چیزی برای برگرداندن نیست؛ داخل اپ، DNS به حالت عادی شبکه برمی‌گردد.</div>';
   };
-  renderNativeBox();
-  loadChanger();
-  renderDnsStatus();
-  setInterval(renderDnsStatus, 2000);
+  if (q("ph4-extra")) q("ph4-extra").onclick = function(){
+    var n = ph4Native(); if (!n || !PH4_SEL) return;
+    try { n.startDns(PH4_SEL.id, PH4_SEL.fa, (PH4_SEL.ips||[]).join(","), PH4_SEL.dot || "", PH4_SEL.sni || "", true); } catch(e){}
+    if (q("ph4-live")) q("ph4-live").innerHTML = '<div class="sub">با حالت «گرفتن DNS دستی اپ‌ها» درخواست رفت — کوئری‌هایی که مستقیم به 8.8.8.8/1.1.1.1 هم می‌روند از این مسیر عبور می‌کنند.</div>';
+  };
+  if (q("ph4-cities")) q("ph4-cities").onclick = function(){
+    var box = q("ph4-more"); if (!box || !PH4_SEL) return;
+    box.innerHTML = '<div class="sub">در حال سنجش از گره‌های ایران…</div>';
+    hget("/api/gameping?ips=" + encodeURIComponent((PH4_SEL.ips||[])[0] || "") + "&cc=IR").then(function(d){
+      var res = ((d.j||{}).results||[])[0] || {};
+      var h = '<table style="width:100%;font-size:12.5px;border-collapse:collapse;margin-top:8px"><tr><th>شهر</th><th>شبکهٔ پروب</th><th>میانگین</th><th>افت</th><th>اعتبار</th></tr>';
+      (res.rows||[]).forEach(function(x){
+        var t = (x.sanity && x.sanity.trusted);
+        h += '<tr><td>' + esc(x.city||"—") + '</td><td>' + esc((x.network||"").slice(0,20)) + '</td><td>' +
+          (x.avg == null ? "—" : fa(Math.round(x.avg)) + "ms") + '</td><td>' + (x.loss == null ? "—" : fa(x.loss) + "٪") + '</td><td>' +
+          (t ? '<span class="ph-badge ph-chip-ok">معتبر</span>' : '<span class="ph-badge ph-chip-no">نانشنه</span>') + '</td></tr>';
+      });
+      h += '</table><div class="sub">پروب‌ها دیتاسنتری‌اند، نه خط موبایل؛ «نانشنه» = عددی که اثر شبکه را نشان نمی‌دهد.</div>';
+      box.innerHTML = (res.rows && res.rows.length) ? h : '<div class="ph-warn">پاسخی نیامد — این رزولور از پروب‌های ایران ICMP نمی‌گیرد.</div>';
+    }).catch(function(e){ box.innerHTML = '<div class="ph-warn">خطا: ' + esc(e.message) + '</div>'; });
+  };
+  if (q("ph4-dns-native")) q("ph4-dns-native").innerHTML = ph4Native()
+    ? '<div class="ph-good" style="margin-top:8px">✅ داخل اپ اندروید هستی — «شروع» دقیقاً همین‌جا کار می‌کند.</div>'
+    : '<div class="ph-box" style="margin-top:8px"><b>در مرورگر:</b> نمی‌توانیم DNS سیستم را عوض کنیم (خط قرمز پروژه). ' +
+      '<a href="https://github.com/Alisarani7021/pinghab/releases/download/apk-latest/pinghab-latest.apk">⬇️ دانلود APK</a> — همین صفحه داخل اپ به دکمهٔ واقعی تبدیل می‌شود.</div>';
+  ph4ShowMain(); ph4Load(); ph4RenderLive();
+  setInterval(ph4RenderLive, 1500);
 
 })();
 </script>
@@ -3575,6 +3686,48 @@ set(T.some(function(t){return t[0]===s})?s:"lamborghini");
       if (t && t.parentNode) t.parentNode.scrollTo({ left: Math.max(0, t.offsetLeft - 20), behavior: "smooth" });
     }, true);
   }catch(e){}
+})();
+</script>
+<div id="ph-nav-root"><div class="ph-appbar" id="ph-appbar"><button class="ph-abtn" id="ph-burger" aria-label="منو">☰</button><b id="ph-appbar-title">🚀 حالت DNS</b><a class="ph-abtn" id="ph-appbar-apk" href="https://github.com/Alisarani7021/pinghab/releases/download/apk-latest/pinghab-latest.apk" title="دانلود/به‌روزرسانی APK">⬇️</a></div><div class="ph-nav" id="ph-nav"><button data-nav="ph-p20"><i>🚀</i><span>DNS</span></button><button data-nav="ph-p1"><i>📈</i><span>خط من</span></button><button data-nav="ph-p2"><i>🎮</i><span>بازی</span></button><button data-nav="__drawer__"><i>☰</i><span>بیشتر</span></button></div><div class="ph-drawer" id="ph-drawer"><div class="ph-drawer-bg" data-close="1"></div><aside><div class="ph-dhead"><b>📡 پینگ‌هاب</b><span class="ph-badge mono">۲.۴</span><button class="wwbtn" data-close="1" style="min-height:36px">✕</button></div><h4>اصلی</h4><div class="ph-ditem" data-item="ph-p20"><i>🚀</i><span>حالت DNS</span></div><div class="ph-ditem" data-item="ph-p1"><i>📈</i><span>خط من</span></div><div class="ph-ditem" data-item="ph-p2"><i>🎮</i><span>سرور بازی‌ها</span></div><h4>سنجش و رزولور</h4><div class="ph-ditem" data-item="ph-p3"><i>🧭</i><span>کاتالوگ رزولورها</span></div><div class="ph-ditem" data-item="ph-p4"><i>🌍</i><span>ایران و جهان</span></div><div class="ph-ditem" data-item="ph-p5"><i>✨</i><span>آی‌پی تمیز</span></div><div class="ph-ditem" data-item="ph-p9"><i>🔍</i><span>واقعیت خط</span></div><div class="ph-ditem" data-item="ph-p15"><i>⚡</i><span>رزولوشن و مسابقه</span></div><div class="ph-ditem" data-item="ph-p10"><i>🌡️</i><span>ایران امروز</span></div><h4>شبکه و مسیر</h4><div class="ph-ditem" data-item="ph-p8"><i>🛰️</i><span>مسیر من</span></div><div class="ph-ditem" data-item="ph-p6"><i>🏠</i><span>خانه و شبکه</span></div><div class="ph-ditem" data-item="ph-p7"><i>📊</i><span>اسکن و آمار</span></div><div class="ph-ditem" data-item="ph-p13"><i>🕵️</i><span>کالبدشکافی فیلترینگ</span></div><div class="ph-ditem" data-item="ph-p14"><i>🌊</i><span>موج و UDP</span></div><h4>ویژهٔ بازی</h4><div class="ph-ditem" data-item="ph-p11"><i>🎯</i><span>آمادهٔ رنکد</span></div><div class="ph-ditem" data-item="ph-p12"><i>🤝</i><span>تیمی و اشتراک</span></div><h4>ابزار و اپ</h4><div class="ph-ditem" data-item="ph-p19"><i>📱</i><span>آزمون دستگاه و ویجت</span></div><div class="ph-ditem" data-item="ph-p16"><i>📡</i><span>نقطهٔ کور (آفلاین)</span></div><div class="ph-ditem" data-item="ph-p17"><i>🧪</i><span>صف و سیاست اپراتور</span></div><div class="ph-ditem" data-item="ph-p18"><i>🛠️</i><span>نسخهٔ مقاوم</span></div><h4>درباره</h4><a class="ph-ditem" href="https://github.com/Alisarani7021/pinghab/releases/download/apk-latest/pinghab-latest.apk" style="text-decoration:none;color:inherit"><i>⬇️</i><span>دانلود / به‌روزرسانی APK</span></a><a class="ph-ditem" href="/docs" target="_blank" style="text-decoration:none;color:inherit"><i>📘</i><span>مستندات API و دادهٔ باز</span></a><div class="sub">قانون ما: کاندید، نه توصیه · DNS پینگ داخل مچ بازی را کم نمی‌کند.</div></aside></div></div>
+<script id="ph-nav-script">
+(function(){
+  if (window.__phNavReady) return; window.__phNavReady = true;
+  function $(s, r){ return (r || document).querySelector(s); }
+  function $$(s, r){ return [].slice.call((r || document).querySelectorAll(s)); }
+  var nav = $("#ph-nav"), dr = $("#ph-drawer"), ttl = $("#ph-appbar-title");
+  var MAIN = ["ph-p20", "ph-p1", "ph-p2"];
+  function openDrawer(){ if (dr) { dr.classList.add("on"); syncDrawer(); } }
+  function closeDrawer(){ if (dr) dr.classList.remove("on"); }
+  function current(){ var on = $(".ph-panel.on"); return on ? on.id : "ph-p20"; }
+  function titleOf(id){ var it = $('.ph-ditem[data-item="' + id + '"]'); return it ? it.textContent.trim() : "پینگ‌هاب"; }
+  function syncDrawer(id){
+    id = id || current();
+    $$(".ph-ditem[data-item]", dr).forEach(function(x){ x.className = "ph-ditem" + (x.getAttribute("data-item") === id ? " on" : ""); });
+    if (nav) $$("button", nav).forEach(function(b){ b.className = (b.getAttribute("data-nav") === id) ? "on" : ""; });
+    if (ttl){ var it = $('.ph-ditem[data-item="' + id + '"]'); ttl.innerHTML = it ? it.innerHTML.replace(/<i>|<\/i>/g, "") : "پینگ‌هاب"; }
+  }
+  function show(id, silent){
+    var tab = document.querySelector('.ph-tab[data-target="' + id + '"]');
+    if (tab) tab.click();
+    else $$(".ph-panel").forEach(function(pn){ pn.className = "ph-panel" + (pn.id === id ? " on" : ""); });
+    syncDrawer(id);
+    if (!silent) window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  window.phShow = show;
+  if (nav) $$("button", nav).forEach(function(b){
+    b.onclick = function(){
+      var t = b.getAttribute("data-nav");
+      if (t === "__drawer__") openDrawer(); else show(t);
+    };
+  });
+  $$("[data-close]", dr).forEach(function(x){ x.onclick = closeDrawer; });
+  $$(".ph-ditem[data-item]", dr).forEach(function(x){
+    x.onclick = function(){ show(x.getAttribute("data-item")); closeDrawer(); };
+  });
+  var burger = $("#ph-burger"); if (burger) burger.onclick = openDrawer;
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeDrawer(); });
+  window.phOpenDrawer = openDrawer;
+  setTimeout(function(){ show(current(), true); }, 150);
 })();
 </script>
 </body>

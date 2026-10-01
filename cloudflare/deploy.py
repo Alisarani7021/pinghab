@@ -417,9 +417,26 @@ def test(env: dict):
     except Exception as e:
         print("  ❌ changer-quality:", e)
     count_in("/app پنل حالت DNS", f"{SITE}/app", 'id="ph-p20"')
-    count_in("/app دکمهٔ باز کردن حالت DNS", f"{SITE}/app", "ph4-dns-open")
+    count_in("/app گروه‌های منوی همبرگری", f"{SITE}/app", "سنجش و رزولور")
     count_in("/app لیست رزولور حالت DNS", f"{SITE}/app", "ph4-dns-list")
     count_in("/docs مسیر changer", f"{SITE}/docs", "/api/changer")
+
+    # --- پوستهٔ ناوبری: ۴ تب پایین + منوی همبرگری ---
+    print("\n  ── پوستهٔ اپ: منوی پایین + همبرگری ──")
+    count_in("/app منوی پایین (۴ تب)", f"{SITE}/app", "ph-nav")
+    count_in("/app منوی همبرگری", f"{SITE}/app", "ph-drawer")
+    count_in("/app کارت میانی DNS (Primary)", f"{SITE}/app", 'id="ph4-primary"')
+    count_in("/app دکمهٔ شروع DNS", f"{SITE}/app", 'id="ph4-connect"')
+    count_in("/app تب‌های قدیمی پنهان شده", f"{SITE}/app", "#ph-tabs,.ph-hero{display:none")
+    try:
+        st, raw = api(f"{SITE}/app", "x", "GET", None, {"Authorization": "", "User-Agent": "PingHab/1.0"}, raw=True, timeout=60)
+        body = raw if isinstance(raw, str) else raw.decode("utf-8", "ignore")
+        n_items = body.count('data-nav=')
+        ok = n_items == 4
+        results.append(("منوی پایین دقیقاً ۴ آیتم", ok, str(n_items)))
+        print(f"  {'✅' if ok else '❌'} {'۴ آیتم منوی پایین':34s} {'':>5s}  n={n_items}")
+    except Exception as e:
+        print("  ❌ nav-count:", e)
 
     # ثبت بی‌نام (تست) — نمونهٔ ساعت طلایی/روند هم ساخته می‌شود
     body = json.dumps({"province": "تست", "carrier": "تست", "resolver": "self-test", "ms": 42, "ok": True}).encode()
