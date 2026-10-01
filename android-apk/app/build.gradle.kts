@@ -11,12 +11,18 @@ android {
         applicationId = "ir.dnsradar.app"
         minSdk = 21
         targetSdk = 34
-        versionCode = 6
-        versionName = "2.6"
+        versionCode = 7
+        versionName = "2.7"
     }
 
     // اپ وب بدون کپی‌شدن، مستقیم از پوشه‌ی web داخل assets قرار می‌گیرد
     sourceSets["main"].assets.srcDirs("src/main/assets", "../../web")
+
+    // پایگاه‌های دادهٔ واقعی (ip2asn / DB-IP / SecLists / فونت) فشرده‌نشده بسته‌بندی می‌شوند:
+    // همان بایت‌های منتشرشدهٔ منبع، بدون دست‌کاری — و بارگذاری سریع‌تر روی گوشی.
+    androidResources {
+        noCompress += listOf("gz", "tsv", "csv", "txt", "woff2", "mmdb")
+    }
 
     buildTypes {
         release {

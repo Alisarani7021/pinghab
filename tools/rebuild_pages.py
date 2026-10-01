@@ -34,6 +34,35 @@ def sh(*args):
 sh("git", "checkout", BASE_COMMIT, "--", "cloudflare/app.html", "web/dns-radar.html")
 print("base checked out from", BASE_COMMIT)
 
+# لایهٔ چیدمان v2 (دور ۷): فقط پنل فعال دیده شود + فشرده‌سازی برای جا شدن در قالب اپ
+LAYOUT_CSS = r"""
+<style id="ph-layout7">
+@font-face{font-family:VazirmatnX;src:url("fonts/Vazirmatn-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:VazirmatnX;src:url("fonts/Vazirmatn-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+body,button,input,select,textarea{font-family:VazirmatnX,Vazirmatn,Tahoma,system-ui,sans-serif}
+/* پوستهٔ قدیمی/بخش‌های بیرون پنل نباید در همهٔ صفحات تکرار شوند */
+.wrap > *:not(.ph-panel){display:none !important}
+.wrap{padding:10px 10px 84px !important;max-width:820px !important}
+body{padding-top:52px !important;padding-bottom:0 !important}
+h2{font-size:14px !important;margin:12px 0 6px !important}
+.head,.adv,.card,.ph-card,.wwrow,.wwbox,.ph-box,.note{border-radius:var(--mr) !important;padding:10px 12px !important;margin:6px 0 !important}
+.ph-card > b{font-size:13.5px !important;line-height:1.6}
+.sub{font-size:12px !important;line-height:1.65 !important}
+table{font-size:12px !important}
+th{padding:3px 4px !important} td{padding:6px 4px !important}
+.ph-grid2{gap:6px !important}
+.wwbtn,button{padding:7px 11px !important;font-size:12.5px !important}
+.ph-startbtn{min-height:48px !important}
+.ph-ip{font-size:24px !important}
+h1{font-size:19px !important}
+.mn-db{padding:0 8px calc(14px + env(safe-area-inset-bottom,0px)) !important}
+.mn-it{padding:8px 10px !important;font-size:13.5px !important}
+.mn-g>button{padding:9px 6px 4px !important}
+.mn-g .ls>div{max-height:none}
+.mn-dr aside{width:min(88vw,340px) !important}
+</style>
+"""
+
 # ------------------------------------------------------------------ ۲) CSS طراحی v3
 DESIGN_CSS = r"""
 <style id="ph-design-v3">
@@ -336,7 +365,7 @@ def _nav_html():
         '<button data-nav="__drawer__"><i>☰</i><span>بیشتر</span></button>'
         '</div>'
         '<div class="ph-drawer" id="ph-drawer"><div class="ph-drawer-bg" data-close="1"></div><aside>'
-        '<div class="ph-dhead"><b>📡 پینگ‌هاب</b><span class="ph-badge mono">۲.۶</span>'
+        '<div class="ph-dhead"><b>📡 پینگ‌هاب</b><span class="ph-badge mono">۲.۷</span>'
         '<button class="wwbtn" data-close="1" style="min-height:36px">✕</button></div>'
         + "".join(items) +
         '</aside></div>'
@@ -720,6 +749,7 @@ for page in PAGES:
     src = (ROOT / "cloudflare" / "_tmp_page.html").read_text(encoding="utf-8") if False else page.read_text(encoding="utf-8")
     src = src.replace("</head>", DESIGN_CSS + "</head>", 1)
     src = src.replace("</head>", NAV_CSS + "</head>", 1)
+    src = src.replace("</head>", LAYOUT_CSS + "</head>", 1)
     src = src.replace("</body>\n</html>", HERO_JS + "</body>\n</html>", 1)
     src = src.replace("</body>\n</html>", NAV_HTML + NAV_JS + MN_LAYER + "</body>\n</html>", 1)
     src, b1 = patch_bgp(src)

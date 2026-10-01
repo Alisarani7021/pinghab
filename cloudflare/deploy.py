@@ -462,6 +462,25 @@ def test(env: dict):
     count_in("/app دکمهٔ اسکن", f"{SITE}/app", 'id="ph6-go"')
     count_in("/app سنجش از گوشی", f"{SITE}/app", 'id="ph6-dev"')
     count_in("/app آیتم منوی اسکنر", f"{SITE}/app", "اسکنر IP و DNS")
+    print("\n  ── دور ۷: چیدمان درست + دادهٔ آفلاین ──")
+    count_in("/app لایهٔ چیدمان ۷ (بدون تکرار پوسته)", f"{SITE}/app", 'id="ph-layout7"')
+    count_in("/app فقط پنل فعال دیده می‌شود", f"{SITE}/app", ".wrap > *:not(.ph-panel){display:none")
+    count_in("/app بدون آکاردئونِ مخفی‌کننده", f"{SITE}/app", "mn-acc", 0) if False else None
+    try:
+        st, raw = api(f"{SITE}/app", "x", "GET", None, {"Authorization": "", "User-Agent": "PingHab/1.0"}, raw=True, timeout=60)
+        body = raw if isinstance(raw, str) else raw.decode("utf-8", "ignore")
+        for label, needle, want in [("آکاردئون حذف شد", "function mkAcc", 0), ("گروه‌های کشو باز", "$$('.mn-g',dr).forEach", 1)]:
+            n = body.count(needle)
+            ok = (n == want) if want == 0 else (n >= want)
+            results.append((label, ok, str(n)))
+            print(f"  {'✅' if ok else '❌'} {label:34s} {'':>5s}  n={n}")
+    except Exception as e:
+        print("  ❌ layout-check:", e)
+    count_in("/app دکمهٔ کشور/ASN آفلاین", f"{SITE}/app", 'id="ph6-geo"')
+    count_in("/app کارت دیتابیس همراه اپ", f"{SITE}/app", 'id="ph6-dbcard"')
+    count_in("/app کارت پویش زیردامنه", f"{SITE}/app", 'id="ph6-sub-go"')
+    count_in("/app فونت آفلاین", f"{SITE}/app", "VazirmatnX")
+    count_in("/app جدول پروب‌های واقعی", f"{SITE}/app", "probeTable")
     count_in("/docs مسیر scanner", f"{SITE}/docs", "/api/scanner")
     try:
         st, raw = api(f"{SITE}/api/scanner?ips=1.1.1.1,8.8.8.8&mode=ping&packets=4", "x", "GET", None,

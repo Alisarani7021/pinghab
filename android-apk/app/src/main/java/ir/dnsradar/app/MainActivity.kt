@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
         fun isNative(): Boolean = true
 
         @JavascriptInterface
-        fun version(): String = "2.6"
+        fun version(): String = "2.7"
 
         // ---------- «حالت DNS روی گوشی» ----------
         @JavascriptInterface
@@ -129,6 +129,79 @@ class MainActivity : AppCompatActivity() {
                 try { org.json.JSONObject().put("ok", false).put("error", t.message ?: "scan failed").toString() }
                 catch (_: Throwable) { "{\"ok\":false,\"error\":\"scan failed\"}" }
             }
+        }
+
+        // ---------- 🏷️ اطلاعات آفلاین IP (کشور/ASN از دادهٔ واقعی همراه اپ) ----------
+        private val geoLock = Object()
+        @Volatile private var geoState = 0 // 0=نالود، 1=در حال بارگذاری، 2=آماده
+
+        private fun ensureGeo() {
+            if (geoState == 2) return
+            synchronized(geoLock) {
+                if (geoState == 2) return
+                geoState = 1
+                try {
+                    fun stream(name: String): java.io.InputStream {
+                        val raw = assets.open(name)
+                        return if (name.endsWith(".gz")) java.util.zip.GZIPInputStream(raw, 1 shl 20) else raw
+                    }
+                    stream("data/ip2asn-v4.tsv.gz").use { IpTable.loadIp2asn(it, false) }
+                    stream("data/ip2asn-v6.tsv.gz").use { IpTable.loadIp2asn(it, true) }
+                    stream("data/dbip-country.csv.gz").use { IpTable.loadDbipCsv(it) }
+                    geoState = 2
+                } catch (t: Throwable) {
+                    geoState = 0
+                }
+            }
+        }
+
+        /** برای چند IP: کشور (GeoIP + BGP)، ASN، سازمان، بازهٔ اعلام‌شده — کاملاً آفلاین. */
+        @JavascriptInterface
+        fun geoInfo(ipsJson: String?): String {
+            return try {
+                ensureGeo()
+                val arr = org.json.JSONArray(ipsJson ?: "[]")
+                val out = org.json.JSONArray()
+                var i = 0
+                while (i < arr.length() && i < 128) {
+                    val ip = arr.optString(i, "").trim()
+                    i++
+                    if (ip.isEmpty()) continue
+                    val row = IpTable.lookup(ip)
+                    val o = org.json.JSONObject().put("ip", ip)
+                    for (k in row.keys) o.put(k, row[k])
+                    out.put(o)
+                }
+                org.json.JSONObject().put("ok", geoState == 2)
+                    .put("rows", out).put("ready", IpTable.loaded)
+                    .put("v4_ranges", IpTable.rowsV4).put("v6_ranges", IpTable.rowsV6)
+                    .put("geo_ranges", IpTable.rowsGeo).toString()
+            } catch (t: Throwable) {
+                "{\"ok\":false,\"error\":\"" + (t.message ?: "geo failed").replace("\"", "") + "\"}"
+            }
+        }
+
+        /** خودآزمون دیتابیس روی IPهای شناخته‌شده — نتیجه در UI نشان داده می‌شود. */
+        @JavascriptInterface
+        fun geoTest(): String {
+            return try { ensureGeo(); IpTable.selfTest() } catch (t: Throwable) { "{\"pass\":0,\"total\":5,\"head\":\"بارگذاری دیتابیس ناموفق\",\"lines\":[]}" }
+        }
+
+        /** فهرست رزولورهای واقعی همراه اپ (trickest/resolvers) — ۱۰٬۸۹۳ مورد. */
+        @JavascriptInterface
+        fun realResolvers(sampleCount: Int, interval: Int): String {
+            return try {
+                val lines = assets.open("data/resolvers-real.txt").bufferedReader().use { it.readLines() }
+                val step = if (interval > 0) interval else 1
+                val out = org.json.JSONArray()
+                var i = 0
+                while (i < lines.size && out.length() < sampleCount) {
+                    val v = lines[i].trim()
+                    if (v.isNotEmpty()) out.put(v)
+                    i += step
+                }
+                org.json.JSONObject().put("ok", true).put("total", lines.size).put("ips", out).toString()
+            } catch (t: Throwable) { "{\"ok\":false,\"error\":\"resolver list\"}" }
         }
 
         /** وصل‌شدن از داخل صفحهٔ وب به یک رزولور مشخص. */

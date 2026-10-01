@@ -1538,7 +1538,7 @@ function probeSanity(st, loss, expected) {
   if (loss === 100 || (st && st.n === 0)) flags.push("icmp_filtered");
   else if (st && st.n != null && expected && st.n < expected * 0.5) flags.push("lossy");
   const bad = flags.includes("quantized_clock") || flags.includes("icmp_filtered");
-  return { flags, spread, sd, trusted: !bad };
+  return { flags, spread, sd, n: (st && st.n != null ? st.n : raws.length), trusted: !bad };
 }
 const SANITY_FA = {
   quantized_clock: "ساعت/ICMP این پروب کوانتش‌شده — عدد ثابت است و اثر شبکه را نشان نمی‌دهد",
@@ -1550,11 +1550,21 @@ function sanitySummary(rows) {
   const q = rows.filter((r) => r.sanity && r.sanity.flags.includes("quantized_clock"));
   const f = rows.filter((r) => r.sanity && r.sanity.flags.includes("icmp_filtered"));
   const avgs = valid.map((r) => r.avg).sort((a, b) => a - b);
+  const jits = valid.map((r) => (r.jitter != null ? r.jitter : null)).filter((x) => x != null);
+  const sds = valid.map((r) => (r.sanity && r.sanity.sd != null ? r.sanity.sd : null)).filter((x) => x != null);
+  const losses = rows.map((r) => (r.loss != null ? r.loss : null)).filter((x) => x != null);
+  const samples = valid.reduce((a, r) => a + ((r.sanity && r.sanity.n) || 0), 0);
+  const medOf = (arr) => (arr.length ? arr.slice().sort((a, b) => a - b)[Math.floor(arr.length / 2)] : null);
   return {
     valid: valid.length, quantized: q.length, icmp_filtered: f.length,
     min_ms: avgs.length ? Math.round(avgs[0]) : null,
     median_ms: avgs.length ? Math.round(avgs[Math.floor(avgs.length / 2)]) : null,
     max_ms: avgs.length ? Math.round(avgs[avgs.length - 1]) : null,
+    avg_ms: avgs.length ? Math.round(avgs.reduce((a, b) => a + b, 0) / avgs.length * 10) / 10 : null,
+    jitter_ms: jits.length ? Math.round(medOf(jits) * 10) / 10 : null,
+    sd_ms: sds.length ? Math.round(medOf(sds) * 10) / 10 : null,
+    loss_pct: losses.length ? Math.round(losses.reduce((a, b) => a + b, 0) / losses.length * 10) / 10 : null,
+    samples,
     credible: valid.length >= 2,
     excluded: q.concat(f).map((r) => ({ network: r.network, city: r.city, flags: r.sanity.flags, reasons: r.sanity.flags.map((x) => SANITY_FA[x]) })),
   };

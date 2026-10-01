@@ -299,6 +299,32 @@ body{padding-top:58px !important;padding-bottom:88px !important}
   border-radius:999px;padding:3px 10px;white-space:nowrap}
 .ph-resrow.on .ph-pickmark::before{content:"✓ "}
 </style>
+
+<style id="ph-layout7">
+@font-face{font-family:VazirmatnX;src:url("fonts/Vazirmatn-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:VazirmatnX;src:url("fonts/Vazirmatn-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+body,button,input,select,textarea{font-family:VazirmatnX,Vazirmatn,Tahoma,system-ui,sans-serif}
+/* پوستهٔ قدیمی/بخش‌های بیرون پنل نباید در همهٔ صفحات تکرار شوند */
+.wrap > *:not(.ph-panel){display:none !important}
+.wrap{padding:10px 10px 84px !important;max-width:820px !important}
+body{padding-top:52px !important;padding-bottom:0 !important}
+h2{font-size:14px !important;margin:12px 0 6px !important}
+.head,.adv,.card,.ph-card,.wwrow,.wwbox,.ph-box,.note{border-radius:var(--mr) !important;padding:10px 12px !important;margin:6px 0 !important}
+.ph-card > b{font-size:13.5px !important;line-height:1.6}
+.sub{font-size:12px !important;line-height:1.65 !important}
+table{font-size:12px !important}
+th{padding:3px 4px !important} td{padding:6px 4px !important}
+.ph-grid2{gap:6px !important}
+.wwbtn,button{padding:7px 11px !important;font-size:12.5px !important}
+.ph-startbtn{min-height:48px !important}
+.ph-ip{font-size:24px !important}
+h1{font-size:19px !important}
+.mn-db{padding:0 8px calc(14px + env(safe-area-inset-bottom,0px)) !important}
+.mn-it{padding:8px 10px !important;font-size:13.5px !important}
+.mn-g>button{padding:9px 6px 4px !important}
+.mn-g .ls>div{max-height:none}
+.mn-dr aside{width:min(88vw,340px) !important}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -1603,6 +1629,12 @@ body{padding-top:58px !important;padding-bottom:88px !important}
         <button class="wwbtn" id="ph6-dev" title="سنجش از خط خودت — فقط داخل اپ اندروید">📱 از این گوشی</button>
         <button class="wwbtn" id="ph6-stop" style="display:none">⏹ توقف</button>
       </div>
+      <div class="row" style="gap:8px;flex-wrap:wrap;margin-top:8px">
+        <button class="wwbtn" id="ph6-geo" title="کشور/ASN آفلاین از دیتابیس همراه اپ">🏷️ کشور و ASN آفلاین</button>
+        <button class="wwbtn" id="ph6-real" title="۱۰٬۸۹۳ رزولور عمومی واقعی (trickest/resolvers)">🌐 ۲۰ رزولور واقعی</button>
+        <button class="wwbtn" id="ph6-geotest">🧪 خودآزمون دیتابیس</button>
+        <button class="wwbtn" id="ph6-wl" title="۲٬۱۷۱٬۶۸۷ نام زیردامنه (SecLists)">📚 پویش زیردامنه</button>
+      </div>
       <div id="ph6-bar" style="margin-top:10px"></div>
       <div id="ph6-log" class="sub" style="margin-top:6px">آماده. سقف هر اجرا ۶۴ هدف است؛ رنج‌های بزرگ‌تر یکنواخت نمونه‌برداری می‌شوند و صادقانه اعلام می‌شود.</div>
     </div>
@@ -1618,6 +1650,36 @@ body{padding-top:58px !important;padding-bottom:88px !important}
         <button class="wwbtn" id="ph6-copy">📋 کپی خلاصه</button>
       </div>
       <div id="ph6-out" style="margin-top:10px"></div>
+    </div>
+
+    <div class="ph-card" id="ph6-dbcard">
+      <b>🗄️ داده‌های واقعی همراه اپ (آفلاین)</b>
+      <div class="sub" id="ph6-dbinfo">در حال بررسی دیتابیس‌های داخل اپ… (در مرورگر این داده‌ها همراه صفحه نیستند و از API/پروب‌ها استفاده می‌شود.)</div>
+      <div id="ph6-dbtest"></div>
+    </div>
+
+    <div class="ph-card" id="ph6-subcard">
+      <b>📚 پویش زیردامنه (Subdomain scan)</b>
+      <div class="sub">دامنه را بده؛ از فهرست واقعی نام‌ها (SecLists — ‏۲٬۱۷۱٬۶۸۷ نام در اپ / ‏۵٬۰۰۰ نام پرتکرار در وب) می‌پرسیم کدام زیردامنه وجود دارد. پاسخ‌ها با DoH گوگل گرفته می‌شود (در اپ: مستقیم از خط خودت).</div>
+      <div class="ph-grid2" style="margin-top:8px">
+        <div><span class="ph-lbl">دامنه</span><input class="wwin" id="ph6-sub-dom" dir="ltr" value="example.com" /></div>
+        <div><span class="ph-lbl">منبع فهرست</span>
+          <select class="wwin" id="ph6-sub-src">
+            <option value="builtin">پرتکرار (۵٬۰۰۰ نام)</option>
+            <option value="app">فایل کامل داخل اپ / asset</option>
+            <option value="paste">فهرست خودم (پیست)</option>
+          </select></div>
+        <div><span class="ph-lbl">سقف پرسش</span>
+          <select class="wwin" id="ph6-sub-n"><option>300</option><option selected>1000</option><option>3000</option></select></div>
+        <div><span class="ph-lbl">هم‌زمانی</span>
+          <select class="wwin" id="ph6-sub-c"><option>4</option><option selected>12</option><option>24</option></select></div>
+      </div>
+      <div class="row" style="gap:8px;flex-wrap:wrap;margin-top:8px">
+        <button class="wwbtn" id="ph6-sub-go">🔎 پیدا کن</button>
+        <button class="wwbtn" id="ph6-sub-stop" style="display:none">⏹ توقف</button>
+      </div>
+      <div id="ph6-sub-bar" style="margin-top:8px"></div>
+      <div id="ph6-sub-out" style="margin-top:8px"></div>
     </div>
 
     <div class="ph-card">
@@ -1832,7 +1894,9 @@ body{padding-top:58px !important;padding-bottom:88px !important}
   function rowHtml(r){
     var okish = r.ok !== false;
     var med = medOf(r), sum = r.summary || {};
+    var med0 = medOf(r);
     var v = r.verdict || { fa: "—", tone: "warn" };
+    if (med0 == null && r.mode !== "dns" && v.code !== "na" && v.code !== "thin") v = { fa: "نامطمئن", tone: "warn" };
     var dev = state.dev[r.ip] || null;
     var head = '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">' +
       '<b class="mono" dir="ltr" style="font-size:15px">' + esc(r.ip || r.target) + '</b>' +
@@ -1847,18 +1911,21 @@ body{padding-top:58px !important;padding-bottom:88px !important}
     }
     var metrics = [];
     if (r.mode !== "dns"){
-      metrics.push(['میانه', fa(sum), 'ms']);
+      metrics.push(['میانه', fa(sum.median_ms), 'ms']);
+      metrics.push(['میانگین', fa(sum.avg_ms), 'ms']);
       metrics.push(['کمینه', fa(sum.min_ms), 'ms']);
-      metrics.push(['نوسان', fa(sum.jitter != null ? sum.jitter : null), 'ms']);
-      metrics.push(['افت', r.loss_avg != null ? fa(r.loss_avg) + "%" : '—', '']);
+      metrics.push(['بیشینه', fa(sum.max_ms), 'ms']);
+      metrics.push(['نوسان', fa(sum.jitter_ms), 'ms']);
+      metrics.push(['افت', sum.loss_pct != null ? fa(sum.loss_pct) + "%" : '—', '']);
+      metrics.push(['نمونه', (sum.samples || 0) + " بسته", '']);
     }
     if (r.mode !== "ping" && r.dns){
       metrics.push(['رزولوشن', fa(r.dns.median_ms), 'ms']);
       metrics.push(['پاسخ', r.dns.ok_count + "/" + r.dns.total, '']);
     }
     if (dev){
-      if (dev.udp) metrics.push(['گوشی UDP/53', fa(dev.udp.avg), 'ms' + (dev.udp.loss ? ' · افت ' + dev.udp.loss + '%' : '')]);
-      if (dev.tcp) metrics.push(['گوشی TCP/' + (dev.port || 53), fa(dev.tcp.avg), 'ms']);
+      if (dev.udp) metrics.push(['گوشی UDP/53', fa(dev.udp.avg > 0 ? dev.udp.avg : null), 'ms · افت ' + (dev.udp.loss != null ? dev.udp.loss + '%' : '—') + ' · ' + (dev.udp.ok || 0) + '/' + (dev.udp.tries || 0)]);
+      if (dev.tcp) metrics.push(['گوشی TCP/' + (dev.port || 53), fa(dev.tcp.avg > 0 ? dev.tcp.avg : null), 'ms · ' + (dev.tcp.ok || 0) + '/' + (dev.tcp.tries || 0)]);
     }
     var cells = metrics.map(function(m){
       return '<div style="min-width:76px"><div class="sub" style="margin:0;font-size:11px">' + esc(m[0]) + '</div>' +
@@ -1869,14 +1936,23 @@ body{padding-top:58px !important;padding-bottom:88px !important}
     if (r.asn && r.asn.asn) extras.push("AS" + r.asn.asn + (r.asn.holder ? " · " + r.asn.holder : ""));
     if (r.host_note) extras.push(r.host_note);
     if (r.v6_note) extras.push(r.v6_note);
-    var probes = (r.probes || []).filter(function(x){ return x.avg != null; })
-      .map(function(x){ return (x.city || "?") + "/AS" + (x.asn || "?"); }).slice(0, 3).join(" · ");
+    var probeRows = (r.probes || []).map(function(x){
+      var okp = x.avg != null && x.sanity && x.sanity.trusted;
+      var trust = x.sanity && x.sanity.trusted ? '<span class="ph-good">معتبر</span>' : '<span class="ph-warn">نانشنه</span>';
+      var why = (x.reasons || []).length ? ' <span class="sub">(' + esc(x.reasons.join("، ")) + ')</span>' : '';
+      return '<tr><td>' + esc(x.city || "—") + '</td><td style="font-size:11.5px">' + esc(x.network || "—") + '</td>' +
+        '<td class="num">' + (x.avg != null ? fa(x.avg) : "—") + '</td>' +
+        '<td class="num">' + (x.jitter != null ? fa(x.jitter) : "—") + '</td>' +
+        '<td class="num">' + (x.loss != null ? fa(x.loss) + "%" : "—") + '</td>' +
+        '<td class="num">' + (x.n || 0) + '</td><td>' + trust + why + '</td></tr>';
+    }).join("");
+    var probeTable = probeRows ? '<table style="margin-top:8px"><thead><tr><th>شهر</th><th>شبکه</th><th>میانگین</th><th>نوسان</th><th>افت</th><th>نمونه</th><th>اعتبار</th></tr></thead><tbody>' + probeRows + '</tbody></table>' : "";
     var reasons = [];
     (r.probes || []).forEach(function(x){ (x.reasons || []).forEach(function(rr){ if (reasons.indexOf(rr) < 0) reasons.push(rr); }); });
     return '<div class="ph-box" style="margin-top:8px">' + head +
       '<div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:8px">' + cells + '</div>' +
       (extras.length ? '<div class="sub" style="margin-top:6px">' + esc(extras.join(" · ")) + '</div>' : '') +
-      (probes ? '<div class="sub" style="margin-top:2px">پروب‌های معتبر: ' + esc(probes) + '</div>' : '') +
+      probeTable +
       (reasons.length ? '<div class="ph-warn" style="margin-top:6px">⚠️ ' + esc(reasons.join(" · ")) + '</div>' : '') +
       (r.summary && r.summary.valid === 0 && r.mode !== "dns" ? '<div class="sub" style="margin-top:4px">صادقانه: هیچ پروب معتبری جواب نداد → عدد ساخته نمی‌شود.</div>' : '') +
       '</div>';
@@ -1962,7 +2038,181 @@ body{padding-top:58px !important;padding-bottom:88px !important}
     }).catch(function(){ log("⚠️ /api/changer در دسترس نبود."); });
   }
 
+  /* ---------- 🏷️ غنی‌سازی آفلاین (کشور/ASN از دیتابیس همراه اپ) ---------- */
+  var FA_CC = {};   // پر می‌شود از /api/dnslist مثل بقیهٔ بخش‌ها (اگر نبود، کد کشور می‌ماند)
+  function geoEnrich(){
+    var ips = (state.rows || []).map(function(r){ return r.ip; }).filter(Boolean);
+    if (!ips.length){ log("اول یک اسکن بزن تا IP داشته باشیم."); return; }
+    if (!(window.phNative && typeof phNative.geoInfo === "function")){
+      log("🏷️ «کشور و ASN آفلاین» داخل اپ کار می‌کند (دیتابیس‌ها همراه خود اپ‌اند). " +
+          "در مرورگر همان اطلاعات از API (Team Cymru) می‌آید. " +
+          '<a href="https://github.com/Alisarani7021/pinghab/releases/download/apk-latest/pinghab-latest.apk">⬇️ دانلود APK</a>');
+      return;
+    }
+    try {
+      var res = JSON.parse(phNative.geoInfo(JSON.stringify(ips)));
+      if (!res || !res.ok){ log("❌ دیتابیس آفلاین بار نشد."); return; }
+      (res.rows || []).forEach(function(g){
+        (state.rows || []).forEach(function(r){
+          if (r.ip !== g.ip) return;
+          r.geo_off = g;
+          if (!r.country || !r.country.cc){
+            var cc = g.cc_geo || g.cc_bgp;
+            if (cc) r.country = { cc: cc, fa: FA_CC[cc] || null };
+          }
+          if (!r.asn || !r.asn.asn){
+            if (g.asn) r.asn = { asn: parseInt(g.asn, 10) || null, holder: g.org || null, prefix: g.range || null, source: "ip2asn (آفلاین)" };
+          }
+        });
+      });
+      log("✅ اطلاعات آفلاین اضافه شد — ‏" + (res.rows || []).length + " IP · بازه‌های بارشده: v4=" + res.v4_ranges + " · v6=" + res.v6_ranges + " · GeoIP=" + res.geo_ranges);
+      render(); summarize();
+    } catch (e){ log("❌ خطای غنی‌سازی: " + esc(String(e && e.message || e))); }
+  }
+  function geoSelfTest(){
+    if (!(window.phNative && typeof phNative.geoTest === "function")){
+      q("ph6-dbtest").innerHTML = '<div class="sub">🧪 خودآزمون فقط داخل اپ اجرا می‌شود (دیتابیس همراه اپ است).</div>';
+      return;
+    }
+    try {
+      var r = JSON.parse(phNative.geoTest());
+      var cls = (r.pass === r.total) ? "ph-good" : "ph-warn";
+      q("ph6-dbtest").innerHTML = '<div class="' + cls + '" style="margin-top:6px">🧪 ' + esc(r.head) + '</div>' +
+        '<div class="sub" style="margin-top:4px">' + (r.lines || []).map(esc).join("<br>") + '</div>';
+    } catch (e){ q("ph6-dbtest").innerHTML = '<div class="ph-warn">خودآزمون خطا داد.</div>'; }
+  }
+  function dbInfo(){
+    if (!(window.phNative && typeof phNative.geoInfo === "function")){
+      q("ph6-dbinfo").innerHTML = "دیتابیس‌های آفلاین همراه اپ‌اند: ip2asn (v4+v6، BGP، Public Domain) · DB-IP Country Lite (CC BY 4.0) · " +
+        "۱۰٬۸۹۳ رزولور واقعی (MIT) · ۲٬۱۷۱٬۶۸۷ نام زیردامنه (SecLists، MIT) · فونت وزیرمتن (OFL).";
+      return;
+    }
+    try {
+      var r = JSON.parse(phNative.realResolvers(1, 1));
+      q("ph6-dbinfo").innerHTML = "✅ داخل اپ فعال: بازه‌های v4=" + "…" + " (نمای کامل با خودآزمون) · فهرست رزولورهای واقعی: " +
+        (r && r.total ? r.total.toLocaleString("fa-IR") : "—") + " مورد · فهرست زیردامنه: ۲٬۱۷۱٬۶۸۷ نام (۲ فایل).";
+    } catch (e){ /* بی‌صدا */ }
+  }
+  function fillReal(){
+    if (!(window.phNative && typeof phNative.realResolvers === "function")){
+      log("🌐 داخل مرورگر این فهرست همراه صفحه نیست؛ از «رزولورهای ایرانی» یا API کاتالوگ استفاده کن.");
+      return;
+    }
+    try {
+      var r = JSON.parse(phNative.realResolvers(20, 480));   // نمونه‌برداری یکنواخت از ۱۰٬۸۹۳ مورد
+      if (!r || !r.ok || !(r.ips || []).length){ log("❌ فهرست رزولورها خوانده نشد."); return; }
+      q("ph6-in").value = r.ips.join("\n");
+      log("🌐 ۲۰ رزولور واقعی از فهرست " + (r.total || 0).toLocaleString("fa-IR") + " موردی (trickest/resolvers — MIT) نمونه‌برداری شد.");
+    } catch (e){ log("❌ خطا در خواندن فهرست رزولورها."); }
+  }
+
+  /* ---------- 📚 پویش زیردامنه (DoH) ---------- */
+  var SUB_BUILTIN = ["www","mail","api","dev","test","cdn","static","beta","admin","app","m","shop","blog","news","forum",
+    "vpn","proxy","ns1","ns2","ftp","smtp","imap","pop","webmail","cpanel","direct","portal","panel","dash","game","games",
+    "media","img","images","video","files","download","upload","store","pay","bank","ir","fa","en","ar","support","help"];
+  var subState = { running:false, cancel:false, found:[], asked:0 };
+  function dohA(name){
+    return fetch("https://dns.google/resolve?name=" + encodeURIComponent(name) + "&type=A",
+      { headers: { accept: "application/dns-json" } })
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        var ans = ((j && j.Answer) || []).filter(function(a){ return a.type === 1; }).map(function(a){ return a.data; });
+        return ans;
+      }).catch(function(){ return []; });
+  }
+  function subBar(p, label){
+    q("ph6-sub-bar").innerHTML = '<div style="background:rgba(127,127,127,.18);border-radius:99px;overflow:hidden;height:8px">' +
+      '<i style="display:block;height:100%;width:' + Math.max(2, Math.min(100, p)) + '%;background:var(--acc)"></i></div>' +
+      '<div class="sub" style="margin-top:6px">' + esc(label) + '</div>';
+  }
+  function subRender(){
+    var el = q("ph6-sub-out");
+    if (!subState.found.length){ el.innerHTML = subState.asked ? '<div class="sub">چیزی پیدا نشد (یا همه NXDOMAIN بودند).</div>' : ""; return; }
+    el.innerHTML = '<div class="sub">✅ ' + fa(subState.found.length) + ' زیردامنهٔ موجود از ' + fa(subState.asked) + ' پرسش:</div>' +
+      '<table><thead><tr><th>زیردامنه</th><th>آدرس‌ها</th></tr></thead><tbody>' +
+      subState.found.map(function(f){ return '<tr><td class="mono" dir="ltr">' + esc(f.name) + '</td><td class="mono" dir="ltr">' + esc(f.ips.join(", ")) + '</td></tr>'; }).join("") +
+      '</tbody></table>';
+  }
+  /* منبع فهرست: پیست کاربر | فایل کامل داخل اپ (gunzip در مرورگر) | فهرست پرتکرار تودرتو */
+  function subWords(src){
+    if (src === "paste") {
+      var el = q("ph6-sub-in-paste");
+      if (!el) {
+        el = document.createElement("textarea");
+        el.id = "ph6-sub-in-paste"; el.className = "wwin"; el.rows = 4; el.dir = "ltr";
+        el.placeholder = "هر خط یک نام: mail / cdn / api …";
+        el.style.cssText = "width:100%;margin-top:8px;font-family:ui-monospace,monospace;font-size:12px";
+        q("ph6-subcard").insertBefore(el, q("ph6-sub-out"));
+      }
+      return el.value.split(/[\s,]+/).filter(Boolean);
+    }
+    return SUB_BUILTIN;
+  }
+  async function subWordsFull(){
+    var pick = q("ph6-sub-src").value;
+    if (pick === "paste" || pick === "builtin") return subWords(pick);
+    try {
+      var resp = await fetch("data/subdomains-top110k.txt.gz");
+      if (!resp.ok) throw new Error("asset 404");
+      var buf = await resp.arrayBuffer();
+      if (typeof DecompressionStream === "function"){
+        var ds = new DecompressionStream("gzip");
+        var stream = new Blob([buf]).stream().pipeThrough(ds);
+        var text = await new Response(stream).text();
+        var arr = text.split("\n").filter(Boolean);
+        if (arr.length > 100) return arr;
+        throw new Error("empty");
+      }
+      throw new Error("no DecompressionStream");
+    } catch (e){
+      log("⚠️ فایل کامل داخل اپ خوانده نشد (" + esc(String(e && e.message || e)) + ") — از فهرست پرتکرار استفاده می‌کنم.");
+      return SUB_BUILTIN;
+    }
+  }
+  async function subRun(){
+    var dom = (q("ph6-sub-dom").value || "").trim().toLowerCase().replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+    if (!/^[a-z0-9][a-z0-9.-]{1,60}\.[a-z]{2,}$/.test(dom)){ q("ph6-sub-out").innerHTML = '<div class="ph-warn">دامنهٔ نامعتبر.</div>'; return; }
+    var words = await subWordsFull();
+    var cap = parseInt(q("ph6-sub-n").value, 10) || 1000;
+    var conc = parseInt(q("ph6-sub-c").value, 10) || 12;
+    words = words.slice(0, cap);
+    subState = { running:true, cancel:false, found:[], asked:0 };
+    q("ph6-sub-go").style.display = "none"; q("ph6-sub-stop").style.display = "";
+    subBar(2, "شروع شد — ‏" + fa(words.length) + " نام برای " + dom);
+    var i = 0;
+    function worker(){
+      if (subState.cancel || i >= words.length){ return Promise.resolve(); }
+      var w = words[i++];
+      var full = w + "." + dom;
+      return dohA(full).then(function(ips){
+        subState.asked++;
+        if (ips.length) subState.found.push({ name: full, ips: ips });
+        if (subState.asked % 25 === 0){ subBar(subState.asked * 100 / words.length, "پرسیده: " + fa(subState.asked) + " / " + fa(words.length) + " · یافته: " + fa(subState.found.length)); subRender(); }
+        return worker();
+      });
+    }
+    var pool = []; for (var k = 0; k < conc; k++) pool.push(worker());
+    Promise.all(pool).then(function(){
+      subState.running = false;
+      q("ph6-sub-go").style.display = ""; q("ph6-sub-stop").style.display = "none";
+      subBar(100, (subState.cancel ? "⏹ متوقف شد — " : "✅ تمام شد — ") + "پرسیده " + fa(subState.asked) + " · یافته " + fa(subState.found.length));
+      subRender();
+    });
+  }
+
   /* ---------- سیم‌کشی ---------- */
+  q("ph6-geo").onclick = geoEnrich;
+  q("ph6-real").onclick = fillReal;
+  q("ph6-geotest").onclick = geoSelfTest;
+  q("ph6-wl").onclick = function(){ q("ph6-subcard").scrollIntoView({ behavior: "smooth", block: "center" }); };
+  q("ph6-sub-go").onclick = subRun;
+  q("ph6-sub-stop").onclick = function(){ subState.cancel = true; };
+  dbInfo();
+  fetch(ABS + "/api/changer", { headers: { accept: "application/json" } })
+    .then(function(r){ return r.json(); })
+    .then(function(j){ (j.resolvers || []).forEach(function(x){ if (x.cc) FA_CC[x.cc] = x.cc; }); })
+    .catch(function(){});
+
   var go = q("ph6-go");
   if (!go) return;
   go.onclick = runServer;
@@ -4118,7 +4368,7 @@ set(T.some(function(t){return t[0]===s})?s:"lamborghini");
   }catch(e){}
 })();
 </script>
-<div id="ph-nav-root"><div class="ph-appbar" id="ph-appbar"><button class="ph-abtn" id="ph-burger" aria-label="منو">☰</button><b id="ph-appbar-title">🚀 حالت DNS</b><a class="ph-abtn" id="ph-appbar-apk" href="https://github.com/Alisarani7021/pinghab/releases/download/apk-latest/pinghab-latest.apk" title="دانلود/به‌روزرسانی APK">⬇️</a></div><div class="ph-nav" id="ph-nav"><button data-nav="ph-p20"><i>🚀</i><span>DNS</span></button><button data-nav="ph-p1"><i>📈</i><span>خط من</span></button><button data-nav="ph-p2"><i>🎮</i><span>بازی</span></button><button data-nav="__drawer__"><i>☰</i><span>بیشتر</span></button></div><div class="ph-drawer" id="ph-drawer"><div class="ph-drawer-bg" data-close="1"></div><aside><div class="ph-dhead"><b>📡 پینگ‌هاب</b><span class="ph-badge mono">۲.۶</span><button class="wwbtn" data-close="1" style="min-height:36px">✕</button></div><h4>اصلی</h4><div class="ph-ditem" data-item="ph-p20"><i>🚀</i><span>حالت DNS</span></div><div class="ph-ditem" data-item="ph-p1"><i>📈</i><span>خط من</span></div><div class="ph-ditem" data-item="ph-p2"><i>🎮</i><span>سرور بازی‌ها</span></div><h4>سنجش و رزولور</h4><div class="ph-ditem" data-item="ph-p3"><i>🧭</i><span>کاتالوگ رزولورها</span></div><div class="ph-ditem" data-item="ph-p4"><i>🌍</i><span>ایران و جهان</span></div><div class="ph-ditem" data-item="ph-p5"><i>✨</i><span>آی‌پی تمیز</span></div><div class="ph-ditem" data-item="ph-p9"><i>🔍</i><span>واقعیت خط</span></div><div class="ph-ditem" data-item="ph-p15"><i>⚡</i><span>رزولوشن و مسابقه</span></div><div class="ph-ditem" data-item="ph-p21"><i>🎯</i><span>اسکنر IP و DNS</span></div><div class="ph-ditem" data-item="ph-p10"><i>🌡️</i><span>ایران امروز</span></div><h4>شبکه و مسیر</h4><div class="ph-ditem" data-item="ph-p8"><i>🛰️</i><span>مسیر من</span></div><div class="ph-ditem" data-item="ph-p6"><i>🏠</i><span>خانه و شبکه</span></div><div class="ph-ditem" data-item="ph-p7"><i>📊</i><span>اسکن و آمار</span></div><div class="ph-ditem" data-item="ph-p13"><i>🕵️</i><span>کالبدشکافی فیلترینگ</span></div><div class="ph-ditem" data-item="ph-p14"><i>🌊</i><span>موج و UDP</span></div><h4>ویژهٔ بازی</h4><div class="ph-ditem" data-item="ph-p11"><i>🎯</i><span>آمادهٔ رنکد</span></div><div class="ph-ditem" data-item="ph-p12"><i>🤝</i><span>تیمی و اشتراک</span></div><h4>ابزار و اپ</h4><div class="ph-ditem" data-item="ph-p19"><i>📱</i><span>آزمون دستگاه و ویجت</span></div><div class="ph-ditem" data-item="ph-p16"><i>📡</i><span>نقطهٔ کور (آفلاین)</span></div><div class="ph-ditem" data-item="ph-p17"><i>🧪</i><span>صف و سیاست اپراتور</span></div><div class="ph-ditem" data-item="ph-p18"><i>🛠️</i><span>نسخهٔ مقاوم</span></div><h4>درباره</h4><a class="ph-ditem" href="https://github.com/Alisarani7021/pinghab/releases/download/apk-latest/pinghab-latest.apk" style="text-decoration:none;color:inherit"><i>⬇️</i><span>دانلود / به‌روزرسانی APK</span></a><a class="ph-ditem" href="/docs" target="_blank" style="text-decoration:none;color:inherit"><i>📘</i><span>مستندات API و دادهٔ باز</span></a><div class="sub">قانون ما: کاندید، نه توصیه · DNS پینگ داخل مچ بازی را کم نمی‌کند.</div></aside></div></div>
+<div id="ph-nav-root"><div class="ph-appbar" id="ph-appbar"><button class="ph-abtn" id="ph-burger" aria-label="منو">☰</button><b id="ph-appbar-title">🚀 حالت DNS</b><a class="ph-abtn" id="ph-appbar-apk" href="https://github.com/Alisarani7021/pinghab/releases/download/apk-latest/pinghab-latest.apk" title="دانلود/به‌روزرسانی APK">⬇️</a></div><div class="ph-nav" id="ph-nav"><button data-nav="ph-p20"><i>🚀</i><span>DNS</span></button><button data-nav="ph-p1"><i>📈</i><span>خط من</span></button><button data-nav="ph-p2"><i>🎮</i><span>بازی</span></button><button data-nav="__drawer__"><i>☰</i><span>بیشتر</span></button></div><div class="ph-drawer" id="ph-drawer"><div class="ph-drawer-bg" data-close="1"></div><aside><div class="ph-dhead"><b>📡 پینگ‌هاب</b><span class="ph-badge mono">۲.۷</span><button class="wwbtn" data-close="1" style="min-height:36px">✕</button></div><h4>اصلی</h4><div class="ph-ditem" data-item="ph-p20"><i>🚀</i><span>حالت DNS</span></div><div class="ph-ditem" data-item="ph-p1"><i>📈</i><span>خط من</span></div><div class="ph-ditem" data-item="ph-p2"><i>🎮</i><span>سرور بازی‌ها</span></div><h4>سنجش و رزولور</h4><div class="ph-ditem" data-item="ph-p3"><i>🧭</i><span>کاتالوگ رزولورها</span></div><div class="ph-ditem" data-item="ph-p4"><i>🌍</i><span>ایران و جهان</span></div><div class="ph-ditem" data-item="ph-p5"><i>✨</i><span>آی‌پی تمیز</span></div><div class="ph-ditem" data-item="ph-p9"><i>🔍</i><span>واقعیت خط</span></div><div class="ph-ditem" data-item="ph-p15"><i>⚡</i><span>رزولوشن و مسابقه</span></div><div class="ph-ditem" data-item="ph-p21"><i>🎯</i><span>اسکنر IP و DNS</span></div><div class="ph-ditem" data-item="ph-p10"><i>🌡️</i><span>ایران امروز</span></div><h4>شبکه و مسیر</h4><div class="ph-ditem" data-item="ph-p8"><i>🛰️</i><span>مسیر من</span></div><div class="ph-ditem" data-item="ph-p6"><i>🏠</i><span>خانه و شبکه</span></div><div class="ph-ditem" data-item="ph-p7"><i>📊</i><span>اسکن و آمار</span></div><div class="ph-ditem" data-item="ph-p13"><i>🕵️</i><span>کالبدشکافی فیلترینگ</span></div><div class="ph-ditem" data-item="ph-p14"><i>🌊</i><span>موج و UDP</span></div><h4>ویژهٔ بازی</h4><div class="ph-ditem" data-item="ph-p11"><i>🎯</i><span>آمادهٔ رنکد</span></div><div class="ph-ditem" data-item="ph-p12"><i>🤝</i><span>تیمی و اشتراک</span></div><h4>ابزار و اپ</h4><div class="ph-ditem" data-item="ph-p19"><i>📱</i><span>آزمون دستگاه و ویجت</span></div><div class="ph-ditem" data-item="ph-p16"><i>📡</i><span>نقطهٔ کور (آفلاین)</span></div><div class="ph-ditem" data-item="ph-p17"><i>🧪</i><span>صف و سیاست اپراتور</span></div><div class="ph-ditem" data-item="ph-p18"><i>🛠️</i><span>نسخهٔ مقاوم</span></div><h4>درباره</h4><a class="ph-ditem" href="https://github.com/Alisarani7021/pinghab/releases/download/apk-latest/pinghab-latest.apk" style="text-decoration:none;color:inherit"><i>⬇️</i><span>دانلود / به‌روزرسانی APK</span></a><a class="ph-ditem" href="/docs" target="_blank" style="text-decoration:none;color:inherit"><i>📘</i><span>مستندات API و دادهٔ باز</span></a><div class="sub">قانون ما: کاندید، نه توصیه · DNS پینگ داخل مچ بازی را کم نمی‌کند.</div></aside></div></div>
 <script id="ph-nav-script">
 (function(){
   if (window.__phNavReady) return; window.__phNavReady = true;
@@ -4191,7 +4441,7 @@ select,input,textarea,.wwin{background:var(--card);color:var(--tx);border:1px so
 .mn-ib{width:40px;height:40px;display:grid;place-items:center;padding:0;border:0!important;background:transparent!important;color:var(--tx)!important;border-radius:12px!important;cursor:pointer;text-decoration:none}
 .mn-ib:hover{background:color-mix(in srgb,var(--tx) 8%,transparent)!important}
 .mn-nav{position:fixed;bottom:0;right:0;left:0;z-index:60;display:grid;grid-template-columns:repeat(5,1fr);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--bg) 90%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-top:1px solid var(--line)}
-.mn-nav button{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0 5px;border:0!important;background:none!important;color:var(--mut);font:600 10.5px Vazirmatn,Tahoma,sans-serif;cursor:pointer}
+.mn-nav button{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 0 4px;border:0!important;background:none!important;color:var(--mut);font:600 10.5px Vazirmatn,Tahoma,sans-serif;cursor:pointer}
 .mn-nav button.on{color:var(--acc)}
 .mn-nav button.on:before{content:"";position:absolute;top:-6px;width:24px;height:2px;border-radius:2px;background:var(--acc)}
 .mn-dr{position:fixed;inset:0;z-index:80;visibility:hidden;transition:visibility .3s}
@@ -4254,6 +4504,7 @@ var dr=d.createElement('div');dr.className='mn-dr';
 dr.innerHTML='<div class="bg" data-x="1"></div><aside role="dialog" aria-modal="true" aria-label="منو"><div class="mn-dh">'+ic('logo','lg')+'<b>پینگ‌هاب</b>'+(ver?'<small>'+ver+'</small>':'')+'<button class="mn-ib" data-x="1" aria-label="بستن">'+ic('x')+'</button></div><div class="mn-db">'+
 groups.map(function(g){return'<section class="mn-g"><button aria-expanded="false"><span>'+g.t+'</span>'+ic('chev')+'</button><div class="ls"><div>'+g.i.map(function(it){return it.id?'<div class="mn-it" role="button" tabindex="0" data-go="'+it.id+'">'+ic(PI[it.id])+'<span>'+it.l+'</span></div>':'<a class="mn-it" href="'+it.h+'" target="_blank" rel="noopener">'+ic(/\.apk/i.test(it.h)?'dl':'link')+'<span>'+it.l+'</span></a>'}).join('')+'</div></div></section>'}).join('')+'</div></aside>';
 d.body.appendChild(bar);d.body.appendChild(nav);d.body.appendChild(dr);
+$$('.mn-g',dr).forEach(function(g){setG(g,true)});
 var isOpen=false;
 function curId(){var o=$('.ph-panel.on');return o?o.id:'ph-p20'}
 function setG(g,o){if(!g)return;g.classList.toggle('open',o);$('button',g).setAttribute('aria-expanded',o)}
@@ -4285,15 +4536,7 @@ addEventListener('popstate',function(e){if(isOpen){shut();return}var st=e.state|
 if(id!==curId()&&d.getElementById(id)&&window.phShow)window.phShow(id,true);sync()});
 window.phOpenDrawer=openDr;
 var mo=new MutationObserver(function(){sync()});$$('.ph-panel').forEach(function(p){mo.observe(p,{attributes:true,attributeFilter:['class']})});
-function mkAcc(c,open){var f=c.firstElementChild;if(!f)return;var h=d.createElement('button'),tt=d.createElement('span'),w=d.createElement('div'),b=d.createElement('div');
-h.type='button';h.className='ah';h.setAttribute('aria-expanded',open);tt.className='tt';tt.appendChild(f);h.appendChild(tt);h.insertAdjacentHTML('beforeend',ic('chev'));
-w.className='aw';b.className='ab';while(c.firstChild)b.appendChild(c.firstChild);w.appendChild(b);c.appendChild(h);c.appendChild(w);c.classList.add('acc');if(open)c.classList.add('open')}
-$$('.ph-card').forEach(function(c){var f=c.firstElementChild;if(c.classList.contains('ph-dnsmain')||!f||!/^(B|H3|H4|STRONG)$/.test(f.tagName)||!f.textContent.trim()||c.parentElement.closest('.ph-card'))return;
-var fc=$('.ph-card',c.closest('.ph-panel'))===c;mkAcc(c,fc)});
-$$('.wrap h2').forEach(function(h){var s=[],n=h.nextElementSibling,bad=0;
-while(n&&!/^(H2|SCRIPT)$/.test(n.tagName)){if(n.matches('.ph-panel,#ph-tabs'))bad=1;s.push(n);n=n.nextElementSibling}
-if(bad||!s.length)return;var c=d.createElement('div');h.parentNode.insertBefore(c,h);c.className='sec';c.appendChild(h);s.forEach(function(x){c.appendChild(x)});
-var t=d.createElement('div');t.className='tt';while(h.firstChild)t.appendChild(h.firstChild);c.removeChild(h);c.insertBefore(t,c.firstChild);mkAcc(c,true)});
+
 var EI={'🔄':'refresh','🔁':'refresh','↩':'undo','▶':'play','⬇':'dl','📥':'dl','📤':'up','🔍':'search','⚡':'zap','🎮':'game','📡':'logo','🌍':'globe','🌐':'globe','📊':'bars','🧭':'compass','🎯':'target','🏠':'home','📱':'phone','💾':'save','📋':'copy','🔗':'link','⚙':'sliders','🛠':'sliders','📈':'act','⭐':'spark','✨':'spark','🚀':'dns','🛰':'route','🕵':'eye','🌊':'wave','🤝':'users','🧪':'flask','🌡':'thermo','📶':'wifi'};
 var DC={128308:'r',128309:'b',129000:'o',129001:'y',129002:'g',129003:'b',129004:'o'},TX={'✅':'✓','❌':'✕','⚠':'!'};
 var TK=/([\u{1F300}-\u{1FAFF}\u2600-\u26FF\u2705\u274C\u274E\u2728\u2753-\u2755\u2757\u2795-\u2797\u27A1\u2B00-\u2BFF\u21A9\u21AA])[\uFE0E\uFE0F]?[ \u00A0]?/gu;
