@@ -937,6 +937,678 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
   })();
 })();
 </script>
+  <div class="ph-panel" id="ph-p8">
+    <div class="ph-card">
+      <b>🛰️ نقشهٔ مسیر — پینگ تو از کجا می‌آید؟</b>
+      <div class="sub">مسیر واقعی از <b>داخل ایران</b> گام‌به‌گام کشیده می‌شود و هر گام با ASN/شبکه نام‌گذاری می‌شود.
+        جای «جهش» را با رنگ می‌بینی: همان‌جا که تأخیر می‌پرد. پروب‌ها دیتاسنتری‌اند (تهران)، نه خط موبایل تو.</div>
+      <div class="ph-grid2" style="margin-top:8px">
+        <div><span class="ph-lbl">هدف</span><input id="ph2-path-target" class="wwin" value="1.1.1.1" style="direction:ltr"></div>
+        <div><span class="ph-lbl">کشور پروب</span><input id="ph2-path-cc" class="wwin" value="IR" maxlength="2" style="direction:ltr"></div>
+      </div>
+      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+        <button class="wwbtn wwprimary" id="ph2-path-go">🛰️ بکش مسیر</button>
+        <button class="wwbtn" data-ph2-path="cdn.cloudflare.steamstatic.com">استیم CDN</button>
+        <button class="wwbtn" data-ph2-path="discord.com">دیسکورد</button>
+        <button class="wwbtn" data-ph2-path="146.66.152.1">سرور CS2 (لوکزامبورگ)</button>
+      </div>
+      <div id="ph2-path-out"></div>
+    </div>
+  </div>
+
+  <div class="ph-panel" id="ph-p9">
+    <div class="ph-card">
+      <b>🔍 واقعیت خط — آن چیزی که فکر می‌کنی نیست</b>
+      <div class="sub">چهار سنجشِ کوچک که خیلی از سؤال‌ها را جواب می‌دهد: رزولور واقعی، IPv6، ساعت دستگاه، سرعت دانلود.
+        همه از خودِ دستگاه تو.</div>
+      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+        <button class="wwbtn wwprimary" id="ph2-fact-go">🔍 بررسی کن</button>
+        <button class="wwbtn" id="ph2-fact-speed">📶 فقط آزمون سرعت (~۶ مگابایت)</button>
+      </div>
+      <div id="ph2-fact-out"></div>
+    </div>
+  </div>
+
+  <div class="ph-panel" id="ph-p10">
+    <div class="ph-card">
+      <b>🌡️ ایران امروز — با داده، نه شایعه</b>
+      <div class="sub">رخدادهای شبکه از رادار کلادفلر (قطعی اعلامی، هجک BGP، نسبت ترافیک انسان/بات در ایران)
+        کنار آمار بی‌نام خودمان. صفحهٔ عمومی: <a href="/status" target="_blank">/status</a></div>
+      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+        <select class="wwin" id="ph2-rad-asn"><option value="">— روند BGP یک اپراتور (اختیاری) —</option></select>
+        <button class="wwbtn wwprimary" id="ph2-rad-go">🌡️ تازه کن</button>
+      </div>
+      <div id="ph2-rad-out"></div>
+    </div>
+  </div>
+
+  <div class="ph-panel" id="ph-p11">
+    <div class="ph-card">
+      <b>🎮 آمادهٔ رنکد؟ — آزمون پیش از بازی</b>
+      <div class="sub">یک دکمه: پینگ/جیتر/افت از دستگاه تو + بهترین DNS روی خط تو + نوع NAT (اختیاری) + بافر‌بلاست (اختیاری)
+        → <b>یک نمره و یک جمله</b>. آستانه‌ها تجربی‌اند و پایین همین کارت نوشته می‌شوند.</div>
+      <div class="ph-grid2" style="margin-top:8px">
+        <div><span class="ph-lbl">بازی</span><select class="wwin" id="ph2-pf-game"></select></div>
+        <div><span class="ph-lbl">گزینه‌ها</span>
+          <div class="row" style="gap:10px;flex-wrap:wrap">
+            <label class="row" style="gap:5px;font-size:13px"><input type="checkbox" id="ph2-pf-nat" checked> نوع NAT</label>
+            <label class="row" style="gap:5px;font-size:13px"><input type="checkbox" id="ph2-pf-bb"> بافر‌بلاست</label>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+        <button class="wwbtn wwprimary" id="ph2-pf-go">▶️ شروع آزمون</button>
+        <span class="sub" id="ph2-pf-note"></span>
+      </div>
+      <div id="ph2-pf-out"></div>
+    </div>
+    <div class="ph-card">
+      <b>🕐 ساعت طلایی و 📈 روند ۳۰ روزه (خط تو / استانت)</b>
+      <div class="sub">از نمونه‌های بی‌نام کاربران — با تعداد نمونه در کنار هر ستون. نمونهٔ کم = نتیجهٔ بی‌معنا.</div>
+      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:6px">
+        <button class="wwbtn" id="ph2-hist-go">نمایش ساعت طلایی و روند</button>
+      </div>
+      <div id="ph2-hist-out"></div>
+    </div>
+  </div>
+
+  <div class="ph-panel" id="ph-p12">
+    <div class="ph-card">
+      <b>🤝 حالت تیمی — بهترین DNS مشترک تیم</b>
+      <div class="sub">یک کد بساز و به دوست‌هایت بده؛ هرکس سنجش می‌دهد، «بهترین مشترک» ساخته می‌شود.
+        اعضا فقط با یک شناسهٔ تصادفی روی دستگاه خودشان شناخته می‌شوند — نه نام واقعی، نه شماره، نه IP.</div>
+      <div class="ph-grid2" style="margin-top:8px">
+        <div><span class="ph-lbl">نام تیم (برای ساخت)</span><input id="ph2-team-name" class="wwin" placeholder="مثلاً: اسکادران تهران"></div>
+        <div><span class="ph-lbl">کد تیم (برای ورود)</span><input id="ph2-team-code" class="wwin" placeholder="مثلاً T7K2M" style="direction:ltr"></div>
+      </div>
+      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+        <button class="wwbtn wwprimary" id="ph2-team-create">بساز</button>
+        <button class="wwbtn" id="ph2-team-join">ورود به تیم</button>
+        <button class="wwbtn" id="ph2-team-refresh">تازه‌سازی</button>
+      </div>
+      <div id="ph2-team-out"></div>
+    </div>
+    <div class="ph-card">
+      <b>🖼️ کارت اشتراک و لینک‌های عمومی</b>
+      <div class="sub">نتیجهٔ آزمون را روی همین دستگاه به یک کارت تصویری تبدیل کن (هیچ تصویری به سرور نمی‌رود).</div>
+      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+        <button class="wwbtn wwprimary" id="ph2-card-go">🖼️ بساز کارت نتیجه</button>
+        <a class="wwbtn" href="/report" target="_blank">📅 گزارش ماهانه</a>
+        <a class="wwbtn" href="/status" target="_blank">🚦 وضعیت عمومی</a>
+        <a class="wwbtn" href="/docs" target="_blank">📘 مستندات API</a>
+        <a class="wwbtn" href="/api/export?format=csv" download>📤 دادهٔ باز (CSV)</a>
+      </div>
+      <div id="ph2-card-out"></div>
+    </div>
+  </div>
+
+<script>
+/* =========== ⚡ پینگ‌هاب ۲.۰ — مسیر، واقعیت خط، ایران امروز، آمادهٔ رنکد، تیم =========== */
+(function(){
+  "use strict";
+  var q = function(id){ return document.getElementById(id); };
+  var ABS = (location.protocol === "file:" || /appassets\.androidplatform\.net$/.test(location.hostname))
+    ? "https://pinghab.catclient-59gk2mui.workers.dev" : "";
+  var fa = function(s){ return String(s).replace(/[0-9]/g, function(d){ return "۰۱۲۳۴۵۶۷۸۹"[d]; }); };
+  var esc = function(s){ return String(s==null?"":s).replace(/[&<>"]/g, function(c){
+      return ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]; }); };
+  var med = function(a){ if(!a.length) return null; var s=a.slice().sort(function(x,y){return x-y;});
+      var m=Math.floor(s.length/2); return s.length%2 ? s[m] : (s[m-1]+s[m])/2; };
+  var pct = function(a,p){ if(!a.length) return null; var s=a.slice().sort(function(x,y){return x-y;});
+      return s[Math.min(s.length-1, Math.max(0, Math.ceil(p/100*s.length)-1))]; };
+  var rnd = function(v,d){ d=d==null?1:d; return v==null?"—":fa(Number(v).toFixed(d)); };
+  async function jget(p){ var r = await fetch(ABS+p, {cache:"no-store"}); if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); }
+  async function jpost(p, body){ var r = await fetch(ABS+p, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body||{})});
+      var j = await r.json().catch(function(){return {};}); if(!r.ok) throw new Error(j.error||("HTTP "+r.status)); return j; }
+  function copy(btn, txt){
+    var done = function(){ btn.textContent="✅"; setTimeout(function(){ btn.textContent="کپی"; },1200); };
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done,function(){ prompt("کپی کن:",txt); });
+    else prompt("کپی کن:", txt);
+  }
+  function bar(v, max, color){ var w = max>0 ? Math.max(2, Math.round(100*v/max)) : 2;
+    return '<div style="height:8px;background:rgba(127,127,127,.18);border-radius:99px;overflow:hidden">' +
+      '<i style="display:block;height:100%;width:'+w+'%;background:'+(color||"var(--acc)")+'"></i></div>'; }
+
+  /* ---------- تب‌ها: افزودن ۵ تب و یکسان‌سازی کلیدها ---------- */
+  var EXIST = ["ph-p1","ph-p2","ph-p3","ph-p4","ph-p5","ph-p6","ph-p7"];
+  var NEW = [["ph-p8","🛰️ مسیر من"],["ph-p9","🔍 واقعیت خط"],["ph-p10","🌡️ ایران امروز"],
+             ["ph-p11","🎮 آمادهٔ رنکد"],["ph-p12","🤝 تیمی و اشتراک"]];
+  var tabsBox = q("ph-tabs");
+  if (tabsBox){
+    var old = [].slice.call(tabsBox.querySelectorAll(".ph-tab"));
+    old.forEach(function(b,i){ if(!b.dataset.target) b.dataset.target = EXIST[i] || ""; });
+    NEW.forEach(function(t){
+      var b = document.createElement("button"); b.type="button"; b.className="ph-tab";
+      b.textContent = t[1]; b.dataset.target = t[0]; tabsBox.appendChild(b);
+    });
+    var switchTo = function(name){
+      [].slice.call(tabsBox.querySelectorAll(".ph-tab")).forEach(function(b){ b.className = "ph-tab" + (b.dataset.target===name ? " on" : ""); });
+      [].slice.call(document.querySelectorAll(".ph-panel")).forEach(function(pn){ pn.className = "ph-panel" + (pn.id===name ? " on" : ""); });
+      if (name === "ph-p10") loadRadar();
+      if (name === "ph-p11") { loadProfiles(); loadHistory(); }
+    };
+    [].slice.call(tabsBox.querySelectorAll(".ph-tab")).forEach(function(b){
+      b.onclick = function(){ switchTo(b.dataset.target); };
+    });
+  }
+
+  /* ================= 🛰️ مسیر من ================= */
+  function renderPath(d){
+    var steps = d.steps || [];
+    var max = Math.max.apply(null, steps.map(function(s){ return s.ms||0; }).concat([1]));
+    var html = '<div class="ph-card"><b>از ' + esc((d.probe&&d.probe.city)||"?") + '</b> — ' +
+      esc((d.probe&&d.probe.network)||"") + ' <span class="ph-badge mono">AS' + esc((d.probe&&d.probe.asn)||"—") + '</span>' +
+      '<div class="sub">هدف: <span class="mono">' + esc(d.target) + '</span> · ' + fa(d.hop_count) + ' گام · تأخیر نهایی: <b>' +
+      rnd(d.last_ms) + 'ms</b></div>';
+    if (d.biggest_jump){
+      var bs = steps[d.biggest_jump-1];
+      html += '<div class="ph-box" style="margin-top:8px"><b>📍 جهش اصلی: گام ' + fa(d.biggest_jump) + '</b> — ' +
+        '<span class="mono">' + esc(bs.ip||"*") + '</span> · ' + esc(bs.holder||bs.ix||"شبکهٔ ناشناس") +
+        ' <b>+' + rnd(bs.delta) + 'ms</b>' +
+        '<div class="sub">همین گام است که بیشترِ تأخیر تو را می‌سازد. اگر این گام مرز ایران است، دست خودت نیست؛ ' +
+        'اگر داخل شبکهٔ خودت است، مشکل از مودم/ISP است.</div></div>';
+    }
+    html += '<table style="margin-top:10px;width:100%;font-size:13px;border-collapse:collapse">' +
+      '<tr style="opacity:.75"><th style="text-align:right">گام</th><th style="text-align:right">آی‌پی</th>' +
+      '<th style="text-align:right">شبکه</th><th style="text-align:right">RTT</th><th style="text-align:right">جهش</th><th style="width:26%"></th></tr>';
+    steps.forEach(function(s){
+      var kindColor = s.ix ? "#7a3dff" : (s.kind==="private" ? "var(--mut,#888)" : (s.kind==="cloud" ? "#1ed760" : "var(--acc)"));
+      var label = s.ix || s.holder || (s.kind==="private" ? "شبکهٔ داخلی" : (s.kind==="lost" ? "بی‌پاسخ" : "—"));
+      html += '<tr><td>' + fa(s.n) + '</td><td class="ph-mono">' + esc(s.ip||"*") + '</td>' +
+        '<td>' + esc(String(label).slice(0,34)) + (s.asn ? ' <span class="ph-badge mono">AS'+esc(s.asn)+'</span>' : '') + '</td>' +
+        '<td>' + rnd(s.ms) + 'ms</td>' + '<td>' + (s.delta==null?"—":'+'+rnd(s.delta)+'ms') + '</td>' +
+        '<td>' + bar(s.ms||0, max, kindColor) + '</td></tr>';
+    });
+    html += '</table><div class="sub">' + esc(d.note||"") + '</div></div>';
+    q("ph2-path-out").innerHTML = html;
+  }
+  if (q("ph2-path-go")) q("ph2-path-go").onclick = async function(){
+    var target = (q("ph2-path-target").value||"").trim(), cc = (q("ph2-path-cc").value||"IR").trim().toUpperCase();
+    var out = q("ph2-path-out"); out.innerHTML = "در حال کشیدن مسیر از داخل ایران… (تا ~۱۵ ثانیه)";
+    try{
+      var d = await jget("/api/path?target=" + encodeURIComponent(target) + "&cc=" + encodeURIComponent(cc));
+      if(!d.ok){ out.innerHTML = '<div class="ph-warn">خطا: ' + esc(d.error||"") + " " + esc(d.detail||"") + '</div>'; return; }
+      renderPath(d);
+    }catch(e){ out.innerHTML = '<div class="ph-warn">خطا: ' + esc(e.message) + '</div>'; }
+  };
+  [].slice.call(document.querySelectorAll("[data-ph2-path]")).forEach(function(b){
+    b.onclick = function(){ q("ph2-path-target").value = b.getAttribute("data-ph2-path"); q("ph2-path-go").click(); };
+  });
+
+  /* ================= 🔍 واقعیت خط ================= */
+  async function resolverCheck(){
+    try{
+      var r = await fetch("https://edns.ip-api.com/json", { cache:"no-store" });
+      var j = await r.json();
+      return { ok:true, ip: (j.dns||{}).ip || null, geo: (j.dns||{}).geo || null };
+    }catch(e){ return { ok:false, err:String(e.message||e) }; }
+  }
+  async function ipv6Check(){
+    for (var i=0;i<2;i++){
+      var url = i===0 ? "https://api6.ipify.org?format=json" : "https://v6.ident.me/.json";
+      try{
+        var c = new AbortController(); var t = setTimeout(function(){ c.abort(); }, 6000);
+        var r = await fetch(url, { cache:"no-store", signal:c.signal }); clearTimeout(t);
+        var j = await r.json();
+        var ip = j.ip || j.address || null;
+        if (ip) return { ok:true, ip:ip };
+      }catch(e){}
+    }
+    return { ok:false };
+  }
+  async function clockCheck(){
+    var t0 = performance.now();
+    var r = await fetch(ABS + "/api/ping?r=" + Math.random(), { cache:"no-store" });
+    var j = await r.json(); var rtt = performance.now() - t0;
+    var devNow = Date.now();
+    var srv = r.headers.get("date") ? Date.parse(r.headers.get("date")) : (j.t || null);
+    if (!srv) return { ok:false };
+    return { ok:true, skew: Math.round(((devNow - rtt/2) - srv)/1000), rtt: Math.round(rtt) };
+  }
+  async function speedTest(bytes){
+    bytes = bytes || 4000000;
+    var t0 = performance.now();
+    var r = await fetch("https://speed.cloudflare.com/__down?bytes=" + bytes, { cache:"no-store" });
+    var blob = await r.blob();
+    var sec = (performance.now()-t0)/1000;
+    return { mbps: (blob.size*8/1e6)/sec, size: blob.size, sec: sec };
+  }
+  function factRow(title, value, verdict, cls){
+    return '<tr><td>' + title + '</td><td><b class="' + (cls||"") + '">' + value + '</b></td><td class="sub">' + verdict + '</td></tr>';
+  }
+  if (q("ph2-fact-go")) q("ph2-fact-go").onclick = async function(){
+    var out = q("ph2-fact-out"); out.innerHTML = "در حال بررسی… (چند ثانیه)";
+    var res = {}, ip6 = {ok:false}, clk = {ok:false};
+    res.resolver = await resolverCheck();
+    ip6 = await ipv6Check();
+    try{ clk = await clockCheck(); }catch(e){}
+    var sp = null;
+    try{ sp = await speedTest(3000000); }catch(e){}
+    var html = '<div class="ph-card" style="margin-top:8px"><table style="width:100%;font-size:13px;border-collapse:collapse">';
+    // رزولور
+    if (res.resolver.ok && res.resolver.ip){
+      html += factRow("🔍 رزولور واقعی خط تو", '<span class="mono">' + esc(res.resolver.ip) + '</span>',
+        esc(res.resolver.geo || "") + ' — اگر این را نمی‌شناسی، یعنی رزولور انتخابی تو دور زده می‌شود (اپراتور یا مودم).', "ph-good");
+    } else {
+      html += factRow("🔍 رزولور واقعی", "نامعلوم", "سرویس بررسی در دسترس نبود (فیلتر/شبکه؟)", "ph-warn");
+    }
+    // IPv6
+    html += ip6.ok
+      ? factRow("🌐 IPv6 واقعی", '<span class="mono">' + esc(ip6.ip) + '</span>', "IPv6 داری ✅ — پس تست‌های v6 هم برایت معنا دارند.", "ph-good")
+      : factRow("🌐 IPv6", "نداری (یا مسدود است)", "طبیعی است؛ بیشتر خطوط ایران فقط IPv4 دارند.", "ph-warn");
+    // ساعت
+    html += clk.ok
+      ? factRow("⏱ ساعت دستگاه", (clk.skew>=0? "+":"") + fa(clk.skew) + " ثانیه",
+        Math.abs(clk.skew) > 30 ? "اختلاف زیاد است — بعضی سرویس‌ها (2FA/TLS) خطا می‌دهند. ساعت را خودکار کن." : "خوب است.", Math.abs(clk.skew)>30?"ph-warn":"ph-good")
+      : factRow("⏱ ساعت دستگاه", "—", "خوانده نشد.", "");
+    if (sp) html += factRow("📶 سرعت دانلود (کلادفلر)", rnd(sp.mbps,1) + " Mbit/s", rnd(sp.size/1e6,1) + " مگابایت در " + rnd(sp.sec,1) + " ثانیه.", "ph-good");
+    html += '</table><div class="sub">همهٔ این سنجش‌ها از خود دستگاه توست؛ هیچ‌کدام به سرور ما فرستاده نمی‌شود مگر خودت «ثبت بی‌نام» را بزنی.</div></div>';
+    out.innerHTML = html;
+  };
+  if (q("ph2-fact-speed")) q("ph2-fact-speed").onclick = async function(){
+    var out = q("ph2-fact-out"); out.innerHTML = "در حال آزمون سرعت…";
+    try{
+      var sp = await speedTest(6000000);
+      out.innerHTML = '<div class="ph-card" style="margin-top:8px"><b>📶 سرعت دانلود:</b> ' + rnd(sp.mbps,1) +
+        ' Mbit/s <div class="sub">' + rnd(sp.size/1e6,1) + ' مگابایت از speed.cloudflare.com در ' + rnd(sp.sec,1) +
+        ' ثانیه — از نزدیک‌ترین لبهٔ کلادفلر به تو.</div></div>';
+    }catch(e){ out.innerHTML = '<div class="ph-warn">خطا: ' + esc(e.message) + '</div>'; }
+  };
+
+  /* ================= 🌡️ ایران امروز ================= */
+  var RAD_LOADED = false;
+  async function loadRadar(force){
+    if (RAD_LOADED && !force) return;
+    var out = q("ph2-rad-out"); out.innerHTML = "در حال گرفتن داده…";
+    var asn = q("ph2-rad-asn").value || "";
+    try{
+      var d = await jget("/api/radar" + (asn ? "?asn=" + encodeURIComponent(asn) : ""));
+      var html = '<div class="ph-card" style="margin-top:8px">';
+      // قطعی‌ها
+      html += '<b>🚧 قطعی‌های اعلامی (۲۴ ساعت)</b>';
+      if ((d.outages||[]).length){
+        html += '<table style="width:100%;font-size:13px;border-collapse:collapse"><tr style="opacity:.75"><th style="text-align:right">دامنه</th><th style="text-align:right">شروع</th><th style="text-align:right">توضیح</th></tr>';
+        (d.outages||[]).slice(0,6).forEach(function(a){
+          html += '<tr><td>' + esc(a.scope||"—") + '</td><td class="ph-mono">' + esc(String(a.startDate||"").slice(5,16)) + '</td><td>' +
+            esc(String(a.description||a.eventType||"").slice(0,90)) + '</td></tr>';
+        });
+        html += '</table>';
+      } else html += '<div class="sub">' + (d.outages_error ? 'دسترسی به رادار نبود (' + esc(d.outages_error) + ')' : 'رخدادی ثبت نشده.') + '</div>';
+      // هجک
+      html += '<b style="display:block;margin-top:10px">🛡️ رخدادهای BGP (۷ روز)</b>';
+      if ((d.hijacks||[]).length){
+        html += '<div class="sub">' + fa((d.hijacks||[]).length) + ' رخداد ثبت‌شده؛ نمونه: ';
+        html += (d.hijacks||[]).slice(0,3).map(function(h){
+          var asns = (h.hijack_msgs||[]).slice(0,1).map(function(m){ return "AS" + (m.hijacker_asn||"?"); }).join("");
+          return '<span class="ph-badge mono">' + esc((h.prefix||"")+" "+asns) + '</span>';
+        }).join(" ") + '</div>';
+      } else html += '<div class="sub">' + (d.hijacks_error ? "دسترسی نبود" : "رخدادی در بازهٔ ۷ روز ثبت نشده.") + '</div>';
+      // ترافیک ایران
+      if (d.traffic_ir) html += '<b style="display:block;margin-top:10px">📊 نسبت ترافیک ایران (۷ روز)</b><div class="sub">' +
+        'انسان: <b>' + rnd(d.traffic_ir.human,1) + '٪</b> · بات: <b>' + rnd(d.traffic_ir.bot,1) + '٪</b> — سهم بات بالا یعنی اسکن/حملهٔ خودکار بیشتر.</div>';
+      // روند BGP اپراتور
+      if (asn){
+        var ser = d.asn_series;
+        if (ser && ser.serie_0 && ser.serie_0.values){
+          var vals = ser.serie_0.values.map(function(v){ return typeof v === "number" ? v : (v && v.value) || 0; });
+          var mx = Math.max.apply(null, vals.concat([1]));
+          html += '<b style="display:block;margin-top:10px">📈 روند BGP برای AS' + fa(asn) + ' (۲۴ ساعت)</b><div class="sub">' +
+            vals.slice(-24).map(function(v){ return '<span style="display:inline-block;width:6px;margin:0 1px;height:' +
+              Math.max(2, Math.round(28*v/mx)) + 'px;background:var(--acc);vertical-align:bottom"></span>'; }).join("") +
+            '<br>کمترین ' + fa(Math.min.apply(null, vals)) + ' · بیشترین ' + fa(Math.max.apply(null, vals)) + '</div>';
+        } else html += '<div class="sub">روند این ASN در دسترس نبود' + (ser && ser.error ? " (" + esc(ser.error) + ")" : "") + '</div>';
+      }
+      html += '<div class="sub" style="margin-top:8px">' + esc(d.note||"") + '</div></div>';
+      out.innerHTML = html; RAD_LOADED = true;
+    }catch(e){ out.innerHTML = '<div class="ph-warn">خطا: ' + esc(e.message) + '</div>'; }
+  }
+  (async function fillAsn(){
+    try{
+      var d = await jget("/api/ir");
+      var sel = q("ph2-rad-asn"); if(!sel) return;
+      (d.carriers.mobile||[]).concat(d.carriers.fixed||[]).forEach(function(c){
+        (c.asn||[]).forEach(function(a){
+          var o = document.createElement("option");
+          o.value = String(a).replace(/^AS/i,"");
+          o.textContent = c.fa + " — " + a;
+          sel.appendChild(o);
+        });
+      });
+    }catch(e){}
+  })();
+  if (q("ph2-rad-go")) q("ph2-rad-go").onclick = function(){ loadRadar(true); };
+
+  /* ================= 🎮 آمادهٔ رنکد ================= */
+  var PROFILES = null, PREFLIGHT = null;
+  async function loadProfiles(){
+    if (PROFILES) return;
+    try{
+      var d = await jget("/api/profiles");
+      PROFILES = d;
+      var sel = q("ph2-pf-game");
+      sel.innerHTML = Object.keys(d.games||{}).map(function(k){
+        return '<option value="'+esc(k)+'">'+esc(d.games[k].fa||k)+'</option>'; }).join("");
+      var f = d.games[q("ph2-pf-game").value] || {};
+      q("ph2-pf-note").textContent = f.note || "";
+    }catch(e){}
+  }
+  if (q("ph2-pf-game")) q("ph2-pf-game").onchange = function(){
+    if (PROFILES && PROFILES.games[q("ph2-pf-game").value]) q("ph2-pf-note").textContent = PROFILES.games[q("ph2-pf-game").value].note || "";
+  };
+  async function natTest(timeoutMs){
+    timeoutMs = timeoutMs || 8000;
+    return new Promise(function(resolve){
+      var out = { ok:false, type:"نامشخص", ip:null, ports:{}, note:"" };
+      if (!window.RTCPeerConnection){ out.note = "مرورگر WebRTC ندارد"; return resolve(out); }
+      var pc, done = false, cands = [];
+      var finish = function(){ if(done) return; done = true; try{ pc.close(); }catch(e){}
+        var srflx = cands.filter(function(c){ return c.type === "srflx"; });
+        var hosts = cands.filter(function(c){ return c.type === "host"; });
+        if (!srflx.length){ out.note = hosts.length ? "STUN مسدود است (فقط کاندید محلی)" : "کاندیدی گرفته نشد (شبکه WebRTC را بسته)"; return resolve(out); }
+        out.ok = true; out.ip = srflx[0].ip;
+        srflx.forEach(function(c){ out.ports[c.server] = c.port; });
+        var ports = Object.keys(out.ports).map(function(k){ return out.ports[k]; });
+        var uniq = ports.filter(function(v,i){ return ports.indexOf(v) === i; });
+        out.type = uniq.length > 1 ? "مخروطی متقارن (Symmetric)" : "مخروطی (Cone)";
+        out.note = uniq.length > 1
+          ? "هر مقصد پورت متفاوتی می‌بیند → احتمال مشکل در میزبانی بازی یا چت پارتی."
+          : "پورت ثابت برای مقاصد مختلف → برای میزبانی/چت پارتی مناسب‌تر.";
+        resolve(out);
+      };
+      try{ pc = new RTCPeerConnection({ iceServers: [
+        { urls:"stun:stun.l.google.com:19302" }, { urls:"stun:stun1.l.google.com:19302" } ] }); }
+      catch(e){ out.note = "WebRTC مسدود است"; return resolve(out); }
+      pc.onicecandidate = function(e){
+        if (!e.candidate){ finish(); return; }
+        var c = e.candidate.candidate || "";
+        var m = c.match(/candidate:\\S+ \\d+ (\\S+) (\\d+) typ (\\w+)/);
+        if (m) cands.push({ ip:m[1], port:parseInt(m[2],10), type:m[3], server:+((c.match(/\\d+ \\S+$/))||[""])[0].split(" ")[0] || 0 });
+      };
+      try{
+        pc.createDataChannel("x");
+        pc.createOffer().then(function(o){ return pc.setLocalDescription(o); }).catch(finish);
+      }catch(e){ finish(); }
+      setTimeout(finish, timeoutMs);
+    });
+  }
+  async function rttSamples(n){
+    var a = [];
+    for (var i=0;i<n;i++){
+      var t0 = performance.now();
+      try{ await fetch(ABS + "/api/ping?r=" + Math.random(), {cache:"no-store"}); a.push(performance.now()-t0); }
+      catch(e){ a.push(null); }
+    }
+    return a;
+  }
+  async function deviceResolverBest(){
+    var DOH = [
+      { name:"کلودفلر", url:"https://cloudflare-dns.com/dns-query" },
+      { name:"گوگل", url:"https://dns.google/resolve" },
+      { name:"کوآد۹", url:"https://dns.quad9.net:5053/dns-query" },
+      { name:"شکن", url:"https://free.shecan.ir/dns-query" },
+      { name:"الکترو", url:"https://dns.electrotm.org/dns-query" },
+      { name:"رادار", url:"https://10.202.10.10/dns-query" }
+    ];
+    var rows = [];
+    for (var i=0;i<DOH.length;i++){
+      var ms = [];
+      for (var k=0;k<2;k++){
+        var c = new AbortController(); var t = setTimeout(function(){ c.abort(); }, 4000);
+        var t0 = performance.now();
+        try{
+          var u = DOH[i].url + (DOH[i].url.indexOf("?")>=0?"&":"?") + "name=cdn.cloudflare.steamstatic.com&type=A";
+          var r = await fetch(u, {headers:{accept:"application/dns-json"}, cache:"no-store", signal:c.signal});
+          var j = await r.json().catch(function(){return {};});
+          ms.push(performance.now()-t0);
+        }catch(e){}
+        clearTimeout(t);
+      }
+      rows.push({ name:DOH[i].name, ms: med(ms) });
+    }
+    rows = rows.filter(function(r){ return r.ms != null; }).sort(function(a,b){ return a.ms-b.ms; });
+    return rows;
+  }
+  async function bufferbloat(){
+    var idle = (await rttSamples(6)).filter(function(x){ return x!=null; });
+    var loads = [];
+    for (var k=0;k<3;k++) loads.push(fetch(ABS + "/api/load?bytes=1500000&r="+Math.random(), {cache:"no-store"}).catch(function(){}));
+    await new Promise(function(r){ setTimeout(r, 1200); });
+    var loaded = (await rttSamples(6)).filter(function(x){ return x!=null; });
+    loads.forEach(function(p){ p.then(function(r){ try{ r && r.body && r.body.cancel(); }catch(e){} }); });
+    var mi = med(idle), ml = med(loaded);
+    return { idle: mi, loaded: ml, delta: (mi!=null && ml!=null) ? ml-mi : null };
+  }
+  function scorePreflight(game, rtt, dns, nat, bb, prof){
+    var p50 = med(rtt.filter(function(x){return x!=null;}));
+    var jit = rtt.filter(function(x){return x!=null;});
+    jit = jit.length>1 ? Math.max.apply(null,jit)-Math.min.apply(null,jit) : 0;
+    var loss = Math.round((rtt.filter(function(x){return x==null;}).length / Math.max(1,rtt.length))*100);
+    var g = (prof && prof.good) || { p50:60, jitter:10, loss:1 };
+    var ok = (prof && prof.ok) || { p50:100, jitter:25, loss:5 };
+    var score = 100, reasons = [];
+    var clamp = function(v,a,b){ return Math.max(a, Math.min(b, v)); };
+    if (p50 != null){
+      if (p50 > ok.p50) { score -= 45; reasons.push("پینگ بالای حد " + fa(ok.p50) + "ms"); }
+      else if (p50 > g.p50) { score -= 22; reasons.push("پینگ مرزی (" + rnd(p50,0) + "ms)"); }
+    }
+    if (jit > ok.jitter) { score -= 22; reasons.push("نوسان بالا " + rnd(jit,0) + "ms"); }
+    else if (jit > g.jitter) { score -= 10; reasons.push("نوسان مرزی " + rnd(jit,0) + "ms"); }
+    if (loss > ok.loss) { score -= 30; reasons.push("افت بسته " + fa(loss) + "٪"); }
+    else if (loss > g.loss) { score -= 12; reasons.push("افت کم " + fa(loss) + "٪"); }
+    if (bb && bb.delta != null){
+      if (bb.delta > 90) { score -= 20; reasons.push("بافر‌بلاست شدید (+" + rnd(bb.delta,0) + "ms زیر بار)"); }
+      else if (bb.delta > 40) { score -= 8; reasons.push("بافر‌بلاست متوسط (+" + rnd(bb.delta,0) + "ms)"); }
+    }
+    if (nat && nat.ok && /متقارن/.test(nat.type)) { score -= 8; reasons.push("NAT متقارن (میزبانی سخت)"); }
+    score = clamp(Math.round(score), 0, 100);
+    return { score:score, p50:p50, jitter:jit, loss:loss,
+      verdict: score>=80 ? "آماده‌ای" : (score>=55 ? "مرزی است" : "آماده نیستی"), reasons:reasons,
+      best: dns && dns[0] ? dns[0] : null };
+  }
+  function kalmanish(samples){
+    var v = samples.filter(function(x){ return x!=null; });
+    if (v.length < 3) return null;
+    var m = med(v);
+    return { p50:m, lo:pct(v,20), hi:pct(v,85) };
+  }
+  if (q("ph2-pf-go")) q("ph2-pf-go").onclick = async function(){
+    var out = q("ph2-pf-out"); var game = q("ph2-pf-game").value || "counter-strike-2";
+    var prof = (PROFILES && PROFILES.games && PROFILES.games[game]) || null;
+    out.innerHTML = '<div class="ph-card">۱/۴ نمونه‌گیری پینگ…</div>';
+    var rtt = await rttSamples(12);
+    out.innerHTML = '<div class="ph-card">۲/۴ بهترین DNS روی خط تو…</div>';
+    var dns = await deviceResolverBest();
+    var nat = null;
+    if (q("ph2-pf-nat").checked){ out.innerHTML = '<div class="ph-card">۳/۴ نوع NAT…</div>'; nat = await natTest(7000); }
+    var bb = null;
+    if (q("ph2-pf-bb").checked){ out.innerHTML = '<div class="ph-card">۴/۴ بافر‌بلاست…</div>'; try{ bb = await bufferbloat(); }catch(e){} }
+    var r = scorePreflight(game, rtt, dns, nat, bb, prof);
+    var pred = kalmanish(rtt);
+    PREFLIGHT = { game: game, fa: (prof&&prof.fa)||game, result: r, nat: nat, bb: bb, pred: pred, when: Date.now(),
+      where: (function(){ try{ return JSON.parse(localStorage.getItem("pinghab.where")||"null"); }catch(e){ return null; } })() };
+    var cls = r.score>=80 ? "ph-good" : (r.score>=55 ? "ph-warn" : "ph-bad");
+    var html = '<div class="ph-card" style="margin-top:8px">' +
+      '<div style="font-size:26px"><b class="' + cls + '">' + fa(r.score) + '/۱۰۰ — ' + esc(r.verdict) + '</b></div>' +
+      '<div class="sub">بازی: <b>' + esc((prof&&prof.fa)||game) + '</b> · آستانه‌ها: خوب p50≤' + fa((prof&&prof.good&&prof.good.p50)||60) +
+      'ms · نوسان≤' + fa((prof&&prof.good&&prof.good.jitter)||10) + 'ms</div>' +
+      '<table style="width:100%;font-size:13px;border-collapse:collapse;margin-top:8px">' +
+      '<tr><td>پینگ میانه (خط تو → لبه)</td><td><b>' + rnd(r.p50,0) + 'ms</b></td></tr>' +
+      '<tr><td>نوسان</td><td>' + rnd(r.jitter,0) + 'ms</td></tr>' +
+      '<tr><td>افت بسته</td><td>' + fa(r.loss) + '٪</td></tr>' +
+      (r.best ? '<tr><td>بهترین DNS روی خط تو</td><td><b>' + esc(r.best.name) + '</b> — ' + rnd(r.best.ms,0) + 'ms</td></tr>' : '') +
+      (nat && nat.ok ? '<tr><td>نوع NAT</td><td>' + esc(nat.type) + ' <span class="sub">' + esc(nat.note) + '</span></td></tr>' : '') +
+      (bb && bb.delta!=null ? '<tr><td>بافر‌بلاست (افزایش زیر بار)</td><td>' + rnd(bb.delta,0) + 'ms</td></tr>' : '') +
+      '</table>';
+    if (pred) html += '<div class="ph-box" style="margin-top:8px"><b>🧠 پیش‌بینی تجربی (۵ دقیقهٔ بعد)</b><div class="sub">' +
+      'حدود <b>' + rnd(pred.p50,0) + 'ms</b> با بازهٔ ' + rnd(pred.lo,0) + '–' + rnd(pred.hi,0) + 'ms — از نمونه‌های همین دقیقه. ' +
+      'این آماری است، تضمین نیست.</div></div>';
+    if (r.reasons.length) html += '<div style="margin-top:8px"><b>ضعف‌ها:</b> ' + r.reasons.map(function(x){ return '<span class="ph-badge">'+esc(x)+'</span>'; }).join(" ") + '</div>';
+    else html += '<div class="ph-good" style="margin-top:8px">نقطهٔ ضعفی در این سطح از سنجش پیدا نشد 👌</div>';
+    html += '<div class="sub" style="margin-top:8px">همهٔ اعداد از دستگاه خودت است. «آماده» یعنی برای این بازی روی اینترنت الان؛ ترافیک ساعت بعد می‌تواند فرق کند.</div></div>';
+    out.innerHTML = html;
+  };
+  var HIST_LOADED = false;
+  async function loadHistory(force){
+    if (HIST_LOADED && !force) return;
+    var out = q("ph2-hist-out"); out.innerHTML = "در حال گرفتن آمار…";
+    var where = null; try{ where = JSON.parse(localStorage.getItem("pinghab.where")||"null"); }catch(e){}
+    var prov = (where && where.province) || "", car = (where && where.carrier) || "";
+    try{
+      var g = await jget("/api/golden?province=" + encodeURIComponent(prov) + "&carrier=" + encodeURIComponent(car));
+      var t = await jget("/api/trend?days=30&province=" + encodeURIComponent(prov) + "&carrier=" + encodeURIComponent(car));
+      var html = '<div class="ph-card" style="margin-top:8px"><b>🕐 ساعت طلایی</b> <span class="sub">' +
+        (prov||car ? esc(prov) + (car? " · "+esc(car):"") : "همهٔ ایران") + ' · ' + fa(g.samples) + ' نمونه</span>';
+      if (g.samples < 3){
+        html += '<div class="sub">نمونه کافی نیست. یک سنجش در بخش «📍 خط من» انجام بده و «ثبت بی‌نام» را بزن؛ با ۳ نمونهٔ بیشتر، این نمودار معنا پیدا می‌کند.</div>';
+      } else {
+        var mx = Math.max.apply(null, g.rows.map(function(r){ return r.avg||0; }).concat([1]));
+        var mn = Math.min.apply(null, g.rows.filter(function(r){return r.avg!=null;}).map(function(r){ return r.avg; }).concat([mx]));
+        html += '<div class="sub" style="margin-top:6px">هر ستون یک ساعت (۰ تا ۲۳ به وقت ایران) — کوتاه‌تر = بهتر</div><div>';
+        g.rows.forEach(function(r2){
+          var h = r2.avg==null ? 3 : Math.max(3, Math.round(40*(r2.avg-mn+8)/(mx-mn+8)));
+          var col = r2.avg==null ? "rgba(127,127,127,.25)" : (r2.avg < mn + (mx-mn)/3 ? "#34b04a" : (r2.avg > mn + 2*(mx-mn)/3 ? "#e53935" : "var(--acc)"));
+          html += '<span title="ساعت '+fa(r2.hour)+' — '+(r2.avg==null?"بدون نمونه":rnd(r2.avg,1)+"ms ("+fa(r2.n)+" نمونه)")+'" ' +
+            'style="display:inline-block;width:3.4%;margin:0 .3%;height:'+h+'px;background:'+col+';vertical-align:bottom"></span>';
+        });
+        html += '</div>';
+        if (g.best.length) html += '<div class="sub">بهترین ساعت‌ها: ' + g.best.map(function(b){ return 'ساعت '+fa(b.hour)+' ('+rnd(b.avg,1)+'ms)'; }).join(" · ") + '</div>';
+        if (g.worst.length) html += '<div class="sub">بدترین ساعت‌ها: ' + g.worst.map(function(b){ return 'ساعت '+fa(b.hour)+' ('+rnd(b.avg,1)+'ms)'; }).join(" · ") + '</div>';
+      }
+      html += '<div class="sub">' + esc(g.note||"") + '</div></div>';
+      // روند
+      html += '<div class="ph-card"><b>📈 روند ۳۰ روزه</b>';
+      var rows = t.rows || [];
+      if (rows.filter(function(r2){return r2.avg!=null;}).length < 2){
+        html += '<div class="sub">برای روند، حداقل چند روز نمونه لازم است. روزهای خالی = بدون نمونه.</div>';
+      } else {
+        var vals = rows.map(function(r2){ return r2.avg; }).filter(function(v){ return v!=null; });
+        var mx2 = Math.max.apply(null, vals), mn2 = Math.min.apply(null, vals);
+        html += '<div style="margin-top:6px">' + rows.map(function(r2){
+          var h = r2.avg==null ? 3 : Math.max(3, Math.round(34*(r2.avg-mn2+6)/(mx2-mn2+6)));
+          return '<span title="'+(r2.avg==null?"—":rnd(r2.avg,1)+"ms / "+fa(r2.n)+" نمونه")+'" style="display:inline-block;width:' +
+            (100/Math.max(1,rows.length)-0.6) + '%;margin:0 .3%;height:'+h+'px;background:'+(r2.avg==null?"rgba(127,127,127,.25)":"var(--acc)")+';vertical-align:bottom"></span>';
+        }).join("") + '</div>';
+        html += '<div class="sub">' + (t.delta==null ? "" : (t.delta<=0 ? 'بهبود ' + rnd(Math.abs(t.delta),1) : 'بدتر شدن ' + rnd(t.delta,1)) + 'ms نسبت به اول بازه. ') + esc(t.note||"") + '</div>';
+      }
+      html += '</div>';
+      out.innerHTML = html; HIST_LOADED = true;
+    }catch(e){ out.innerHTML = '<div class="ph-warn">خطا: ' + esc(e.message) + '</div>'; }
+  }
+  if (q("ph2-hist-go")) q("ph2-hist-go").onclick = function(){ loadHistory(true); };
+
+  /* ================= 🤝 تیمی و اشتراک ================= */
+  function teamId(){
+    var k = "pinghab.uid"; var v = null;
+    try{ v = localStorage.getItem(k); }catch(e){}
+    if (!v){ v = "u" + Math.random().toString(36).slice(2, 10); try{ localStorage.setItem(k, v); }catch(e){} }
+    return v;
+  }
+  function renderTeam(d){
+    var html = '<div class="ph-card" style="margin-top:8px"><b>تیم: ' + esc(d.name||"") + '</b> ' +
+      '<span class="ph-badge mono">' + esc(d.code||"") + '</span>';
+    if (d.code) html += ' <button class="wwbtn wwcopy" id="ph2-team-copy" data-c="' + esc(d.code) + '">کپی کد</button>';
+    html += '<div class="sub">اعضا: ' + fa((d.members||[]).length) + ' نفر</div>';
+    if ((d.members||[]).length){
+      html += '<table style="width:100%;font-size:13px;border-collapse:collapse"><tr style="opacity:.75"><th style="text-align:right">نام</th><th style="text-align:right">استان/اپراتور</th></tr>';
+      (d.members||[]).forEach(function(m){ html += '<tr><td>' + esc(m.name||"—") + '</td><td>' + esc((m.province||"—") + (m.carrier ? " / " + m.carrier : "")) + '</td></tr>'; });
+      html += '</table>';
+    }
+    if ((d.best_shared||[]).length){
+      html += '<div style="margin-top:6px"><b>بهترین DNS مشترک تیم</b><table style="width:100%;font-size:13px;border-collapse:collapse">';
+      (d.best_shared||[]).forEach(function(b){ html += '<tr><td>' + esc(b.resolver) + '</td><td><b>' + rnd(b.avg,1) + 'ms</b></td><td>' + fa(b.n) + ' نمونه</td></tr>'; });
+      html += '</table></div>';
+    }
+    html += '<div class="sub">' + esc(d.note||"") + '</div></div>';
+    q("ph2-team-out").innerHTML = html;
+    var cp = q("ph2-team-copy"); if (cp) cp.onclick = function(){ copy(cp, cp.getAttribute("data-c")); };
+  }
+  if (q("ph2-team-create")) q("ph2-team-create").onclick = async function(){
+    var w = null; try{ w = JSON.parse(localStorage.getItem("pinghab.where")||"null"); }catch(e){}
+    try{
+      var d = await jpost("/api/team", { action:"create", name: q("ph2-team-name").value || "تیم من" });
+      try{ localStorage.setItem("pinghab.team", d.code); }catch(e){}
+      var d2 = await jpost("/api/team", { action:"join", code:d.code, uid:teamId(), name: (w&&w.city)||"من", province:(w&&w.province)||"", carrier:(w&&w.carrier)||"" });
+      renderTeam({ ...d2, note:"کد را به دوست‌هایت بده؛ هرکس «ورود به تیم» را بزند و یک سنجش ثبت کند، بهترین مشترک ساخته می‌شود." });
+      q("ph2-team-code").value = d.code;
+    }catch(e){ q("ph2-team-out").innerHTML = '<div class="ph-warn">خطا: ' + esc(e.message) + '</div>'; }
+  };
+  if (q("ph2-team-join")) q("ph2-team-join").onclick = async function(){
+    var w = null; try{ w = JSON.parse(localStorage.getItem("pinghab.where")||"null"); }catch(e){}
+    var code = (q("ph2-team-code").value||"").toUpperCase().replace(/[^A-Z0-9]/g,"");
+    if (!code){ q("ph2-team-out").innerHTML = '<div class="ph-warn">کد تیم را بنویس.</div>'; return; }
+    try{
+      await jpost("/api/team", { action:"join", code:code, uid:teamId(), name:(w&&w.city)||"من", province:(w&&w.province)||"", carrier:(w&&w.carrier)||"" });
+      try{ localStorage.setItem("pinghab.team", code); }catch(e){}
+      var d = await jget("/api/team?code=" + encodeURIComponent(code));
+      renderTeam(d);
+    }catch(e){ q("ph2-team-out").innerHTML = '<div class="ph-warn">خطا: ' + esc(e.message) + '</div>'; }
+  };
+  if (q("ph2-team-refresh")) q("ph2-team-refresh").onclick = async function(){
+    var code = (q("ph2-team-code").value||"").toUpperCase().replace(/[^A-Z0-9]/g,"");
+    if (!code) { try{ code = localStorage.getItem("pinghab.team")||""; }catch(e){} }
+    if (!code){ q("ph2-team-out").innerHTML = '<div class="sub">اول یک تیم بساز یا کد بزن.</div>'; return; }
+    try{ renderTeam(await jget("/api/team?code=" + encodeURIComponent(code))); }
+    catch(e){ q("ph2-team-out").innerHTML = '<div class="ph-warn">خطا: ' + esc(e.message) + '</div>'; }
+  };
+  (async function(){ try{ var c = localStorage.getItem("pinghab.team"); if (c){ q("ph2-team-code").value = c; } }catch(e){} })();
+  // کارت تصویری
+  if (q("ph2-card-go")) q("ph2-card-go").onclick = async function(){
+    var out = q("ph2-card-out");
+    if (!PREFLIGHT){ out.innerHTML = '<div class="ph-warn">اول در تب «🎮 آمادهٔ رنکد» آزمون را بگیر، بعد کارت بساز.</div>'; return; }
+    var W = 1000, H = 1000, c = document.createElement("canvas"); c.width = W; c.height = H;
+    var x = c.getContext("2d");
+    var cs = getComputedStyle(document.documentElement);
+    var bg = (cs.getPropertyValue("--bg")||"#000").trim() || "#000";
+    var tx = (cs.getPropertyValue("--tx")||"#fff").trim() || "#fff";
+    var ac = (cs.getPropertyValue("--acc")||"#ffc000").trim() || "#ffc000";
+    x.fillStyle = bg; x.fillRect(0,0,W,H);
+    x.strokeStyle = ac; x.lineWidth = 10; x.strokeRect(24,24,W-48,H-48);
+    x.fillStyle = ac; x.font = "700 46px Tahoma,sans-serif"; x.textAlign = "center";
+    x.fillText("⚡ پینگ‌هاب", W/2, 120);
+    x.fillStyle = tx; x.font = "400 30px Tahoma,sans-serif";
+    x.fillText("نتیجهٔ سنجش خط من", W/2, 175);
+    var r = PREFLIGHT.result;
+    x.fillStyle = ac; x.font = "700 130px Tahoma,sans-serif";
+    x.fillText(String(r.score), W/2, 400);
+    x.fillStyle = tx; x.font = "700 44px Tahoma,sans-serif";
+    x.fillText(r.score>=80 ? "آمادهٔ بازی" : (r.score>=55 ? "مرزی" : "آماده نیست"), W/2, 465);
+    x.font = "400 34px Tahoma,sans-serif";
+    var lines = [
+      "بازی: " + (PREFLIGHT.fa||PREFLIGHT.game),
+      "پینگ میانه: " + (r.p50==null?"—":Math.round(r.p50) + " ms"),
+      "نوسان: " + Math.round(r.jitter) + " ms · افت: " + r.loss + "%",
+      r.best ? ("بهترین DNS خط من: " + r.best.name + " (" + Math.round(r.best.ms) + " ms)") : "",
+      PREFLIGHT.where && PREFLIGHT.where.province ? (PREFLIGHT.where.province + (PREFLIGHT.where.carrier ? " · " + PREFLIGHT.where.carrier : "")) : "",
+    ].filter(Boolean);
+    lines.forEach(function(l,i){ x.fillText(l, W/2, 560 + i*58); });
+    x.fillStyle = ac; x.font = "400 30px Tahoma,sans-serif";
+    x.fillText("pinghab.catclient-59gk2mui.workers.dev", W/2, 900);
+    x.fillStyle = tx; x.font = "400 26px Tahoma,sans-serif";
+    x.fillText("DNS پینگ داخل مچ را کم نمی‌کند — کاندید، نه توصیه", W/2, 945);
+    var url = c.toDataURL("image/png");
+    var a = document.createElement("a"); a.href = url; a.download = "pinghab-score.png"; a.textContent = "دانلود کارت";
+    out.innerHTML = '<div class="ph-card" style="margin-top:8px"><img alt="کارت نتیجه" style="max-width:100%;border:1px solid rgba(127,127,127,.3)" src="' + url + '"></div>';
+    out.innerHTML += '<div class="row" style="gap:8px;margin-top:8px"><a class="wwbtn wwprimary" href="' + url + '" download="pinghab-score.png">⬇️ دانلود کارت</a>' +
+      '<button class="wwbtn" id="ph2-card-share">📤 اشتراک</button></div>';
+    var sh = q("ph2-card-share");
+    if (sh) sh.onclick = async function(){
+      try{
+        var blob = await (await fetch(url)).blob();
+        var file = new File([blob], "pinghab-score.png", { type:"image/png" });
+        if (navigator.canShare && navigator.canShare({ files:[file] })) await navigator.share({ files:[file], text:"نتیجهٔ سنجش خط من — پینگ‌هاب" });
+        else out.insertAdjacentHTML("beforeend", '<div class="sub">اشتراک فایل روی این دستگاه پشتیبانی نمی‌شود؛ از «دانلود کارت» استفاده کن.</div>');
+      }catch(e){ out.insertAdjacentHTML("beforeend", '<div class="sub">اشتراک انجام نشد: ' + esc(e.message) + '</div>'); }
+    };
+  };
+
+  /* ================= PWA (فقط روی سایت، نه داخل اپ) ================= */
+  if (location.protocol !== "file:" && !/appassets\.androidplatform\.net$/.test(location.hostname) && "serviceWorker" in navigator){
+    navigator.serviceWorker.register("/sw.js").catch(function(){});
+  }
+})();
+</script>
+
+
 
   <div class="foot">
     پینگ‌هاب · اندازه‌گیری محلی در مرورگر خودت · بدون ذخیره‌سازی داده‌های شخصی<br>

@@ -31,6 +31,7 @@ const CORS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, X-Admin-Key",
+  "Access-Control-Expose-Headers": "Date, Server-Timing",
   "Access-Control-Max-Age": "86400",
 };
 const json = (obj, status = 200, extra = {}) =>
@@ -236,6 +237,66 @@ async function tcpDnsQuery(ip, name = "www.wikipedia.org", timeoutMs = 4000) {
   }
 }
 
+/* ------------------------------------------------------------------ مسیر (AS-Path) و رادار */
+
+/* جدول کوچک نقاط تبادل ترافیک (IXP). لینک‌های peering در RIPEstat ثبت نمی‌شوند، پس این‌ها را
+   دستی نگه می‌داریم و در خروجی هم صادقانه «IXP» می‌نویسیم. */
+const IX_TABLE = {
+  "80.81.192": "DE-CIX Frankfurt", "80.81.193": "DE-CIX Frankfurt", "80.81.194": "DE-CIX Frankfurt",
+  "80.81.195": "DE-CIX Frankfurt", "80.81.196": "DE-CIX Frankfurt",
+  "195.66.224": "LINX London", "195.66.225": "LINX London", "195.66.226": "LINX London",
+  "80.249.208": "AMS-IX Amsterdam", "80.249.209": "AMS-IX Amsterdam", "80.249.210": "AMS-IX Amsterdam",
+  "198.32.160": "Equinix Ashburn", "198.32.176": "Equinix San Jose", "198.32.118": "Equinix Amsterdam",
+  "185.1.8": "MIX Milan", "193.178.185": "France-IX Paris", "94.31.32": "Netnod Stockholm",
+  "91.239.96": "DE-CIX Frankfurt",
+};
+/* بازه‌هایی که از داخل ایران دیده می‌شوند ولی ثبت عمومی (RIPE) ندارند — صادقانه همین را می‌نویسیم */
+const IR_INTERNAL = { "185.228.239": "شبکهٔ داخلی (ثبت عمومی ندارد)", "185.228.238": "شبکهٔ داخلی (ثبت عمومی ندارد)",
+  "185.228.237": "شبکهٔ داخلی (ثبت عمومی ندارد)" };
+const isPrivate = (ip) => /^10\./.test(ip) || /^192\.168\./.test(ip) || /^172\.(1[6-9]|2\d|3[01])\./.test(ip) || /^100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])\./.test(ip);
+const ixOf = (ip) => { const k = ip.split(".").slice(0, 3).join("."); return IX_TABLE[k] || null; };
+const irInternalOf = (ip) => { const k = ip.split(".").slice(0, 3).join("."); return IR_INTERNAL[k] || null; };
+
+/** نام شبکهٔ هر آی‌پی با RIPEstat (بدون کلید) — با کش ۳۰ روزه */
+async function asnOf(env, ip) {
+  if (isPrivate(ip)) return { asn: null, holder: "شبکهٔ داخلی (خصوصی)", kind: "private" };
+  const ix = ixOf(ip);
+  const key = "asn:" + ip;
+  try { const c = await env.DNSRADAR_KV.get(key); if (c) return JSON.parse(c); } catch {}
+  const intl = irInternalOf(ip);
+  let out = { asn: null, holder: intl || null, kind: ix ? "ix" : (intl ? "internal" : "unknown") };
+  try {
+    const r = await fetch("https://stat.ripe.net/data/prefix-overview/data.json?resource=" + ip);
+    if (r.ok) {
+      const j = await r.json();
+      const a = ((j.data || {}).asns || [])[0] || {};
+      out = { asn: a.asn || null, holder: a.holder || null, kind: ix ? "ix" : "transit" };
+    }
+  } catch {}
+  if (out.kind !== "ix") {
+    if (/cloudflare/i.test(out.holder || "")) out.kind = "cloud";
+    else if (/google|akamai|amazon|microsoft|fastly|meta|facebook|apple/i.test(out.holder || "")) out.kind = "cloud";
+  }
+  try { await env.DNSRADAR_KV.put(key, JSON.stringify(out), { expirationTtl: 60 * 60 * 24 * 30 }); } catch {}
+  return out;
+}
+
+/** رادار کلادفلر: قطعی‌ها، هجک‌های BGP، ترافیک ایران، روند ASN اپراتور */
+async function radarGet(env, path) {
+  const token = env.CF_API_TOKEN;
+  if (!token) return { ok: false, error: "توکن Radar روی سرور تنظیم نشده" };
+  const key = "rd:" + djb2(path);
+  try { const c = await env.DNSRADAR_KV.get(key); if (c) return { ok: true, cached: true, ...JSON.parse(c) }; } catch {}
+  try {
+    const r = await fetch("https://api.cloudflare.com/client/v4/radar/" + path, { headers: { Authorization: "Bearer " + token } });
+    const j = await r.json().catch(() => null);
+    if (!r.ok || !j || j.success === false) return { ok: false, error: "radar " + r.status + " " + String((j && j.errors && j.errors[0] && j.errors[0].message) || "") };
+    const out = { result: j.result };
+    try { await env.DNSRADAR_KV.put(key, JSON.stringify(out), { expirationTtl: 900 }); } catch {}
+    return { ok: true, cached: false, ...out };
+  } catch (e) { return { ok: false, error: "radar fetch: " + String(e?.name || e) }; }
+}
+
 /* ------------------------------------------------------------------ بررسی لبه‌ای DoH */
 
 const WORLD_CATALOG = __WORLD_CATALOG__;
@@ -246,6 +307,7 @@ const GAMES = __GAMES_CATALOG__;        // سرورهای بازی (MIT — ping
 const CF_IR = __CF_IR__;                // آی‌پی‌های کلادفلر دامنه‌های ایرانی (MIT — CF-Web)
 const R_META = __RESOLVERS_META__;      // متادیتای رزولورها: DNSSEC/بدون‌لاگ/بدون‌فیلتر (ISC)
 const SCAN_SUMMARY = __SCAN_SUMMARY__;  // نتیجهٔ اسکن خودمان (اثر رزولور → آی‌پی → RTT)
+const GAME_PROFILES = __GAME_PROFILES__; // آستانه و وزن هر بازی (تجربی — در متن هم همین را می‌نویسیم)
 const EDGE_RESOLVERS = [
   { id: "cloudflare", name: "کلودفلر", url: "https://cloudflare-dns.com/dns-query", dns: "1.1.1.1" },
   { id: "google", name: "گوگل", url: "https://dns.google/dns-query", dns: "8.8.8.8" },
@@ -306,7 +368,7 @@ function nearestProvince(lat, lon) {
 
 /** پروکسی Globalping با کش KV — سنجش از داخل ایران و هر کشور دیگر */
 async function gpRun(env, payload, ttl = 900) {
-  const key = "gp:" + djb2(JSON.stringify(payload));
+  const key = "gp:v3:" + djb2(JSON.stringify(payload));   // v2: ساختار hops اصلاح شد
   try { const c = await env.DNSRADAR_KV.get(key); if (c) return { ok: true, cached: true, ...JSON.parse(c) }; } catch {}
   let post;
   try {
@@ -339,8 +401,13 @@ function gpSimplify(d, id) {
       status: r.statusCodeName || null, answers: (r.answers || []).map((a) => a.value).slice(0, 4) };
     if (Array.isArray(r.timings)) { const st = r.stats || {};
       return { ...base, kind: "ping", min: st.min ?? null, avg: st.avg ?? null, max: st.max ?? null, loss: st.loss ?? null }; }
-    if (Array.isArray(r.hops)) return { ...base, kind: "traceroute",
-      hops: r.hops.slice(0, 14).map((h) => ({ ip: h.resolvedAddress || h.address || null, ms: (h.timings && h.timings.length) ? Math.round(h.timings[0]) : null })) };
+    if (Array.isArray(r.hops)) { const hh = (h) => {
+        const t = (h.timings || [])[0];
+        const v = t == null ? null : (typeof t === "number" ? t : (t.rtt ?? null));
+        return v == null ? null : Math.round(v * 10) / 10;
+      };
+      return { ...base, kind: "traceroute",
+        hops: r.hops.slice(0, 18).map((h) => ({ ip: h.resolvedAddress || h.address || null, ms: hh(h) })) }; }
     if (r.statusCode !== undefined || r.headers) return { ...base, kind: "http", status: r.statusCode ?? null, total: (r.timings || {}).total ?? null };
     return { ...base, kind: "?", raw: JSON.stringify(r).slice(0, 140) };
   });
@@ -522,6 +589,128 @@ function sharePage(doc) {
 </div></body></html>`;
 }
 
+
+/* ------------------------------------------------------------------ صفحه‌های سروشده (وضعیت/گزارش/مستندات) */
+
+const PAGE_CSS = `
+:root{--bg:#000;--card:#0e0e0e;--line:#2c2c2c;--tx:#fff;--mut:#9a9a9a;--acc:#ffc000;--ok:#34b04a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:400 14.5px/1.9 Vazirmatn,Tahoma,system-ui,sans-serif;padding:18px}
+.wrap{max-width:900px;margin:0 auto}
+h1{font-size:20px;margin:6px 0 2px} h2{font-size:16px;margin:22px 0 6px;color:var(--acc)}
+.card{background:var(--card);border:1px solid var(--line);padding:12px 14px;margin:10px 0}
+.mut{color:var(--mut);font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+th,td{padding:5px 4px;border-bottom:1px solid var(--line);text-align:right}
+.mono{font-family:ui-monospace,Consolas,monospace;direction:ltr}
+a{color:var(--acc)} .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:2px 9px;font-size:12px;margin:2px}
+.ok{color:var(--ok)} .bad{color:#e53935}
+`;
+
+function shell(title, body) {
+  return `<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(title)} — پینگ‌هاب</title>
+<style>${PAGE_CSS}</style></head><body><div class="wrap">
+<h1>⚡ ${esc(title)}</h1>
+<div class="mut">سنجش از خط خودت، نه وعده. <a href="/app">اپ</a> · <a href="/status">وضعیت</a> ·
+<a href="/report">گزارش</a> · <a href="/docs">مستندات API</a></div>
+${body}
+<div class="mut" style="margin-top:22px">پینگ‌هاب — بدون VPN، بدون فیلترشکن، بدون وعدهٔ کاهش پینگ در مچ.</div>
+</div></body></html>`;
+}
+
+function statusPage(rows, outages, edge) {
+  const stats = rows.length
+    ? `<table><tr><th>استان / اپراتور</th><th>رزولور</th><th>میانگین</th><th>n</th></tr>` +
+      rows.map((r) => `<tr><td>${esc(r.province)} / ${esc(r.carrier)}</td><td class="mono">${esc(r.resolver)}</td><td>${r.avg ?? "—"} ms</td><td>${r.n}</td></tr>`).join("") + `</table>`
+    : `<div class="mut">هنوز نمونهٔ بی‌نامی ثبت نشده — اولین نفر باش: در اپ بخش «📍 خط من» → «ثبت بی‌نام».</div>`;
+  const edges = `<table><tr><th>DNS</th><th>وضعیت از دید لبه</th><th>ms</th></tr>` +
+    edge.map((e) => `<tr><td>${esc(e.name)}</td><td class="${e.ok ? "ok" : "bad"}">${e.ok ? "پاسخ می‌دهد" : "پاسخ نداد"}</td><td>${e.ms ?? "—"}</td></tr>`).join("") + `</table>`;
+  const out = outages.length
+    ? outages.map((a) => `<div class="card"><b>${esc(a.scope || "رخداد")}</b> ${a.startDate ? `<span class="mut mono">${esc(String(a.startDate).slice(0, 16))}</span>` : ""}
+        <div class="mut">${esc((a.description || a.eventType || "").slice(0, 220))}</div>
+        ${(a.asns || []).length ? `<div class="mut">ASN: ${(a.asns || []).slice(0, 8).map((x) => `<span class="pill mono">${esc(String(x))}</span>`).join("")}</div>` : ""}</div>`).join("")
+    : `<div class="mut">رخدادِ قطعیِ اعلامی در ۲۴ ساعت گذشته ثبت نشده.</div>`;
+  return shell("وضعیت شبکه و دادهٔ ما", `
+    <h2>🚦 وضعیت سرورهای DNS از دید اینترنت</h2><div class="card">${edges}
+      <div class="mut">این عدد از لبهٔ کلادفلر است، نه خط تو. سرورهای ایرانی از بیرون پاسخ نمی‌دهند (طبیعی است).</div></div>
+    <h2>🌡️ رخدادهای اعلامی (۲۴ ساعت، رادار کلادفلر)</h2><div class="card">${out}</div>
+    <h2>📊 آمار بی‌نام کاربران (بهترین‌ها)</h2><div class="card">${stats}
+      <div class="mut">فقط استان/اپراتور/رزولور/عدد ذخیره می‌شود. دادهٔ خام: <a href="/api/export">JSON</a> ·
+      <a href="/api/export?format=csv">CSV</a></div></div>
+    <div class="mut">صفحهٔ وضعیت هر ۶۰ ثانیه خودش را تازه می‌کند… <span class="mono">${new Date().toISOString().slice(0, 16)}Z</span></div>
+    <script>setTimeout(function(){location.reload()},60000)</script>`);
+}
+
+function reportPage(rows, meta) {
+  const body = rows.length
+    ? `<table><tr><th>استان</th><th>میانگین (ms)</th><th>نمونه</th><th>اپراتورهای دیده‌شده</th></tr>` +
+      rows.map((r) => `<tr><td>${esc(r.province)}</td><td>${r.avg ?? "—"}</td><td>${r.n}</td><td>${r.carriers}</td></tr>`).join("") + `</table>`
+    : `<div class="mut">داده‌ای برای گزارش نیست؛ با ثبت بی‌نام در اپ، ماه بعد این گزارش ساخته می‌شود.</div>`;
+  const best = rows[0], worst = rows[rows.length - 1];
+  return shell("گزارش بهداشت اینترنت (خودساخته، صادقانه)", `
+    <div class="card"><b>چه چیزی اینجاست؟</b>
+      <div class="mut">این گزارش از نمونه‌های بی‌نام خود کاربران ساخته می‌شود: ${meta.keyCount} گروه (استان/اپراتور/رزولور)
+      و ${meta.samples} نمونه. هیچ عددی حدس زده نشده و هیچ ادعایی دربارهٔ «بهترین DNS ایران» نمی‌کنیم —
+      چون بهترین، بسته به خط، ساعت و مسیر فرق می‌کند.</div>
+      ${best && best.avg != null ? `<div class="mut">میانگین کمترین: <b>${esc(best.province)}</b> (${best.avg} ms) ·
+      بیشترین: <b>${esc(worst ? worst.province : "")}</b> (${worst && worst.avg != null ? worst.avg : "—"} ms)
+      <span class="pill">ترتیب بر اساس میانگین است، نه قضاوت کیفیت</span></div>` : ""}</div>
+    <h2>استان‌ها</h2><div class="card">${body}</div>
+    <h2>دادهٔ باز</h2><div class="card">
+      <div class="mut">می‌توانی همین داده را بردار و خودت تحلیل کنی:
+        <a href="/api/export">JSON</a> · <a href="/api/export?format=csv">CSV</a> — با ذکر منبع «پینگ‌هاب».</div>
+      <div class="mut">برای مقایسه، مرجع رسمی: گزارش‌های رگولاتوری (RTT و زمان پاسخ DNS هر اپراتور) —
+        که در آن‌ها هر سه اپراتور بالاتر از حد مجاز خودشان هستند.</div></div>
+    <h2>آنچه این گزارش نیست</h2><div class="card"><div class="mut">
+      ❌ رتبه‌بندی «بهترین DNS» برای همهٔ ایران — معنا ندارد.<br>
+      ❌ ادعای کاهش پینگ در مچ بازی — DNS پینگ داخل مچ را کم نمی‌کند.<br>
+      ✅ تصویری از آنچه کاربران واقعاً اندازه گرفته‌اند، با تعداد نمونه در کنار هر عدد.</div></div>`);
+}
+
+function docsPage() {
+  const rows = [
+    ["GET", "/api/geo", "تشخیص خط کاربر: ASN، اپراتور، شهر، لبهٔ کلادفلر"],
+    ["GET", "/api/ir", "۳۱ استان · ۲۵۰ شهر · ۲۴ اپراتور با PLMN/ASN"],
+    ["GET", "/api/dnslist?cc=IR", "کاتالوگ ۱۹۳ کشور (۶۲٬۷۹۰ رزولور) + گروه‌های منتخب"],
+    ["GET", "/api/impact?name=…", "اثر PoP: هر رزولور چه آی‌پی می‌دهد"],
+    ["GET", "/api/path?target=1.1.1.1&cc=IR", "🛰️ مسیر گام‌به‌گام از داخل ایران + ASN/IX هر گام"],
+    ["GET", "/api/gp?type=ping|dns|traceroute|http&target=…&cc=IR", "سنجش از پروب‌های جهانی (کش ۱۰ دقیقه)"],
+    ["GET", "/api/dnssec?name=…", "DNSSEC (پرچم AD) + کد خطای EDE"],
+    ["GET", "/api/resolvers?flags=dnssec,nolog&doh=1", "۷۷۲ رزولور با پرچم‌ها و آدرس DoH (ISC)"],
+    ["GET", "/api/games?game=cs2", "کاتالوگ ۹ بازی · ۱۴۱ سرور (MIT)"],
+    ["GET", "/api/profile?game=cs2", "🎯 آستانه‌های تجربی هر بازی"],
+    ["GET", "/api/cfip · /api/cfip-test", "آی‌پی تمیز کلادفلر ایرانی (MIT) + سنجش از ایران"],
+    ["GET", "/api/radar?asn=44244", "🌡️ قطعی‌ها، هجک‌های BGP و ترافیک ایران (رادار)"],
+    ["GET", "/api/golden?province=تهران&carrier=ایرانسل", "🕐 ساعت طلایی (میانگین ساعتی)"],
+    ["GET", "/api/trend?days=30", "📈 روند روزانه"],
+    ["GET", "/api/stats · /api/leaderboard", "آمار بی‌نام استانی/اپراتوری"],
+    ["POST", "/api/report", "ثبت بی‌نام یک نمونه {province,carrier,resolver,ms,ok}"],
+    ["POST", "/api/team", "🤝 حالت تیمی: create | join"],
+    ["GET", "/api/export?format=json|csv", "📤 دادهٔ باز (بی‌نام)"],
+    ["GET", "/api/scan", "نتیجهٔ اسکن ما: اثر رزولور → آی‌پی → تأخیر"],
+    ["GET", "/api/gen?kind=windows-game", "🛠 تولید اسکریپت (ویندوز/CAKE/روتر/MTU)"],
+    ["GET", "/api/ping · /api/load", "RTT + بار مصنوعی (آزمون بافر‌بلاست)"],
+  ];
+  return shell("مستندات API و دادهٔ باز", `
+    <div class="card"><b>قواعد استفاده</b>
+      <div class="mut">همهٔ خروجی‌ها JSON و CORS-آزادند. دادهٔ جمعی «بی‌نام» است: فقط استان/اپراتور/رزولور/عدد —
+      هیچ IP، شناسه یا نامی ذخیره نمی‌شود. استفادهٔ آزاد با ذکر منبع «پینگ‌هاب».</div></div>
+    <h2>مسیرها</h2><div class="card"><table><tr><th>روش</th><th>مسیر</th><th>توضیح</th></tr>
+      ${rows.map((r) => `<tr><td class="mono">${r[0]}</td><td class="mono">${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join("")}
+    </table></div>
+    <h2>صفحه‌ها</h2><div class="card">
+      <span class="pill"><a href="/app">/app — سایت و مینی‌اپ</a></span>
+      <span class="pill"><a href="/status">/status — وضعیت عمومی</a></span>
+      <span class="pill"><a href="/report">/report — گزارش ماهانه</a></span>
+      <span class="pill"><a href="/api/export?format=csv">/api/export — CSV</a></span></div>
+    <h2>صداقت مهندسی</h2><div class="card"><div class="mut">
+      • پروب‌های ایران در Globalping <b>دیتاسنتری</b>اند، نه خط موبایل.<br>
+      • بازهٔ <span class="mono">10.0.0.0/8</span> (رادار/۴۰۳) فقط از خط خودِ کاربر قابل سنجش است.<br>
+      • لینک‌های peering (IXP) در RIPEstat ثبت نمی‌شوند؛ برچسب IX از جدول محلی ماست و همان‌جا شفاف نوشته شده.<br>
+      • «DNS پینگ داخل مچ بازی را کم نمی‌کند» — این را در همهٔ بخش‌ها می‌نویسیم.</div></div>`);
+}
+
 /* ------------------------------------------------------------------ بات تلگرام */
 
 async function botHandleUpdate(env, update) {
@@ -666,14 +855,28 @@ async function botHandleUpdate(env, update) {
   if (cmd === "/watch") {
     const parts = arg.split(/\s+/);
     const target = (parts[0] || "").slice(0, 80);
-    const thr = Math.max(20, Math.min(2000, parseInt(parts[1] || "120", 10) || 120));
+    // فرمت: /watch <domain> [ms] [jitter=ms] [loss=%] [ساعت=a-b]
+    const numArg = (pref, def) => { const p = parts.find((x) => x.toLowerCase().startsWith(pref)); if (!p) return def; const n = parseInt(p.split("=")[1], 10); return Number.isFinite(n) ? n : def; };
+    const thr = Math.max(20, Math.min(2000, numArg("ms=", parseInt(parts[1] || "120", 10) || 120)));
+    const maxJitter = Math.max(0, Math.min(5000, numArg("jitter=", 0)));
+    const maxLoss = Math.max(0, Math.min(100, numArg("loss=", 50)));
+    let hours = null;
+    const hp = parts.find((x) => x.startsWith("ساعت=") || x.startsWith("hours="));
+    if (hp) { const m = hp.split("=")[1].split("-").map((n) => parseInt(n, 10)); if (m.length === 2 && m.every((x) => x >= 0 && x <= 23)) hours = m; }
     if (!/^[a-z0-9.\-]+$/i.test(target)) {
-      await tg(env, "sendMessage", { chat_id: chatId, parse_mode: "HTML", text: "نمونه:\n<code>/watch discord.com 120</code>\n<code>/watch cdn.cloudflare.steamstatic.com 90</code>" });
+      await tg(env, "sendMessage", { chat_id: chatId, parse_mode: "HTML", disable_web_page_preview: true,
+        text: ["نمونه‌ها:", "<code>/watch discord.com 120</code>", "<code>/watch discord.com ms=90 jitter=20 loss=10</code>",
+               "<code>/watch cdn.cloudflare.steamstatic.com ms=80 ساعت=18-24</code>", "", "شرط‌ها ترکیبی‌اند (هر کدام اول برسد، هشدار)."].join("\n") });
       return;
     }
-    await env.DNSRADAR_KV.put(`w:${chatId}:${target}`, JSON.stringify({ chat: chatId, target, thr, ts: Date.now(), last: null }));
+    const doc = { chat: chatId, target, thr, maxJitter: maxJitter || 1e9, maxLoss, hours, ts: Date.now(), last: null };
+    await env.DNSRADAR_KV.put(`w:${chatId}:${target}`, JSON.stringify(doc));
+    const cond = [`میانه > ${thr}ms`];
+    if (maxJitter) cond.push(`نوسان > ${maxJitter}ms`);
+    if (maxLoss < 50) cond.push(`افت > ${maxLoss}٪`);
+    if (hours) cond.push(`ساعت ${hours[0]}–${hours[1]} به وقت ایران`);
     await tg(env, "sendMessage", { chat_id: chatId, parse_mode: "HTML", disable_web_page_preview: true, reply_markup: mainKeyboard(),
-      text: `🔔 پایش فعال شد: <code>${esc(target)}</code>\nاگر از لبهٔ ما بیش از <b>${thr} ms</b> طول بکشد یا پاسخ نده، خبر می‌دهم. (هر ۱۵ دقیقه)\n\n/i/watching را بزن تا لیست را ببینی.` });
+      text: `🔔 پایش فعال شد: <code>${esc(target)}</code>\nشرط‌ها: ${cond.join(" · ")}\nاگر بد شد، حداکثر هر ۳۰ دقیقه یک‌بار خبر می‌دهم. /watching` });
     return;
   }
   if (cmd === "/unwatch") {
@@ -694,7 +897,12 @@ async function botHandleUpdate(env, update) {
     for (const k of l.keys) {
       const raw = await env.DNSRADAR_KV.get(k.name); if (!raw) continue;
       const w = JSON.parse(raw);
-      lines.push(`• <code>${esc(w.target)}</code> — حد ${w.thr} ms${w.last != null ? ` · آخرین: ${w.last} ms` : ""}`);
+      const extras = [];
+      if (w.maxJitter && w.maxJitter < 1e8) extras.push(`نوسان≤${w.maxJitter}ms`);
+      if (w.maxLoss != null && w.maxLoss < 50) extras.push(`افت≤${w.maxLoss}٪`);
+      if (w.hours) extras.push(`ساعت ${w.hours[0]}–${w.hours[1]}`);
+      lines.push(`• <code>${esc(w.target)}</code> — حد ${w.thr} ms${extras.length ? ` · ${extras.join(" · ")}` : ""}` +
+        (w.last != null ? ` · آخرین: ${w.last} ms${w.loss != null ? ` (افت ${w.loss}٪)` : ""}` : ""));
     }
     if (l.keys.length === 0) lines.push("چیزی فعال نیست. <code>/watch discord.com 120</code>");
     await tg(env, "sendMessage", { chat_id: chatId, parse_mode: "HTML", disable_web_page_preview: true, reply_markup: mainKeyboard(), text: lines.join("\n") });
@@ -855,38 +1063,55 @@ async function botHandleUpdate(env, update) {
 async function checkWatchers(env) {
   let list;
   try { list = await env.DNSRADAR_KV.list({ prefix: "w:", limit: 500 }); } catch { return; }
+  const r = EDGE_RESOLVERS[0];
   for (const k of list.keys) {
     const raw = await env.DNSRADAR_KV.get(k.name);
     if (!raw) continue;
     let w; try { w = JSON.parse(raw); } catch { continue; }
     if (!w?.target || !w?.chat) continue;
-    const r = EDGE_RESOLVERS[0];
-    const t0 = Date.now();
-    let ms = null, ok = false, rcode = null;
-    try {
-      const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 5000);
-      const res = await fetch(r.url, { method: "POST",
-        headers: { "Content-Type": "application/dns-message", "Accept": "application/dns-message" },
-        body: dnsPacket(w.target, undefined, { do: true }), signal: ctrl.signal });
-      const p2 = parseDns(new Uint8Array(await res.arrayBuffer()));
-      clearTimeout(t);
-      ms = Date.now() - t0; rcode = p2.rcode; ok = (p2.rcode === 0 || p2.rcode === 3);
-    } catch { ok = false; ms = null; }
-    const breach = !ok || (ms !== null && ms > (w.thr || 120));
-    const key = ms === null ? "down" : String(Math.round(ms / 25));
-    if (breach && w.lastBreachKey !== key) {
-      w.lastBreachKey = key; w.last = ms; w.lastCheck = Date.now();
-      try { await env.DNSRADAR_KV.put(k.name, JSON.stringify(w)); } catch {}
+    // ساعت مجاز (به وقت ایران) — اگر تعیین شده و بیرون بازه باشیم، بررسی نمی‌کنیم
+    const irHour = new Date(Date.now() + 3.5 * 3600 * 1000).getUTCHours();
+    if (Array.isArray(w.hours) && w.hours.length === 2) {
+      const [a, b2] = w.hours;
+      const inRange = a <= b2 ? (irHour >= a && irHour < b2) : (irHour >= a || irHour < b2);
+      if (!inRange) continue;
+    }
+    // سه نمونهٔ سریع برای میانه/نوسان/افت
+    const samples = [];
+    for (let i = 0; i < 3; i++) {
+      const t0 = Date.now();
+      try {
+        const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 4000);
+        const res = await fetch(r.url, { method: "POST",
+          headers: { "Content-Type": "application/dns-message", "Accept": "application/dns-message" },
+          body: dnsPacket(w.target, undefined, { do: true }), signal: ctrl.signal });
+        const p2 = parseDns(new Uint8Array(await res.arrayBuffer()));
+        clearTimeout(t);
+        samples.push({ ms: Date.now() - t0, ok: p2.rcode === 0 || p2.rcode === 3 });
+      } catch { samples.push({ ms: null, ok: false }); }
+    }
+    const good = samples.filter((x) => x.ok && x.ms != null).map((x) => x.ms).sort((a, b2) => a - b2);
+    const ms = good.length ? Math.round(good[Math.floor(good.length / 2)]) : null;
+    const jitter = good.length > 1 ? Math.max(...good) - Math.min(...good) : 0;
+    const loss = Math.round(((samples.length - samples.filter((x) => x.ok).length) / samples.length) * 100);
+    const reasons = [];
+    if (loss > (w.maxLoss ?? 50)) reasons.push(`افت ${loss}٪`);
+    if (ms != null && ms > (w.thr || 120)) reasons.push(`میانه ${ms}ms > حد ${w.thr || 120}ms`);
+    if (ms != null && jitter > (w.maxJitter || 1e9)) reasons.push(`نوسان ${jitter}ms > حد ${w.maxJitter}ms`);
+    if (ms == null && loss > 0) reasons.push("پاسخ نگرفت");
+    const breach = reasons.length > 0;
+    const cooldown = 30 * 60 * 1000;
+    w.last = ms; w.jitter = jitter; w.loss = loss; w.lastCheck = Date.now();
+    if (breach && (!w.lastAlert || Date.now() - w.lastAlert > cooldown)) {
+      w.lastAlert = Date.now();
       try {
         await tg(env, "sendMessage", { chat_id: w.chat, parse_mode: "HTML", disable_web_page_preview: true,
           text: `⚠️ <b>هشدار پایش</b>\n<code>${esc(w.target)}</code>\n` +
-            (ok ? `تأخیر از لبه: <b>${ms} ms</b> (حد تو: ${w.thr} ms)` : "پاسخ نداد یا خطای DNS") +
-            "\n\n<i>این عدد از لبهٔ ماست؛ برای خط خودت اپ را باز کن.</i>" });
+            `دلیل: ${reasons.join(" · ")}\nمیانه ${ms ?? "—"}ms · نوسان ${jitter}ms · افت ${loss}٪\n\n` +
+            "<i>از لبهٔ ما اندازه‌گیری شد؛ برای خط خودت اپ را باز کن.</i>" });
       } catch {}
-    } else if (!breach) {
-      w.last = ms; w.lastCheck = Date.now(); w.lastBreachKey = null;
-      try { await env.DNSRADAR_KV.put(k.name, JSON.stringify(w)); } catch {}
     }
+    try { await env.DNSRADAR_KV.put(k.name, JSON.stringify(w)); } catch {}
   }
 }
 
@@ -1035,7 +1260,17 @@ export default {
         cur.max = cur.max === null ? ms : Math.max(cur.max, ms);
         cur.avg = Math.round((cur.sum / cur.n) * 10) / 10; cur.ts = Date.now();
         await env.DNSRADAR_KV.put(key, JSON.stringify(cur));
-        return json({ ok: true, key, cur, note: "بی‌نام ذخیره شد: فقط استان/اپراتور/رزولور/عدد." });
+        // ساعت طلایی + روند روزانه (به وقت ایران: UTC+3:30)
+        const ir = new Date(Date.now() + 3.5 * 3600 * 1000);
+        const hh = ir.getUTCHours(), day = ir.toISOString().slice(0, 10);
+        for (const hk of [`hr:${prov}:${carrier}:${hh}`, `d:${day}:${prov}:${carrier}`]) {
+          let hcur = { n: 0, sum: 0, ok: 0 };
+          try { const hr = await env.DNSRADAR_KV.get(hk); if (hr) hcur = JSON.parse(hr); } catch {}
+          hcur.n++; hcur.ok += b.ok === false ? 0 : 1; hcur.sum += ms;
+          hcur.avg = Math.round((hcur.sum / hcur.n) * 10) / 10;
+          await env.DNSRADAR_KV.put(hk, JSON.stringify(hcur));
+        }
+        return json({ ok: true, key, cur, hour: hh, day, note: "بی‌نام ذخیره شد: فقط استان/اپراتور/رزولور/عدد." });
       }
 
       /* --- آمار استانی/اپراتوری (آنچه کاربران دیگر ثبت کرده‌اند) --- */
@@ -1145,6 +1380,273 @@ export default {
         const out = await gpRun(env, payload, 600);
         return json(out.ok ? out : { ok: false, error: out.error, detail: out.detail }, out.ok ? 200 : 502);
       }
+
+      /* --- 🛰️ نقشهٔ مسیر: traceroute از داخل ایران + نام‌گذاری ASN/IX هر گام --- */
+      if (p === "/api/path") {
+        const target = (url.searchParams.get("target") || "1.1.1.1").trim().slice(0, 60);
+        const cc = (url.searchParams.get("cc") || "IR").toUpperCase().slice(0, 2);
+        if (!/^[a-z0-9.\-]+$/i.test(target)) return json({ ok: false, error: "هدف نامعتبر" }, 400);
+        let gp = await gpRun(env, { type: "traceroute", target, limit: 1, locations: [{ country: cc }],
+          measurementOptions: { protocol: "ICMP", port: 80 } }, 1800);
+        if (!gp.ok) return json({ ok: false, error: gp.error, detail: gp.detail }, 502);
+        let probe = (gp.results || [])[0] || {};
+        let hops = (probe.hops || []).slice(0, 18);
+        let proto = "ICMP";
+        // بعضی شبکه‌ها ICMP/TCP را می‌بندند → نام را به آی‌پی تبدیل کن و دوباره بکش
+        if (!hops.length && /[a-z]/i.test(target)) {
+          try {
+            const rq = await fetch("https://cloudflare-dns.com/dns-query", { method: "POST",
+              headers: { "Content-Type": "application/dns-message", "Accept": "application/dns-message" }, body: dnsPacket(target) });
+            const pd = parseDns(new Uint8Array(await rq.arrayBuffer()));
+            const ip0 = (pd.a || [])[0];
+            if (ip0) {
+              const gp3 = await gpRun(env, { type: "traceroute", target: ip0, limit: 1, locations: [{ country: cc }],
+                measurementOptions: { protocol: "ICMP", port: 80 } }, 1800);
+              const pr3 = gp3.ok ? ((gp3.results || [])[0] || {}) : {};
+              if ((pr3.hops || []).length) { probe = { ...pr3, resolved: ip0 }; hops = pr3.hops.slice(0, 18); proto = "ICMP (روی آی‌پی " + ip0 + ")"; }
+            }
+          } catch {}
+        }
+        // بعضی شبکه‌ها (دیسکورد و…) ICMP را می‌بندند → دوباره با TCP/443
+        if (!hops.length) {
+          const gp2 = await gpRun(env, { type: "traceroute", target, limit: 1, locations: [{ country: cc }],
+            measurementOptions: { protocol: "TCP", port: 443 } }, 1800);
+          if (gp2.ok) {
+            const pr2 = (gp2.results || [])[0] || {};
+            if ((pr2.hops || []).length) { probe = pr2; hops = pr2.hops.slice(0, 18); proto = "TCP/443"; }
+          }
+        }
+        const enr = await Promise.all(hops.map((h) => h.ip ? asnOf(env, h.ip) : Promise.resolve({ asn: null, holder: null, kind: "lost" })));
+        let prev = 0, biggest = { delta: -1, step: null }, steps = [];
+        hops.forEach((h, i) => {
+          const ms = h.ms == null ? null : h.ms;
+          const delta = (ms != null && prev != null) ? Math.round(Math.max(0, ms - prev) * 10) / 10 : null;
+          if (delta != null && delta > biggest.delta) biggest = { delta, step: i + 1 };
+          if (ms != null) prev = ms;
+          steps.push({ n: i + 1, ip: h.ip, ms: ms == null ? null : Math.round(ms * 10) / 10, delta, asn: enr[i].asn,
+            holder: enr[i].holder, kind: enr[i].kind, ix: ixOf(h.ip || "") || irInternalOf(h.ip || ""),
+            private: h.ip ? isPrivate(h.ip) : null });
+        });
+        return json({ ok: true, target, cc, protocol: proto, probe: { city: probe.city, asn: probe.asn, network: probe.network },
+          steps, hop_count: steps.length, biggest_jump: biggest.step, empty: steps.length === 0,
+          note_empty: steps.length === 0 ? "این شبکه حتی با TCP هم مسیرش را نشان نداد (فایروال سخت)." : null,
+          first_public: (steps.find((x) => x.ip && !x.private) || {}).n || null,
+          last_ms: steps.filter((x) => x.ms != null).slice(-1)[0]?.ms ?? null,
+          note: "این مسیر از پروب دیتاسنتری داخل کشور گرفته شده، نه از خط موبایل تو. لینک‌های peering (IXP) در RIPEstat ثبت نمی‌شوند و با جدول محلی ما برچسب خورده‌اند." });
+      }
+
+      /* --- 🌡️ رادار: قطعی‌ها و رخدادهای اینترنت (کلادفلر) --- */
+      if (p === "/api/radar") {
+        const asn = (url.searchParams.get("asn") || "").replace(/[^0-9]/g, "").slice(0, 8);
+        const [outages, hijacks, humans] = await Promise.all([
+          radarGet(env, "annotations/outages?dateRange=1d&limit=8"),
+          radarGet(env, "bgp/hijacks/events?dateRange=7d&limit=5"),
+          radarGet(env, "http/summary/bot_class?dateRange=7d&location=IR"),
+        ]);
+        let series = null;
+        if (asn) {
+          const t = await radarGet(env, `bgp/timeseries?dateRange=1d&asn=${asn}&aggInterval=1h`);
+          series = t.ok ? t.result : { error: t.error };
+        }
+        return json({ ok: true, asn: asn || null,
+          outages: outages.ok ? (outages.result.annotations || []) : [], outages_error: outages.error || null,
+          hijacks: hijacks.ok ? (hijacks.result.events || []) : [], hijacks_asn: hijacks.ok ? (hijacks.result.asn_info || []) : [],
+          hijacks_error: hijacks.error || null,
+          traffic_ir: humans.ok ? (humans.result.summary_0 || null) : null, traffic_error: humans.error || null,
+          asn_series: series,
+          note: "دادهٔ رادار کلادفلر (صنعتی). این‌ها «رخداد شبکه»‌اند، نه قضاوت دربارهٔ کیفیت خط تو." });
+      }
+
+      /* --- 🕐 ساعت طلایی: میانگین ساعتی نمونه‌های بی‌نام (به وقت ایران) --- */
+      if (p === "/api/golden") {
+        const prov = (url.searchParams.get("province") || "").trim().slice(0, 24);
+        const car = (url.searchParams.get("carrier") || "").trim().slice(0, 24);
+        const list = await env.DNSRADAR_KV.list({ prefix: `hr:${prov}:${car}`, limit: 800 });
+        const hours = Array.from({ length: 24 }, () => ({ n: 0, sum: 0 }));
+        for (const k of list.keys) {
+          const raw = await env.DNSRADAR_KV.get(k.name); if (!raw) continue;
+          const hh = parseInt(k.name.split(":")[3], 10); if (!(hh >= 0 && hh < 24)) continue;
+          let v; try { v = JSON.parse(raw); } catch { continue; }
+          hours[hh].n += v.n || 0; hours[hh].sum += (v.avg || 0) * (v.n || 0);
+        }
+        const rows = hours.map((h, i) => ({ hour: i, n: h.n, avg: h.n ? Math.round((h.sum / h.n) * 10) / 10 : null }));
+        const valid = rows.filter((r) => r.n >= 3 && r.avg != null);
+        const sorted = valid.slice().sort((a, b) => a.avg - b.avg);
+        return json({ ok: true, province: prov || null, carrier: car || null, rows,
+          best: sorted.slice(0, 3), worst: sorted.slice(-3).reverse(), samples: rows.reduce((a, b) => a + b.n, 0),
+          note: "به وقت ایران، از نمونه‌های بی‌نام کاربران. با n کم، نتیجه معنادار نیست." });
+      }
+
+      /* --- 📈 روند روزانه (۳۰ روز) --- */
+      if (p === "/api/trend") {
+        const prov = (url.searchParams.get("province") || "").trim().slice(0, 24);
+        const car = (url.searchParams.get("carrier") || "").trim().slice(0, 24);
+        const days = Math.min(90, Math.max(7, parseInt(url.searchParams.get("days") || "30", 10) || 30));
+        const list = await env.DNSRADAR_KV.list({ prefix: `d:${prov}:${car}`, limit: 900 });
+        const byDay = new Map();
+        for (const k of list.keys) {
+          const raw = await env.DNSRADAR_KV.get(k.name); if (!raw) continue;
+          const day = k.name.split(":")[1]; if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) continue;
+          let v; try { v = JSON.parse(raw); } catch { continue; }
+          const a = byDay.get(day) || { n: 0, sum: 0, ok: 0 };
+          a.n += v.n || 0; a.sum += (v.avg || 0) * (v.n || 0); a.ok += v.ok || 0; byDay.set(day, a);
+        }
+        const today = new Date(); const rows = [];
+        for (let i = days - 1; i >= 0; i--) {
+          const dt = new Date(today.getTime() - i * 86400000).toISOString().slice(0, 10);
+          const a = byDay.get(dt);
+          rows.push({ day: dt, n: a ? a.n : 0, avg: a && a.n ? Math.round((a.sum / a.n) * 10) / 10 : null,
+            ok_rate: a && a.n ? Math.round((a.ok / a.n) * 100) : null });
+        }
+        const vals = rows.filter((r) => r.avg != null);
+        const first = vals[0] || null, last = vals[vals.length - 1] || null;
+        return json({ ok: true, days, rows, first, last,
+          delta: first && last ? Math.round((last.avg - first.avg) * 10) / 10 : null,
+          note: "روند از نمونه‌های بی‌نام کاربران ساخته می‌شود؛ روزهای بدون نمونه خالی‌اند." });
+      }
+
+      /* --- 🎮 پروفایل هر بازی (آستانهٔ تجربی) --- */
+      if (p === "/api/profile") {
+        const slug = (url.searchParams.get("game") || "").trim();
+        if (!slug) {
+          return json({ ok: true, count: Object.keys(GAME_PROFILES.games || {}).length,
+            note: GAME_PROFILES.note, games: Object.entries(GAME_PROFILES.games || {}).map(([k, v]) => ({ slug: k, fa: v.fa, good: v.good, ok: v.ok })) });
+        }
+        const g = (GAME_PROFILES.games || {})[slug];
+        if (!g) return json({ ok: false, error: "پروفایل این بازی نیست", available: Object.keys(GAME_PROFILES.games || {}) }, 404);
+        return json({ ok: true, slug, ...g, note: GAME_PROFILES.note });
+      }
+      /* --- 🎮 فهرست پروفایل‌ها برای ادغام --- */
+      if (p === "/api/profiles") return json({ ok: true, ...GAME_PROFILES });
+
+      /* --- 📤 دادهٔ باز (بی‌نام): JSON یا CSV --- */
+      if (p === "/api/export") {
+        const list = await env.DNSRADAR_KV.list({ prefix: "st:", limit: 1000 });
+        const rows = [];
+        for (const k of list.keys) {
+          const raw = await env.DNSRADAR_KV.get(k.name); if (!raw) continue;
+          const parts = k.name.split(":"); let v; try { v = JSON.parse(raw); } catch { continue; }
+          rows.push({ province: parts[1], carrier: parts[2], resolver: parts.slice(3).join(":"),
+            n: v.n || 0, ok: v.ok || 0, avg_ms: v.avg ?? null, min_ms: v.min ?? null, max_ms: v.max ?? null });
+        }
+        rows.sort((a, b) => (b.n - a.n));
+        if ((url.searchParams.get("format") || "json") === "csv") {
+          const head = "province,carrier,resolver,n,ok,avg_ms,min_ms,max_ms";
+          const body = rows.map((r) => [r.province, r.carrier, r.resolver, r.n, r.ok, r.avg_ms, r.min_ms, r.max_ms].join(",")).join("\n");
+          return new Response(head + "\n" + body, { headers: { "Content-Type": "text/csv; charset=utf-8",
+            "Content-Disposition": 'attachment; filename="pinghab-open-data.csv"', ...CORS } });
+        }
+        return json({ ok: true, generated_at: new Date().toISOString(), count: rows.length, rows,
+          license: "دادهٔ بی‌نام کاربران پینگ‌هاب — استفادهٔ آزاد با ذکر منبع",
+          note: "هیچ شناسهٔ فردی ذخیره نمی‌شود؛ فقط استان/اپراتور/رزولور/عدد." });
+      }
+
+      /* --- 🤝 حالت تیمی --- */
+      if (p === "/api/team") {
+        if (method === "POST") {
+          const b = await request.json().catch(() => null);
+          if (!b || !b.action) return json({ ok: false, error: "دادهٔ نامعتبر" }, 400);
+          if (b.action === "create") {
+            const code = "T" + shortId().slice(0, 5).toUpperCase();
+            const doc = { code, name: String(b.name || "تیم بدون نام").slice(0, 30), created: Date.now(), members: [] };
+            await env.DNSRADAR_KV.put(`team:${code}`, JSON.stringify(doc), { expirationTtl: 60 * 60 * 24 * 90 });
+            return json({ ok: true, ...doc });
+          }
+          if (b.action === "join") {
+            const code = String(b.code || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 6);
+            const raw = await env.DNSRADAR_KV.get(`team:${code}`);
+            if (!raw) return json({ ok: false, error: "تیم پیدا نشد" }, 404);
+            const doc = JSON.parse(raw);
+            const uid = String(b.uid || "").slice(0, 24);
+            doc.members = (doc.members || []).filter((m) => m.uid !== uid);
+            if (doc.members.length >= 20) return json({ ok: false, error: "تیم پر است (۲۰ نفر)" }, 400);
+            doc.members.push({ uid, name: String(b.name || "بازیکن").slice(0, 24),
+              province: String(b.province || "").slice(0, 24), carrier: String(b.carrier || "").slice(0, 24), ts: Date.now() });
+            await env.DNSRADAR_KV.put(`team:${code}`, JSON.stringify(doc), { expirationTtl: 60 * 60 * 24 * 90 });
+            return json({ ok: true, ...doc });
+          }
+          return json({ ok: false, error: "action نامعتبر (create|join)" }, 400);
+        }
+        const code = (url.searchParams.get("code") || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 6);
+        if (!code) return json({ ok: false, error: "کد تیم لازم است" }, 400);
+        const raw = await env.DNSRADAR_KV.get(`team:${code}`);
+        if (!raw) return json({ ok: false, error: "تیم پیدا نشد" }, 404);
+        const doc = JSON.parse(raw);
+        const provs = [...new Set((doc.members || []).map((m) => m.province).filter(Boolean))];
+        const carriers = [...new Set((doc.members || []).map((m) => m.carrier).filter(Boolean))];
+        const list = await env.DNSRADAR_KV.list({ prefix: "st:", limit: 800 });
+        const byRes = new Map();
+        for (const k of list.keys) {
+          const parts = k.name.split(":");
+          if (provs.length && !provs.includes(parts[1])) continue;
+          if (carriers.length && !carriers.includes(parts[2])) continue;
+          const r2 = await env.DNSRADAR_KV.get(k.name); if (!r2) continue;
+          let v; try { v = JSON.parse(r2); } catch { continue; }
+          const res = parts.slice(3).join(":");
+          const a = byRes.get(res) || { n: 0, sum: 0 };
+          a.n += v.n || 0; a.sum += (v.avg || 0) * (v.n || 0); byRes.set(res, a);
+        }
+        const best = [...byRes.entries()].map(([resolver, a]) => ({ resolver, n: a.n, avg: a.n ? Math.round((a.sum / a.n) * 10) / 10 : null }))
+          .filter((x) => x.n >= 2).sort((x, y) => x.avg - y.avg).slice(0, 5);
+        return json({ ok: true, code: doc.code, name: doc.name, members: doc.members || [], best_shared: best,
+          note: "اعضای تیم فقط با یک شناسهٔ تصادفی روی دستگاه خودشان شناخته می‌شوند؛ نه نام واقعی، نه شماره." });
+      }
+
+      /* --- 📲 PWA: مانیفست و سرویس‌ورکر --- */
+      if (p === "/manifest.json") {
+        return new Response(JSON.stringify({
+          name: "پینگ‌هاب — DNS و پینگ", short_name: "پینگ‌هاب", start_url: "/app", scope: "/",
+          display: "standalone", background_color: "#000000", theme_color: "#ffc000", dir: "rtl", lang: "fa",
+          description: "سنجش DNS، مسیر شبکه و آمادگی بازی روی خط خودت — بدون VPN، بدون وعدهٔ توخالی.",
+          icons: [
+            { src: "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="#ffc000"/><text x="256" y="330" font-size="260" text-anchor="middle" font-family="sans-serif">⚡</text></svg>'), sizes: "512x512", type: "image/svg+xml", purpose: "any maskable" },
+          ],
+        }), { headers: { "Content-Type": "application/manifest+json; charset=utf-8", ...CORS } });
+      }
+      if (p === "/sw.js") {
+        return new Response(`const C="pinghab-v1";
+self.addEventListener("install",e=>{self.skipWaiting()});
+self.addEventListener("activate",e=>{e.waitUntil(self.clients.claim())});
+self.addEventListener("fetch",e=>{const u=new URL(e.request.url);
+ if(e.request.method!=="GET"||u.origin!==location.origin){return}
+ if(u.pathname.startsWith("/api/")){e.respondWith(fetch(e.request).catch(()=>new Response(JSON.stringify({ok:false,offline:true}),{headers:{"Content-Type":"application/json"}})));return}
+ e.respondWith(fetch(e.request).then(r=>{const c=r.clone();caches.open(C).then(x=>x.put(e.request,c)).catch(()=>{});return r}).catch(()=>caches.match(e.request).then(m=>m||caches.match("/app"))))});
+`, { headers: { "Content-Type": "application/javascript; charset=utf-8", ...CORS } });
+      }
+
+      /* --- 🩺 صفحهٔ وضعیت عمومی --- */
+      if (p === "/status") {
+        const list = await env.DNSRADAR_KV.list({ prefix: "st:", limit: 400 });
+        const rows = [];
+        for (const k of list.keys) {
+          const raw = await env.DNSRADAR_KV.get(k.name); if (!raw) continue;
+          const parts = k.name.split(":"); let v; try { v = JSON.parse(raw); } catch { continue; }
+          rows.push({ province: parts[1], carrier: parts[2], resolver: parts.slice(3).join(":"), ...v });
+        }
+        rows.sort((a, b) => (a.avg ?? 1e9) - (b.avg ?? 1e9));
+        const radar = await radarGet(env, "annotations/outages?dateRange=1d&limit=6");
+        const edge = await edgeCheckDoh(EDGE_RESOLVERS.slice(0, 8));
+        return html(statusPage(rows.slice(0, 20), radar.ok ? (radar.result.annotations || []) : [], edge));
+      }
+
+      /* --- 📅 گزارش ماهانه (بهداشت اینترنت) --- */
+      if (p === "/report") {
+        const list = await env.DNSRADAR_KV.list({ prefix: "st:", limit: 1000 });
+        const byProv = new Map(); let samples = 0, keyCount = 0;
+        for (const k of list.keys) {
+          const raw = await env.DNSRADAR_KV.get(k.name); if (!raw) continue;
+          const parts = k.name.split(":"); let v; try { v = JSON.parse(raw); } catch { continue; }
+          keyCount++; samples += v.n || 0;
+          const a = byProv.get(parts[1]) || { n: 0, sum: 0, carriers: new Set() };
+          a.n += v.n || 0; a.sum += (v.avg || 0) * (v.n || 0); a.carriers.add(parts[2]); byProv.set(parts[1], a);
+        }
+        const rows = [...byProv.entries()].map(([province, a]) => ({ province, n: a.n,
+          avg: a.n ? Math.round((a.sum / a.n) * 10) / 10 : null, carriers: a.carriers.size })).sort((x, y) => x.avg - y.avg);
+        return html(reportPage(rows, { keyCount, samples }));
+      }
+
+      /* --- 📘 مستندات API و دادهٔ باز --- */
+      if (p === "/docs") return html(docsPage());
 
       /* --- DNSSEC + EDE از دید لبه (پرچم DO در EDNS0) --- */
       if (p === "/api/dnssec") {

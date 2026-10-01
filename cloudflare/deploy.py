@@ -117,6 +117,7 @@ def build() -> Path:
     _inject("__CF_IR__", ROOT / "data" / "ir" / "cf-domains.json", '{"ips":[],"domains_total":0,"unique_ips":0,"source":{}}', "🔥 آی‌پی تمیز")
     _inject("__RESOLVERS_META__", ROOT / "data" / "resolvers" / "meta.json", '{"resolvers":[],"count":0,"source":{}}', "🧪 متادیتای رزولور")
     _inject("__SCAN_SUMMARY__", ROOT / "data" / "dns_world" / "scan-summary.json", '{"effect_targets":[],"note":""}', "📊 نتیجهٔ اسکن")
+    _inject("__GAME_PROFILES__", ROOT / "data" / "games" / "profiles.json", '{"games":{},"note":""}', "🎯 پروفایل بازی‌ها")
     DIST.mkdir(exist_ok=True)
     target = DIST / "worker.mjs"
     target.write_text(out, encoding="utf-8")
@@ -173,6 +174,7 @@ def deploy(env: dict) -> bool:
             {"type": "secret_text", "name": "TG_TOKEN", "text": tg_token},
             {"type": "secret_text", "name": "TG_SECRET", "text": webhook_secret},
             {"type": "secret_text", "name": "ADMIN_KEY", "text": admin_key},
+            {"type": "secret_text", "name": "CF_API_TOKEN", "text": env.get("CLOUDFLARE_API_TOKEN", "")},
         ],
         "observability": {"enabled": True},
     }
@@ -293,6 +295,39 @@ def test(env: dict):
     check("/api/gen (CAKE لینوکس)", f"{SITE}/api/gen?kind=linux-cake&iface=eth0&rate=20mbit")
     # سنجش از ایران (Globalping) — کمی کندتر
     check("/api/gp (سنجش از ایران)", f"{SITE}/api/gp?type=ping&target=1.1.1.1&cc=IR&limit=1")
+
+    # --- قابلیت‌های ۲.۰ ---
+    print("\n  ── پینگ‌هاب ۲.۰ ──")
+    check("/api/path (نقشهٔ مسیر)", f"{SITE}/api/path?target=1.1.1.1&cc=IR")
+    check("/api/radar (رخدادها)", f"{SITE}/api/radar?asn=44244")
+    check("/api/golden (ساعت طلایی)", f"{SITE}/api/golden")
+    check("/api/trend (روند ۳۰ روزه)", f"{SITE}/api/trend?days=30")
+    check("/api/profiles (پروفایل بازی)", f"{SITE}/api/profiles")
+    check("/api/profile?game=cs2", f"{SITE}/api/profile?game=counter-strike-2")
+    check("/api/export (دادهٔ باز)", f"{SITE}/api/export")
+    check("/api/export?format=csv", f"{SITE}/api/export?format=csv")
+    check("/status (صفحهٔ عمومی)", f"{SITE}/status")
+    check("/report (گزارش ماهانه)", f"{SITE}/report")
+    check("/docs (مستندات API)", f"{SITE}/docs")
+    check("/manifest.json (PWA)", f"{SITE}/manifest.json")
+    check("/sw.js (سرویس‌ورکر)", f"{SITE}/sw.js")
+    # تیم: ساخت + خواندن
+    try:
+        body = json.dumps({"action": "create", "name": "تست"}).encode()
+        raw = api(f"{SITE}/api/team", "x", "POST", body,
+                  {"Authorization": "", "User-Agent": "PingHab/1.0", "Content-Type": "application/json"}, raw=True, timeout=60)
+        j = json.loads(raw[1]); code = j.get("code")
+        ok = raw[0] == 200 and bool(code)
+        results.append(("POST /api/team (ساخت)", ok, str(raw[0])))
+        print(f"  {'✅' if ok else '❌'} {'POST /api/team':34s} {str(raw[0]):>5s}  کد={code}")
+        if code:
+            check(f"/api/team?code={code}", f"{SITE}/api/team?code={code}")
+    except Exception as e:
+        print("  ❌ team:", e)
+    # ثبت بی‌نام (تست) — نمونهٔ ساعت طلایی/روند هم ساخته می‌شود
+    body = json.dumps({"province": "تست", "carrier": "تست", "resolver": "self-test", "ms": 42, "ok": True}).encode()
+    api(f"{SITE}/api/report", "x", "POST", body, {"Authorization": "", "User-Agent": "PingHab/1.0", "Content-Type": "application/json"}, raw=True, timeout=30)
+    check("/api/stats (بعد از ثبت)", f"{SITE}/api/stats?province=" + urllib.parse.quote("تست"))
 
     good = sum(1 for _, ok, _ in results if ok)
     print(f"\nنتیجه: {good}/{len(results)} بررسی موفق")
