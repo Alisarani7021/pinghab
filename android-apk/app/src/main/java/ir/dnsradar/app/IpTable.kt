@@ -74,7 +74,7 @@ object IpTable {
         val asns = ArrayList<Int>(700000); val ccs = ArrayList<String?>(700000); val orgs = ArrayList<String?>(700000)
         val st6 = ArrayList<BigInteger>(200000); val en6 = ArrayList<BigInteger>(200000)
         val as6 = ArrayList<Int>(200000); val cc6 = ArrayList<String?>(200000); val or6 = ArrayList<String?>(200000)
-        val br = BufferedReader(input, 1 shl 20)
+        val br = BufferedReader(java.io.InputStreamReader(input, Charsets.UTF_8), 1 shl 20)
         while (true) {
             val line = br.readLine() ?: break
             if (line.isEmpty()) continue
@@ -113,7 +113,7 @@ object IpTable {
     /** پارس CSV «DB-IP Country Lite» (start,end,cc) برای کشور جغرافیایی. */
     fun loadDbipCsv(input: InputStream) {
         val st = ArrayList<Int>(400000); val en = ArrayList<Int>(400000); val ccs = ArrayList<String?>(400000)
-        val br = BufferedReader(input, 1 shl 20)
+        val br = BufferedReader(java.io.InputStreamReader(input, Charsets.UTF_8), 1 shl 20)
         while (true) {
             val line = br.readLine() ?: break
             if (line.isEmpty() || line.startsWith("#")) continue
