@@ -14,3 +14,4 @@ dist-apk/
 data/dns_world/raw/
 data/dns_world/scan-*.json
 data/dns_world/scan-*.csv
+cloudflare/_tmp_page.html

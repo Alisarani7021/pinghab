@@ -291,6 +291,7 @@ NAV_SECTIONS = [
     ("ph-p5", "✨", "آی‌پی تمیز", "سنجش و رزولور"),
     ("ph-p9", "🔍", "واقعیت خط", "سنجش و رزولور"),
     ("ph-p15", "⚡", "رزولوشن و مسابقه", "سنجش و رزولور"),
+    ("ph-p21", "🎯", "اسکنر IP و DNS", "سنجش و رزولور"),
     ("ph-p10", "🌡️", "ایران امروز", "سنجش و رزولور"),
     ("ph-p8", "🛰️", "مسیر من", "شبکه و مسیر"),
     ("ph-p6", "🏠", "خانه و شبکه", "شبکه و مسیر"),
@@ -335,7 +336,7 @@ def _nav_html():
         '<button data-nav="__drawer__"><i>☰</i><span>بیشتر</span></button>'
         '</div>'
         '<div class="ph-drawer" id="ph-drawer"><div class="ph-drawer-bg" data-close="1"></div><aside>'
-        '<div class="ph-dhead"><b>📡 پینگ‌هاب</b><span class="ph-badge mono">۲.۵</span>'
+        '<div class="ph-dhead"><b>📡 پینگ‌هاب</b><span class="ph-badge mono">۲.۶</span>'
         '<button class="wwbtn" data-close="1" style="min-height:36px">✕</button></div>'
         + "".join(items) +
         '</aside></div>'
@@ -369,7 +370,8 @@ NAV_JS = r"""
   function show(id, silent){
     var tab = document.querySelector('.ph-tab[data-target="' + id + '"]');
     if (tab) tab.click();
-    else $$(".ph-panel").forEach(function(pn){ pn.className = "ph-panel" + (pn.id === id ? " on" : ""); });
+    /* همیشه تک‌پنلی: بعضی هندلرهای تب قدیمی فقط گروه خودشان را خاموش می‌کنند */
+    $$(".ph-panel").forEach(function(pn){ pn.className = "ph-panel" + (pn.id === id ? " on" : ""); });
     syncDrawer(id);
     if (!silent) window.scrollTo({ top: 0, behavior: "smooth" });
   }

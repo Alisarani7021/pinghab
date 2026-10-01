@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
         fun isNative(): Boolean = true
 
         @JavascriptInterface
-        fun version(): String = "2.5"
+        fun version(): String = "2.6"
 
         // ---------- «حالت DNS روی گوشی» ----------
         @JavascriptInterface
@@ -117,6 +117,18 @@ class MainActivity : AppCompatActivity() {
                     .put("jitter", s.jitter ?: -1).put("error", s.error ?: "")
                     .toString()
             } catch (t: Throwable) { "{}" }
+        }
+
+        // ---------- 🎯 اسکنر IP و DNS ----------
+        /** سنجش واقعی از خط خودِ گوشی: UDP/53 + TCP/port برای هر هدف. */
+        @JavascriptInterface
+        fun scanIps(ipsJson: String?, port: Int, tries: Int): String {
+            return try {
+                IpScanner.scan(ipsJson ?: "[]", port, tries)
+            } catch (t: Throwable) {
+                try { org.json.JSONObject().put("ok", false).put("error", t.message ?: "scan failed").toString() }
+                catch (_: Throwable) { "{\"ok\":false,\"error\":\"scan failed\"}" }
+            }
         }
 
         /** وصل‌شدن از داخل صفحهٔ وب به یک رزولور مشخص. */

@@ -455,6 +455,38 @@ def test(env: dict):
     except Exception as e:
         print("  ❌ mn-drawer:", e)
 
+    # --- دور ۶: اسکنر IP و DNS ---
+    print("\n  ── 🎯 اسکنر IP و DNS ──")
+    count_in("/app پنل اسکنر", f"{SITE}/app", 'id="ph-p21"')
+    count_in("/app ورودی اسکنر", f"{SITE}/app", 'id="ph6-in"')
+    count_in("/app دکمهٔ اسکن", f"{SITE}/app", 'id="ph6-go"')
+    count_in("/app سنجش از گوشی", f"{SITE}/app", 'id="ph6-dev"')
+    count_in("/app آیتم منوی اسکنر", f"{SITE}/app", "اسکنر IP و DNS")
+    count_in("/docs مسیر scanner", f"{SITE}/docs", "/api/scanner")
+    try:
+        st, raw = api(f"{SITE}/api/scanner?ips=1.1.1.1,8.8.8.8&mode=ping&packets=4", "x", "GET", None,
+                      {"Authorization": "", "User-Agent": "PingHab/1.0"}, raw=True, timeout=90)
+        j = json.loads(raw)
+        rows = j.get("results") or []
+        ok = st == 200 and j.get("ok") and len(rows) == 2 and all(("summary" in R or "error" in R) for R in rows)
+        n_meas = sum(len(R.get("probes") or []) for R in rows)
+        results.append(("اسکنر: دو هدف، پروب‌های واقعی", ok, f"probes={n_meas}"))
+        print(f"  {'✅' if ok else '❌'} {'اسکنر live (ICMP از ایران)':34s} {str(st):>5s}  probes={n_meas} countries={len(j.get('countries') or [])}")
+    except Exception as e:
+        results.append(("اسکنر live", False, str(e)[:40]))
+        print("  ❌ scanner-ping:", e)
+    try:
+        st, raw = api(f"{SITE}/api/scanner?ips=9.9.9.9&mode=dns", "x", "GET", None,
+                      {"Authorization": "", "User-Agent": "PingHab/1.0"}, raw=True, timeout=90)
+        j = json.loads(raw)
+        R0 = (j.get("results") or [{}])[0]
+        ok = st == 200 and j.get("ok") and ("dns" in R0)
+        print(f"  {'✅' if ok else '❌'} {'اسکنر رزولوشن DNS':34s} {str(st):>5s}  ok_count={(R0.get('dns') or {}).get('ok_count')}")
+        results.append(("اسکنر: رزولوشن DNS از ایران", ok, str((R0.get('dns') or {}).get('median_ms'))))
+    except Exception as e:
+        results.append(("اسکنر DNS", False, str(e)[:40]))
+        print("  ❌ scanner-dns:", e)
+
     # ثبت بی‌نام (تست) — نمونهٔ ساعت طلایی/روند هم ساخته می‌شود
     body = json.dumps({"province": "تست", "carrier": "تست", "resolver": "self-test", "ms": 42, "ok": True}).encode()
     api(f"{SITE}/api/report", "x", "POST", body, {"Authorization": "", "User-Agent": "PingHab/1.0", "Content-Type": "application/json"}, raw=True, timeout=30)

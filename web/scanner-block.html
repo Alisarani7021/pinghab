@@ -1,0 +1,428 @@
+<!-- ============ 🎯 اسکنر IP و DNS (ph-p21) — IPv4 · IPv6 · رنج ============ -->
+  <div class="ph-panel" id="ph-p21">
+    <div class="ph-card">
+      <b>🎯 اسکنر IP و DNS — آی‌پی فور، آی‌پی سیکس، رنج</b>
+      <div class="sub">هر خط یک هدف: آی‌پی نسخهٔ ۴، آی‌پی نسخهٔ ۶، دامنه، یا رنج CIDR. مثال:
+        <span class="mono" dir="ltr">1.1.1.1</span> ·
+        <span class="mono" dir="ltr">2001:4860:4860::8888</span> ·
+        <span class="mono" dir="ltr">185.51.200.0/26</span> ·
+        <span class="mono" dir="ltr">dns.google</span>
+      </div>
+      <textarea id="ph6-in" class="wwin" rows="5" dir="ltr" spellcheck="false"
+        style="width:100%;margin-top:8px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;line-height:1.7"
+        placeholder="1.1.1.1&#10;8.8.8.8&#10;178.22.122.101&#10;2001:4860:4860::8888"></textarea>
+      <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:8px">
+        <button class="wwbtn" id="ph6-fill-global">🌍 ۸ DNS معروف</button>
+        <button class="wwbtn" id="ph6-fill-ir">🇮🇷 رزولورهای ایرانی</button>
+        <button class="wwbtn" id="ph6-fill-range">📐 نمونهٔ رنج /29</button>
+        <button class="wwbtn" id="ph6-clear">🧹 پاک کردن</button>
+      </div>
+      <div class="ph-grid2" style="margin-top:10px">
+        <div><span class="ph-lbl">نوع سنجش</span>
+          <select class="wwin" id="ph6-mode">
+            <option value="ping">پینگ ICMP (قدرت اتصال)</option>
+            <option value="dns">رزولوشن DNS (پورت ۵۳)</option>
+            <option value="both">هر دو</option>
+          </select></div>
+        <div><span class="ph-lbl">نقطهٔ سنجش (از کجا؟)</span>
+          <select class="wwin" id="ph6-from">
+            <option value="ir">از داخل ایران</option>
+            <option value="world">از جهان (EU/AS/NA)</option>
+          </select></div>
+        <div><span class="ph-lbl">بستهٔ هر سنجش</span>
+          <select class="wwin" id="ph6-pk">
+            <option>3</option><option selected>4</option><option>6</option><option>8</option>
+          </select></div>
+        <div><span class="ph-lbl">پورت TCP (سنجش گوشی)</span>
+          <select class="wwin" id="ph6-port">
+            <option selected>53</option><option>443</option><option>80</option>
+          </select></div>
+      </div>
+      <div class="row" style="gap:8px;flex-wrap:wrap;margin-top:10px">
+        <button class="wwbtn ph-startbtn" id="ph6-go" style="flex:1;min-width:150px">🔍 اسکن کن</button>
+        <button class="wwbtn" id="ph6-dev" title="سنجش از خط خودت — فقط داخل اپ اندروید">📱 از این گوشی</button>
+        <button class="wwbtn" id="ph6-stop" style="display:none">⏹ توقف</button>
+      </div>
+      <div id="ph6-bar" style="margin-top:10px"></div>
+      <div id="ph6-log" class="sub" style="margin-top:6px">آماده. سقف هر اجرا ۶۴ هدف است؛ رنج‌های بزرگ‌تر یکنواخت نمونه‌برداری می‌شوند و صادقانه اعلام می‌شود.</div>
+    </div>
+
+    <div class="ph-card">
+      <b>📊 نتیجهٔ اسکن</b>
+      <div class="sub" id="ph6-sum">هنوز اسکنی انجام نشده.</div>
+      <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:8px">
+        <button class="wwbtn" id="ph6-sort">↕️ ترتیب: میانهٔ پینگ</button>
+        <button class="wwbtn" id="ph6-only-ok">✅ فقط سنجش‌شده‌ها</button>
+        <button class="wwbtn" id="ph6-csv">⬇️ CSV</button>
+        <button class="wwbtn" id="ph6-json">🧾 JSON</button>
+        <button class="wwbtn" id="ph6-copy">📋 کپی خلاصه</button>
+      </div>
+      <div id="ph6-out" style="margin-top:10px"></div>
+    </div>
+
+    <div class="ph-card">
+      <b>🧭 محدودیت‌ها و صداقت‌ها</b>
+      <div class="sub">
+        • مرورگر نمی‌تواند ICMP بزند؛ سنجش «از داخل ایران» با پروب‌های دیتاسنتری Globalping انجام می‌شود، نه خط موبایل تو.<br>
+        • «📱 از این گوشی» داخل اپ واقعاً از خط خودت سنجش می‌کند: DNS روی UDP/53 و اتصال TCP روی پورت انتخابی (ICMP بدون روت در اندروید در دسترس نیست).<br>
+        • رنج IPv6 کوچک‌تر از /96 معنا ندارد برای شمارش: فضای v6 قابل پیمایش نیست (فیزیک/ریاضی)، پس یا پیشوند ۹۶+ بده یا چند نشانی دستی.<br>
+        • در حالت «رزولوشن DNS»، کوئری از پروب‌ها به خودِ آن رزولور زده می‌شود (پورت ۵۳). رزولورهای بومیِ ISP (مثل شکن/رادار) ممکن است از دیتاسنترها جواب ندهند → «بی‌پاسخ» یعنی همین، نه فیلتر.
+        • «کشور ثبت (RIR)» جای ثبت آی‌پی است، نه محل واقعی پاسخ؛ رزولورهای انیکست (۱.۱.۱.۱/۸.۸.۸.۸) از همه‌جا جواب می‌دهند.
+        • DNS پینگ داخل مچ بازی را کم نمی‌کند؛ زمان نام‌یابی و اتصال را بهتر می‌کند. «کاندید، نه توصیه».
+      </div>
+      <div class="row" style="gap:8px;flex-wrap:wrap;margin-top:8px">
+        <a class="wwbtn" href="/api/scanner?ips=1.1.1.1,8.8.8.8&mode=ping" target="_blank">🧾 API همین اسکنر</a>
+        <a class="wwbtn" href="/api/changer" target="_blank">📚 کاتالوگ ۴۴ رزولور</a>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* ============ 🎯 اسکنر IP/DNS — منطق (ph-p21) ============ */
+(function(){
+  "use strict";
+  if (window.__phScanner) return; window.__phScanner = 1;
+  var q = function(id){ return document.getElementById(id); };
+  var ABS = (location.protocol === "file:" || /appassets\.androidplatform\.net$/.test(location.hostname))
+    ? "https://pinghab.catclient-59gk2mui.workers.dev" : "";
+  var CAP = 64, CHUNK = 8, DEV_CAP = 32;
+  var fa = function(n){ return (n === null || n === undefined || isNaN(n)) ? "—" : String(Math.round(n * 10) / 10); };
+  var esc = function(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); };
+  var state = { rows: [], dev: {}, sortBy: "median", onlyOk: false, running: false, cancel: false };
+
+  function tone(t){ return t === "good" ? "var(--great, #34d399)" : t === "warn" ? "var(--meh, #f59e0b)" : "var(--dead, #ef4444)"; }
+  function badge(txt, t){
+    return '<span class="pill" style="border-color:' + tone(t) + ';color:' + tone(t) + ';font-size:11px;padding:2px 8px">' + esc(txt) + '</span>';
+  }
+  function bar(p, label){
+    var el = q("ph6-bar"); if (!el) return;
+    el.innerHTML = '<div style="background:rgba(127,127,127,.18);border-radius:99px;overflow:hidden;height:8px">' +
+      '<i style="display:block;height:100%;width:' + Math.max(2, Math.min(100, p)) + '%;background:var(--acc);transition:width .25s"></i></div>' +
+      (label ? '<div class="sub" style="margin-top:6px">' + esc(label) + '</div>' : "");
+  }
+  function log(s){ var el = q("ph6-log"); if (el) el.innerHTML = s; }
+
+  /* ---------- تجزیهٔ ورودی: IP v4/v6، دامنه، رنج CIDR ---------- */
+  function ip2int(a){
+    var p = String(a).split("."); if (p.length !== 4) return null;
+    var n = 0;
+    for (var i = 0; i < 4; i++){
+      if (!/^\d{1,3}$/.test(p[i])) return null;
+      var v = +p[i]; if (v > 255) return null;
+      n = n * 256 + v;
+    }
+    return n;
+  }
+  function int2ip(n){ n = n >>> 0; return [(n >>> 24) & 255, (n >>> 16) & 255, (n >>> 8) & 255, n & 255].join("."); }
+  function v4Range(cidr){
+    var parts = String(cidr).split("/"), base = parts[0], pfx = parseInt(parts[1], 10);
+    var n = ip2int(base);
+    if (n === null || isNaN(pfx) || pfx < 0 || pfx > 32) return null;
+    var total = Math.pow(2, 32 - pfx);
+    var usable = Math.max(1, total - (total > 2 ? 2 : 0));
+    var start = n + (total > 2 ? 1 : 0);
+    var step = usable <= CAP ? 1 : Math.ceil(usable / CAP);
+    var out = [];
+    for (var i = 0; i < Math.min(usable, CAP); i++) out.push(int2ip(start + i * step));
+    return { ips: out, total: usable, sampled: usable > CAP, step: step };
+  }
+  function v6groups(a){
+    var s = String(a).trim().toLowerCase();
+    if (!/^[0-9a-f:]+$/.test(s) || s.indexOf(":") < 0) return null;
+    if (s.indexOf("::") >= 0){
+      var pp = s.split("::"); if (pp.length > 2) return null;
+      var h = pp[0] ? pp[0].split(":") : [], t = pp[1] ? pp[1].split(":") : [];
+      var mid = []; for (var i = 0; i < 8 - h.length - t.length; i++) mid.push("0");
+      s = h.concat(mid, t).join(":");
+    }
+    var g = s.split(":");
+    if (g.length !== 8) return null;
+    var out = [];
+    for (var j = 0; j < 8; j++){ if (!/^[0-9a-f]{1,4}$/.test(g[j])) return null; out.push(parseInt(g[j], 16)); }
+    return out;
+  }
+  function v6Range(cidr){
+    var parts = String(cidr).split("/"), base = parts[0], pfx = parseInt(parts[1], 10);
+    var g = v6groups(base);
+    if (!g || isNaN(pfx) || pfx < 0 || pfx > 128) return null;
+    if (pfx < 96) return { error: "پیشوند v6 باید ۹۶ یا بزرگ‌تر باشد — رنج /" + pfx + " قابل شمارش نیست (۲^" + (128 - pfx) + " نشانی)." };
+    var last = ((g[6] * 65536) + g[7]) >>> 0;
+    var vary = Math.pow(2, Math.min(32, 128 - pfx));
+    var step = vary <= CAP ? 1 : Math.ceil(vary / CAP);
+    var out = [];
+    for (var i = 0; i < Math.min(vary, CAP); i++){
+      var v = (last + i * step) >>> 0;
+      if (v < last) break;
+      var head = g.slice(0, 6).map(function(x){ return x.toString(16); });
+      out.push(head.join(":") + ":" + (((v >>> 16) & 0xffff).toString(16)) + ":" + ((v & 0xffff).toString(16)));
+    }
+    return { ips: out, total: vary, sampled: vary > CAP, step: step };
+  }
+  function parseInput(){
+    var raw = (q("ph6-in").value || "").split(/[\s,;]+/).filter(Boolean);
+    var ips = [], notes = [], seen = {};
+    var maxNote = 12;
+    for (var i = 0; i < raw.length && ips.length < CAP; i++){
+      var t = raw[i];
+      if (t.indexOf("/") >= 0){
+        var isV6 = t.indexOf(":") >= 0;
+        var r = isV6 ? v6Range(t) : v4Range(t);
+        if (!r) { notes.push("رنج نامعتبر: " + t); continue; }
+        if (r.error) { notes.push(r.error); continue; }
+        var added = 0;
+        for (var k = 0; k < r.ips.length && ips.length < CAP; k++){ if (!seen[r.ips[k]]) { seen[r.ips[k]] = 1; ips.push(r.ips[k]); added++; } }
+        notes.push("رنج " + t + ": " + r.total + " نشانی" + (r.sampled ? " → نمونه‌برداری یکنواخت هر " + r.step + " (" + added + " هدف)" : " → " + added + " هدف"));
+        continue;
+      }
+      if (!seen[t]) { seen[t] = 1; ips.push(t); }
+    }
+    var rest = raw.length - Object.keys(seen).length;
+    if (rest > 0 && notes.length < maxNote) notes.push((raw.length) + " ورودی خوانده شد؛ سقف " + CAP + " هدف.");
+    return { ips: ips.slice(0, CAP), notes: notes };
+  }
+
+  /* ---------- سنجش از پروب‌ها (سرور) ---------- */
+  function runServer(){
+    var p = parseInput();
+    if (!p.ips.length){ log("❌ چیزی برای اسکن نیست — آی‌پی یا رنج وارد کن."); return; }
+    var mode = q("ph6-mode").value, from = q("ph6-from").value, pk = q("ph6-pk").value;
+    state.rows = []; state.running = true; state.cancel = false;
+    q("ph6-go").style.display = "none"; q("ph6-stop").style.display = "";
+    log("🚀 " + p.ips.length + " هدف · " + (mode === "ping" ? "پینگ ICMP" : mode === "dns" ? "رزولوشن DNS" : "پینگ + DNS") +
+        " · " + (from === "ir" ? "از داخل ایران" : "از جهان") + (p.notes.length ? "<br>" + p.notes.map(esc).join("<br>") : ""));
+    render();
+    var chunks = [], i;
+    for (i = 0; i < p.ips.length; i += CHUNK) chunks.push(p.ips.slice(i, i + CHUNK));
+    var done = 0;
+    function next(){
+      if (state.cancel){ finish("⏹ متوقف شد — " + done + " هدف از " + p.ips.length + " سنجیده شد."); return; }
+      if (!chunks.length){ finish(null); return; }
+      var ch = chunks.shift();
+      var urlq = ABS + "/api/scanner?ips=" + encodeURIComponent(ch.join(",")) + "&mode=" + mode + "&from=" + from + "&packets=" + pk;
+      fetch(urlq, { headers: { accept: "application/json" } })
+        .then(function(r){ return r.json(); })
+        .then(function(j){
+          if (j && j.results) state.rows = state.rows.concat(j.results);
+          done += ch.length;
+          bar(done * 100 / p.ips.length, "سنجیده شد: " + done + " از " + p.ips.length);
+          render();
+          next();
+        })
+        .catch(function(e){
+          done += ch.length;
+          log("⚠️ خطا در این دسته (" + esc(ch.join(", ")) + "): " + esc(String(e && e.message || e)) + " — ادامه می‌دهم.");
+          setTimeout(next, 400);
+        });
+    }
+    bar(2, ""); next();
+    function finish(msg){
+      state.running = false;
+      q("ph6-go").style.display = ""; q("ph6-stop").style.display = "none";
+      bar(100, msg ? msg : "✅ تمام شد — " + state.rows.length + " هدف");
+      if (!msg) log("✅ اسکن تمام شد. " + state.rows.length + " هدف. اعداد از پروب‌های واقعی‌اند؛ سطر «نانشنه» یعنی عدد معتبری وجود ندارد.");
+      render(); summarize();
+    }
+  }
+
+  /* ---------- سنجش از خط خودِ گوشی (فقط داخل اپ) ---------- */
+  function runDevice(){
+    var p = parseInput();
+    if (!p.ips.length){ log("❌ چیزی برای اسکن نیست."); return; }
+    if (!(window.phNative && typeof phNative.scanIps === "function")){
+      log("📱 «از این گوشی» فقط داخل اپ اندروید کار می‌کند (مرورگر دسترسی به سوکت خام/ICMP ندارد). " +
+          "در مرورگر از «اسکن کن» استفاده کن — عدد از پروب‌های ایران می‌آید. " +
+          '<a href="https://github.com/Alisarani7021/pinghab/releases/download/apk-latest/pinghab-latest.apk">⬇️ دانلود APK</a>');
+      return;
+    }
+    var list = p.ips.slice(0, DEV_CAP);
+    var port = parseInt(q("ph6-port").value, 10) || 53;
+    log("📱 دارم از خط خودت " + list.length + " هدف را می‌سنجم (UDP/53 + TCP/" + port + ")…");
+    q("ph6-dev").style.display = "none";
+    setTimeout(function(){
+      var res = null;
+      try { res = JSON.parse(phNative.scanIps(JSON.stringify(list), port, 4)); }
+      catch (e){ log("❌ خطای سنجش گوشی: " + esc(String(e && e.message || e))); q("ph6-dev").style.display = ""; return; }
+      q("ph6-dev").style.display = "";
+      if (!res || !res.ok){ log("❌ سنجش گوشی ناموفق بود: " + esc((res && res.error) || "نامشخص")); return; }
+      state.dev = {};
+      (res.rows || []).forEach(function(r){ state.dev[r.ip] = r; });
+      log("✅ سنجش گوشی تمام شد — " + (res.rows || []).length + " هدف از خط خودت" + (list.length < p.ips.length ? " (سقف " + DEV_CAP + " هدف در هر اجرا)" : "") + ".");
+      render(); summarize();
+    }, 60);
+  }
+
+  /* ---------- نمایش ---------- */
+  function medOf(r){ return r.summary && r.summary.median_ms != null ? r.summary.median_ms : null; }
+  function dnsMed(r){ return r.dns && r.dns.median_ms != null ? r.dns.median_ms : null; }
+  function sortRows(rows){
+    var arr = rows.slice();
+    if (state.sortBy === "median"){
+      arr.sort(function(a, b){
+        var x = medOf(a), y = medOf(b);
+        if (x == null && y == null) return 0; if (x == null) return 1; if (y == null) return -1;
+        return x - y;
+      });
+    } else if (state.sortBy === "ip"){
+      arr.sort(function(a, b){ return String(a.ip).localeCompare(String(b.ip)); });
+    } else if (state.sortBy === "country"){
+      arr.sort(function(a, b){ return String((a.country && a.country.cc) || "zz").localeCompare(String((b.country && b.country.cc) || "zz")); });
+    }
+    return arr;
+  }
+  function rowHtml(r){
+    var okish = r.ok !== false;
+    var med = medOf(r), sum = r.summary || {};
+    var v = r.verdict || { fa: "—", tone: "warn" };
+    var dev = state.dev[r.ip] || null;
+    var head = '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">' +
+      '<b class="mono" dir="ltr" style="font-size:15px">' + esc(r.ip || r.target) + '</b>' +
+      (r.version === "v6" ? '<span class="pill" style="font-size:10px;padding:1px 6px">IPv6</span>' : '') +
+      (okish ? badge(v.fa, v.tone) : badge("خطا", "bad")) +
+      '<span style="flex:1"></span>' +
+      (r.country && r.country.cc ? '<span class="sub" style="margin:0" title="کشور ثبت آی‌پی در RIR — برای رزولورهای انیکست ممکن است با محل واقعی پاسخ یکی نباشد">کشور ثبت (RIR): ' + esc(r.country.fa || r.country.cc) + ' <span class="mono">' + esc(r.country.cc) + '</span></span>' : '<span class="sub" style="margin:0">کشور ثبت نامعلوم</span>') +
+      '</div>';
+    if (!okish){
+      return '<div class="ph-box" style="margin-top:8px">' + head +
+        '<div class="sub" style="margin-top:4px">⛔️ ' + esc(r.error || "سنجش نشد") + '</div></div>';
+    }
+    var metrics = [];
+    if (r.mode !== "dns"){
+      metrics.push(['میانه', fa(sum), 'ms']);
+      metrics.push(['کمینه', fa(sum.min_ms), 'ms']);
+      metrics.push(['نوسان', fa(sum.jitter != null ? sum.jitter : null), 'ms']);
+      metrics.push(['افت', r.loss_avg != null ? fa(r.loss_avg) + "%" : '—', '']);
+    }
+    if (r.mode !== "ping" && r.dns){
+      metrics.push(['رزولوشن', fa(r.dns.median_ms), 'ms']);
+      metrics.push(['پاسخ', r.dns.ok_count + "/" + r.dns.total, '']);
+    }
+    if (dev){
+      if (dev.udp) metrics.push(['گوشی UDP/53', fa(dev.udp.avg), 'ms' + (dev.udp.loss ? ' · افت ' + dev.udp.loss + '%' : '')]);
+      if (dev.tcp) metrics.push(['گوشی TCP/' + (dev.port || 53), fa(dev.tcp.avg), 'ms']);
+    }
+    var cells = metrics.map(function(m){
+      return '<div style="min-width:76px"><div class="sub" style="margin:0;font-size:11px">' + esc(m[0]) + '</div>' +
+        '<div style="font-weight:700;font-variant-numeric:tabular-nums">' + esc(String(m[1])) +
+        '<span class="sub" style="font-size:11px"> ' + esc(m[2]) + '</span></div></div>';
+    }).join("");
+    var extras = [];
+    if (r.asn && r.asn.asn) extras.push("AS" + r.asn.asn + (r.asn.holder ? " · " + r.asn.holder : ""));
+    if (r.host_note) extras.push(r.host_note);
+    var probes = (r.probes || []).filter(function(x){ return x.avg != null; })
+      .map(function(x){ return (x.city || "?") + "/AS" + (x.asn || "?"); }).slice(0, 3).join(" · ");
+    var reasons = [];
+    (r.probes || []).forEach(function(x){ (x.reasons || []).forEach(function(rr){ if (reasons.indexOf(rr) < 0) reasons.push(rr); }); });
+    return '<div class="ph-box" style="margin-top:8px">' + head +
+      '<div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:8px">' + cells + '</div>' +
+      (extras.length ? '<div class="sub" style="margin-top:6px">' + esc(extras.join(" · ")) + '</div>' : '') +
+      (probes ? '<div class="sub" style="margin-top:2px">پروب‌های معتبر: ' + esc(probes) + '</div>' : '') +
+      (reasons.length ? '<div class="ph-warn" style="margin-top:6px">⚠️ ' + esc(reasons.join(" · ")) + '</div>' : '') +
+      (r.summary && r.summary.valid === 0 && r.mode !== "dns" ? '<div class="sub" style="margin-top:4px">صادقانه: هیچ پروب معتبری جواب نداد → عدد ساخته نمی‌شود.</div>' : '') +
+      '</div>';
+  }
+  function render(){
+    var rows = state.rows || [];
+    var list = state.onlyOk ? rows.filter(function(r){ return r.ok !== false && (medOf(r) != null || dnsMed(r) != null); }) : rows;
+    list = sortRows(list);
+    var out = q("ph6-out"); if (!out) return;
+    if (!list.length){ out.innerHTML = rows.length ? '<div class="sub">با این فیلتر چیزی نیست.</div>' : ""; return; }
+    out.innerHTML = list.map(rowHtml).join("");
+  }
+  function summarize(){
+    var rows = (state.rows || []).filter(function(r){ return r.ok !== false; });
+    var withMed = rows.filter(function(r){ return medOf(r) != null; });
+    var na = rows.length - withMed.length;
+    var best = null;
+    withMed.forEach(function(r){ if (best == null || medOf(r) < medOf(best)) best = r; });
+    var cc = {};
+    rows.forEach(function(r){
+      var c = (r.country && r.country.cc) || "??";
+      cc[c] = cc[c] || { n: 0, meds: [], fa: (r.country && r.country.fa) || c };
+      cc[c].n++;
+      var m = medOf(r); if (m != null) cc[c].meds.push(m);
+    });
+    var ccRows = Object.keys(cc).map(function(k){
+      var x = cc[k];
+      return { cc: k, fa: x.fa, n: x.n, med: x.meds.length ? Math.round(x.meds.reduce(function(a, b){ return a + b; }, 0) / x.meds.length) : null };
+    }).sort(function(a, b){ return (a.med == null ? 1e9 : a.med) - (b.med == null ? 1e9 : b.med); });
+    var el = q("ph6-sum"); if (!el) return;
+    var devN = Object.keys(state.dev || {}).length;
+    el.innerHTML = "🗂️ " + rows.length + " هدف سنجیده شد · " + withMed.length + " عدد معتبر · " + na + " نانشنه" +
+      (devN ? " · 📱 " + devN + " هدف از خط خودت" : "") +
+      (best ? '<br>🏅 کم‌ترین میانه: <b class="mono" dir="ltr">' + esc(best.ip) + '</b> — ' + fa(medOf(best)) + " ms" +
+        (best.country && best.country.fa ? " (" + esc(best.country.fa) + ")" : "") : "") +
+      (ccRows.length > 1 ? "<br>🌍 رول‌آپ کشوری: " + ccRows.map(function(x){ return esc(x.fa) + " " + (x.med == null ? "—" : x.med + "ms") + " (" + x.n + ")"; }).join(" · ") : "") +
+      '<br><span class="sub">قانون ما: کاندید، نه توصیه. عدد خط خودت را با «📱 از این گوشی» بسنج.</span>';
+  }
+
+  /* ---------- خروجی ---------- */
+  function asCsv(){
+    var head = ["ip","version","country_cc","country_fa","asn","holder","median_ms","min_ms","jitter_ms","loss_pct","valid_probes","verdict","dns_ms","dns_ok","device_udp_ms","device_tcp_ms"];
+    var lines = [head.join(",")];
+    (state.rows || []).forEach(function(r){
+      var s = r.summary || {}, dev = state.dev[r.ip] || {};
+      lines.push([r.ip || r.target, r.version || "", (r.country && r.country.cc) || "", (r.country && r.country.fa) || "",
+        (r.asn && r.asn.asn) || "", ((r.asn && r.asn.holder) || "").replace(/,/g, " "),
+        s.median_ms != null ? s.median_ms : "", s.min_ms != null ? s.min_ms : "", s.jitter != null ? s.jitter : "",
+        r.loss_avg != null ? r.loss_avg : "", s.valid != null ? s.valid : "",
+        (r.verdict && r.verdict.fa) || "", r.dns && r.dns.median_ms != null ? r.dns.median_ms : "",
+        r.dns ? r.dns.ok_count + "/" + r.dns.total : "", (dev.udp && dev.udp.avg) || "", (dev.tcp && dev.tcp.avg) || ""].join(","));
+    });
+    return "\ufeff" + lines.join("\n");
+  }
+  function copy(txt, btn){
+    var old = btn ? btn.textContent : "";
+    var done = function(){ if (btn){ btn.textContent = "✅ کپی شد"; setTimeout(function(){ btn.textContent = old; }, 1200); } };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, function(){ prompt("کپی کن:", txt); });
+    else prompt("کپی کن:", txt);
+  }
+  function summaryText(){
+    var rows = (state.rows || []).filter(function(r){ return r.ok !== false; });
+    var out = ["🔍 اسکنر پینگ‌هاب — " + rows.length + " هدف"];
+    sortRows(rows.filter(function(r){ return medOf(r) != null; })).slice(0, 10).forEach(function(r){
+      out.push((r.ip || r.target) + (r.country && r.country.cc ? " [" + r.country.cc + "]" : "") + " — " + fa(medOf(r)) + "ms · افت " + (r.loss_avg != null ? r.loss_avg + "%" : "—") + " · " + ((r.verdict && r.verdict.fa) || ""));
+    });
+    out.push("کاندید، نه توصیه — عدد خط خودت را با «📱 از این گوشی» بسنج.");
+    return out.join("\n");
+  }
+
+  /* ---------- پیش‌فرض‌ها ---------- */
+  function fillGlobal(){
+    q("ph6-in").value = ["1.1.1.1", "1.0.0.1", "8.8.8.8", "8.8.4.4", "9.9.9.9", "208.67.222.222", "94.140.14.14", "2001:4860:4860::8888"].join("\n");
+  }
+  function fillIr(){
+    fetch(ABS + "/api/changer", { headers: { accept: "application/json" } }).then(function(r){ return r.json(); }).then(function(j){
+      var ir = (j.resolvers || []).filter(function(x){ return x.kind === "iran"; }).slice(0, 12);
+      var ips = [];
+      ir.forEach(function(x){ (x.ips || []).slice(0, 1).forEach(function(i){ ips.push(i); }); });
+      if (!ips.length){ log("⚠️ لیست ایرانی در دسترس نبود."); return; }
+      q("ph6-in").value = ips.join("\n");
+      log("🇮🇷 " + ips.length + " رزولور ایرانی از کاتالوگ خودمان گذاشته شد (منبع: /api/changer).");
+    }).catch(function(){ log("⚠️ /api/changer در دسترس نبود."); });
+  }
+
+  /* ---------- سیم‌کشی ---------- */
+  var go = q("ph6-go");
+  if (!go) return;
+  go.onclick = runServer;
+  q("ph6-stop").onclick = function(){ state.cancel = true; };
+  q("ph6-dev").onclick = runDevice;
+  q("ph6-fill-global").onclick = fillGlobal;
+  q("ph6-fill-ir").onclick = fillIr;
+  q("ph6-fill-range").onclick = function(){ q("ph6-in").value = "1.1.1.0/29"; };
+  q("ph6-clear").onclick = function(){ q("ph6-in").value = ""; state.rows = []; state.dev = {}; render(); q("ph6-bar").innerHTML = ""; log("پاک شد."); };
+  q("ph6-sort").onclick = function(){
+    state.sortBy = state.sortBy === "median" ? "ip" : state.sortBy === "ip" ? "country" : "median";
+    this.textContent = "↕️ ترتیب: " + (state.sortBy === "median" ? "میانهٔ پینگ" : state.sortBy === "ip" ? "آی‌پی" : "کشور");
+    render();
+  };
+  q("ph6-only-ok").onclick = function(){ state.onlyOk = !state.onlyOk; this.textContent = state.onlyOk ? "✅ همه" : "✅ فقط سنجش‌شده‌ها"; render(); };
+  q("ph6-csv").onclick = function(){
+    var blob = new Blob([asCsv()], { type: "text/csv;charset=utf-8" });
+    var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "pinghab-scan.csv"; a.click();
+  };
+  q("ph6-json").onclick = function(){ copy(JSON.stringify({ at: Date.now(), rows: state.rows, device: state.dev }, null, 1), q("ph6-json")); };
+  q("ph6-copy").onclick = function(){ copy(summaryText(), q("ph6-copy")); };
+  fillGlobal();
+})();
+</script>
