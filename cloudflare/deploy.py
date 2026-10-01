@@ -359,6 +359,47 @@ def test(env: dict):
     count_in("/app پل نیتیو ویجت", f"{SITE}/app", "phNative")
     count_in("/app آزمون تک‌دستگاهی", f"{SITE}/app", "آزمون تک‌دستگاهی")
 
+    # --- دور ۳: صداقت سنجش (پروب نانشنه)، بازی‌ها، لیست کشوری، طراحی v3 ---
+    print("\n  ── پینگ‌هاب ۲.۲ (دور ۳: ضدِ-نانشنه) ──")
+    check("/api/games (۱۳ بازی)", f"{SITE}/api/games")
+    check("/api/games?q=pubg (جست‌وجو)", f"{SITE}/api/games?q=pubg")
+    check("/api/games?game=pubg-mobile", f"{SITE}/api/games?game=pubg-mobile")
+    check("/api/games?game=mobile-legends", f"{SITE}/api/games?game=mobile-legends&region=SEA")
+    check("/api/dohrace (مسابقهٔ رزولور از لبه)", f"{SITE}/api/dohrace?host=discord.com")
+    check("/api/gameping (پینگ سرور بازی)", f"{SITE}/api/gameping?ips=161.202.221.155,148.153.196.5&cc=IR")
+    check("/api/dnslist ES (لیست کشوری)", f"{SITE}/api/dnslist?cc=ES&n=10")
+    check("/api/wave (شامل جمع‌بندی اعتبار)", f"{SITE}/api/wave?host=1.1.1.1&packets=8&cc=IR")
+    # تفکیک لیست کشورها (ایراد «تکراری»)
+    try:
+        def _ips(cc):
+            st, raw = api(f"{SITE}/api/dnslist?cc={cc}&n=12", "x", "GET", None,
+                          {"Authorization": "", "User-Agent": "PingHab/1.0"}, raw=True, timeout=60)
+            j = json.loads(raw)
+            return {x["ip"] for x in (j.get("servers") or [])}
+        a, b = _ips("ES"), _ips("BD")
+        inter = len(a & b)
+        ok = len(a) > 0 and len(b) > 0 and inter == 0
+        results.append(("تفکیک لیست کشوری ES≠BD", ok, f"{len(a)}/{len(b)} مشترک={inter}"))
+        print(f"  {'✅' if ok else '❌'} {'تفکیک لیست کشوری ES/BD':34s} {'':>5s}  ES={len(a)} BD={len(b)} مشترک={inter}")
+    except Exception as e:
+        print("  ❌ dnslist-diff:", e)
+    # جمع‌بندی موج باید کلید summary داشته باشد (نشان‌دادن پروب نانشنه)
+    try:
+        st, raw = api(f"{SITE}/api/wave?host=1.1.1.1&packets=8&cc=IR", "x", "GET", None,
+                      {"Authorization": "", "User-Agent": "PingHab/1.0"}, raw=True, timeout=120)
+        j = json.loads(raw)
+        ok = bool(j.get("summary")) and "control_target" in j
+        results.append(("/api/wave جمع‌بندی اعتبار پروب‌ها", ok, str(st)))
+        print(f"  {'✅' if ok else '❌'} {'/api/wave summary (اعتبار پروب)':34s} {str(st):>5s}  valid={((j.get('summary') or {}).get('valid'))}")
+    except Exception as e:
+        print("  ❌ wave-summary:", e)
+    count_in("/app لایهٔ طراحی v3", f"{SITE}/app", "ph-design-v3")
+    count_in("/app پنل لیست رزولور کشور", f"{SITE}/app", "ph3-cc-out")
+    count_in("/app نشان اعتبار پروب (نانشنه)", f"{SITE}/app", "sanityBadge")
+    count_in("/app هیرو تازه", f"{SITE}/app", "ph-hero")
+    count_in("/app سنجش واقعی سرور بازی در آمادگی", f"{SITE}/app", 'id="ph2-pf-gs"')
+    count_in("/app پنل بازی‌های تأییدشده", f"{SITE}/app", "ph-gsvc")
+
     # ثبت بی‌نام (تست) — نمونهٔ ساعت طلایی/روند هم ساخته می‌شود
     body = json.dumps({"province": "تست", "carrier": "تست", "resolver": "self-test", "ms": 42, "ok": True}).encode()
     api(f"{SITE}/api/report", "x", "POST", body, {"Authorization": "", "User-Agent": "PingHab/1.0", "Content-Type": "application/json"}, raw=True, timeout=30)

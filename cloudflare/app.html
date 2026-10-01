@@ -103,6 +103,148 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
 .themes button[aria-pressed=true]{background:var(--tx);color:var(--bg);border-color:var(--tx)}
 </style>
 <script src="https://telegram.org/js/telegram-web-app.js" onerror="window.__noTgSdk=1"></script>
+
+<style id="ph-design-v3">
+/* ================= پینگ‌هاب — لایهٔ طراحی v3 (روی متغیرهای هر ۱۱ تم) ================= */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:Vazirmatn,system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Arabic",sans-serif;
+  background:var(--bg);
+  background:
+    radial-gradient(1100px 520px at 88% -8%, color-mix(in srgb,var(--acc) 13%, transparent), transparent 62%),
+    radial-gradient(760px 420px at 4% 2%, color-mix(in srgb,var(--acc) 7%, transparent), transparent 58%),
+    var(--bg);
+  background-attachment:fixed;
+  color:var(--tx);
+  line-height:1.75;
+  -webkit-text-size-adjust:100%;
+  font-feature-settings:"ss01","ss02";
+}
+::selection{background:color-mix(in srgb,var(--acc) 40%, transparent)}
+h1,h2,h3,b,strong{font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(19px,4.6vw,26px);margin:18px 0 6px;display:flex;align-items:center;gap:8px}
+h2::after{content:"";flex:1;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--acc) 55%, transparent),transparent)}
+a{color:var(--acc);text-decoration:none}
+a:hover{text-decoration:underline}
+.mono,.ph-mono,code{font-family:ui-monospace,SFMono-Regular,"JetBrains Mono",Menlo,monospace;
+  font-variant-numeric:tabular-nums;font-size:.92em;direction:ltr;unicode-bidi:isolate}
+.num,.ph-kv b{font-variant-numeric:tabular-nums}
+
+/* ---- هیرو ---- */
+.ph-hero{position:relative;overflow:hidden;margin:14px 0 4px;padding:20px 18px 16px;
+  border:1px solid var(--line);border-radius:calc(var(--r) + 6px);
+  background:var(--card);
+  background:linear-gradient(135deg,color-mix(in srgb,var(--acc) 20%, var(--card)),var(--card) 62%);
+  box-shadow:var(--sh), 0 18px 44px -28px color-mix(in srgb,var(--acc) 60%, transparent)}
+.ph-hero::before{content:"";position:absolute;inset:auto -30% -70% 40%;height:180px;
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--acc) 30%, transparent),transparent);pointer-events:none}
+.ph-hero h1{margin:0;font-size:clamp(24px,7vw,38px);line-height:1.15;display:flex;align-items:center;gap:10px}
+.ph-hero .ph-hero-sub{margin-top:6px;color:var(--mut);font-size:clamp(12.5px,3.4vw,15px);max-width:62ch}
+.ph-hero .ph-hero-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;position:relative;z-index:1}
+.ph-hero .ph-chip{border:1px solid var(--line);background:var(--card);background:color-mix(in srgb,var(--tx) 5%, transparent);
+  color:var(--tx);border-radius:999px;padding:9px 14px;font-size:13.5px;font-weight:700;cursor:pointer;
+  transition:transform .15s ease, border-color .15s ease, background .15s ease}
+.ph-hero .ph-chip:hover{transform:translateY(-1px);border-color:var(--acc);
+  background:color-mix(in srgb,var(--acc) 16%, transparent)}
+.ph-hero .ph-hero-note{margin-top:12px;font-size:12.5px;color:var(--mut);position:relative;z-index:1}
+
+/* ---- تب‌ها: چسبان + نواری ---- */
+.ph-tabs{position:sticky;top:0;z-index:30;display:flex;gap:7px;overflow-x:auto;flex-wrap:nowrap;
+  padding:9px 6px;margin:12px -6px 14px;background:var(--bg);background:color-mix(in srgb,var(--bg) 86%, transparent);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);scrollbar-width:none;scroll-snap-type:x proximity}
+.ph-tabs::-webkit-scrollbar{display:none}
+.ph-tab{flex:0 0 auto;padding:9px 14px;border-radius:var(--rb,999px);border:1px solid var(--line);
+  background:var(--card);background:color-mix(in srgb,var(--card) 92%, transparent);color:var(--mut);font:inherit;font-size:13px;
+  font-weight:700;cursor:pointer;white-space:nowrap;scroll-snap-align:center;
+  transition:color .15s ease, background .15s ease, border-color .15s ease, transform .15s ease}
+.ph-tab:hover{color:var(--tx);border-color:color-mix(in srgb,var(--acc) 50%, var(--line))}
+.ph-tab.on{background:var(--acc);color:var(--on);border-color:var(--acc);
+  box-shadow:0 8px 22px -12px color-mix(in srgb,var(--acc) 75%, transparent);transform:translateY(-1px)}
+
+/* ---- پنل‌ها و کارت‌ها ---- */
+.ph-panel{animation:phFade .25s ease}
+@keyframes phFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.ph-card{position:relative;margin:12px 0;padding:16px 15px;border:1px solid var(--line);
+  border-radius:calc(var(--r) + 4px);background:var(--card);box-shadow:var(--sh);
+  transition:border-color .18s ease, transform .18s ease}
+.ph-card:hover{border-color:color-mix(in srgb,var(--acc) 34%, var(--line))}
+.ph-card>b:first-child,.ph-card>div>b:first-child{display:inline-flex;align-items:center;gap:7px;font-size:15.5px}
+.ph-box{border:1px dashed color-mix(in srgb,var(--acc) 45%, var(--line));
+  background:color-mix(in srgb,var(--acc) 7%, transparent);border-radius:calc(var(--r) + 2px);padding:12px 13px}
+.sub{color:var(--mut);font-size:13px;line-height:1.85}
+.ph-lbl{display:block;margin-bottom:5px;font-size:12.5px;font-weight:700;color:var(--mut)}
+.row{display:flex;align-items:center;gap:8px}
+.ph-grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.ph-kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+
+/* ---- فرم‌ها ---- */
+.wwin,input[type=text],input[type=search],input[type=number],input:not([type]),select,textarea{
+  width:100%;min-height:46px;padding:10px 12px;border-radius:var(--r);border:1px solid var(--line);
+  background:var(--card);background:color-mix(in srgb,var(--tx) 4%, transparent);color:var(--tx);font:inherit;font-size:14.5px;
+  transition:border-color .15s ease, box-shadow .15s ease, background .15s ease}
+.wwin:focus,input:focus,select:focus,textarea:focus{outline:none;border-color:var(--acc);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 22%, transparent)}
+input[style*="direction:ltr"],.wwin[style*="direction:ltr"],#ph-dom,#ph3-race-name,#ph3-flt-host,#ph2-path-target{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.01em}
+
+/* ---- دکمه‌ها ---- */
+.wwbtn{min-height:44px;padding:10px 15px;border-radius:var(--rb,10px);border:1px solid var(--line);
+  background:var(--card);background:color-mix(in srgb,var(--tx) 6%, transparent);color:var(--tx);font:inherit;font-size:13.5px;
+  font-weight:700;cursor:pointer;transition:transform .14s ease, background .14s ease, border-color .14s ease;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.wwbtn:hover{transform:translateY(-1px);border-color:color-mix(in srgb,var(--acc) 55%, var(--line));
+  background:color-mix(in srgb,var(--acc) 12%, transparent)}
+.wwbtn:active{transform:translateY(0) scale(.985)}
+.wwbtn.wwprimary{background:var(--acc);color:var(--on);border-color:var(--acc);
+  box-shadow:0 10px 26px -14px color-mix(in srgb,var(--acc) 80%, transparent)}
+.wwbtn.wwprimary:hover{filter:brightness(1.06)}
+.wwbtn.wwcopy{min-height:34px;padding:5px 11px;font-size:12.5px;border-radius:999px}
+
+/* ---- جدول‌ها ---- */
+table{width:100%;border-collapse:separate;border-spacing:0;margin:10px 0;font-size:13.5px;
+  overflow:hidden;border:1px solid var(--line);border-radius:calc(var(--r) + 2px)}
+th,td{padding:9px 11px;text-align:right;border-bottom:1px solid color-mix(in srgb,var(--line) 80%, transparent)}
+th{background:var(--card);background:color-mix(in srgb,var(--tx) 6%, transparent);color:var(--mut);font-size:12.5px;font-weight:800;
+  position:sticky;top:0;backdrop-filter:blur(6px)}
+tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--tx) 2.6%, transparent)}
+tbody tr:hover td{background:color-mix(in srgb,var(--acc) 8%, transparent)}
+tr:last-child td{border-bottom:none}
+.ph-tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0}
+.ph-tblwrap table{margin:0;min-width:520px}
+
+/* ---- نشان‌ها ---- */
+.ph-badge,.badge,.pill{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;
+  border:1px solid var(--line);font-size:11.5px;font-weight:800;
+  background:var(--card);background:color-mix(in srgb,var(--tx) 5%, transparent)}
+.ph-good,.ph-warn,.ph-bad{display:inline-flex;align-items:center;gap:5px;padding:2px 9px;border-radius:999px;font-weight:800}
+.ph-good{color:#0f7a55;background:rgba(16,168,116,.18);border:1px solid rgba(16,168,116,.42)}
+.ph-warn{color:#8a5a00;background:rgba(224,138,0,.18);border:1px solid rgba(224,138,0,.42)}
+.ph-bad{color:#a1231f;background:rgba(229,57,53,.16);border:1px solid rgba(229,57,53,.42)}
+[data-t=renault] .ph-good,[data-t=apple] .ph-good,[data-t=claude] .ph-good,[data-t=lovable] .ph-good{color:#046b48}
+.ph-chip-ok{background:color-mix(in srgb,#10a874 20%, transparent);border-color:color-mix(in srgb,#10a874 45%, transparent)}
+.ph-chip-no{background:color-mix(in srgb,#e53935 16%, transparent);border-color:color-mix(in srgb,#e53935 40%, transparent)}
+
+/* ---- اسکرول‌بار ---- */
+*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--acc) 45%, var(--line)) transparent}
+*::-webkit-scrollbar{width:9px;height:9px}
+*::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--acc) 40%, var(--line));border-radius:99px}
+*::-webkit-scrollbar-track{background:transparent}
+
+/* ---- موبایل ---- */
+@media (max-width:640px){
+  .ph-card{padding:14px 12px;border-radius:calc(var(--r) + 2px)}
+  .row{flex-wrap:wrap}
+  .wwbtn{flex:1 1 auto}
+  .ph-tabs{margin:10px -4px 12px}
+  th,td{padding:8px 9px;font-size:12.5px}
+  .ph-hero{padding:16px 14px}
+  body{line-height:1.7}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -414,15 +556,20 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
 
   <div class="ph-panel" id="ph-p2">
     <div class="ph-card">
-      <b>سرورهای بازی — بهترین رجین برای تو</b>
-      <div class="sub">۹ بازی · ۱۴۱ سرور (داده از پروژهٔ MIT «pingdiff»). اول سرورهای هر رجین را ببین، بعد پینگ «از داخل ایران» را بگیر.</div>
+            <b>سرورهای بازی — بهترین رجین برای تو</b> <!-- ph-games-v2 -->
+      <div class="sub">۱۳ بازی · ۱۶۸ سرور. سرورهای <b>پابجی موبایل</b> و <b>موبایل لجندز</b> با پینگ واقعی از سه نقطهٔ دید سنجیده و تأیید شده‌اند (✅)؛
+        برای هر سرور، منبع و تاریخ تأیید ثبت است. جست‌وجو کن، رجین را ببین، بعد «پینگ زنده از ایران» را بگیر.</div>
       <div class="ph-grid2" style="margin-top:8px">
         <div><span class="ph-lbl">بازی</span><select class="wwin" id="ph-game"></select></div>
         <div><span class="ph-lbl">رجین</span><select class="wwin" id="ph-region"></select></div>
       </div>
+            <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+        <input id="ph-gsearch" class="wwin" placeholder="جست‌وجو: pubg، لجند، valorant…" style="flex:1;min-width:180px">
+      </div>
       <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
         <button class="wwbtn wwprimary" id="ph-gload">نمایش سرورها</button>
-        <button class="wwbtn" id="ph-gping">پینگ ۳ سرور اول از ایران</button>
+        <button class="wwbtn" id="ph-gping">📡 پینگ زنده از ایران</button>
+        <button class="wwbtn" id="ph-gsvc">🧩 سرویس‌هایی که ICMP بسته‌اند</button>
       </div>
       <div id="ph-gout"></div>
     </div>
@@ -621,14 +768,16 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
     }
   }catch(e){}
 
-  /* ---------- سنجش از دستگاه (DoH JSON) + p95/jitter ---------- */
+  /* ---------- سنجش از دستگاه (DoH) — نسخهٔ ۲ (ph-doh-v2) ---------- */
+  /* ریشهٔ خطای «همه ناموفق»: آدرس‌های غلط (adguard/nextdns)، نبود CORS، و بسته‌بودن DoH روی برخی اپراتورها.
+     راه‌حل: (۱) آدرس‌های درست، (۲) آزمون «دسترسی» بدون نیاز به CORS، (۳) نسخهٔ لبه که همیشه عدد واقعی می‌دهد. */
   var DOH = [
     { id:"cloudflare", name:"کلودفلر", url:"https://cloudflare-dns.com/dns-query" },
-    { id:"google", name:"گوگل", url:"https://dns.google/resolve" },
+    { id:"google", name:"گوگل", url:"https://dns.google/dns-query" },
+    { id:"adguard", name:"ادگارد", url:"https://dns.adguard-dns.com/resolve" },
     { id:"quad9", name:"کوآد۹", url:"https://dns.quad9.net:5053/dns-query" },
-    { id:"shecan", name:"شکن (ایران)", url:"https://free.shecan.ir/dns-query" },
-    { id:"electro", name:"الکترو (ایران)", url:"https://dns.electrotm.org/dns-query" },
-    { id:"radar", name:"رادار (ایران)", url:"https://10.202.10.10/dns-query" }
+    { id:"dns0", name:"DNS0.eu", url:"https://dns0.eu/dns-query" },
+    { id:"dnssb", name:"DNS.SB", url:"https://doh.sb/dns-query" }
   ];
   async function probeOne(r, name){
     var ctrl = new AbortController(); var to = setTimeout(function(){ ctrl.abort(); }, 4500);
@@ -639,42 +788,90 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
       var ms = performance.now() - t0;
       var ips = [];
       try{ var j = await res.json(); ips = (j.Answer||[]).filter(function(a){ return a.type === 1; }).map(function(a){ return a.data; }); }catch(e){}
-      return { id:r.id, name:r.name, ms:ms, ips:ips, ok:res.ok };
-    }catch(e){ return { id:r.id, name:r.name, ms:performance.now()-t0, ips:[], ok:false }; }
+      return { id:r.id, name:r.name, ms:ms, ips:ips, ok:!!res.ok && ips.length>0 };
+    }catch(e){
+      var why = (e && e.name === "AbortError") ? "timeout" : "دسترسی/CORS";
+      return { id:r.id, name:r.name, ms:performance.now()-t0, ips:[], ok:false, why:why };
+    }
+    finally{ clearTimeout(to); }
+  }
+  /* آزمون «فقط دسترسی»: با no-cors بدنه خوانده نمی‌شود ولی اگر TLS برقرار شود، خط بسته نیست. */
+  async function reachOne(r){
+    var ctrl = new AbortController(); var to = setTimeout(function(){ ctrl.abort(); }, 4000);
+    var t0 = performance.now();
+    try{
+      await fetch(r.url, { mode:"no-cors", cache:"no-store", signal: ctrl.signal });
+      return { id:r.id, reach:true, ms:Math.round(performance.now()-t0) };
+    }catch(e){
+      return { id:r.id, reach:false, ms:Math.round(performance.now()-t0),
+        why:(e && e.name === "AbortError") ? "پاسخی نیامد (۴ث)" : "اتصال برقرار نشد" };
+    }
     finally{ clearTimeout(to); }
   }
   var LAST = [];
   q("ph-run").onclick = async function(){
     var name = (q("ph-dom").value||"").trim().replace(/[^a-z0-9.\-]/gi, "") || "cdn.cloudflare.steamstatic.com";
-    var out = q("ph-out"); out.innerHTML = "در حال سنجش (۶ رزولور × ۳ بار)…";
-    var rows = [];
+    var out = q("ph-out"); out.innerHTML = "در حال سنجش (۶ رزولور × ۳ بار) + آزمون دسترسی…";
+    var rows = [], reachRows = {};
     for (var i=0;i<DOH.length;i++){
-      var rs = [];
+      var rs = [], re = null;
+      re = await reachOne(DOH[i]);
+      reachRows[DOH[i].id] = re;
       for (var k=0;k<3;k++){ rs.push(await probeOne(DOH[i], name)); }
       var good = rs.filter(function(x){ return x.ok && x.ips.length; });
       var ms = good.map(function(x){ return x.ms; });
+      var failWhy = !good.length ? ((rs[0] && rs[0].why) || "بی‌پاسخ") : null;
       rows.push({ id:DOH[i].id, name:DOH[i].name, ok:good.length>0, n:good.length,
         p50: pct(ms,50), p95: pct(ms,95), jit: ms.length>1 ? Math.round((Math.max.apply(null,ms)-Math.min.apply(null,ms))) : 0,
-        ips: good.length ? good[0].ips : [] });
+        ips: good.length ? good[0].ips : [], reach: re, why: failWhy });
     }
     LAST = rows;
     var okRows = rows.filter(function(x){ return x.ok; }).sort(function(a,b){ return a.p50-b.p50; });
-    var html = '<table><tr><th>DNS</th><th>میانه</th><th>p95</th><th>نوسان</th><th>آی‌پی برگشتی</th></tr>';
+    var reachOk = rows.filter(function(x){ return x.reach && x.reach.reach; }).length;
+    var html = '<div class="sub" style="margin-top:8px">از خط خودت: <b>' + fa(reachOk) + ' از ' + fa(rows.length) +
+      '</b> رزولور قابل دسترسی بود · پاسخ سالم از <b>' + fa(okRows.length) + '</b> رزولور.</div>';
+    html += '<div class="ph-tblwrap"><table><tr><th>DNS</th><th>دسترسی از خط تو</th><th>میانه</th><th>p95</th><th>نوسان</th><th>آی‌پی برگشتی</th></tr>';
     rows.forEach(function(r2){
-      html += '<tr><td>' + esc(r2.name) + (r2.ok ? "" : ' <span class="ph-bad">▲</span>') + "</td>"
+      var reachTxt = r2.reach && r2.reach.reach
+        ? '<span class="ph-badge ph-chip-ok">✅ بله (' + fa(r2.reach.ms) + 'ms)</span>'
+        : '<span class="ph-badge ph-chip-no">⛔ ' + esc((r2.reach && r2.reach.why) || "بسته") + '</span>';
+      html += '<tr><td>' + esc(r2.name) + (r2.ok ? "" : ' <span class="ph-bad">بی‌پاسخ</span>') + "</td>"
+        + "<td>" + reachTxt + "</td>"
         + "<td>" + (r2.p50==null?"—":fa(r2.p50.toFixed(0))+"ms") + "</td>"
         + "<td>" + (r2.p95==null?"—":fa(r2.p95.toFixed(0))+"ms") + "</td>"
         + "<td>" + fa(r2.jit||0) + "ms</td>"
         + '<td class="ph-mono">' + esc((r2.ips||[]).slice(0,2).join(" · ")||"—") + "</td></tr>";
     });
-    html += "</table>";
+    html += "</table></div>";
     if (okRows.length){
       var b = okRows[0], w = okRows[okRows.length-1], gap = (w.p50 - b.p50);
-      html += '<div class="ph-card"><b>خلاصه:</b> بهترین <b>' + esc(b.name) + "</b> با میانهٔ <b>" + fa(b.p50.toFixed(0)) + "ms</b>"
-        + (okRows.length>1 ? " · اختلاف تا بدترین (" + esc(w.name) + "): <b>" + fa(gap.toFixed(0)) + "ms</b>" : "")
-        + '<div class="sub">▲ این عدد «سرعت رسیدن پاسخ DNS» است. اثر واقعی روی پینگ بازی از <b>آی‌پی برگشتی</b> می‌آید — اگر آی‌پی‌ها فرق دارند، مسیر هم فرق دارد (بخش «ایران و جهان» را ببین).</div></div>';
+      html += '<div class="ph-card"><b>خلاصه از خط تو:</b> بهترین <b>' + esc(b.name) + "</b> با میانهٔ <b>" + fa(b.p50.toFixed(0)) + "ms</b>"
+        + (okRows.length>1 ? " · اختلاف تا بدترین (" + esc(w.name) + "): <b>" + fa(gap.toFixed(0)) + "ms</b>" : "") + "</div>";
+    } else {
+      html += '<div class="ph-warn">هیچ رزولوری از این خط پاسخ JSON نداد. دو حالت دارد: یا اپراتور DoH را بسته، یا مرورگر به‌خاطر CORS اجازهٔ خواندن بدنه را نمی‌دهد. جدول پایین (سنجش از لبهٔ شبکه) در هر دو حالت عدد واقعی می‌دهد.</div>';
     }
+    html += '<div class="sub">▲ این عدد «سرعت رسیدن پاسخ DNS» است، نه پینگ بازی. اثر واقعی روی مسیر بازی از <b>آی‌پی برگشتی</b> می‌آید. در مرورگر نمی‌توانیم DNS سیستم را عوض کنیم؛ در اپ اندروید هم بدون روت فقط راهنمای تغییر دستی می‌دهیم.</div>';
     out.innerHTML = html;
+
+    /* --- نسخهٔ لبه: از سرور ما، مستقل از فیلتر اپراتور --- */
+    out.innerHTML += '<div class="ph-card" id="ph-edge-race"><b>🏁 مسابقهٔ رزولور از لبهٔ شبکه</b><div class="sub">در حال سنجش…</div></div>';
+    try{
+      var d = await jget("/api/dohrace?host=" + encodeURIComponent(name));
+      var eh = '<div class="ph-card" id="ph-edge-race"><b>🏁 مسابقهٔ رزولور از لبهٔ شبکه</b><div class="sub">' +
+        'این مسابقه از سرور ما اجرا می‌شود، پس اگر اپراتور DoH را بسته باشد هم عدد واقعی می‌بینی (مرجع، نه خط تو).</div>' +
+        '<div class="ph-tblwrap"><table><tr><th>رزولور</th><th>زمان</th><th>کد</th><th>آی‌پی</th></tr>';
+      (d.rows||[]).forEach(function(x){
+        eh += "<tr><td>" + esc(x.name) + "</td><td>" + (x.ok? fa(x.ms)+"ms" : '<span class="ph-bad">'+esc(x.err||"—")+"</span>") +
+          "</td><td>" + (x.rcode==null?"—":fa(x.rcode)) + '</td><td class="ph-mono">' + esc((x.ips||[]).join(" · ")||"—") + "</td></tr>";
+      });
+      eh += "</table></div>";
+      if (d.best) eh += '<div class="sub">پاسخ‌دهنده: <b>' + fa(d.answered) + " از " + fa(d.tried) + "</b> · تندترین: <b>" + esc(d.best.name) +
+        "</b> (" + fa(d.best.ms) + "ms) · آی‌پی‌های اولین پاسخ متمایز: <b>" + fa(d.distinct_first_ips||0) + "</b> (تفاوت = PoP متفاوت)</div>";
+      eh += "</div>";
+      var box = q("ph-edge-race"); if (box) box.outerHTML = eh;
+    }catch(e){
+      var box2 = q("ph-edge-race"); if (box2) box2.innerHTML = '<b>🏁 مسابقهٔ لبه</b><div class="ph-warn">دسترسی نبود: ' + esc(e.message) + "</div>";
+    }
   };
   q("ph-report").onclick = async function(){
     if(!LAST.length){ q("ph-out").innerHTML += '<div class="ph-warn">اول یک بار «سنجش» را بزن.</div>'; return; }
@@ -691,13 +888,29 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
     q("ph-out").innerHTML += '<div class="ph-good" style="margin-top:6px">' + fa(sent) + " رکورد بی‌نام ثبت شد (فقط استان/اپراتور/رزولور/عدد).</div>";
   };
 
-  /* ---------- بازی ---------- */
+  /* ---------- بازی (نسخهٔ ۲: تأییدشده + پینگ زنده + سرویس‌ها) ---------- */
   var GAMES = null;
+  function gameRowBadges(s){
+    var b = '';
+    if (s.v) b += ' <span class="ph-badge ph-chip-ok">✅ تأییدشده</span>';
+    else b += ' <span class="ph-badge">کاندید</span>';
+    return b;
+  }
+  function renderProbe(s){
+    if (!s.probe) return "—";
+    var parts = [];
+    ["DE","SG","TR"].forEach(function(k){ if (s.probe[k] != null) parts.push(k + " " + fa(Math.round(s.probe[k])) + "ms"); });
+    return parts.length ? parts.join(" · ") : "—";
+  }
   async function loadGames(){
-    try{ GAMES = await jget("/api/games"); }catch(e){ return; }
+    var qq = (q("ph-gsearch") && q("ph-gsearch").value || "").trim();
+    try{ GAMES = await jget("/api/games" + (qq ? "?q=" + encodeURIComponent(qq) : "")); }catch(e){ return; }
+    if (!GAMES || !GAMES.games) return;
     q("ph-game").innerHTML = GAMES.games.map(function(g){
-      return '<option value="'+esc(g.slug)+'">'+esc(g.fa)+' — '+fa(g.servers)+' سرور</option>'; }).join("");
+      return '<option value="'+esc(g.slug)+'">'+esc(g.fa)+' — '+fa(g.servers)+' سرور'+(g.verified?" · "+fa(g.verified)+" تأییدشده":"")+'</option>'; }).join("");
     loadRegion();
+    q("ph-gout").innerHTML = '<div class="sub">' + fa(GAMES.count) + " بازی · " + fa(GAMES.total_servers) + " سرور · تأییدشده با پینگ واقعی: <b>" +
+      fa(GAMES.verified_servers) + "</b> سرور · تاریخ تأیید: " + esc(GAMES.verified_at||"—") + "</div>";
   }
   async function loadRegion(){
     var slug = q("ph-game").value; if(!slug) return;
@@ -706,21 +919,30 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
       q("ph-region").innerHTML = Object.keys(d.regions).map(function(r){
         var cnt = d.regions[r].length;
         return '<option value="'+esc(r)+'">'+esc(d.regions_fa[r]||r)+" ("+fa(cnt)+")</option>"; }).join("");
+      if (d.note) q("ph-gout").innerHTML = '<div class="ph-box"><b>' + esc(d.fa) + (d.publisher ? " — " + esc(d.publisher) : "") + '</b><div class="sub">' +
+        esc(d.note) + (d.src ? '<br>منبع: <span class="mono">' + esc(d.src) + '</span>' : '') + '</div>' +
+        ((d.unmeasurable||[]).length ? '<div class="sub">⚠️ سنجش‌پذیر نیست: ' + d.unmeasurable.map(function(u){ return esc(u.loc) + " (" + esc(u.why) + ")"; }).join(" · ") + '</div>' : '') +
+        '</div>';
     }catch(e){}
   }
-  q("ph-game").onchange = loadRegion;
+  if (q("ph-game")) q("ph-game").onchange = loadRegion;
+  if (q("ph-gsearch")) q("ph-gsearch").oninput = function(){ loadGames(); };
   q("ph-gload").onclick = async function(){
     var slug = q("ph-game").value, reg = q("ph-region").value;
     var out = q("ph-gout"); out.innerHTML = "…";
     try{
       var d = await jget("/api/games?game=" + encodeURIComponent(slug) + "&region=" + encodeURIComponent(reg));
       var arr = d.regions[reg] || [];
-      var html = '<table><tr><th>سرور</th><th>آی‌پی:پورت</th><th>کپی</th></tr>';
+      var html = '<div class="sub">' + fa(arr.length) + " سرور در رجین " + esc(d.regions_fa[reg]||reg) + " · پینگ‌های ستون «سنجش ما» میانگین ICMP از DE/SG/TR است (نه خط تو).</div>";
+      html += '<div class="ph-tblwrap"><table><tr><th>سرور</th><th>آی‌پی:پورت</th><th>ASN</th><th>وضعیت</th><th>سنجش ما</th><th></th></tr>';
       arr.forEach(function(s){
-        html += '<tr><td>' + esc(s.loc||s.id) + '</td><td class="ph-mono">' + esc(s.ip+":"+s.port) + "</td>"
+        html += "<tr><td>" + esc(s.loc||s.id) + '</td><td class="ph-mono">' + esc(s.ip+":"+s.port) + "</td>"
+          + '<td class="ph-mono">' + esc(s.asn||"—") + "</td>"
+          + "<td>" + gameRowBadges(s) + (s.why ? '<div class="sub">' + esc(s.why) + '</div>' : "") + "</td>"
+          + '<td class="ph-mono">' + renderProbe(s) + "</td>"
           + '<td><button class="wwbtn wwcopy" data-c="' + esc(s.ip+":"+s.port) + '">کپی</button></td></tr>';
       });
-      html += "</table>";
+      html += "</table></div>";
       out.innerHTML = html;
       Array.prototype.forEach.call(out.querySelectorAll("[data-c]"), function(b){ b.onclick = function(){ copy(b, b.getAttribute("data-c")); }; });
     }catch(e){ out.textContent = "خطا: " + e.message; }
@@ -731,17 +953,47 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
     try{
       var d = await jget("/api/games?game=" + encodeURIComponent(slug) + "&region=" + encodeURIComponent(reg));
       var arr = (d.regions[reg]||[]).slice(0,3);
-      out.innerHTML = "در حال سنجش از پروب‌های ایران…";
-      var html = '<div class="ph-card"><b>پینگ از داخل ایران (Globalping)</b><table><tr><th>سرور</th><th>آی‌پی</th><th>میانگین</th><th>افت</th></tr>';
-      for (var i=0;i<arr.length;i++){
-        var s = arr[i];
-        var r = await jget("/api/gp?type=ping&target=" + encodeURIComponent(s.ip) + "&cc=IR&limit=1");
-        var f = (r.results||[])[0] || {};
-        html += "<tr><td>" + esc(s.loc||s.id) + '</td><td class="ph-mono">' + esc(s.ip) + "</td>"
-          + "<td>" + (f.avg==null?"—":fa(f.avg.toFixed(1))+"ms") + "</td>"
-          + "<td>" + (f.loss==null?"—":fa(f.loss)+"%") + "</td></tr>";
-      }
-      html += "</table><div class='sub'>پروب‌ها دیتاسنتری‌اند (تهران)؛ پینگ خط موبایل تو معمولاً بالاتر است. برای عدد خط خودت، بخش «خط من» یا اپ را ببین.</div></div>";
+      if (!arr.length) return;
+      out.innerHTML = '<div class="sub">در حال پینگ زندهٔ ' + fa(arr.length) + " سرور از پروب‌های ایران (Globalping)…</div>";
+      var r = await jget("/api/gameping?ips=" + encodeURIComponent(arr.map(function(s){ return s.ip; }).join(",")) + "&cc=IR");
+      var html = '<div class="ph-card"><b>📡 پینگ زندهٔ سرور بازی از داخل ایران</b>';
+      (r.results||[]).forEach(function(res){
+        var meta = arr.filter(function(s){ return s.ip === res.ip; })[0] || {};
+        html += '<div class="ph-box" style="margin-top:8px"><b>' + esc(meta.loc||res.ip) + '</b> <span class="ph-mono">' + esc(res.ip) + '</span>';
+        if (!res.rows || !res.rows.length){ html += '<div class="ph-warn">پاسخی نیامد — این سرور ICMP را می‌بندد یا مسیر بسته است. عدد نمی‌سازیم.</div>'; }
+        else {
+          html += '<table style="margin-top:6px"><tr><th>شبکهٔ پروب</th><th>میانگین</th><th>نوسان</th><th>افت</th><th>اعتبار</th></tr>';
+          res.rows.forEach(function(x){
+            var trust = (x.sanity && x.sanity.trusted) ? '<span class="ph-badge ph-chip-ok">معتبر</span>'
+              : '<span class="ph-badge ph-chip-no">نانشنه</span> <span class="sub">' + esc((x.sanity && x.sanity.flags || []).join(" · ")) + '</span>';
+            html += "<tr><td>" + esc(x.network||"—") + "</td><td>" + (x.avg==null?"—":fa(Math.round(x.avg))+"ms") + "</td>"
+              + "<td>" + (x.jitter==null?"—":fa(Math.round(x.jitter))+"ms") + "</td><td>" + (x.loss==null?"—":fa(x.loss)+"٪") + "</td><td>" + trust + "</td></tr>";
+          });
+          html += "</table>";
+          if (res.summary) html += '<div class="sub">میانهٔ شبکه‌های معتبر: <b>' + (res.summary.median_ms==null?"—":fa(res.summary.median_ms)+"ms") +
+            '</b> · پروب‌های نانشنه/بسته: ' + fa((res.summary.quantized||0)+(res.summary.icmp_filtered||0)) + '</div>';
+        }
+        html += "</div>";
+      });
+      html += '<div class="sub">' + esc(r.note||"") + '</div></div>';
+      out.innerHTML = html;
+    }catch(e){ out.textContent = "خطا: " + e.message; }
+  };
+  q("ph-gsvc").onclick = async function(){
+    var out = q("ph-gout");
+    try{
+      var d = GAMES || await jget("/api/games");
+      var sv = d.services;
+      if (!sv || !sv.rows) { out.innerHTML = '<div class="ph-warn">دادهٔ سرویس‌ها نبود.</div>'; return; }
+      var html = '<div class="ph-card"><b>🧩 بازی‌هایی که سرورشان ICMP را می‌بندد</b><div class="sub">' + esc(sv.note) + '</div>';
+      html += '<div class="ph-tblwrap"><table><tr><th>بازی</th><th>هاست</th><th>زمان پاسخ HTTPS از ایران</th><th>از DE</th><th>از TR</th></tr>';
+      sv.rows.forEach(function(x){
+        var ex = {}; (x.extra||[]).forEach(function(e){ ex[e.loc] = e.ms; });
+        html += "<tr><td>" + esc(x.fa||x.game) + '</td><td class="ph-mono">' + esc(x.host) + "</td><td>" +
+          (x.ir_https_ms==null ? '<span class="ph-bad">بی‌پاسخ</span>' : "<b>" + fa(x.ir_https_ms) + "ms</b>") + "</td><td class=\"ph-mono\">" +
+          (ex.DE==null?"—":fa(ex.DE)+"ms") + "</td><td class=\"ph-mono\">" + (ex.TR==null?"—":fa(ex.TR)+"ms") + "</td></tr>";
+      });
+      html += "</table></div><div class='sub'>تاریخ سنجش: " + esc(sv.measured_at||"—") + "</div></div>";
       out.innerHTML = html;
     }catch(e){ out.textContent = "خطا: " + e.message; }
   };
@@ -1090,8 +1342,9 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
 
   <div class="ph-panel" id="ph-p15">
     <div class="ph-card">
-      <b>⚡ رزولوشن تندرو — مسابقهٔ DoH داخل مرورگر</b>
-      <div class="sub">یک کوئری، هم‌زمان به چهار رزولور تأییدشده؛ <b>اولین جواب برنده است</b>. برندهٔ هر شبکه روی همین دستگاه به خاطر می‌ماند.
+      <b>⚡ رزولوشن تندرو — مسابقهٔ رزولور (خط تو + لبه)</b>
+      <div class="sub">یک کوئری، هم‌زمان به شش رزولور؛ <b>اولین جواب برنده است</b>. نسخهٔ ۲ دو ستون می‌دهد:
+        «از خط خودت» (با آزمون دسترسی، مستقل از CORS) و «از لبهٔ شبکه» که همیشه عدد واقعی می‌دهد — حتی وقتی اپراتور DoH را بسته باشد.
         این فقط رزولوشن خودِ پینگ‌هاب را تند می‌کند، نه DNS سیستم گوشی (خط قرمز پروژه).</div>
       <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
         <input id="ph3-race-name" class="wwin" value="discord.com" style="direction:ltr;min-width:160px">
@@ -1099,6 +1352,23 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
         <label class="sub" style="display:flex;align-items:center;gap:6px"><input type="checkbox" id="ph3-hedge" checked> فراخوانی‌های حیاتی «پشتیبان‌دار» باشند (Hedged)</label>
       </div>
       <div id="ph3-race-out"></div>
+    </div>
+    <div class="ph-card">
+      <b>🌍 رزولورهای هر کشور — بدون لیست تکراری</b>
+      <div class="sub">کشور را انتخاب کن: اول رزولورهای <b>بومی همان کشور</b> با ASN/شهر/نرم‌افزار می‌آید، بعد سرورهای ثبت‌شدهٔ همان کشور.
+        گروه <b>anycast سراسری</b> عمداً از لیست کشوری حذف شده تا لیست هر کشور واقعاً فرق کند (ایراد «تکراری بودن» همان ابزارهای دیگر).</div>
+      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+        <input id="ph3-cc" class="wwin" value="ES" maxlength="2" style="direction:ltr;width:84px">
+        <button class="wwbtn wwprimary" id="ph3-cc-go">نمایش لیست کشور</button>
+        <button class="wwbtn" data-ph3-cc="IR">ایران</button>
+        <button class="wwbtn" data-ph3-cc="DE">آلمان</button>
+        <button class="wwbtn" data-ph3-cc="ES">اسپانیا</button>
+        <button class="wwbtn" data-ph3-cc="BD">بنگلادش</button>
+        <button class="wwbtn" data-ph3-cc="TR">ترکیه</button>
+        <button class="wwbtn" data-ph3-cc="RU">روسیه</button>
+        <button class="wwbtn" data-ph3-cc="CN">چین</button>
+      </div>
+      <div id="ph3-cc-out"></div>
     </div>
   </div>
 
@@ -1388,12 +1658,13 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
       if (asn){
         var ser = d.asn_series;
         if (ser && ser.serie_0 && ser.serie_0.values){
-          var vals = ser.serie_0.values.map(function(v){ return typeof v === "number" ? v : (v && v.value) || 0; });
+          var vals = ser.serie_0.values.map(function(v){ var n = (typeof v === "number") ? v : Number(v && v.value !== undefined ? v.value : v); return isFinite(n) ? n : 0; });
           var mx = Math.max.apply(null, vals.concat([1]));
           html += '<b style="display:block;margin-top:10px">📈 روند BGP برای AS' + fa(asn) + ' (۲۴ ساعت)</b><div class="sub">' +
             vals.slice(-24).map(function(v){ return '<span style="display:inline-block;width:6px;margin:0 1px;height:' +
               Math.max(2, Math.round(28*v/mx)) + 'px;background:var(--acc);vertical-align:bottom"></span>'; }).join("") +
-            '<br>کمترین ' + fa(Math.min.apply(null, vals)) + ' · بیشترین ' + fa(Math.max.apply(null, vals)) + '</div>';
+            '<br>کمترین ' + fa(Math.min.apply(null, vals)) + ' · بیشترین ' + fa(Math.max.apply(null, vals)) +
+            ' · مجموع ' + fa(vals.reduce(function(a,b){return a+b;},0)) + '</div>';
         } else html += '<div class="sub">روند این ASN در دسترس نبود' + (ser && ser.error ? " (" + esc(ser.error) + ")" : "") + '</div>';
       }
       html += '<div class="sub" style="margin-top:8px">' + esc(d.note||"") + '</div></div>';
@@ -1507,42 +1778,62 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
     return rows;
   }
   async function bufferbloat(){
-    var idle = (await rttSamples(6)).filter(function(x){ return x!=null; });
+    /* نسخهٔ ۲: قبل از بار، وسط بار (دو پنجره) و بعد از بار — تا هم «صف» و هم «بازگشت» دیده شود. */
+    var idle = (await rttSamples(8)).filter(function(x){ return x!=null; });
     var loads = [];
     for (var k=0;k<3;k++) loads.push(fetch(ABS + "/api/load?bytes=1500000&r="+Math.random(), {cache:"no-store"}).catch(function(){}));
-    await new Promise(function(r){ setTimeout(r, 1200); });
-    var loaded = (await rttSamples(6)).filter(function(x){ return x!=null; });
+    var sleep2 = function(ms){ return new Promise(function(r){ setTimeout(r, ms); }); };
+    await sleep2(900);
+    var mid1 = (await rttSamples(6)).filter(function(x){ return x!=null; });
+    await sleep2(700);
+    var mid2 = (await rttSamples(6)).filter(function(x){ return x!=null; });
     loads.forEach(function(p){ p.then(function(r){ try{ r && r.body && r.body.cancel(); }catch(e){} }); });
-    var mi = med(idle), ml = med(loaded);
-    return { idle: mi, loaded: ml, delta: (mi!=null && ml!=null) ? ml-mi : null };
+    await sleep2(500);
+    var after = (await rttSamples(6)).filter(function(x){ return x!=null; });
+    var mi = med(idle), ml = med(mid1.concat(mid2)), ma = med(after);
+    return { idle: mi, loaded: ml, after: ma,
+      delta: (mi!=null && ml!=null) ? Math.round(ml-mi) : null,
+      recovered: (ma!=null && mi!=null) ? Math.round(ma-mi) : null,
+      spread_loaded: (mid1.concat(mid2).length>1) ? Math.round(Math.max.apply(null,mid1.concat(mid2))-Math.min.apply(null,mid1.concat(mid2))) : null,
+      n_idle: idle.length, n_loaded: mid1.length+mid2.length };
   }
   function scorePreflight(game, rtt, dns, nat, bb, prof){
-    var p50 = med(rtt.filter(function(x){return x!=null;}));
-    var jit = rtt.filter(function(x){return x!=null;});
-    jit = jit.length>1 ? Math.max.apply(null,jit)-Math.min.apply(null,jit) : 0;
-    var loss = Math.round((rtt.filter(function(x){return x==null;}).length / Math.max(1,rtt.length))*100);
+    /* امتیاز = پایداری خط. پینگ مطلق «خط تو → لبهٔ شبکهٔ ما» در امتیاز دخالت نمی‌کند،
+       چون با آستانهٔ سرور بازی مقایسه‌شدنش غلط است. پینگ واقعی سرور بازی جدا سنجیده می‌شود. */
+    var v = rtt.filter(function(x){ return x!=null; });
+    var p50 = med(v);
+    var jit = 0;
+    if (v.length > 1){ var d=[]; for (var i=1;i<v.length;i++) d.push(Math.abs(v[i]-v[i-1])); jit = med(d); }
+    var loss = Math.round(((rtt.length - v.length) / Math.max(1,rtt.length)) * 100);
     var g = (prof && prof.good) || { p50:60, jitter:10, loss:1 };
     var ok = (prof && prof.ok) || { p50:100, jitter:25, loss:5 };
-    var score = 100, reasons = [];
-    var clamp = function(v,a,b){ return Math.max(a, Math.min(b, v)); };
-    if (p50 != null){
-      if (p50 > ok.p50) { score -= 45; reasons.push("پینگ بالای حد " + fa(ok.p50) + "ms"); }
-      else if (p50 > g.p50) { score -= 22; reasons.push("پینگ مرزی (" + rnd(p50,0) + "ms)"); }
-    }
-    if (jit > ok.jitter) { score -= 22; reasons.push("نوسان بالا " + rnd(jit,0) + "ms"); }
+    var clamp = function(x,a,b){ return Math.max(a, Math.min(b, x)); };
+    var score = 100, reasons = [], parts = [];
+    if (jit > ok.jitter) { score -= 25; reasons.push("نوسان بالا " + rnd(jit,0) + "ms"); }
     else if (jit > g.jitter) { score -= 10; reasons.push("نوسان مرزی " + rnd(jit,0) + "ms"); }
+    else parts.push("نوسان خوب " + rnd(jit,0) + "ms");
     if (loss > ok.loss) { score -= 30; reasons.push("افت بسته " + fa(loss) + "٪"); }
     else if (loss > g.loss) { score -= 12; reasons.push("افت کم " + fa(loss) + "٪"); }
+    else parts.push("بدون افت بسته");
     if (bb && bb.delta != null){
-      if (bb.delta > 90) { score -= 20; reasons.push("بافر‌بلاست شدید (+" + rnd(bb.delta,0) + "ms زیر بار)"); }
-      else if (bb.delta > 40) { score -= 8; reasons.push("بافر‌بلاست متوسط (+" + rnd(bb.delta,0) + "ms)"); }
+      if (bb.delta > 150) { score -= 22; reasons.push("صف شدید زیر بار (+" + rnd(bb.delta,0) + "ms)"); }
+      else if (bb.delta > 60) { score -= 10; reasons.push("صف متوسط زیر بار (+" + rnd(bb.delta,0) + "ms)"); }
+      else parts.push("صف کنترل‌شده (+" + rnd(bb.delta,0) + "ms)");
+      if (bb.recovered != null){
+        if (bb.recovered > 60) { score -= 6; reasons.push("بازگشت کند بعد از بار (+" + rnd(bb.recovered,0) + "ms)"); }
+        else parts.push("بازگشت سریع بعد از بار");
+      }
     }
-    if (nat && nat.ok && /متقارن/.test(nat.type)) { score -= 8; reasons.push("NAT متقارن (میزبانی سخت)"); }
+    if (nat && nat.ok && /متقارن/.test(nat.type)) { score -= 8; reasons.push("NAT متقارن (میزبانی/عضویت سخت‌تر)"); }
+    if (v.length < 6) reasons.push("نمونهٔ کم — اطمینان پایین");
     score = clamp(Math.round(score), 0, 100);
-    return { score:score, p50:p50, jitter:jit, loss:loss,
-      verdict: score>=80 ? "آماده‌ای" : (score>=55 ? "مرزی است" : "آماده نیستی"), reasons:reasons,
-      best: dns && dns[0] ? dns[0] : null };
+    return { score: score, p50: p50, jitter: Math.round(jit), loss: loss,
+      samples: v.length, confidence: v.length >= 10 ? "بالا" : (v.length >= 6 ? "متوسط" : "پایین"),
+      verdict: score >= 80 ? "پایداری خوب" : (score >= 55 ? "پایداری مرزی" : "پایداری ضعیف"),
+      reasons: reasons, parts: parts, best: dns && dns[0] ? dns[0] : null,
+      basis: "امتیاز فقط از پایداری خط (نوسان/افت/صف/NAT) است — نه پینگ مطلق. پینگ سرور بازی پایین‌تر، واقعی سنجیده می‌شود." };
   }
+  /* ph2-pf-v2: آزمون آمادگی بازنویسی شد (امتیاز = پایداری خط) */
   function kalmanish(samples){
     var v = samples.filter(function(x){ return x!=null; });
     if (v.length < 3) return null;
@@ -1564,7 +1855,6 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
     var pred = kalmanish(rtt);
     PREFLIGHT = { game: game, fa: (prof&&prof.fa)||game, result: r, nat: nat, bb: bb, pred: pred, when: Date.now(),
       where: (function(){ try{ return JSON.parse(localStorage.getItem("pinghab.where")||"null"); }catch(e){ return null; } })() };
-    try{ window.phPreflight = PREFLIGHT; }catch(e){}
     var cls = r.score>=80 ? "ph-good" : (r.score>=55 ? "ph-warn" : "ph-bad");
     var html = '<div class="ph-card" style="margin-top:8px">' +
       '<div style="font-size:26px"><b class="' + cls + '">' + fa(r.score) + '/۱۰۰ — ' + esc(r.verdict) + '</b></div>' +
@@ -1583,8 +1873,57 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
       'این آماری است، تضمین نیست.</div></div>';
     if (r.reasons.length) html += '<div style="margin-top:8px"><b>ضعف‌ها:</b> ' + r.reasons.map(function(x){ return '<span class="ph-badge">'+esc(x)+'</span>'; }).join(" ") + '</div>';
     else html += '<div class="ph-good" style="margin-top:8px">نقطهٔ ضعفی در این سطح از سنجش پیدا نشد 👌</div>';
-    html += '<div class="sub" style="margin-top:8px">همهٔ اعداد از دستگاه خودت است. «آماده» یعنی برای این بازی روی اینترنت الان؛ ترافیک ساعت بعد می‌تواند فرق کند.</div></div>';
+    try{
+      var prev = JSON.parse(localStorage.getItem("ph2.pf.last")||"null");
+      if (prev && prev.game === game){
+        var diff = r.score - prev.score;
+        html += '<div class="sub" style="margin-top:6px">اجرای قبلی همین بازی: <b>' + fa(prev.score) + '/۱۰۰</b> (' + ago(prev.at) +
+          ') — تفاوت <b>' + (diff>0?"+":"") + fa(diff) + '</b>. روی خط موبایل تا ±۱۰ امتیاز نوسان طبیعی است؛ کمتر از آن را «تغییر واقعی» ندان.</div>';
+      }
+      localStorage.setItem("ph2.pf.last", JSON.stringify({ game: game, score: r.score, at: Date.now() }));
+    }catch(e){}
+    html += '<div class="sub" style="margin-top:6px">' + esc(r.basis||"") + ' · اطمینان: <b>' + esc(r.confidence||"—") + '</b> (' + fa(r.samples||0) + ' نمونه)</div>';
+    if ((r.parts||[]).length) html += '<div style="margin-top:6px"><b>نقاط قوت:</b> ' + r.parts.map(function(x){ return '<span class="ph-badge ph-chip-ok">'+esc(x)+'</span>'; }).join(" ") + '</div>';
+    html += '<div class="ph-card" style="margin-top:10px"><b>🎯 پینگ واقعی سرور بازی (از پروب‌های ایران)</b>' +
+      '<div class="sub">این آزمون فقط «پایداری خط» را می‌سنجد. دکمهٔ زیر خودِ سرور بازی را از دیتاسنترهای داخل ایران پینگ می‌کند — عدد واقعی، با شبکهٔ پروب و اعتبار هر نمونه.</div>' +
+      '<button class="wwbtn wwprimary" id="ph2-pf-gs" style="margin-top:8px">📡 سنجش سرور بازی</button><div id="ph2-pf-gsout"></div></div>';
+    html += '</div>';   /* بستن کارت اصلی آزمون */
     out.innerHTML = html;
+    var gs = q("ph2-pf-gs");
+    if (gs) gs.onclick = async function(){
+      var bo = q("ph2-pf-gsout");
+      bo.innerHTML = '<div class="sub">در حال گرفتن سرورهای این بازی و پینگ زنده… (~۲۰ ثانیه)</div>';
+      try{
+        var gd = await jget("/api/games?game=" + encodeURIComponent(game));
+        var firsts = [];
+        Object.keys(gd.regions||{}).forEach(function(rg){ if ((gd.regions[rg]||[])[0]) firsts.push((gd.regions[rg])[0]); });
+        firsts = firsts.slice(0, 3);
+        if (!firsts.length) return bo.innerHTML = '<div class="ph-warn">سروری برای این بازی ثبت نشده.</div>';
+        var gpr = await jget("/api/gameping?ips=" + encodeURIComponent(firsts.map(function(s2){ return s2.ip; }).join(",")) + "&cc=IR");
+        var h2 = '<table style="width:100%;font-size:13px;border-collapse:collapse;margin-top:8px"><tr><th>سرور</th><th>آی‌پی</th><th>میانهٔ پروب‌های ایران</th><th>وضعیت</th></tr>';
+        var bestMed = null;
+        (gpr.results||[]).forEach(function(res){
+          var meta = firsts.filter(function(s2){ return s2.ip === res.ip; })[0] || {};
+          var sm = res.summary || {};
+          h2 += '<tr><td>' + esc(meta.loc||res.ip) + '</td><td class="mono">' + esc(res.ip) + '</td><td>' +
+            (sm.median_ms==null ? "—" : '<b>' + fa(sm.median_ms) + 'ms</b>') + '</td><td>' +
+            (sm.median_ms==null ? '<span class="ph-bad">سنجش‌پذیر نبود (ICMP بسته)</span>'
+              : (sm.credible ? '<span class="ph-badge ph-chip-ok">' + fa(sm.valid) + ' پروب معتبر</span>' : '<span class="ph-badge">اطمینان کم</span>')) + '</td></tr>';
+          if (sm.median_ms != null && (bestMed==null || sm.median_ms<bestMed)) bestMed = sm.median_ms;
+        });
+        h2 += '</table>';
+        if (bestMed != null){
+          var gg = (prof && prof.good) || { p50:60 }, oo = (prof && prof.ok) || { p50:100 };
+          var band = bestMed <= gg.p50 ? "در محدودهٔ «خوب» این بازی" : (bestMed <= oo.p50 ? "قابل بازی، نه رقابتی" : "دور از محدودهٔ رقابتی");
+          h2 += '<div class="sub">بهترین سرور: <b>' + fa(Math.round(bestMed)) + 'ms</b> از دیتاسنتر ایران → ' + band +
+            ' (آستانه‌های این بازی: خوب ≤' + fa(gg.p50) + 'ms · قابل بازی ≤' + fa(oo.p50) + 'ms).<br>' +
+            'پینگ خط موبایل تو معمولاً از این عدد بالاتر است؛ برای عدد <b>خط خودت</b>، بخش «خط من» را ببین. DNS پینگ داخل مچ را کم نمی‌کند.</div>';
+        } else {
+          h2 += '<div class="warn-note sub">سرورهای این بازی به ICMP جواب ندادند — عدد نمی‌سازیم. از بخش «سرورهای بازی» سرور دیگری/رجین دیگری امتحان کن.</div>';
+        }
+        bo.innerHTML = h2;
+      }catch(e){ bo.innerHTML = '<div class="ph-warn">خطا: ' + esc(e.message) + '</div>'; }
+    };
   };
   var HIST_LOADED = false;
   async function loadHistory(force){
@@ -1931,23 +2270,48 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
   };
 
   /* ================== 🌊 آزمون موج ================== */
+  function sanityBadge(p){
+    var f = (p.sanity && p.sanity.flags) || [];
+    if (!f.length) return ' <span class="ph-badge ph-chip-ok">معتبر</span>';
+    if (f.indexOf("quantized_clock") >= 0) return ' <span class="ph-badge ph-chip-no">نانشنه: عدد کوانتش‌شده</span>';
+    if (f.indexOf("icmp_filtered") >= 0) return ' <span class="ph-badge ph-chip-no">ICMP بسته</span>';
+    return ' <span class="ph-badge">' + esc(f.join(" · ")) + '</span>';
+  }
   function renderWave(d){
+    var sum = d.summary || {};
     var h = '<div class="ph-card" style="margin-top:8px"><b>هدف <span class="mono">'+esc(d.target)+'</span></b> — '+
       fa(d.packets)+' بسته از هر پروب <span class="ph-badge">'+esc(d.cc)+'</span> · '+ago(d.at)+'</div>';
+    if (sum.valid != null){
+      h += '<div class="ph-card" style="margin-top:8px"><b>جمع‌بندی (فقط پروب‌های معتبر)</b>' +
+        '<div class="sub">پروب معتبر: <b>' + fa(sum.valid) + '</b> · کنارگذاشته: <b>' + fa((sum.quantized||0)+(sum.icmp_filtered||0)) +
+        '</b> (نانشنه ' + fa(sum.quantized||0) + ' · ICMP بسته ' + fa(sum.icmp_filtered||0) + ') · ' +
+        (sum.median_ms!=null ? 'میانه <b>' + fa(sum.median_ms) + 'ms</b> · بازهٔ ' + fa(sum.min_ms) + '–' + fa(sum.max_ms) + 'ms' : 'عدد معتبری به‌دست نیامد') +
+        '</div>' +
+        (sum.credible ? '' : '<div class="ph-warn" style="margin-top:6px">پروب معتبر کمتر از دو تا است — این اجرا برای «همهٔ شبکه‌های ایران» نماینده نیست. دوباره بزن یا هدف دیگری امتحان کن.</div>') +
+        ((sum.excluded||[]).length ? '<div class="sub" style="margin-top:6px">دلیل کنارگذاری: ' + sum.excluded.map(function(x){
+            return esc((x.city||"?")+" / "+(x.network||"?")+" — "+(x.reasons||[]).join("، ")); }).join(" · ") + '</div>' : '') +
+        '</div>';
+    }
     (d.probes||[]).forEach(function(p){
       var st = p.stats;
-      h += '<div class="ph-card" style="margin-top:8px"><b>'+esc(p.city||"?")+'</b> <span class="ph-badge">'+esc(p.network||"")+'</span> <span class="ph-badge mono">AS'+esc(p.asn||"—")+'</span>' +
-        ((p.tags||[]).indexOf("datacenter-network")>=0 ? ' <span class="ph-badge">دیتاسنتری</span>' : '') + '</div>';
-      if(!st){ h += '<div class="sub">'+(p.ok? "داده‌ای برنگشت" : "ناموفق")+'</div>'; return; }
+      var bad = p.sanity && !p.sanity.trusted;
+      h += '<div class="ph-card" style="margin-top:8px' + (bad ? ';opacity:.72' : '') + '"><b>'+esc(p.city||"?")+'</b> <span class="ph-badge">'+esc(p.network||"")+'</span> <span class="ph-badge mono">AS'+esc(p.asn||"—")+'</span>' +
+        ((p.tags||[]).indexOf("datacenter-network")>=0 ? ' <span class="ph-badge">دیتاسنتری</span>' : '') + sanityBadge(p) + '</div>';
+      if(!st){ h += '<div class="sub">'+(p.ok? "داده‌ای برنگشت" : "ناموفق/بی‌پاسخ")+(bad ? ' — عددی ساخته نمی‌شود' : '')+'</div>'; return; }
       h += '<div class="sub">میانگین <b>'+rnd(st.avg)+'ms</b> · کمینه '+rnd(st.min)+' · بیشینه '+rnd(st.max)+
-        ' · نوسان (sd) '+rnd(st.sd)+' · <b>جیتر '+rnd(st.jitter)+'ms</b> · افت '+rnd(p.loss,1)+'٪</div>';
+        ' · نوسان (sd) '+rnd(st.sd)+' · <b>جیتر '+rnd(st.jitter)+'ms</b> · افت '+rnd(p.loss,1)+'٪' +
+        (bad ? ' — <b>این عدد در جمع‌بندی حساب نشد</b>' : '') + '</div>';
       var max = Math.max.apply(null, st.hist.map(function(x){ return x.n; }).concat([1]));
       h += '<div style="margin-top:6px">' + st.hist.map(function(b2){
         return '<div style="display:flex;align-items:center;gap:6px;margin:2px 0"><span class="sub mono" style="width:74px">'+fa(b2.from)+'–'+fa(b2.to)+'</span>' + bar3(b2.n, max) + '<span class="sub">'+fa(b2.n)+'</span></div>';
       }).join("") + '</div>';
       h += '<div class="sub mono" style="margin-top:4px;font-size:11px;opacity:.7">'+esc((st.raw||[]).join(", "))+'</div>';
     });
+    if (d.verdict_fa) h += '<div class="ph-box" style="margin-top:8px"><b>حکم این اجرا:</b> <div class="sub">' + esc(d.verdict_fa) + '</div></div>';
+    if (d.control_summary && d.control_summary.valid) h += '<div class="sub">کنترل <span class="mono">' + esc(d.control_target||"1.1.1.1") + '</span>: ' +
+      fa(d.control_summary.valid) + ' پروب معتبر' + (d.control_summary.median_ms!=null ? ' · میانه ' + fa(d.control_summary.median_ms) + 'ms' : '') + ' — «کنترل» نشان می‌دهد مسئله از هدف است یا از شبکه.</div>';
     h += '<div class="sub" style="margin-top:8px">'+esc(d.note||"")+' · منبع: '+esc((d.sources||[]).join(" · "))+'</div>';
+    if (d.control_target) h += '<div class="sub">آزمون کنترل: همان پروب‌ها هم‌زمان روی <span class="mono">'+esc(d.control_target)+'</span> سنجیده شدند؛ اگر عدد دو هدف مختلف یکی در بیاید، پروب کوانتش‌شده است و کنار گذاشته می‌شود.</div>';
     return h;
   }
   async function runWave(host){
@@ -2033,12 +2397,17 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
     }
   };
 
-  /* ================== ⚡ رزولوشن تندرو ================== */
+  /* ================== ⚡ مسابقهٔ رزولور — نسخهٔ ۲ ==================
+     درسِ خطای میدانی: آدرس‌های غلط (adguard/nextdns)، نبود CORS و بسته‌بودن DoH روی برخی اپراتورها
+     باعث می‌شد «همه ناموفق» دیده شود. حالا سه چیز جدا نشان داده می‌شود:
+     (۱) دسترسی از خط تو (no-cors، مستقل از CORS)، (۲) پاسخ سالم از خط تو، (۳) مسابقهٔ لبه که همیشه عدد می‌دهد. */
   var RACERS = [
-    { id:"google", name:"گوگل", url:"https://dns.google/resolve" },
-    { id:"cloudflare", name:"کلادفلر", url:"https://cloudflare-dns.com/dns-query" },
+    { id:"cloudflare", name:"کلودفلر", url:"https://cloudflare-dns.com/dns-query" },
+    { id:"google", name:"گوگل", url:"https://dns.google/dns-query" },
     { id:"adguard", name:"ادگارد", url:"https://dns.adguard-dns.com/resolve" },
-    { id:"nextdns", name:"NextDNS", url:"https://dns.nextdns.io/dns-query" },
+    { id:"dns0", name:"DNS0.eu", url:"https://dns0.eu/dns-query" },
+    { id:"dnssb", name:"DNS.SB", url:"https://doh.sb/dns-query" },
+    { id:"controld", name:"ControlD", url:"https://freedns.controld.com/p0" }
   ];
   function netKey(){ var c = navigator.connection || {};
     return (c.type || "net") + "|" + (c.effectiveType || "?") + "|" + (location.hostname||"local"); }
@@ -2046,34 +2415,116 @@ code{display:inline-block;background:var(--card2);border:1px solid var(--line);p
     var t0 = performance.now(); var c = new AbortController();
     var t = setTimeout(function(){ try{ c.abort(); }catch(e){} }, 4000);
     try {
-      var res = await fetch(r.url + "?name=" + encodeURIComponent(name) + "&type=A",
-        { headers:{ accept:"application/dns-json" }, cache:"no-store", signal:c.signal });
+      var u = r.url + (r.url.indexOf("?")>=0 ? "&" : "?") + "name=" + encodeURIComponent(name) + "&type=A";
+      var res = await fetch(u, { headers:{ accept:"application/dns-json" }, cache:"no-store", signal:c.signal });
       clearTimeout(t);
-      var j = await res.json();
-      var ips = (j.Answer||[]).filter(function(a){ return a.type===1; }).map(function(a){ return a.data; });
-      return { id:r.id, name:r.name, ms: Math.round(performance.now()-t0), ips: ips, status: j.Status };
-    } catch(e){ clearTimeout(t); return { id:r.id, name:r.name, ms:null, err:"ناموفق" }; }
+      var ips = [];
+      try{ var j = await res.json(); ips = (j.Answer||[]).filter(function(a){ return a.type===1; }).map(function(a){ return a.data; }); }catch(e){}
+      return { id:r.id, name:r.name, ms: Math.round(performance.now()-t0), ips: ips, ok: !!res.ok && ips.length>0,
+        why: (!res.ok ? ("HTTP "+res.status) : (ips.length ? null : "بدون رکورد A")) };
+    } catch(e){ clearTimeout(t); return { id:r.id, name:r.name, ms: Math.round(performance.now()-t0), ips:[], ok:false,
+      why: (e && e.name==="AbortError") ? "پاسخی نیامد (۴ث)" : "خطای شبکه/CORS" }; }
+  }
+  async function reachOne(r){
+    var c = new AbortController(); var t = setTimeout(function(){ try{ c.abort(); }catch(e){} }, 4000);
+    var t0 = performance.now();
+    try { await fetch(r.url, { mode:"no-cors", cache:"no-store", signal:c.signal }); clearTimeout(t);
+      return { id:r.id, reach:true, ms:Math.round(performance.now()-t0) }; }
+    catch(e){ clearTimeout(t); return { id:r.id, reach:false, ms:Math.round(performance.now()-t0),
+      why:(e && e.name==="AbortError") ? "پاسخی نیامد (۴ث)" : "اتصال برقرار نشد" }; }
   }
   async function runRace(){
     var out = q("ph3-race-out");
     var name = (q("ph3-race-name").value||"discord.com").trim();
-    out.innerHTML = '<div class="sub" style="margin-top:8px">⏳ چهار رزولور هم‌زمان…</div>';
+    out.innerHTML = '<div class="sub" style="margin-top:8px">⏳ شش رزولور هم‌زمان از خط تو + مسابقهٔ لبه…</div>';
+    var reach = await Promise.all(RACERS.map(reachOne));
     var res = await Promise.all(RACERS.map(function(r){ return raceOne(r, name); }));
-    var good = res.filter(function(x){ return x.ms != null; }).sort(function(a,b){ return a.ms-b.ms; });
+    var rmap = {}; reach.forEach(function(x){ rmap[x.id] = x; });
+    var good = res.filter(function(x){ return x.ok; }).sort(function(a,b){ return a.ms-b.ms; });
     var win = good[0];
-    var h = '<div class="ph-card" style="margin-top:8px"><b>'+(win ? "🏆 برنده: "+esc(win.name)+" — "+rnd(win.ms,0)+"ms" : "هیچ‌کدام پاسخ نداد")+'</b>';
-    h += tbl(["رزولور","زمان","آی‌پی"], res.map(function(x){
-      return [esc(x.name) + (win && x.id===win.id ? ' 🏆' : ''), x.ms==null ? '<span style="color:#f97316">'+esc(x.err||"—")+'</span>' : rnd(x.ms,0)+'ms',
-        x.ips && x.ips.length ? '<span class="mono" style="font-size:12px">'+esc(x.ips.join(", "))+'</span>' : "—"];
-    }));
-    h += '<div class="sub" style="margin-top:6px">شبکهٔ فعلی: <span class="mono">'+esc(netKey())+'</span></div></div>';
+    var reachOk = reach.filter(function(x){ return x.reach; }).length;
+    var h = '<div class="ph-card" style="margin-top:8px"><b>از خط خودت:</b> <span class="ph-badge">دسترسی '+fa(reachOk)+'/'+fa(RACERS.length)+'</span> ' +
+      '<span class="ph-badge">پاسخ سالم '+fa(good.length)+'</span>' +
+      (win ? ' — 🏆 <b>'+esc(win.name)+'</b> با <b>'+rnd(win.ms,0)+'ms</b>' : ' — <span class="ph-warn">هیچ رزولوری پاسخ نداد</span>');
+    h += '<table style="width:100%;font-size:13px;border-collapse:collapse;margin-top:8px">' +
+      '<tr><th>رزولور</th><th>دسترسی</th><th>پاسخ</th><th>آی‌پی</th></tr>';
+    res.forEach(function(x){
+      var r2 = rmap[x.id] || {};
+      h += '<tr><td>'+esc(x.name)+(win && x.id===win.id ? ' 🏆':'')+'</td>' +
+        '<td>'+(r2.reach ? '<span class="ph-badge ph-chip-ok">✅ '+fa(r2.ms)+'ms</span>' : '<span class="ph-badge ph-chip-no">⛔ '+esc(r2.why||"بسته")+'</span>')+'</td>' +
+        '<td>'+(x.ok ? rnd(x.ms,0)+'ms' : '<span class="ph-bad">'+esc(x.why||"ناموفق")+'</span>')+'</td>' +
+        '<td class="mono" style="font-size:12px">'+esc((x.ips||[]).join(", ")||"—")+'</td></tr>';
+    });
+    h += '</table><div class="sub" style="margin-top:6px">شبکهٔ فعلی: <span class="mono">'+esc(netKey())+'</span>' +
+      (good.length ? '' : ' — «پاسخ» ندادن به‌خودی‌خود یعنی اینترنت خراب نیست: اپراتور می‌تواند DoH را ببندد یا CORS اجازهٔ خواندن بدنه را ندهد. ستون «دسترسی» جداگانه سنجیده شده.') +
+      '</div></div>';
     out.innerHTML = h;
     if (win){ try{ localStorage.setItem("ph3.winner", JSON.stringify({ net: netKey(), id: win.id, name: win.name, ms: win.ms, at: Date.now() })); }catch(e){} }
-    var w = load("winner");
-    if (w) out.innerHTML += '<div class="sub" style="margin-top:6px">برندهٔ به‌خاطر‌ماندهٔ این شبکه: <b>'+esc(w.name)+'</b> ('+rnd(w.ms,0)+'ms · '+ago(w.at)+')'+
-      ' — در مرورگر نمی‌توانیم DNS سیستم را عوض کنیم، ولی «واقعیت خط» و همین سنجش‌ها از این ترتیب سود می‌برند.</div>';
+
+    /* مسابقهٔ لبه — همیشه عدد واقعی */
+    out.innerHTML += '<div class="ph-card" id="ph3-edge-race"><b>🏁 مسابقهٔ رزولور از لبهٔ شبکه</b><div class="sub">در حال سنجش…</div></div>';
+    try {
+      var d = await hget("/api/dohrace?host=" + encodeURIComponent(name));
+      var j = d.j || {};
+      var eh = '<div class="ph-card" id="ph3-edge-race"><b>🏁 مسابقهٔ رزولور از لبهٔ شبکه</b><div class="sub">مرجع مستقل از خط تو؛ اگر اپراتور DoH را بسته باشد، این‌جا باز هم عدد واقعی می‌بینی.</div>' +
+        '<table style="width:100%;font-size:13px;border-collapse:collapse;margin-top:8px"><tr><th>رزولور</th><th>زمان</th><th>کد</th><th>آی‌پی</th></tr>';
+      (j.rows||[]).forEach(function(x){
+        eh += '<tr><td>'+esc(x.name)+'</td><td>'+(x.ok ? rnd(x.ms,0)+'ms' : '<span class="ph-bad">'+esc(x.err||"—")+'</span>')+
+          '</td><td>'+(x.rcode==null?"—":fa(x.rcode))+'</td><td class="mono" style="font-size:12px">'+esc((x.ips||[]).join(", ")||"—")+'</td></tr>';
+      });
+      eh += '</table>' + (j.best ? '<div class="sub">پاسخ‌دهنده: <b>'+fa(j.answered)+' از '+fa(j.tried)+'</b> · تندترین: <b>'+esc(j.best.name)+'</b> ('+fa(j.best.ms)+'ms) · آی‌پی‌های متمایز: <b>'+fa(j.distinct_first_ips||0)+'</b></div>' : '') + '</div>';
+      var box = q("ph3-edge-race"); if (box) box.outerHTML = eh;
+    } catch(e){ var box2 = q("ph3-edge-race"); if (box2) box2.innerHTML = '<b>🏁 مسابقهٔ لبه</b><div class="ph-warn">دسترسی نبود: '+esc(e.message)+'</div>'; }
   }
   if (q("ph3-race-go")) q("ph3-race-go").onclick = runRace;
+
+  /* ================== 🌍 لیست رزولور هر کشور (بدون تکرار) ================== */
+  async function loadCountryList(cc){
+    var out = q("ph3-cc-out");
+    if (!cc) cc = (q("ph3-cc").value||"").trim().toUpperCase();
+    if (!cc) return;
+    q("ph3-cc").value = cc;
+    out.innerHTML = '<div class="sub" style="margin-top:8px">در حال گرفتن لیست کشور '+esc(cc)+'…</div>';
+    try {
+      var d = await hget("/api/dnslist?cc=" + encodeURIComponent(cc) + "&n=14");
+      var j = d.j || {};
+      var h = '<div class="ph-card" style="margin-top:8px"><b>' + esc((j.country && j.country.name) || cc) +
+        ' <span class="ph-badge mono">'+esc(cc)+'</span></b>' +
+        (j.country ? ' <span class="ph-badge">'+fa(j.country.count)+' رزولور ثبت‌شده</span>' : '');
+      if (j.distinct){
+        h += '<div class="sub">سیاست: ' + esc(j.distinct.policy) + ' · ASNهای متفاوت در این لیست: <b>' + fa(j.distinct.asn_count) +
+          '</b> · نمونه: <span class="mono">' + esc((j.distinct.asn_sample||[]).slice(0,4).join(" · ")) + '</span>' +
+          (j.distinct.cities && j.distinct.cities.length ? ' · شهرها: ' + esc(j.distinct.cities.slice(0,4).join(" · ")) : '') + '</div>';
+      }
+      if ((j.groups||[]).length){
+        h += '<b style="display:block;margin-top:8px">رزولورهای بومی / معرفی‌شده</b><table style="width:100%;font-size:13px;border-collapse:collapse">' +
+          '<tr><th>نام</th><th>آی‌پی</th><th>DoH</th><th>وضعیت</th></tr>';
+        j.groups.forEach(function(g){
+          h += '<tr><td>'+esc(g.name)+'</td><td class="mono" style="font-size:12px">'+esc((g.ips||[]).slice(0,3).join(", "))+'</td>' +
+            '<td class="mono" style="font-size:11px">'+esc(g.doh||"—")+'</td>' +
+            '<td>'+(g.verified ? '<span class="ph-badge ph-chip-ok">تأییدشده</span>' : '<span class="ph-badge">کاندید</span>')+'</td></tr>';
+        });
+        h += '</table>';
+      }
+      if ((j.servers||[]).length){
+        h += '<b style="display:block;margin-top:8px">سرورهای ثبت‌شدهٔ همین کشور (بر پایهٔ اعتبار — بدون anycast سراسری)</b>' +
+          '<table style="width:100%;font-size:12.5px;border-collapse:collapse"><tr><th>آی‌پی</th><th>ASN</th><th>شرکت</th><th>شهر</th><th>نرم‌افزار</th><th>اعتبار</th></tr>';
+        j.servers.forEach(function(s){
+          h += '<tr><td class="mono">'+esc(s.ip)+'</td><td class="mono">'+esc(s.asn||"—")+'</td><td>'+esc((s.as||"").slice(0,26))+
+            '</td><td>'+esc(s.city||"—")+'</td><td class="mono" style="font-size:11px">'+esc((s.sw||"—").slice(0,22))+
+            '</td><td>'+rnd((s.reliability||0)*100,0)+'٪</td></tr>';
+        });
+        h += '</table>';
+      }
+      h += '<div class="sub">'+esc(j.note||"")+'</div></div>';
+      out.innerHTML = h;
+    } catch(e){ err(out, e); }
+  }
+  if (q("ph3-cc-go")) q("ph3-cc-go").onclick = function(){ loadCountryList(); };
+  [].slice.call(document.querySelectorAll("[data-ph3-cc]")).forEach(function(b){
+    b.onclick = function(){ loadCountryList(b.getAttribute("data-ph3-cc")); };
+  });
+
 
   /* ================== 📡 نقطهٔ کور ================== */
   if (q("ph3-blind-status")) q("ph3-blind-status").onclick = async function(){
@@ -2971,6 +3422,46 @@ function set(k,save){
 T.forEach(function(t){var b=document.createElement("button");b.type="button";b.dataset.k=t[0];b.style.cssText="--a:"+t[2]+";--b:"+t[3];b.innerHTML="<i></i>"+t[1];b.onclick=function(){set(t[0],1)};box.appendChild(b)});
 var s=null;try{s=localStorage.getItem("pinghab.theme")}catch(e){}
 set(T.some(function(t){return t[0]===s})?s:"lamborghini");
+})();
+</script>
+
+<script>
+/* ================= هیرو و بهبود تجربهٔ تب‌ها (لایهٔ v3) ================= */
+(function(){
+  function q(i){ return document.getElementById(i); }
+  function jump(target){
+    var b = document.querySelector('.ph-tab[data-target="'+target+'"]');
+    if (b) b.click();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  try{
+    var tabs = q("ph-tabs");
+    var host = tabs ? (tabs.closest("div") || document.body) : document.body;
+    var hero = document.createElement("div");
+    hero.className = "ph-hero";
+    hero.innerHTML =
+      '<h1>📡 پینگ‌هاب <span class="ph-badge mono">۲.۲</span></h1>' +
+      '<div class="ph-hero-sub">کدام DNS و کدام مسیر، برای <b>خط خودت</b> بهتر است؟ این‌جا عدد واقعی سنجیده می‌شود — ' +
+      'از گوشی تو، از شبکه‌های ایران، و از پروب‌های دیتاسنتری تهران. هر عدد، منبع و محدودیتش را کنارش می‌نویسیم.</div>' +
+      '<div class="ph-hero-chips">' +
+        '<button class="ph-chip" data-j="ph-p1">🚀 تست خط من</button>' +
+        '<button class="ph-chip" data-j="ph-p3">🧭 بهترین DNS</button>' +
+        '<button class="ph-chip" data-j="ph-p2">🎮 سرورهای بازی</button>' +
+        '<button class="ph-chip" data-j="ph-p13">🕵️ کالبدشکافی فیلترینگ</button>' +
+        '<button class="ph-chip" data-j="ph-p15">🏁 مسابقهٔ رزولور</button>' +
+      '</div>' +
+      '<div class="ph-hero-note">قانون ما: <b>کاندید، نه توصیه</b> · «DNS پینگ داخل مچ بازی را کم نمی‌کند» (فیزیک) · ' +
+      'هر جا سنجش ممکن نباشد، «سنجش‌پذیر نیست» می‌نویسیم و عدد نمی‌سازیم.</div>';
+    if (tabs && tabs.parentNode) tabs.parentNode.insertBefore(hero, tabs);
+    hero.querySelectorAll("[data-j]").forEach(function(b){
+      b.onclick = function(){ jump(b.getAttribute("data-j")); };
+    });
+    // تب فعال همیشه در دید بماند
+    document.addEventListener("click", function(e){
+      var t = e.target.closest && e.target.closest(".ph-tab");
+      if (t && t.parentNode) t.parentNode.scrollTo({ left: Math.max(0, t.offsetLeft - 20), behavior: "smooth" });
+    }, true);
+  }catch(e){}
 })();
 </script>
 </body>

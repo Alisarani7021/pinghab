@@ -1,1 +1,1574 @@
-{"source":{"repo":"bokiko/pingdiff","url":"https://github.com/bokiko/pingdiff","license":"MIT","note":"کاتالوگ سرورهای بازی — داده از پروژهٔ MIT «pingdiff»، ساختار فارسی‌سازی‌شده توسط ما."},"regions_fa":{"EU":"اروپا","NA":"آمریکای شمالی","ASIA":"آسیا","SA":"آمریکای جنوبی","ME":"خاورمیانه"},"games":{"overwatch-2":{"name":"Overwatch 2","name_fa":"اورواچ ۲","regions":{"EU":[{"id":"eu-ams","loc":"Amsterdam","ip":"185.60.112.157","port":26503},{"id":"eu-par","loc":"Paris","ip":"185.60.114.159","port":26503},{"id":"eu-fra","loc":"Frankfurt","ip":"185.60.112.158","port":26503}],"NA":[{"id":"na-west","loc":"Los Angeles","ip":"24.105.30.129","port":26503},{"id":"na-central","loc":"Chicago","ip":"24.105.62.129","port":26503},{"id":"na-east","loc":"New York","ip":"24.105.94.129","port":26503}],"ASIA":[{"id":"asia-sg","loc":"Singapore","ip":"137.221.106.104","port":26503},{"id":"asia-kr","loc":"Seoul","ip":"117.52.35.100","port":26503},{"id":"asia-jp","loc":"Tokyo","ip":"34.84.155.100","port":26503},{"id":"asia-tw","loc":"Taiwan","ip":"203.66.81.98","port":26503},{"id":"asia-au","loc":"Sydney","ip":"103.4.115.100","port":26503}],"SA":[{"id":"sa-br","loc":"São Paulo","ip":"54.207.107.12","port":26503}],"ME":[{"id":"me-bh","loc":"Bahrain","ip":"157.175.45.1","port":26503},{"id":"me-ae","loc":"Dubai","ip":"34.18.61.77","port":26503}]}},"call-of-duty":{"name":"Call of Duty","name_fa":"کال آو دیوتی","regions":{"EU":[{"id":"eu-ams","loc":"Amsterdam","ip":"108.61.198.102","port":3074},{"id":"eu-lon","loc":"London","ip":"108.61.196.101","port":3074},{"id":"eu-fra","loc":"Frankfurt","ip":"108.61.210.117","port":3074},{"id":"eu-par","loc":"Paris","ip":"108.61.209.127","port":3074},{"id":"eu-mad","loc":"Madrid","ip":"208.76.222.30","port":3074}],"NA":[{"id":"na-atl","loc":"Atlanta","ip":"108.61.193.166","port":3074},{"id":"na-chi","loc":"Chicago","ip":"107.191.51.12","port":3074},{"id":"na-dal","loc":"Dallas","ip":"108.61.224.175","port":3074},{"id":"na-lax","loc":"Los Angeles","ip":"108.61.219.200","port":3074},{"id":"na-mia","loc":"Miami","ip":"104.156.244.232","port":3074},{"id":"na-nyc","loc":"New York","ip":"108.61.149.182","port":3074},{"id":"na-sfo","loc":"San Francisco","ip":"104.156.230.107","port":3074},{"id":"na-sea","loc":"Seattle","ip":"108.61.194.105","port":3074}],"ASIA":[{"id":"asia-tok","loc":"Tokyo","ip":"108.61.201.151","port":3074},{"id":"asia-seo","loc":"Seoul","ip":"141.164.34.61","port":3074},{"id":"asia-sgp","loc":"Singapore","ip":"45.32.100.168","port":3074},{"id":"asia-syd","loc":"Sydney","ip":"108.61.212.117","port":3074}],"SA":[{"id":"sa-sao","loc":"São Paulo","ip":"216.238.98.118","port":3074},{"id":"sa-scl","loc":"Santiago","ip":"64.176.2.7","port":3074}],"ME":[{"id":"me-tlv","loc":"Tel Aviv","ip":"64.176.162.16","port":3074}]}},"counter-strike-2":{"name":"Counter-Strike 2","name_fa":"کانتر استرایک ۲","regions":{"EU":[{"id":"eu-lux","loc":"Luxembourg","ip":"146.66.152.1","port":27015},{"id":"eu-sto","loc":"Stockholm","ip":"146.66.156.1","port":27015},{"id":"eu-vie","loc":"Vienna","ip":"146.66.155.1","port":27015},{"id":"eu-war","loc":"Warsaw","ip":"155.133.240.1","port":27015},{"id":"eu-mad","loc":"Madrid","ip":"155.133.246.1","port":27015}],"NA":[{"id":"na-was","loc":"Washington DC","ip":"208.78.164.1","port":27015},{"id":"na-atl","loc":"Atlanta","ip":"162.254.199.1","port":27015},{"id":"na-sea","loc":"Seattle","ip":"192.69.96.1","port":27015},{"id":"na-lax","loc":"Los Angeles","ip":"162.254.194.1","port":27015}],"ASIA":[{"id":"asia-sgp","loc":"Singapore","ip":"103.28.54.1","port":27015},{"id":"asia-tok","loc":"Tokyo","ip":"45.121.186.1","port":27015},{"id":"asia-hkg","loc":"Hong Kong","ip":"155.133.244.1","port":27015},{"id":"asia-mum","loc":"Mumbai","ip":"180.149.41.1","port":27015},{"id":"asia-syd","loc":"Sydney","ip":"103.10.125.1","port":27015}],"SA":[{"id":"sa-sao","loc":"São Paulo","ip":"209.197.29.1","port":27015},{"id":"sa-scl","loc":"Santiago","ip":"155.133.249.1","port":27015},{"id":"sa-lim","loc":"Lima","ip":"143.137.146.1","port":27015}],"ME":[{"id":"me-dub","loc":"Dubai","ip":"185.25.183.1","port":27015}]}},"battlefield-6":{"name":"Battlefield 6","name_fa":"بتلفیلد ۶","regions":{"EU":[{"id":"eu-lon","loc":"London","ip":"35.71.111.102","port":25200},{"id":"eu-ire","loc":"Dublin","ip":"35.71.75.100","port":25200},{"id":"eu-fra","loc":"Frankfurt","ip":"35.71.105.10","port":25200},{"id":"eu-par","loc":"Paris","ip":"35.71.101.129","port":25200},{"id":"eu-sto","loc":"Stockholm","ip":"35.71.98.128","port":25200}],"NA":[{"id":"na-vir","loc":"Virginia","ip":"3.218.182.208","port":25200},{"id":"na-ohi","loc":"Ohio","ip":"35.71.102.135","port":25200},{"id":"na-cal","loc":"California","ip":"35.71.117.132","port":25200},{"id":"na-ore","loc":"Oregon","ip":"35.71.66.124","port":25200}],"ASIA":[{"id":"asia-tok","loc":"Tokyo","ip":"52.94.8.118","port":25200},{"id":"asia-seo","loc":"Seoul","ip":"35.71.109.128","port":25200},{"id":"asia-sgp","loc":"Singapore","ip":"35.71.118.128","port":25200},{"id":"asia-syd","loc":"Sydney","ip":"35.71.97.129","port":25200},{"id":"asia-mum","loc":"Mumbai","ip":"35.71.100.130","port":25200}],"SA":[{"id":"sa-sao","loc":"São Paulo","ip":"35.71.106.104","port":25200}],"ME":[{"id":"me-bhr","loc":"Bahrain","ip":"35.71.99.128","port":25200}]}},"marvel-rivals":{"name":"Marvel Rivals","name_fa":"مارول ریوالز","regions":{"EU":[{"id":"eu-ire","loc":"Dublin","ip":"52.94.76.1","port":443},{"id":"eu-lon","loc":"London","ip":"52.94.77.1","port":443},{"id":"eu-par","loc":"Paris","ip":"52.94.78.1","port":443},{"id":"eu-fra","loc":"Frankfurt","ip":"52.94.79.1","port":443},{"id":"eu-sto","loc":"Stockholm","ip":"52.94.80.1","port":443}],"NA":[{"id":"na-vir","loc":"Virginia","ip":"52.94.81.1","port":443},{"id":"na-ohi","loc":"Ohio","ip":"52.94.82.1","port":443},{"id":"na-cal","loc":"California","ip":"52.94.83.1","port":443},{"id":"na-ore","loc":"Oregon","ip":"52.94.84.1","port":443}],"ASIA":[{"id":"asia-tok","loc":"Tokyo","ip":"52.94.85.1","port":443},{"id":"asia-seo","loc":"Seoul","ip":"52.94.86.1","port":443},{"id":"asia-sgp","loc":"Singapore","ip":"52.94.87.1","port":443},{"id":"asia-syd","loc":"Sydney","ip":"52.94.88.1","port":443},{"id":"asia-mum","loc":"Mumbai","ip":"52.94.89.1","port":443}],"SA":[{"id":"sa-sao","loc":"São Paulo","ip":"52.94.90.1","port":443}],"ME":[{"id":"me-bhr","loc":"Bahrain","ip":"52.94.91.1","port":443}]}},"valorant":{"name":"Valorant","name_fa":"والورانت","regions":{"EU":[{"id":"eu-lon","loc":"London","ip":"104.160.141.3","port":443},{"id":"eu-par","loc":"Paris","ip":"162.249.72.1","port":443},{"id":"eu-fra","loc":"Frankfurt","ip":"162.249.73.1","port":443},{"id":"eu-sto","loc":"Stockholm","ip":"162.249.74.1","port":443},{"id":"eu-war","loc":"Warsaw","ip":"162.249.75.1","port":443}],"NA":[{"id":"na-ash","loc":"Ashburn","ip":"104.160.131.3","port":443},{"id":"na-chi","loc":"Chicago","ip":"104.160.136.3","port":443},{"id":"na-dal","loc":"Dallas","ip":"104.160.151.182","port":443},{"id":"na-lax","loc":"Los Angeles","ip":"104.160.159.1","port":443},{"id":"na-atl","loc":"Atlanta","ip":"104.160.156.1","port":443},{"id":"na-sea","loc":"Seattle","ip":"104.160.158.1","port":443}],"ASIA":[{"id":"asia-tok","loc":"Tokyo","ip":"104.160.129.1","port":443},{"id":"asia-seo","loc":"Seoul","ip":"104.160.142.1","port":443},{"id":"asia-sgp","loc":"Singapore","ip":"151.106.248.1","port":443},{"id":"asia-hkg","loc":"Hong Kong","ip":"104.160.144.1","port":443},{"id":"asia-mum","loc":"Mumbai","ip":"151.106.246.1","port":443},{"id":"asia-syd","loc":"Sydney","ip":"43.229.64.1","port":443}],"SA":[{"id":"sa-sao","loc":"São Paulo","ip":"104.160.152.1","port":443},{"id":"sa-scl","loc":"Santiago","ip":"104.160.154.1","port":443}],"ME":[{"id":"me-bhr","loc":"Bahrain","ip":"104.160.146.1","port":443}]}},"fortnite":{"name":"Fortnite","name_fa":"فورت‌نایت","regions":{"EU":[{"id":"eu-lon","loc":"London","ip":"18.133.162.190","port":443},{"id":"eu-fra","loc":"Frankfurt","ip":"3.66.90.29","port":443},{"id":"eu-par","loc":"Paris","ip":"13.37.148.3","port":443},{"id":"eu-sto","loc":"Stockholm","ip":"15.237.20.100","port":443}],"NA":[{"id":"na-east","loc":"Virginia","ip":"3.129.132.114","port":443},{"id":"na-east2","loc":"Ohio","ip":"44.192.143.240","port":443},{"id":"na-west","loc":"Oregon","ip":"44.237.247.68","port":443},{"id":"na-west2","loc":"California","ip":"3.101.95.110","port":443}],"ASIA":[{"id":"asia-tok","loc":"Tokyo","ip":"35.72.18.106","port":443},{"id":"asia-syd","loc":"Sydney","ip":"3.25.159.13","port":443}],"SA":[{"id":"sa-sao","loc":"São Paulo","ip":"15.228.25.140","port":443}],"ME":[{"id":"me-bhr","loc":"Bahrain","ip":"15.184.13.113","port":443}]}},"league-of-legends":{"name":"League of Legends","name_fa":"لیگ آو لجندز","regions":{"EU":[{"id":"eu-euw","loc":"Amsterdam","ip":"104.160.141.3","port":443},{"id":"eu-eune","loc":"Frankfurt","ip":"104.160.142.3","port":443},{"id":"eu-tr","loc":"Istanbul","ip":"104.160.143.3","port":443}],"NA":[{"id":"na-chi","loc":"Chicago","ip":"104.160.131.3","port":443},{"id":"na-lan","loc":"Miami","ip":"104.160.136.3","port":443}],"ASIA":[{"id":"asia-jp","loc":"Tokyo","ip":"104.160.129.3","port":443},{"id":"asia-kr","loc":"Seoul","ip":"104.160.142.1","port":443},{"id":"asia-sgp","loc":"Singapore","ip":"151.106.248.3","port":443},{"id":"asia-oce","loc":"Sydney","ip":"104.160.156.1","port":443}],"SA":[{"id":"sa-br","loc":"São Paulo","ip":"104.160.152.3","port":443}],"ME":[{"id":"me-tr","loc":"Istanbul","ip":"104.160.143.3","port":443}]}},"apex-legends":{"name":"Apex Legends","name_fa":"ایپکس لجندز","regions":{"EU":[{"id":"eu-lon","loc":"London","ip":"13.43.48.202","port":443},{"id":"eu-fra","loc":"Frankfurt","ip":"52.94.141.14","port":443},{"id":"eu-ams","loc":"Amsterdam","ip":"3.66.90.156","port":443},{"id":"eu-bel","loc":"Belgium","ip":"13.37.152.32","port":443}],"NA":[{"id":"na-vir","loc":"Virginia","ip":"209.54.182.34","port":443},{"id":"na-ore","loc":"Oregon","ip":"52.119.174.12","port":443},{"id":"na-ohi","loc":"Ohio","ip":"3.129.132.172","port":443},{"id":"na-dal","loc":"Dallas","ip":"44.198.247.11","port":443}],"ASIA":[{"id":"asia-tok","loc":"Tokyo","ip":"99.77.58.84","port":443},{"id":"asia-sgp","loc":"Singapore","ip":"15.221.8.220","port":443},{"id":"asia-hkg","loc":"Hong Kong","ip":"99.83.81.12","port":443},{"id":"asia-syd","loc":"Sydney","ip":"99.83.81.12","port":443}],"SA":[{"id":"sa-sao","loc":"São Paulo","ip":"177.72.245.178","port":443}],"ME":[{"id":"me-bhr","loc":"Bahrain","ip":"99.82.132.91","port":443}]}}}}
+{
+ "source": {
+  "repo": "bokiko/pingdiff",
+  "url": "https://github.com/bokiko/pingdiff",
+  "license": "MIT",
+  "note": "کاتالوگ سرورهای بازی — داده از پروژهٔ MIT «pingdiff»، ساختار فارسی‌سازی‌شده توسط ما."
+ },
+ "regions_fa": {
+  "EU": "اروپا",
+  "NA": "آمریکای شمالی",
+  "ASIA": "آسیا",
+  "SA": "آمریکای جنوبی",
+  "ME": "خاورمیانه (دبی/بحرین)",
+  "SEA": "جنوب شرق آسیا (سینگاپور/جاکارتا)",
+  "OCE": "اقیانوسیه (سیدنی)"
+ },
+ "games": {
+  "overwatch-2": {
+   "name": "Overwatch 2",
+   "name_fa": "اورواچ ۲",
+   "regions": {
+    "EU": [
+     {
+      "id": "eu-ams",
+      "loc": "Amsterdam",
+      "ip": "185.60.112.157",
+      "port": 26503
+     },
+     {
+      "id": "eu-par",
+      "loc": "Paris",
+      "ip": "185.60.114.159",
+      "port": 26503
+     },
+     {
+      "id": "eu-fra",
+      "loc": "Frankfurt",
+      "ip": "185.60.112.158",
+      "port": 26503
+     }
+    ],
+    "NA": [
+     {
+      "id": "na-west",
+      "loc": "Los Angeles",
+      "ip": "24.105.30.129",
+      "port": 26503
+     },
+     {
+      "id": "na-central",
+      "loc": "Chicago",
+      "ip": "24.105.62.129",
+      "port": 26503
+     },
+     {
+      "id": "na-east",
+      "loc": "New York",
+      "ip": "24.105.94.129",
+      "port": 26503
+     }
+    ],
+    "ASIA": [
+     {
+      "id": "asia-sg",
+      "loc": "Singapore",
+      "ip": "137.221.106.104",
+      "port": 26503
+     },
+     {
+      "id": "asia-kr",
+      "loc": "Seoul",
+      "ip": "117.52.35.100",
+      "port": 26503
+     },
+     {
+      "id": "asia-jp",
+      "loc": "Tokyo",
+      "ip": "34.84.155.100",
+      "port": 26503
+     },
+     {
+      "id": "asia-tw",
+      "loc": "Taiwan",
+      "ip": "203.66.81.98",
+      "port": 26503
+     },
+     {
+      "id": "asia-au",
+      "loc": "Sydney",
+      "ip": "103.4.115.100",
+      "port": 26503
+     }
+    ],
+    "SA": [
+     {
+      "id": "sa-br",
+      "loc": "São Paulo",
+      "ip": "54.207.107.12",
+      "port": 26503
+     }
+    ],
+    "ME": [
+     {
+      "id": "me-bh",
+      "loc": "Bahrain",
+      "ip": "157.175.45.1",
+      "port": 26503
+     },
+     {
+      "id": "me-ae",
+      "loc": "Dubai",
+      "ip": "34.18.61.77",
+      "port": 26503
+     }
+    ]
+   }
+  },
+  "call-of-duty": {
+   "name": "Call of Duty",
+   "name_fa": "کال آو دیوتی",
+   "regions": {
+    "EU": [
+     {
+      "id": "eu-ams",
+      "loc": "Amsterdam",
+      "ip": "108.61.198.102",
+      "port": 3074
+     },
+     {
+      "id": "eu-lon",
+      "loc": "London",
+      "ip": "108.61.196.101",
+      "port": 3074
+     },
+     {
+      "id": "eu-fra",
+      "loc": "Frankfurt",
+      "ip": "108.61.210.117",
+      "port": 3074
+     },
+     {
+      "id": "eu-par",
+      "loc": "Paris",
+      "ip": "108.61.209.127",
+      "port": 3074
+     },
+     {
+      "id": "eu-mad",
+      "loc": "Madrid",
+      "ip": "208.76.222.30",
+      "port": 3074
+     }
+    ],
+    "NA": [
+     {
+      "id": "na-atl",
+      "loc": "Atlanta",
+      "ip": "108.61.193.166",
+      "port": 3074
+     },
+     {
+      "id": "na-chi",
+      "loc": "Chicago",
+      "ip": "107.191.51.12",
+      "port": 3074
+     },
+     {
+      "id": "na-dal",
+      "loc": "Dallas",
+      "ip": "108.61.224.175",
+      "port": 3074
+     },
+     {
+      "id": "na-lax",
+      "loc": "Los Angeles",
+      "ip": "108.61.219.200",
+      "port": 3074
+     },
+     {
+      "id": "na-mia",
+      "loc": "Miami",
+      "ip": "104.156.244.232",
+      "port": 3074
+     },
+     {
+      "id": "na-nyc",
+      "loc": "New York",
+      "ip": "108.61.149.182",
+      "port": 3074
+     },
+     {
+      "id": "na-sfo",
+      "loc": "San Francisco",
+      "ip": "104.156.230.107",
+      "port": 3074
+     },
+     {
+      "id": "na-sea",
+      "loc": "Seattle",
+      "ip": "108.61.194.105",
+      "port": 3074
+     }
+    ],
+    "ASIA": [
+     {
+      "id": "asia-tok",
+      "loc": "Tokyo",
+      "ip": "108.61.201.151",
+      "port": 3074
+     },
+     {
+      "id": "asia-seo",
+      "loc": "Seoul",
+      "ip": "141.164.34.61",
+      "port": 3074
+     },
+     {
+      "id": "asia-sgp",
+      "loc": "Singapore",
+      "ip": "45.32.100.168",
+      "port": 3074
+     },
+     {
+      "id": "asia-syd",
+      "loc": "Sydney",
+      "ip": "108.61.212.117",
+      "port": 3074
+     }
+    ],
+    "SA": [
+     {
+      "id": "sa-sao",
+      "loc": "São Paulo",
+      "ip": "216.238.98.118",
+      "port": 3074
+     },
+     {
+      "id": "sa-scl",
+      "loc": "Santiago",
+      "ip": "64.176.2.7",
+      "port": 3074
+     }
+    ],
+    "ME": [
+     {
+      "id": "me-tlv",
+      "loc": "Tel Aviv",
+      "ip": "64.176.162.16",
+      "port": 3074
+     }
+    ]
+   }
+  },
+  "counter-strike-2": {
+   "name": "Counter-Strike 2",
+   "name_fa": "کانتر استرایک ۲",
+   "regions": {
+    "EU": [
+     {
+      "id": "eu-lux",
+      "loc": "Luxembourg",
+      "ip": "146.66.152.1",
+      "port": 27015
+     },
+     {
+      "id": "eu-sto",
+      "loc": "Stockholm",
+      "ip": "146.66.156.1",
+      "port": 27015
+     },
+     {
+      "id": "eu-vie",
+      "loc": "Vienna",
+      "ip": "146.66.155.1",
+      "port": 27015
+     },
+     {
+      "id": "eu-war",
+      "loc": "Warsaw",
+      "ip": "155.133.240.1",
+      "port": 27015
+     },
+     {
+      "id": "eu-mad",
+      "loc": "Madrid",
+      "ip": "155.133.246.1",
+      "port": 27015
+     }
+    ],
+    "NA": [
+     {
+      "id": "na-was",
+      "loc": "Washington DC",
+      "ip": "208.78.164.1",
+      "port": 27015
+     },
+     {
+      "id": "na-atl",
+      "loc": "Atlanta",
+      "ip": "162.254.199.1",
+      "port": 27015
+     },
+     {
+      "id": "na-sea",
+      "loc": "Seattle",
+      "ip": "192.69.96.1",
+      "port": 27015
+     },
+     {
+      "id": "na-lax",
+      "loc": "Los Angeles",
+      "ip": "162.254.194.1",
+      "port": 27015
+     }
+    ],
+    "ASIA": [
+     {
+      "id": "asia-sgp",
+      "loc": "Singapore",
+      "ip": "103.28.54.1",
+      "port": 27015
+     },
+     {
+      "id": "asia-tok",
+      "loc": "Tokyo",
+      "ip": "45.121.186.1",
+      "port": 27015
+     },
+     {
+      "id": "asia-hkg",
+      "loc": "Hong Kong",
+      "ip": "155.133.244.1",
+      "port": 27015
+     },
+     {
+      "id": "asia-mum",
+      "loc": "Mumbai",
+      "ip": "180.149.41.1",
+      "port": 27015
+     },
+     {
+      "id": "asia-syd",
+      "loc": "Sydney",
+      "ip": "103.10.125.1",
+      "port": 27015
+     }
+    ],
+    "SA": [
+     {
+      "id": "sa-sao",
+      "loc": "São Paulo",
+      "ip": "209.197.29.1",
+      "port": 27015
+     },
+     {
+      "id": "sa-scl",
+      "loc": "Santiago",
+      "ip": "155.133.249.1",
+      "port": 27015
+     },
+     {
+      "id": "sa-lim",
+      "loc": "Lima",
+      "ip": "143.137.146.1",
+      "port": 27015
+     }
+    ],
+    "ME": [
+     {
+      "id": "me-dub",
+      "loc": "Dubai",
+      "ip": "185.25.183.1",
+      "port": 27015
+     }
+    ]
+   }
+  },
+  "battlefield-6": {
+   "name": "Battlefield 6",
+   "name_fa": "بتلفیلد ۶",
+   "regions": {
+    "EU": [
+     {
+      "id": "eu-lon",
+      "loc": "London",
+      "ip": "35.71.111.102",
+      "port": 25200
+     },
+     {
+      "id": "eu-ire",
+      "loc": "Dublin",
+      "ip": "35.71.75.100",
+      "port": 25200
+     },
+     {
+      "id": "eu-fra",
+      "loc": "Frankfurt",
+      "ip": "35.71.105.10",
+      "port": 25200
+     },
+     {
+      "id": "eu-par",
+      "loc": "Paris",
+      "ip": "35.71.101.129",
+      "port": 25200
+     },
+     {
+      "id": "eu-sto",
+      "loc": "Stockholm",
+      "ip": "35.71.98.128",
+      "port": 25200
+     }
+    ],
+    "NA": [
+     {
+      "id": "na-vir",
+      "loc": "Virginia",
+      "ip": "3.218.182.208",
+      "port": 25200
+     },
+     {
+      "id": "na-ohi",
+      "loc": "Ohio",
+      "ip": "35.71.102.135",
+      "port": 25200
+     },
+     {
+      "id": "na-cal",
+      "loc": "California",
+      "ip": "35.71.117.132",
+      "port": 25200
+     },
+     {
+      "id": "na-ore",
+      "loc": "Oregon",
+      "ip": "35.71.66.124",
+      "port": 25200
+     }
+    ],
+    "ASIA": [
+     {
+      "id": "asia-tok",
+      "loc": "Tokyo",
+      "ip": "52.94.8.118",
+      "port": 25200
+     },
+     {
+      "id": "asia-seo",
+      "loc": "Seoul",
+      "ip": "35.71.109.128",
+      "port": 25200
+     },
+     {
+      "id": "asia-sgp",
+      "loc": "Singapore",
+      "ip": "35.71.118.128",
+      "port": 25200
+     },
+     {
+      "id": "asia-syd",
+      "loc": "Sydney",
+      "ip": "35.71.97.129",
+      "port": 25200
+     },
+     {
+      "id": "asia-mum",
+      "loc": "Mumbai",
+      "ip": "35.71.100.130",
+      "port": 25200
+     }
+    ],
+    "SA": [
+     {
+      "id": "sa-sao",
+      "loc": "São Paulo",
+      "ip": "35.71.106.104",
+      "port": 25200
+     }
+    ],
+    "ME": [
+     {
+      "id": "me-bhr",
+      "loc": "Bahrain",
+      "ip": "35.71.99.128",
+      "port": 25200
+     }
+    ]
+   }
+  },
+  "marvel-rivals": {
+   "name": "Marvel Rivals",
+   "name_fa": "مارول ریوالز",
+   "regions": {
+    "EU": [
+     {
+      "id": "eu-ire",
+      "loc": "Dublin",
+      "ip": "52.94.76.1",
+      "port": 443
+     },
+     {
+      "id": "eu-lon",
+      "loc": "London",
+      "ip": "52.94.77.1",
+      "port": 443
+     },
+     {
+      "id": "eu-par",
+      "loc": "Paris",
+      "ip": "52.94.78.1",
+      "port": 443
+     },
+     {
+      "id": "eu-fra",
+      "loc": "Frankfurt",
+      "ip": "52.94.79.1",
+      "port": 443
+     },
+     {
+      "id": "eu-sto",
+      "loc": "Stockholm",
+      "ip": "52.94.80.1",
+      "port": 443
+     }
+    ],
+    "NA": [
+     {
+      "id": "na-vir",
+      "loc": "Virginia",
+      "ip": "52.94.81.1",
+      "port": 443
+     },
+     {
+      "id": "na-ohi",
+      "loc": "Ohio",
+      "ip": "52.94.82.1",
+      "port": 443
+     },
+     {
+      "id": "na-cal",
+      "loc": "California",
+      "ip": "52.94.83.1",
+      "port": 443
+     },
+     {
+      "id": "na-ore",
+      "loc": "Oregon",
+      "ip": "52.94.84.1",
+      "port": 443
+     }
+    ],
+    "ASIA": [
+     {
+      "id": "asia-tok",
+      "loc": "Tokyo",
+      "ip": "52.94.85.1",
+      "port": 443
+     },
+     {
+      "id": "asia-seo",
+      "loc": "Seoul",
+      "ip": "52.94.86.1",
+      "port": 443
+     },
+     {
+      "id": "asia-sgp",
+      "loc": "Singapore",
+      "ip": "52.94.87.1",
+      "port": 443
+     },
+     {
+      "id": "asia-syd",
+      "loc": "Sydney",
+      "ip": "52.94.88.1",
+      "port": 443
+     },
+     {
+      "id": "asia-mum",
+      "loc": "Mumbai",
+      "ip": "52.94.89.1",
+      "port": 443
+     }
+    ],
+    "SA": [
+     {
+      "id": "sa-sao",
+      "loc": "São Paulo",
+      "ip": "52.94.90.1",
+      "port": 443
+     }
+    ],
+    "ME": [
+     {
+      "id": "me-bhr",
+      "loc": "Bahrain",
+      "ip": "52.94.91.1",
+      "port": 443
+     }
+    ]
+   }
+  },
+  "valorant": {
+   "name": "Valorant",
+   "name_fa": "والورانت",
+   "regions": {
+    "EU": [
+     {
+      "id": "eu-lon",
+      "loc": "London",
+      "ip": "104.160.141.3",
+      "port": 443
+     },
+     {
+      "id": "eu-par",
+      "loc": "Paris",
+      "ip": "162.249.72.1",
+      "port": 443
+     },
+     {
+      "id": "eu-fra",
+      "loc": "Frankfurt",
+      "ip": "162.249.73.1",
+      "port": 443
+     },
+     {
+      "id": "eu-sto",
+      "loc": "Stockholm",
+      "ip": "162.249.74.1",
+      "port": 443
+     },
+     {
+      "id": "eu-war",
+      "loc": "Warsaw",
+      "ip": "162.249.75.1",
+      "port": 443
+     }
+    ],
+    "NA": [
+     {
+      "id": "na-ash",
+      "loc": "Ashburn",
+      "ip": "104.160.131.3",
+      "port": 443
+     },
+     {
+      "id": "na-chi",
+      "loc": "Chicago",
+      "ip": "104.160.136.3",
+      "port": 443
+     },
+     {
+      "id": "na-dal",
+      "loc": "Dallas",
+      "ip": "104.160.151.182",
+      "port": 443
+     },
+     {
+      "id": "na-lax",
+      "loc": "Los Angeles",
+      "ip": "104.160.159.1",
+      "port": 443
+     },
+     {
+      "id": "na-atl",
+      "loc": "Atlanta",
+      "ip": "104.160.156.1",
+      "port": 443
+     },
+     {
+      "id": "na-sea",
+      "loc": "Seattle",
+      "ip": "104.160.158.1",
+      "port": 443
+     }
+    ],
+    "ASIA": [
+     {
+      "id": "asia-tok",
+      "loc": "Tokyo",
+      "ip": "104.160.129.1",
+      "port": 443
+     },
+     {
+      "id": "asia-seo",
+      "loc": "Seoul",
+      "ip": "104.160.142.1",
+      "port": 443
+     },
+     {
+      "id": "asia-sgp",
+      "loc": "Singapore",
+      "ip": "151.106.248.1",
+      "port": 443
+     },
+     {
+      "id": "asia-hkg",
+      "loc": "Hong Kong",
+      "ip": "104.160.144.1",
+      "port": 443
+     },
+     {
+      "id": "asia-mum",
+      "loc": "Mumbai",
+      "ip": "151.106.246.1",
+      "port": 443
+     },
+     {
+      "id": "asia-syd",
+      "loc": "Sydney",
+      "ip": "43.229.64.1",
+      "port": 443
+     }
+    ],
+    "SA": [
+     {
+      "id": "sa-sao",
+      "loc": "São Paulo",
+      "ip": "104.160.152.1",
+      "port": 443
+     },
+     {
+      "id": "sa-scl",
+      "loc": "Santiago",
+      "ip": "104.160.154.1",
+      "port": 443
+     }
+    ],
+    "ME": [
+     {
+      "id": "me-bhr",
+      "loc": "Bahrain",
+      "ip": "104.160.146.1",
+      "port": 443
+     }
+    ]
+   }
+  },
+  "fortnite": {
+   "name": "Fortnite",
+   "name_fa": "فورت‌نایت",
+   "regions": {
+    "EU": [
+     {
+      "id": "eu-lon",
+      "loc": "London",
+      "ip": "18.133.162.190",
+      "port": 443
+     },
+     {
+      "id": "eu-fra",
+      "loc": "Frankfurt",
+      "ip": "3.66.90.29",
+      "port": 443
+     },
+     {
+      "id": "eu-par",
+      "loc": "Paris",
+      "ip": "13.37.148.3",
+      "port": 443
+     },
+     {
+      "id": "eu-sto",
+      "loc": "Stockholm",
+      "ip": "15.237.20.100",
+      "port": 443
+     }
+    ],
+    "NA": [
+     {
+      "id": "na-east",
+      "loc": "Virginia",
+      "ip": "3.129.132.114",
+      "port": 443
+     },
+     {
+      "id": "na-east2",
+      "loc": "Ohio",
+      "ip": "44.192.143.240",
+      "port": 443
+     },
+     {
+      "id": "na-west",
+      "loc": "Oregon",
+      "ip": "44.237.247.68",
+      "port": 443
+     },
+     {
+      "id": "na-west2",
+      "loc": "California",
+      "ip": "3.101.95.110",
+      "port": 443
+     }
+    ],
+    "ASIA": [
+     {
+      "id": "asia-tok",
+      "loc": "Tokyo",
+      "ip": "35.72.18.106",
+      "port": 443
+     },
+     {
+      "id": "asia-syd",
+      "loc": "Sydney",
+      "ip": "3.25.159.13",
+      "port": 443
+     }
+    ],
+    "SA": [
+     {
+      "id": "sa-sao",
+      "loc": "São Paulo",
+      "ip": "15.228.25.140",
+      "port": 443
+     }
+    ],
+    "ME": [
+     {
+      "id": "me-bhr",
+      "loc": "Bahrain",
+      "ip": "15.184.13.113",
+      "port": 443
+     }
+    ]
+   }
+  },
+  "league-of-legends": {
+   "name": "League of Legends",
+   "name_fa": "لیگ آو لجندز",
+   "regions": {
+    "EU": [
+     {
+      "id": "eu-euw",
+      "loc": "Amsterdam",
+      "ip": "104.160.141.3",
+      "port": 443
+     },
+     {
+      "id": "eu-eune",
+      "loc": "Frankfurt",
+      "ip": "104.160.142.3",
+      "port": 443
+     },
+     {
+      "id": "eu-tr",
+      "loc": "Istanbul",
+      "ip": "104.160.143.3",
+      "port": 443
+     }
+    ],
+    "NA": [
+     {
+      "id": "na-chi",
+      "loc": "Chicago",
+      "ip": "104.160.131.3",
+      "port": 443
+     },
+     {
+      "id": "na-lan",
+      "loc": "Miami",
+      "ip": "104.160.136.3",
+      "port": 443
+     }
+    ],
+    "ASIA": [
+     {
+      "id": "asia-jp",
+      "loc": "Tokyo",
+      "ip": "104.160.129.3",
+      "port": 443
+     },
+     {
+      "id": "asia-kr",
+      "loc": "Seoul",
+      "ip": "104.160.142.1",
+      "port": 443
+     },
+     {
+      "id": "asia-sgp",
+      "loc": "Singapore",
+      "ip": "151.106.248.3",
+      "port": 443
+     },
+     {
+      "id": "asia-oce",
+      "loc": "Sydney",
+      "ip": "104.160.156.1",
+      "port": 443
+     }
+    ],
+    "SA": [
+     {
+      "id": "sa-br",
+      "loc": "São Paulo",
+      "ip": "104.160.152.3",
+      "port": 443
+     }
+    ],
+    "ME": [
+     {
+      "id": "me-tr",
+      "loc": "Istanbul",
+      "ip": "104.160.143.3",
+      "port": 443
+     }
+    ]
+   }
+  },
+  "apex-legends": {
+   "name": "Apex Legends",
+   "name_fa": "ایپکس لجندز",
+   "regions": {
+    "EU": [
+     {
+      "id": "eu-lon",
+      "loc": "London",
+      "ip": "13.43.48.202",
+      "port": 443
+     },
+     {
+      "id": "eu-fra",
+      "loc": "Frankfurt",
+      "ip": "52.94.141.14",
+      "port": 443
+     },
+     {
+      "id": "eu-ams",
+      "loc": "Amsterdam",
+      "ip": "3.66.90.156",
+      "port": 443
+     },
+     {
+      "id": "eu-bel",
+      "loc": "Belgium",
+      "ip": "13.37.152.32",
+      "port": 443
+     }
+    ],
+    "NA": [
+     {
+      "id": "na-vir",
+      "loc": "Virginia",
+      "ip": "209.54.182.34",
+      "port": 443
+     },
+     {
+      "id": "na-ore",
+      "loc": "Oregon",
+      "ip": "52.119.174.12",
+      "port": 443
+     },
+     {
+      "id": "na-ohi",
+      "loc": "Ohio",
+      "ip": "3.129.132.172",
+      "port": 443
+     },
+     {
+      "id": "na-dal",
+      "loc": "Dallas",
+      "ip": "44.198.247.11",
+      "port": 443
+     }
+    ],
+    "ASIA": [
+     {
+      "id": "asia-tok",
+      "loc": "Tokyo",
+      "ip": "99.77.58.84",
+      "port": 443
+     },
+     {
+      "id": "asia-sgp",
+      "loc": "Singapore",
+      "ip": "15.221.8.220",
+      "port": 443
+     },
+     {
+      "id": "asia-hkg",
+      "loc": "Hong Kong",
+      "ip": "99.83.81.12",
+      "port": 443
+     },
+     {
+      "id": "asia-syd",
+      "loc": "Sydney",
+      "ip": "99.83.81.12",
+      "port": 443
+     }
+    ],
+    "SA": [
+     {
+      "id": "sa-sao",
+      "loc": "São Paulo",
+      "ip": "177.72.245.178",
+      "port": 443
+     }
+    ],
+    "ME": [
+     {
+      "id": "me-bhr",
+      "loc": "Bahrain",
+      "ip": "99.82.132.91",
+      "port": 443
+     }
+    ]
+   }
+  },
+  "pubg-mobile": {
+   "name": "PUBG Mobile",
+   "name_fa": "پابجی موبایل",
+   "publisher": "Tencent / Lightspeed (Level Infinite)",
+   "src": "https://www.netify.ai/resources/ips/162.62.115.42",
+   "note": "سرور موبایل روی Tencent Cloud است، نه AWS. بسیاری از گره‌های آسیا/خاورمیانه ICMP را بلاک می‌کنند؛ برای همان‌ها عدد نمی‌سازیم و «قابل سنجش نیست» می‌نویسیم. پینگ داخل مچ = RTT به آی‌پی سرور بازی؛ DNS فقط سرعت اتصال را بهتر می‌کند، نه پینگ داخل مچ.",
+   "regions": {
+    "EU": [
+     {
+      "id": "pubgm-eu-fra",
+      "loc": "Frankfurt (Tencent Cloud)",
+      "ip": "162.62.115.42",
+      "port": 443,
+      "asn": "AS132203 Tencent",
+      "v": true,
+      "probe": {
+       "DE": 7,
+       "SG": 248,
+       "TR": 40
+      }
+     }
+    ],
+    "ASIA": [
+     {
+      "id": "pubgm-as-tencent",
+      "loc": "گرهٔ Tencent Cloud (از سینگاپور ۲۴۵ms ⇒ دور از SEA)",
+      "ip": "162.62.116.5",
+      "port": 443,
+      "asn": "AS132203 Tencent",
+      "v": true,
+      "probe": {
+       "DE": null,
+       "SG": 245,
+       "TR": null
+      }
+     }
+    ]
+   },
+   "unmeasurable": [
+    {
+     "loc": "Asia (سینگاپور)",
+     "why": "ICMP بسته — از سه نقطهٔ دید پاسخی نیامد"
+    },
+    {
+     "loc": "Middle East (بحرین)",
+     "why": "ICMP بسته"
+    },
+    {
+     "loc": "KRJP (سئول/توکیو)",
+     "why": "ICMP بسته"
+    }
+   ],
+   "v_at": "2026-10-01",
+   "probe_note": "میانگین پینگ ICMP از Globalping — فرانکفورت/سینگاپور/استانبول"
+  },
+  "mobile-legends": {
+   "name": "Mobile Legends: Bang Bang",
+   "name_fa": "موبایل لجندز (MLBB)",
+   "publisher": "Moonton (ByteDance)",
+   "src": "https://forums.mudfish.net/t/request-add-jakarta-destination-for-mobile-legends-bang-bang/84016 + فهرست عمومی آی‌پی/پورت نسخهٔ ۲.۱.۴۰",
+   "note": "میزبان اصلی Moonton = IBM Cloud (SoftLayer) و گره‌های Jakarta روی Zenlayer/BytePlus. پورت‌های اتصال: TCP 30021/30104 و UDP 30190 (طبق فهرست عمومی نسخه). سنجش ما ICMP است، پس پورت در عدد اثر ندارد و فقط برای کپی/فایروال آمده.",
+   "regions": {
+    "SEA": [
+     {
+      "id": "mlbb-sg-a",
+      "loc": "سینگاپور (IBM Cloud)",
+      "ip": "161.202.221.155",
+      "port": 30021,
+      "asn": "AS36351 IBM Cloud",
+      "v": true,
+      "probe": {
+       "DE": 175,
+       "SG": 1,
+       "TR": 245
+      }
+     },
+     {
+      "id": "mlbb-sg-b",
+      "loc": "سینگاپور (IBM Cloud)",
+      "ip": "161.202.222.25",
+      "port": 30021,
+      "asn": "AS36351 IBM Cloud",
+      "v": true,
+      "probe": {
+       "DE": 175,
+       "SG": 1,
+       "TR": 246
+      }
+     },
+     {
+      "id": "mlbb-sg-c",
+      "loc": "سینگاپور (CDS/Zenlayer)",
+      "ip": "148.153.196.5",
+      "port": 30190,
+      "asn": "AS63199",
+      "v": true,
+      "probe": {
+       "DE": 164,
+       "SG": 2,
+       "TR": 191
+      }
+     },
+     {
+      "id": "mlbb-sg-d",
+      "loc": "سینگاپور (CDS/Zenlayer)",
+      "ip": "148.153.196.16",
+      "port": 30190,
+      "asn": "AS63199",
+      "v": true,
+      "probe": {
+       "DE": 168,
+       "SG": 2,
+       "TR": 192
+      }
+     },
+     {
+      "id": "mlbb-sg-e",
+      "loc": "سینگاپور (Kaopu)",
+      "ip": "154.93.119.148",
+      "port": 30190,
+      "asn": "AS138915",
+      "v": true,
+      "probe": {
+       "DE": 222,
+       "SG": 27,
+       "TR": 210
+      }
+     },
+     {
+      "id": "mlbb-sg-f",
+      "loc": "سینگاپور (Zenlayer)",
+      "ip": "45.198.233.14",
+      "port": 30190,
+      "asn": "AS141109 (SC)",
+      "v": true,
+      "probe": {
+       "DE": 204,
+       "SG": 32,
+       "TR": 213
+      }
+     }
+    ],
+    "ASIA": [
+     {
+      "id": "mlbb-jkt-a",
+      "loc": "جاکارتا (Zenlayer)",
+      "ip": "216.133.157.41",
+      "port": 30021,
+      "asn": "AS62610",
+      "v": true,
+      "probe": {
+       "DE": 176,
+       "SG": 18,
+       "TR": 209
+      }
+     },
+     {
+      "id": "mlbb-jkt-b",
+      "loc": "جاکارتا (Zenlayer-ID)",
+      "ip": "103.157.33.35",
+      "port": 30021,
+      "asn": "AS141109 (ID)",
+      "v": true,
+      "probe": {
+       "DE": 173,
+       "SG": 13,
+       "TR": 190
+      }
+     },
+     {
+      "id": "mlbb-asia-a",
+      "loc": "آسیا (IBM Cloud)",
+      "ip": "169.55.210.238",
+      "port": 30021,
+      "asn": "AS36351 IBM Cloud",
+      "v": true,
+      "probe": {
+       "DE": 126,
+       "SG": 253,
+       "TR": 165
+      }
+     },
+     {
+      "id": "mlbb-asia-b",
+      "loc": "آسیا (IBM Cloud)",
+      "ip": "169.55.210.227",
+      "port": 30021,
+      "asn": "AS36351 IBM Cloud",
+      "v": true,
+      "probe": {
+       "DE": 127,
+       "SG": 241,
+       "TR": 162
+      }
+     }
+    ],
+    "EU": [
+     {
+      "id": "mlbb-eu-a",
+      "loc": "اروپا (IBM Cloud)",
+      "ip": "158.177.196.162",
+      "port": 30021,
+      "asn": "AS36351 IBM Cloud",
+      "v": true,
+      "probe": {
+       "DE": 16,
+       "SG": 151,
+       "TR": 42
+      }
+     }
+    ],
+    "ME": [
+     {
+      "id": "mlbb-me-login",
+      "loc": "گرهٔ ورود خاورمیانه (IBM Cloud)",
+      "ip": "169.46.198.121",
+      "port": 30021,
+      "asn": "AS36351 IBM Cloud",
+      "v": false,
+      "probe": {
+       "DE": null,
+       "SG": null,
+       "TR": null
+      },
+      "why": "کاندید از فهرست عمومی — ICMP پاسخ نداد؛ فقط به‌عنوان کاندید نگه داشته شد"
+     }
+    ]
+   },
+   "unmeasurable": [
+    {
+     "loc": "Mumbai (هند/جنوب آسیا)",
+     "why": "ICMP بسته (169.38.97.1 پاسخ نداد)"
+    }
+   ],
+   "v_at": "2026-10-01",
+   "probe_note": "میانگین پینگ ICMP از Globalping — فرانکفورت/سینگاپور/استانبول"
+  },
+  "pubg-pc": {
+   "name": "PUBG: Battlegrounds (PC)",
+   "name_fa": "پابجی کامپیوتر",
+   "publisher": "Krafton (میزبانی AWS)",
+   "src": "https://gist.github.com/kirankotari/938cb9452caca2d6c312be91a39e9f79 (فهرست AWS عمومی، تأیید با پینگ ما)",
+   "note": "این‌ها میزبان‌های AWS سبک PC‑era هستند و پابجی موبایل با آن‌ها کار نمی‌کند — جدا نگه داشته شده‌اند. فقط آی‌پی‌هایی که خودمان پاسخ گرفتیم آمده‌اند (فرانکفورت و نیویورک پاسخ ندادند).",
+   "regions": {
+    "ASIA": [
+     {
+      "id": "pubgpc-seoul",
+      "loc": "سئول (AWS)",
+      "ip": "52.79.52.64",
+      "port": 443,
+      "asn": "AS16509 AWS",
+      "v": true,
+      "probe": {
+       "DE": 295,
+       "SG": 68,
+       "TR": 343
+      }
+     },
+     {
+      "id": "pubgpc-tokyo",
+      "loc": "توکیو (AWS)",
+      "ip": "13.112.63.251",
+      "port": 443,
+      "asn": "AS16509 AWS",
+      "v": true,
+      "probe": {
+       "DE": 240,
+       "SG": 69,
+       "TR": 351
+      }
+     },
+     {
+      "id": "pubgpc-sg",
+      "loc": "سینگاپور (AWS)",
+      "ip": "13.228.0.251",
+      "port": 443,
+      "asn": "AS16509 AWS",
+      "v": true,
+      "probe": {
+       "DE": 159,
+       "SG": 2,
+       "TR": 363
+      }
+     },
+     {
+      "id": "pubgpc-mumbai",
+      "loc": "بمبئی (AWS)",
+      "ip": "13.126.0.252",
+      "port": 443,
+      "asn": "AS16509 AWS",
+      "v": true,
+      "probe": {
+       "DE": 131,
+       "SG": 56,
+       "TR": 256
+      }
+     }
+    ],
+    "EU": [
+     {
+      "id": "pubgpc-london",
+      "loc": "لندن (AWS)",
+      "ip": "35.176.0.252",
+      "port": 443,
+      "asn": "AS16509 AWS",
+      "v": true,
+      "probe": {
+       "DE": 17,
+       "SG": 161,
+       "TR": 57
+      }
+     },
+     {
+      "id": "pubgpc-fra",
+      "loc": "فرانکفورت (AWS)",
+      "ip": "52.58.95.114",
+      "port": 443,
+      "asn": "AS16509 AWS",
+      "v": true,
+      "probe": {
+       "DE": null,
+       "SG": 174,
+       "TR": 64
+      }
+     }
+    ],
+    "OCE": [
+     {
+      "id": "pubgpc-sydney",
+      "loc": "سیدنی (AWS)",
+      "ip": "13.54.63.252",
+      "port": 443,
+      "asn": "AS16509 AWS",
+      "v": true,
+      "probe": {
+       "DE": 308,
+       "SG": 337,
+       "TR": 343
+      }
+     }
+    ]
+   },
+   "v_at": "2026-10-01",
+   "probe_note": "میانگین پینگ ICMP از Globalping — فرانکفورت/سینگاپور/استانبول"
+  },
+  "dota-2": {
+   "name": "Dota 2 / CS2 (Valve)",
+   "name_fa": "دوتا ۲ / CS۲ (سرورهای Valve)",
+   "publisher": "Valve (AS32590)",
+   "src": "سرورهای ثابت Valve — تأیید با پینگ ما از سه نقطهٔ دید",
+   "note": "دبی و استکلهم و سینگاپور پاسخ دادند؛ فرانکفورت Valve از دو نقطه عدد پرت داد (۳۸۰ms) که نشانهٔ فیلتر/مسیریابی عجیب است — همان را هم صادقانه نشان می‌دهیم.",
+   "regions": {
+    "ME": [
+     {
+      "id": "valve-dubai-a",
+      "loc": "دبی (Valve)",
+      "ip": "185.25.182.1",
+      "port": 27015,
+      "asn": "AS32590 Valve",
+      "v": true,
+      "probe": {
+       "DE": 15,
+       "SG": 162,
+       "TR": 43
+      }
+     },
+     {
+      "id": "valve-dubai-b",
+      "loc": "دبی (Valve)",
+      "ip": "185.25.183.1",
+      "port": 27015,
+      "asn": "AS32590 Valve",
+      "v": true,
+      "probe": {
+       "DE": 136,
+       "SG": 81,
+       "TR": 168
+      }
+     }
+    ],
+    "EU": [
+     {
+      "id": "valve-sto",
+      "loc": "استکلهم (Valve)",
+      "ip": "146.66.155.1",
+      "port": 27015,
+      "asn": "AS32590 Valve",
+      "v": true,
+      "probe": {
+       "DE": 16,
+       "SG": 183,
+       "TR": 24
+      }
+     },
+     {
+      "id": "valve-fra",
+      "loc": "فرانکفورت (Valve)",
+      "ip": "146.66.152.1",
+      "port": 27015,
+      "asn": "AS32590 Valve",
+      "v": true,
+      "probe": {
+       "DE": 380,
+       "SG": 178,
+       "TR": 385
+      }
+     }
+    ],
+    "SEA": [
+     {
+      "id": "valve-sg-a",
+      "loc": "سینگاپور (Valve)",
+      "ip": "103.10.124.1",
+      "port": 27015,
+      "asn": "AS32590 Valve",
+      "v": true,
+      "probe": {
+       "DE": 159,
+       "SG": 1,
+       "TR": 205
+      }
+     },
+     {
+      "id": "valve-sg-b",
+      "loc": "سینگاپور (Valve)",
+      "ip": "103.10.125.1",
+      "port": 27015,
+      "asn": "AS32590 Valve",
+      "v": true,
+      "probe": {
+       "DE": 175,
+       "SG": 1,
+       "TR": 257
+      }
+     }
+    ]
+   },
+   "v_at": "2026-10-01",
+   "probe_note": "میانگین پینگ ICMP از Globalping — فرانکفورت/سینگاپور/استانبول"
+  }
+ },
+ "services": {
+  "note": "بازی‌هایی که سرور بازی‌شان ICMP را بلاک می‌کند با «پینگ» قابل سنجش نیستند. اینجا زمان پاسخ سرویس (HTTPS کامل) از پروب تهران می‌آید؛ این عدد شامل DNS+TCP+TLS است و با پینگ داخل بازی یکی نیست. برای پینگ داخل بازی، عدد خودِ بازی معتبر است.",
+  "measured_at": "2026-10-01",
+  "rows": [
+   {
+    "game": "Roblox",
+    "fa": "ربلاکس",
+    "host": "www.roblox.com",
+    "ir_https_ms": 389,
+    "status": 200,
+    "extra": [
+     {
+      "loc": "DE",
+      "ms": 195
+     },
+     {
+      "loc": "TR",
+      "ms": null
+     }
+    ]
+   },
+   {
+    "game": "Free Fire",
+    "fa": "فری فایر (Garena)",
+    "host": "www.garena.sg",
+    "ir_https_ms": 1005,
+    "status": 200,
+    "extra": [
+     {
+      "loc": "DE",
+      "ms": 653
+     },
+     {
+      "loc": "TR",
+      "ms": 1176
+     }
+    ]
+   },
+   {
+    "game": "eFootball",
+    "fa": "ای‌فوتبال (Konami)",
+    "host": "www.konami.com",
+    "ir_https_ms": 924,
+    "status": 302,
+    "extra": [
+     {
+      "loc": "DE",
+      "ms": 395
+     },
+     {
+      "loc": "TR",
+      "ms": 487
+     }
+    ]
+   },
+   {
+    "game": "Steam",
+    "fa": "استیم (Valve)",
+    "host": "store.steampowered.com",
+    "ir_https_ms": 562,
+    "status": 200,
+    "extra": [
+     {
+      "loc": "DE",
+      "ms": 312
+     },
+     {
+      "loc": "TR",
+      "ms": 468
+     }
+    ]
+   },
+   {
+    "game": "Epic / Fortnite",
+    "fa": "اپیک / فورتنایت",
+    "host": "www.epicgames.com",
+    "ir_https_ms": 151,
+    "status": 403,
+    "extra": [
+     {
+      "loc": "DE",
+      "ms": 45
+     },
+     {
+      "loc": "TR",
+      "ms": 36
+     }
+    ]
+   },
+   {
+    "game": "EA / Apex",
+    "fa": "EA / ایپکس",
+    "host": "accounts.ea.com",
+    "ir_https_ms": 603,
+    "status": 404,
+    "extra": [
+     {
+      "loc": "DE",
+      "ms": 354
+     },
+     {
+      "loc": "TR",
+      "ms": 430
+     }
+    ]
+   },
+   {
+    "game": "Call of Duty",
+    "fa": "کالاف دیوتی",
+    "host": "www.callofduty.com",
+    "ir_https_ms": null,
+    "status": null,
+    "extra": [
+     {
+      "loc": "DE",
+      "ms": null
+     }
+    ],
+    "why": "پاسخی نیامد (۱۵ ثانیه تایم‌اوت از هر سه نقطه)"
+   }
+  ]
+ },
+ "verified_at": "2026-10-01",
+ "verified_by": "Globalping (ICMP از DE/SG/TR) + Globalping HTTP از پروب تهران",
+ "build_note": "بازتولید: python3 tools/build_games_catalog.py"
+}
