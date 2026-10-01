@@ -392,6 +392,22 @@ sub('''    ["GET", "/api/games?game=cs2", "کاتالوگ ۹ بازی · ۱۴۱ 
     ["GET", "/api/gameping?ips=1.1.1.1", "پینگ زندهٔ سرور بازی از پروب‌های ایران"],
     ["GET", "/api/dohrace?host=…", "🏁 مسابقهٔ DoH از لبهٔ شبکه (همیشه عدد واقعی)"],''', "docs")
 
+# ---------------------------------------------------------------- ۹) /api/filter: سلامت پروب
+sub("""  const out = {
+    ok: true, host, at: Date.now(), cache: \"miss\",
+    neutral, neutral_ips: neutralIps,
+    ir_dns: irRows, ir_via_public: tcpRows, ir_http: httpRows,""",
+    """  const WHY_NO_REPLY = \"پاسخی نیامد — احتمالاً فیلتر ICMP/پورت در سمت هدف است یا پروب دیتاسنتری اجازهٔ پرسش از بیرون را ندارد.\";
+  const markRows = (rows) => rows.map((r) => ({ ...r, why: r.ok ? null : (r.err || \"بی‌پاسخ\"), why_fa: r.ok ? null : WHY_NO_REPLY }));
+  const rowsAll = irRows.concat(tcpRows).concat(httpRows);
+  const probeHealth = { total: rowsAll.length, answered: rowsAll.filter((r) => r.ok).length, failed: rowsAll.filter((r) => !r.ok).length,
+    note: \"پروب‌های ایران دیتاسنتری‌اند؛ «پاسخ نداد» با «کند/خراب» یکی نیست — دلیلش کنار هر ردیف نوشته شده است.\" };
+  const out = {
+    ok: true, host, at: Date.now(), cache: \"miss\",
+    neutral, neutral_ips: neutralIps,
+    ir_dns: markRows(irRows), ir_via_public: markRows(tcpRows), ir_http: markRows(httpRows),
+    probe_health: probeHealth,""", "probe_health")
+
 SRC.write_text(s, encoding="utf-8")
 print(f"bytes: {orig_len} → {len(s)}")
 print("applied:", applied)

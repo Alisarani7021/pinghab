@@ -458,7 +458,11 @@ tr:last-child td{border-bottom:none}
       const d = await jget("/api/dnslist?cc=" + encodeURIComponent(q("ww-cc").value));
       (d.groups||[]).forEach(g=>{ if(g.doh) targets.push({name:g.name, doh:g.doh}); });
     }catch(e){}
-    if(!targets.length){ out.textContent = "آدرس DoH پیدا نشد."; return; }
+    if(!targets.length){
+      targets = (typeof DOH !== "undefined" ? DOH : []).map(function(x){ return { name: x.name, doh: x.url }; });
+      out.innerHTML = '<div class="sub">برای این کشور رزولور DoH معرفی‌شده ثبت نشده (لیست آن کشور، سرورهای بومی همان کشور است)؛ این سنجش با ۶ رزولور جهانی انجام می‌شود و «آی‌پی برگشتی» مقایسه می‌شود — نه اینکه لیست کشورها را تکرار کنیم.</div>';
+    }
+    if(!targets.length){ out.textContent = "هیچ رزولور DoH در دسترس نبود."; return; }
     out.innerHTML = `<div class="sub">⏱ سنجش از گوشی خودت روی ${fa(targets.length)} رزولور — این عدد «زمان تا دریافت پاسخ از این خط» است:</div>`;
     const rows = [];
     await Promise.all(targets.slice(0,10).map(async t=>{

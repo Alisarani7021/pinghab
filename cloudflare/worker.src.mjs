@@ -1420,10 +1420,20 @@ async function filterProbe(env, host) {
       fix: "یک دقیقه بعد دوباره بزن.", notfix: "از دادهٔ ناقص حکم نمی‌سازیم." };
   }
 
+  /* «چرا پاسخ نداد»: پروبی که جواب نمی‌دهد نشانهٔ شبکهٔ بد نیست — خیلی از گیت‌وی‌ها
+     پرسش ICMP/DNS از بیرون را می‌بندند. هر ردیف ناموفق دلیل صریح می‌گیرد. */
+  const WHY_NO_REPLY = "پاسخی نیامد — احتمالاً فیلتر ICMP/پورت در سمت هدف است یا پروب دیتاسنتری اجازهٔ پرسش از بیرون را ندارد (نه اینکه «شبکه خراب» باشد).";
+  const markRows = (rows) => rows.map((r) => ({ ...r, why: r.ok ? null : (r.err || "بی‌پاسخ"), why_fa: r.ok ? null : WHY_NO_REPLY }));
+  const rowsAll = irRows.concat(tcpRows).concat(httpRows);
+  const probeHealth = {
+    total: rowsAll.length, answered: rowsAll.filter((r) => r.ok).length, failed: rowsAll.filter((r) => !r.ok).length,
+    note: "پروب‌های ایران دیتاسنتری‌اند؛ «پاسخ نداد» با «کند/خراب» یکی نیست — دلیلش کنار هر ردیف نوشته شده است.",
+  };
   const out = {
     ok: true, host, at: Date.now(), cache: "miss",
     neutral, neutral_ips: neutralIps,
-    ir_dns: irRows, ir_via_public: tcpRows, ir_http: httpRows,
+    ir_dns: markRows(irRows), ir_via_public: markRows(tcpRows), ir_http: markRows(httpRows),
+    probe_health: probeHealth,
     sinkhole_ips: [...new Set(sinkLocal.concat(sinkViaPublic))],
     hijack,
     checkhost: chAvail ? ch : { available: false, retry_in_min: chOpen ? 60 : 60,

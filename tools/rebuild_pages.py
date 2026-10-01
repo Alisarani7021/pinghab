@@ -354,6 +354,19 @@ def patch_doh(src):
     return src, True
 
 
+def patch_impact_fallback(src):
+    """سنجش اثر PoP: اگر کشور DoH معرفی‌شده نداشت، از ۶ رزولور جهانی استفاده کن — با برچسب صریح."""
+    old = '    if(!targets.length){ out.textContent = "آدرس DoH پیدا نشد."; return; }'
+    new = """    if(!targets.length){
+      targets = (typeof DOH !== "undefined" ? DOH : []).map(function(x){ return { name: x.name, doh: x.url }; });
+      out.innerHTML = '<div class="sub">برای این کشور رزولور DoH معرفی‌شده ثبت نشده (لیست آن کشور، سرورهای بومی همان کشور است)؛ این سنجش با ۶ رزولور جهانی انجام می‌شود و «آی‌پی برگشتی» مقایسه می‌شود — نه اینکه لیست کشورها را تکرار کنیم.</div>';
+    }
+    if(!targets.length){ out.textContent = "هیچ رزولور DoH در دسترس نبود."; return; }"""
+    if old not in src:
+        return src, False
+    return src.replace(old, new, 1), True
+
+
 def patch_games(src):
     if 'ph-games-v2' in src:
         return src, False
@@ -537,6 +550,7 @@ for page in PAGES:
     src, b1 = patch_bgp(src)
     src, b2 = patch_doh(src)
     src, b3 = patch_games(src)
+    src, b3b = patch_impact_fallback(src)
     src, b4 = patch_preflight_page(src)
     src = inline_tools3(src)
     page.write_text(src, encoding="utf-8")
