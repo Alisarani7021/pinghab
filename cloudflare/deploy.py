@@ -324,6 +324,38 @@ def test(env: dict):
             check(f"/api/team?code={code}", f"{SITE}/api/team?code={code}")
     except Exception as e:
         print("  ❌ team:", e)
+    # --- فاز E: کالبدشکافی فیلترینگ و مهندسیِ نتِ بد ---
+    print("\n  ── پینگ‌هاب ۲.۱ (فاز E) ──")
+    check("/api/asn (Team Cymru)", f"{SITE}/api/asn?ip=217.218.155.155")
+    check("/api/ix (PeeringDB)", f"{SITE}/api/ix?asn=15169")
+    check("/api/ioda (قطعی‌های ایران)", f"{SITE}/api/ioda?cc=IR&hours=24")
+    check("/api/edns (TCP/53 از ایران)", f"{SITE}/api/edns")
+    check("/api/filter (کالبدشکافی فیلترینگ)", f"{SITE}/api/filter?host=example.com")
+    check("/api/vantage (۶ شهر ایران)", f"{SITE}/api/vantage?host=1.1.1.1&near=1")
+    check("/api/wave (آزمون موج)", f"{SITE}/api/wave?host=1.1.1.1&packets=8&cc=IR")
+    try:
+        body = json.dumps({"role": "offer", "data": {"sdp": "v=0-test-floor", "type": "offer"}}).encode()
+        raw = api(f"{SITE}/api/rtc?code=T3STAA", "x", "POST", body,
+                  {"Authorization": "", "User-Agent": "PingHab/1.0", "Content-Type": "application/json"}, raw=True, timeout=60)
+        j = json.loads(raw[1]); ok = raw[0] == 200 and bool(j.get("ok"))
+        results.append(("POST /api/rtc (سیگنالینگ اتاق)", ok, str(raw[0])))
+        print(f"  {'✅' if ok else '❌'} {'POST /api/rtc':34s} {str(raw[0]):>5s}  کد=T3STAA")
+        check("/api/rtc (خواندن پاسخ اتاق)", f"{SITE}/api/rtc?code=T3STAA&role=offer")
+    except Exception as e:
+        print("  ❌ rtc:", e)
+
+    def count_in(label, url, needle, minn=1):
+        st, raw = api(url, "x", "GET", None, {"Authorization": "", "User-Agent": "PingHab/1.0"}, raw=True, timeout=60)
+        n = str(raw).count(needle)
+        ok = st == 200 and n >= minn
+        results.append((label, ok, f"{st}/{n}"))
+        print(f"  {'✅' if ok else '❌'} {label:34s} {str(st):>5s}  «{needle}»×{n}")
+    count_in("/app دارای ۶ پنل تازه", f"{SITE}/app", 'id="ph-p13"')
+    count_in("/app پنل نسخهٔ مقاوم", f"{SITE}/app", 'id="ph-p18"')
+    count_in("/app کالبدشکافی فیلترینگ", f"{SITE}/app", "کالبدشکافی فیلترینگ")
+    count_in("/sw.js نسخهٔ ۳", f"{SITE}/sw.js", "pinghab-v3")
+    count_in("/docs مسیر تازهٔ filter", f"{SITE}/docs", "/api/filter")
+
     # ثبت بی‌نام (تست) — نمونهٔ ساعت طلایی/روند هم ساخته می‌شود
     body = json.dumps({"province": "تست", "carrier": "تست", "resolver": "self-test", "ms": 42, "ok": True}).encode()
     api(f"{SITE}/api/report", "x", "POST", body, {"Authorization": "", "User-Agent": "PingHab/1.0", "Content-Type": "application/json"}, raw=True, timeout=30)

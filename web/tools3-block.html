@@ -1,0 +1,697 @@
+  <div class="ph-panel" id="ph-p13">
+    <div class="ph-card">
+      <b>🕵️ کالبدشکافی فیلترینگ — «چرا فیلتر است؟»</b>
+      <div class="sub">این دامنه را از سه زاویه می‌سنجیم: (۱) رزولوشنِ بی‌طرف از سه DoH مستقل، (۲) رزولورهای <b>واقعی داخل ایران</b> از ۵ گره در ۴ شهر،
+        (۳) اتصال TCP و HTTPS به آی‌پی واقعی از همان گره‌ها. خروجی: «کدام لایه مسدود است» با شاهد خام و درجهٔ اطمینان — نه حدس.</div>
+      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+        <input id="ph3-flt-host" class="wwin" value="twitter.com" style="direction:ltr;min-width:190px">
+        <button class="wwbtn wwprimary" id="ph3-flt-go">🔬 کالبدشکافی کن</button>
+        <button class="wwbtn" data-ph3-flt="youtube.com">یوتیوب</button>
+        <button class="wwbtn" data-ph3-flt="discord.com">دیسکورد</button>
+        <button class="wwbtn" data-ph3-flt="web.telegram.org">تلگرام وب</button>
+        <button class="wwbtn" data-ph3-flt="instagram.com">اینستاگرام</button>
+        <button class="wwbtn" id="ph3-flt-van">📍 همین هدف از شبکه‌های ایران</button>
+      </div>
+      <div id="ph3-flt-out"></div>
+    </div>
+  </div>
+
+  <div class="ph-panel" id="ph-p14">
+    <div class="ph-card">
+      <b>🌊 آزمون موج — جیتر و افت، همان‌طور که بازی می‌بیند</b>
+      <div class="sub">موج ۱۴ بسته‌ای از پروب‌های ایران: کمینه/میانگین/بیشینه، انحراف معیار، <b>جیتر لحظه‌ای</b>، افت و بافت‌نگار.
+        برای گیمر، جیتر از میانگین مهم‌تر است.</div>
+      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+        <input id="ph3-wave-host" class="wwin" value="1.1.1.1" style="direction:ltr;min-width:150px">
+        <input id="ph3-wave-n" class="wwin" type="number" min="5" max="30" value="14" style="width:70px;direction:ltr">
+        <button class="wwbtn wwprimary" id="ph3-wave-go">🌊 اجرا کن</button>
+        <button class="wwbtn" data-ph3-wave="discord.com">دیسکورد</button>
+        <button class="wwbtn" data-ph3-wave="cdn.cloudflare.steamstatic.com">استیم CDN</button>
+      </div>
+      <div id="ph3-wave-out"></div>
+    </div>
+    <div class="ph-card">
+      <b>🎙 آزمون UDP دو-دستگاهی (اتاق اشتراکی)</b>
+      <div class="sub">دو دستگاه با یک کد ۶ رقمی به هم می‌رسند و موج را روی <b>کانال دادهٔ UDP</b> (WebRTC) می‌فرستند — نزدیک‌ترین چیز به مسیر واقعی بازی.
+        اگر STUN مسدود باشد، وصل نمی‌شود و همین خودش یک یافته است. هیچ داده‌ای از این آزمون روی سرور ما ذخیره نمی‌شود جز پیام‌های چالاکِ سیگنالینگ (۱۵ دقیقه).</div>
+      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+        <input id="ph3-rtc-code" class="wwin" placeholder="کد اتاق" style="direction:ltr;width:120px">
+        <button class="wwbtn wwprimary" id="ph3-rtc-create">➕ اتاق بساز (دستگاه اول)</button>
+        <button class="wwbtn" id="ph3-rtc-join">🔗 وصل شو (دستگاه دوم)</button>
+        <button class="wwbtn" id="ph3-rtc-wave">📈 موج ۴۰ بسته‌ای</button>
+      </div>
+      <div id="ph3-rtc-out"></div>
+    </div>
+  </div>
+
+  <div class="ph-panel" id="ph-p15">
+    <div class="ph-card">
+      <b>⚡ رزولوشن تندرو — مسابقهٔ DoH داخل مرورگر</b>
+      <div class="sub">یک کوئری، هم‌زمان به چهار رزولور تأییدشده؛ <b>اولین جواب برنده است</b>. برندهٔ هر شبکه روی همین دستگاه به خاطر می‌ماند.
+        این فقط رزولوشن خودِ پینگ‌هاب را تند می‌کند، نه DNS سیستم گوشی (خط قرمز پروژه).</div>
+      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+        <input id="ph3-race-name" class="wwin" value="discord.com" style="direction:ltr;min-width:160px">
+        <button class="wwbtn wwprimary" id="ph3-race-go">🏁 مسابقه بده</button>
+        <label class="sub" style="display:flex;align-items:center;gap:6px"><input type="checkbox" id="ph3-hedge" checked> فراخوانی‌های حیاتی «پشتیبان‌دار» باشند (Hedged)</label>
+      </div>
+      <div id="ph3-race-out"></div>
+    </div>
+  </div>
+
+  <div class="ph-panel" id="ph-p16">
+    <div class="ph-card">
+      <b>📡 نقطهٔ کور — وقتی نت نیست، اپ دست خالی نماند</b>
+      <div class="sub">با سرویس‌ورکر، آخرین نتیجهٔ هر بخش روی دستگاه می‌ماند؛ در قطعی یا آنتن‌نداشتن، نسخهٔ کهنه با برچسب زمان نمایش داده می‌شود
+        و «ثبت بی‌نام»های عقب‌مانده وقتی شبکه برگشت خودکار آپلود می‌شوند.</div>
+      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+        <button class="wwbtn wwprimary" id="ph3-blind-status">📦 وضعیت حافظه و صف</button>
+        <button class="wwbtn" id="ph3-blind-flush">📤 تخلیهٔ صف آپلود</button>
+        <label class="sub" style="display:flex;align-items:center;gap:6px"><input type="checkbox" id="ph3-lite"> حالت «نت بد» (سبک)</label>
+      </div>
+      <div id="ph3-blind-out"></div>
+    </div>
+  </div>
+
+  <div class="ph-panel" id="ph-p17">
+    <div class="ph-card">
+      <b>🧪 صف و سیاست اپراتور — چرا توی بازی می‌لگد می‌زند؟</b>
+      <div class="sub">سه فاز: بی‌بار → بار دانلود → بار <b>آپلود</b>. بعد الگوی جهش تأخیر را با سه الگوی مرجع مقایسه می‌کنیم:
+        صف (افزایش خطی)، پلیسینگ (سقف/پله)، تداخل رادیویی (پراکندگی بی‌قاعده). نتیجه استنباطی است، با درصد اطمینان.</div>
+      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+        <button class="wwbtn wwprimary" id="ph3-pol-go">🧪 سه فاز را بگیر (~۲۵ ثانیه)</button>
+        <button class="wwbtn" id="ph3-pol-edns">🧭 تست TCP/53 و سلامت DNS</button>
+        <button class="wwbtn" id="ph3-pol-mtu">📏 پویش مرزی بسته‌ها</button>
+      </div>
+      <div id="ph3-pol-out"></div>
+    </div>
+  </div>
+
+  <div class="ph-panel" id="ph-p18">
+    <div class="ph-card">
+      <b>🛠️ نسخهٔ مقاوم — روتر و رزولور در نت بد</b>
+      <div class="sub">هر سه، از پارامترهای رسمیِ مستندشده ساخته شده‌اند (cake-autorate، dnsmasq، unbound). دکمهٔ ساخت، متن آمادهٔ کپی می‌دهد.</div>
+      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+        <button class="wwbtn wwprimary" data-ph3-gen="router">🧱 روتر OpenWrt: cake-autorate + AQL</button>
+        <button class="wwbtn" data-ph3-gen="dnsmasq">🧩 dnsmasq مقاوم</button>
+        <button class="wwbtn" data-ph3-gen="unbound">🧩 unbound مقاوم</button>
+        <button class="wwbtn" data-ph3-gen="sysctl">🐧 sysctl لینوکس/ویندوز</button>
+      </div>
+      <div id="ph3-gen-out"></div>
+    </div>
+    <div class="ph-card">
+      <b>🧭 نقشهٔ صادقانه: چه چیزی برای کدام لایه کار می‌کند</b>
+      <div id="ph3-map"></div>
+    </div>
+  </div>
+
+<!--PH3-SCRIPT-->
+<script>
+/* =========== 🧪 پینگ‌هاب ۲.۱ — کالبدشکافی فیلترینگ و مهندسیِ نتِ بد =========== */
+(function(){
+  "use strict";
+  var q = function(id){ return document.getElementById(id); };
+  var ABS = (location.protocol === "file:" || /appassets\.androidplatform\.net$/.test(location.hostname))
+    ? "https://pinghab.catclient-59gk2mui.workers.dev" : "";
+  var fa = function(s){ return String(s).replace(/[0-9]/g, function(d){ return "۰۱۲۳۴۵۶۷۸۹"[d]; }); };
+  var esc = function(s){ return String(s==null?"":s).replace(/[&<>"]/g, function(c){
+    return ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]; }); };
+  var rnd = function(v,d){ d = (d==null?1:d); return (v==null||isNaN(v))?"—":fa(Number(v).toFixed(d)); };
+  var sleep = function(ms){ return new Promise(function(r){ setTimeout(r, ms); }); };
+  function ago(t){ if(!t) return "—"; var s=(Date.now()-t)/1000;
+    if(s<90) return fa(Math.round(s))+" ثانیه پیش"; if(s<5400) return fa(Math.round(s/60))+" دقیقه پیش";
+    if(s<172800) return fa(Math.round(s/3600))+" ساعت پیش"; return fa(Math.round(s/86400))+" روز پیش"; }
+  function save(k,data){ try{ localStorage.setItem("ph3."+k, JSON.stringify({at:Date.now(), data:data})); }catch(e){} }
+  function load(k){ try{ var r = localStorage.getItem("ph3."+k); return r ? JSON.parse(r) : null; }catch(e){ return null; } }
+  function liteOn(){ try{ return localStorage.getItem("ph3.lite")==="1"; }catch(e){ return false; } }
+  function tbl(head, rows){
+    var h = '<table style="width:100%;font-size:13px;border-collapse:collapse;margin-top:6px"><tr style="opacity:.75">';
+    head.forEach(function(x){ h += '<th style="text-align:right;padding:4px">'+esc(x)+'</th>'; });
+    h += '</tr>';
+    rows.forEach(function(r){ h += '<tr>'; r.forEach(function(c){ h += '<td style="padding:4px;border-top:1px solid rgba(127,127,127,.18)">'+c+'</td>'; }); h += '</tr>'; });
+    return h + '</table>';
+  }
+  function bar3(v, max, color){ var w = max>0 ? Math.max(2, Math.round(100*v/max)) : 2;
+    return '<div style="height:8px;background:rgba(127,127,127,.18);border-radius:99px;overflow:hidden">' +
+      '<i style="display:block;height:100%;width:'+w+'%;background:'+(color||"var(--acc)")+'"></i></div>'; }
+
+  /* ---------- فراخوانی پشتیبان‌دار (Hedged Fetch) ---------- */
+  var hstat = { n:0, hedged:0 };
+  var HDEF = { filter: 900, wave: 900, edns: 600, default: 700 };
+  function histo(key){ try{ return JSON.parse(localStorage.getItem("ph3.hist."+key) || "[]"); }catch(e){ return []; } }
+  function pushHisto(key, ms){ var a = histo(key); a.push(Math.round(ms)); if(a.length>40) a.shift();
+    try{ localStorage.setItem("ph3.hist."+key, JSON.stringify(a)); }catch(e){} }
+  function p95(key, def){ var a = histo(key).slice().sort(function(x,y){return x-y;});
+    if(a.length<6) return def; return a[Math.min(a.length-1, Math.ceil(0.95*a.length)-1)]; }
+  function anyFirst(ps){ return new Promise(function(res, rej){ var left=ps.length, e0=null;
+    ps.forEach(function(p){ p.then(res, function(e){ e0=e0||e; if(--left===0) rej(e0||new Error("fail")); }); }); }); }
+  async function hget(path, key){
+    var cb = q("ph3-hedge"); var on = cb ? cb.checked : true;
+    var th = Math.min(2500, Math.max(350, p95(key, HDEF[key] || HDEF.default)));
+    var t0 = performance.now(); var hedged = false, tm = null;
+    var c1 = new AbortController();
+    var reqs = [fetch(ABS+path, {cache:"no-store", signal:c1.signal}).then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })];
+    if (on) tm = setTimeout(function(){ hedged = true; var c2 = new AbortController();
+      reqs.push(fetch(ABS+path, {cache:"no-store", signal:c2.signal}).then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })); }, th);
+    try {
+      var j = await anyFirst(reqs); if (tm) clearTimeout(tm);
+      var ms = performance.now()-t0; pushHisto(key, ms); hstat.n++; if (hedged) hstat.hedged++;
+      return { ok:true, j:j, ms:ms, hedged:hedged, th:Math.round(th) };
+    } catch(e){ if (tm) clearTimeout(tm); hstat.n++; throw e; }
+  }
+  async function jget(p){ var r = await fetch(ABS+p, {cache:"no-store"}); if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); }
+  async function jpost(p, body){ var r = await fetch(ABS+p, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body||{})});
+    var j = await r.json().catch(function(){ return {}; }); if(!r.ok) throw new Error(j.error || ("HTTP "+r.status)); return j; }
+  function busy(el, on, txt){ if(!el) return; el.innerHTML = on ? '<div class="sub" style="margin-top:8px">⏳ ' + esc(txt||"در حال سنجش…") + '</div>' : el.innerHTML; }
+  function err(el, e){ el.innerHTML = '<div class="sub" style="margin-top:8px;color:#f97316">⚠️ ' + esc(e && e.message ? e.message : String(e)) + '</div>'; }
+
+  /* ================== 🕵️ کالبدشکافی فیلترینگ ================== */
+  function tags(x){
+    var t = [];
+    if (x.ok === false && x.err) t.push('<span class="ph-badge" style="color:#f97316">'+esc(x.err)+'</span>');
+    return t.join(" ");
+  }
+  function renderFilter(d, meta){
+    var v = d.verdict || {};
+    var col = v.code === "dns_hijack" ? "#ef4444" : v.code === "dns_sinkhole" ? "#f97316"
+      : v.code === "reachable" ? "#12b981" : v.code === "unknown" ? "#94a3b8" : "#f59e0b";
+    var h = '<div class="ph-card" style="margin-top:8px;border-right:4px solid '+col+'">' +
+      '<b>'+esc(v.fa || "—")+'</b> <span class="ph-badge">اطمینان '+fa(Math.round((v.conf||0)*100))+'٪</span> ' +
+      '<span class="ph-badge">'+esc(v.layer||"")+'</span>' +
+      '<div class="sub" style="margin-top:6px">'+esc(v.what||"")+'</div>' +
+      '<div class="sub" style="margin-top:6px"><b>✅ چه چیزی کمک می‌کند:</b> '+esc(v.fix||"")+'</div>' +
+      '<div class="sub" style="margin-top:4px"><b>🚫 چه چیزی کمک نمی‌کند:</b> '+esc(v.notfix||"")+'</div>' +
+      (meta ? '<div class="sub" style="margin-top:6px;opacity:.8">'+esc(meta)+'</div>' : '') +
+      '<div class="sub" style="margin-top:4px;opacity:.8">هدف: <span class="mono">'+esc(d.host||"")+'</span> · '+ago(d.at)+'</div></div>';
+
+    if ((d.sinkhole_ips||[]).length){
+      h += '<div class="ph-card" style="margin-top:8px"><b>🚧 مدرک خام: آی‌پی چالهٔ سانسور</b>' +
+        '<div class="sub">'+d.sinkhole_ips.map(function(ip){ return '<span class="mono ph-badge">'+esc(ip)+'</span>'; }).join(" ")+
+        (d.hijack ? ' — و این پاسخ <b>حتی از رزولور عمومی (۸.۸.۸.۸ روی TCP)</b> هم برگشت: یعنی کوئری در مسیر قاپیده می‌شود.' :
+                    ' — این‌ها آی‌پی واقعی سرویس نیستند؛ چالهٔ معلومِ سانسور است.')+'</div></div>';
+    }
+
+    h += '<div class="ph-card" style="margin-top:8px"><b>۱) رزولوشن بی‌طرف (از بیرون ایران)</b>' +
+      tbl(["رزولور","وضعیت","زمان","آی‌پی"], (d.neutral||[]).map(function(n){
+        return [esc(n.name), fa(n.status==null?"—":n.status), rnd(n.ms,0)+'ms',
+          (n.ips&&n.ips.length) ? '<span class="mono">'+esc(n.ips.join(", "))+'</span>' : '<span style="color:#f97316">'+esc(n.err||"—")+'</span>'];
+      })) + '</div>';
+
+    h += '<div class="ph-card" style="margin-top:8px"><b>۲) رزولورهای واقعی شبکه‌های ایران</b>' +
+      '<div class="sub">پروب‌ها در شبکهٔ دیتاسنتری‌اند؛ رزولور هر پروب همان چیزی است که آن شبکه واقعاً استفاده می‌کند.</div>' +
+      tbl(["شهر / شبکه","رزولور","A","AAAA"], (d.ir_dns||[]).map(function(r){
+        var bad = (r.a||[]).some(function(ip){ return /^10\./.test(ip); }) || (r.aaaa||[]).some(function(ip){ return /10:10:34/i.test(ip); });
+        return ['<b>'+esc(r.city||"?")+'</b> <span class="sub">'+esc(r.network||"")+'</span> <span class="ph-badge mono">AS'+esc(r.asn||"—")+'</span>'+tags(r),
+          '<span class="mono" style="font-size:11px">'+esc(r.resolver||"—")+'</span>',
+          (r.a||[]).length ? '<span class="mono" style="color:'+(bad?"#f97316":"inherit")+'">'+esc(r.a.join(", "))+'</span>' : "—",
+          (r.aaaa||[]).length ? '<span class="mono" style="font-size:11px">'+esc(r.aaaa.join(", "))+'</span>' : "—"];
+      })) + '</div>';
+
+    if ((d.ir_via_public||[]).length){
+      h += '<div class="ph-card" style="margin-top:8px"><b>۳) آزمون «دزدی DNS»: پرسیدن از ۸.۸.۸.۸ روی TCP</b>' +
+        '<div class="sub">اگر این‌جا هم چاله برگردد، تغییر رزولور روی آن شبکه بی‌فایده است.</div>' +
+        tbl(["شهر / شبکه","پاسخ به ۸.۸.۸.۸","نتیجه"], (d.ir_via_public||[]).map(function(r){
+          var bad = (r.a||[]).some(function(ip){ return /^10\./.test(ip); });
+          return ['<b>'+esc(r.city||"?")+'</b> <span class="sub">'+esc(r.network||"")+'</span>',
+            (r.a||[]).length ? '<span class="mono" style="color:'+(bad?"#ef4444":"inherit")+'">'+esc(r.a.join(", "))+'</span>' : "—",
+            r.ok ? (bad ? '🚨 دزدی DNS' : '✅ سالم') : '<span style="color:#f97316">'+esc(r.err||"ناموفق")+'</span>'];
+        })) + '</div>';
+    }
+
+    h += '<div class="ph-card" style="margin-top:8px"><b>۴) دسترسی HTTPS از شبکه‌های ایران</b>' +
+      tbl(["شهر / شبکه","نتیجه","زمان کل","TLS"], (d.ir_http||[]).map(function(x){
+        return ['<b>'+esc(x.city||"?")+'</b> <span class="sub">'+esc(x.network||"")+'</span>',
+          x.ok ? '✅ '+('HTTP '+esc(x.status_code||"")) : '❌ '+esc(x.status||"ناموفق"),
+          x.total_ms!=null ? fa(x.total_ms)+'ms' : "—", x.tls_ms!=null ? fa(x.tls_ms)+'ms' : "—"];
+      })) + '</div>';
+
+    var ch = d.checkhost || {};
+    if (ch.available){
+      h += '<div class="ph-card" style="margin-top:8px"><b>۵) شاهد مکمل: گره‌های شهری check-host</b>' +
+        tbl(["شهر","A","AAAA","HTTPS"], (ch.dns||[]).map(function(r2, i){
+          var hh = (ch.http||[])[i] || {};
+          return [esc(r2.city), (r2.a||[]).length ? '<span class="mono">'+esc(r2.a.join(", "))+'</span>' : esc(r2.err||"—"),
+            (r2.aaaa||[]).length ? '<span class="mono" style="font-size:11px">'+esc(r2.aaaa.join(", "))+'</span>' : "—",
+            hh.ok ? '✅ '+rnd(hh.ms,0)+'ms' : '❌ '+esc(hh.err||"—")];
+        })) + '</div>';
+    }
+
+    var src = d.sources || {};
+    h += '<div class="ph-card" style="margin-top:8px"><div class="sub">' +
+      (d.limits||[]).map(function(x){ return "• "+esc(x); }).join("<br>") +
+      '<br><b>وضعیت منابع:</b> ' + Object.keys(src).map(function(k){ return esc(k)+": "+esc(src[k]); }).join(" · ") + '</div></div>';
+    return h;
+  }
+
+  async function runFilter(host){
+    var out = q("ph3-flt-out"); if(!host) host = q("ph3-flt-host").value.trim();
+    if(!host) return;
+    q("ph3-flt-host").value = host;
+    busy(out, true, "کالبدشکافی… (~۸ ثانیه: رزولوشن + ۵ گره ایرانی)");
+    out.innerHTML = '<div class="sub" style="margin-top:8px">⏳ کالبدشکافی… (رزولوشن بی‌طرف + رزولورهای ایران + TCP/HTTPS از ۵ گره)</div>';
+    try {
+      var r = await hget("/api/filter?host=" + encodeURIComponent(host), "filter");
+      out.innerHTML = renderFilter(r.j, "زمان پاسخ: " + rnd(r.ms,0) + "ms" + (r.hedged ? " (پشتیبان فعال شد)" : ""));
+      save("filter:" + host, r.j);
+    } catch(e){ err(out, e); }
+  }
+  if (q("ph3-flt-go")) q("ph3-flt-go").onclick = function(){ runFilter(); };
+  [].slice.call(document.querySelectorAll("[data-ph3-flt]")).forEach(function(b){
+    b.onclick = function(){ runFilter(b.getAttribute("data-ph3-flt")); };
+  });
+
+  /* ---------- 📍 همین هدف از شبکه‌های ایران ---------- */
+  function renderVantage(d){
+    var st = d.summary || {};
+    var h = '<div class="ph-card" style="margin-top:8px"><b>📍 '+esc(d.host||"")+' از شبکه‌های ایران</b>' +
+      '<div class="sub">'+(st.networks||0)+' شبکه · '+(st.reachable||0)+' شبکه به HTTPS رسید' +
+      (st.spread_ms!=null ? ' · اختلاف بهترین و بدترین پینگ: <b>'+fa(st.spread_ms)+'ms</b>' : '') +
+      (st.best ? ' · بهترین: '+esc(st.best.city)+' / '+esc(st.best.network)+' ('+rnd(st.best.avg)+'ms)' : '') + '</div>' +
+      tbl(["شهر / شبکه","پینگ","جیتر","افت","HTTPS"], (d.rows||[]).map(function(r){
+        return ['<b>'+esc(r.city||"?")+'</b> <span class="sub">'+esc(r.network||"")+'</span> <span class="ph-badge mono">AS'+esc(r.asn||"—")+'</span>',
+          r.avg!=null ? rnd(r.avg)+'ms' : "—", r.jitter!=null ? rnd(r.jitter)+'ms' : "—",
+          r.loss!=null ? rnd(r.loss,1)+'٪' : "—",
+          r.http_ok ? '✅'+(r.http_ms!=null? ' '+fa(r.http_ms)+'ms':'') : '❌'];
+      })) + '</div>';
+    if ((d.near||[]).length){
+      h += '<div class="ph-card" style="margin-top:8px"><b>🌍 مقایسه با گره‌های همسایه/اروپا</b>' +
+        tbl(["شهر","پینگ","وضعیت"], (d.near||[]).map(function(r){ return [esc(r.city||"?")+' <span class="sub">'+esc(r.cc||"")+'</span>', r.avg!=null?rnd(r.avg)+'ms':"—", r.ok?'✅':'❌']; })) + '</div>';
+    }
+    return h + '<div class="sub" style="margin-top:6px">'+esc(d.note||"")+'</div>';
+  }
+  if (q("ph3-flt-van")) q("ph3-flt-van").onclick = async function(){
+    var out = q("ph3-flt-out"); var host = (q("ph3-flt-host").value||"").trim();
+    if(!host) return;
+    out.innerHTML = '<div class="sub" style="margin-top:8px">⏳ سنجش از شبکه‌های ایران… (~۲۵ ثانیه)</div>';
+    try {
+      var r = await hget("/api/vantage?host="+encodeURIComponent(host)+"&near=1", "vantage");
+      out.innerHTML = renderVantage(r.j); save("vantage:"+host, r.j);
+    } catch(e){ err(out, e); }
+  };
+
+  /* ================== 🌊 آزمون موج ================== */
+  function renderWave(d){
+    var h = '<div class="ph-card" style="margin-top:8px"><b>هدف <span class="mono">'+esc(d.target)+'</span></b> — '+
+      fa(d.packets)+' بسته از هر پروب <span class="ph-badge">'+esc(d.cc)+'</span> · '+ago(d.at)+'</div>';
+    (d.probes||[]).forEach(function(p){
+      var st = p.stats;
+      h += '<div class="ph-card" style="margin-top:8px"><b>'+esc(p.city||"?")+'</b> <span class="ph-badge">'+esc(p.network||"")+'</span> <span class="ph-badge mono">AS'+esc(p.asn||"—")+'</span>' +
+        ((p.tags||[]).indexOf("datacenter-network")>=0 ? ' <span class="ph-badge">دیتاسنتری</span>' : '') + '</div>';
+      if(!st){ h += '<div class="sub">'+(p.ok? "داده‌ای برنگشت" : "ناموفق")+'</div>'; return; }
+      h += '<div class="sub">میانگین <b>'+rnd(st.avg)+'ms</b> · کمینه '+rnd(st.min)+' · بیشینه '+rnd(st.max)+
+        ' · نوسان (sd) '+rnd(st.sd)+' · <b>جیتر '+rnd(st.jitter)+'ms</b> · افت '+rnd(p.loss,1)+'٪</div>';
+      var max = Math.max.apply(null, st.hist.map(function(x){ return x.n; }).concat([1]));
+      h += '<div style="margin-top:6px">' + st.hist.map(function(b2){
+        return '<div style="display:flex;align-items:center;gap:6px;margin:2px 0"><span class="sub mono" style="width:74px">'+fa(b2.from)+'–'+fa(b2.to)+'</span>' + bar3(b2.n, max) + '<span class="sub">'+fa(b2.n)+'</span></div>';
+      }).join("") + '</div>';
+      h += '<div class="sub mono" style="margin-top:4px;font-size:11px;opacity:.7">'+esc((st.raw||[]).join(", "))+'</div>';
+    });
+    h += '<div class="sub" style="margin-top:8px">'+esc(d.note||"")+' · منبع: '+esc((d.sources||[]).join(" · "))+'</div>';
+    return h;
+  }
+  async function runWave(host){
+    var out = q("ph3-wave-out");
+    if(!host) host = q("ph3-wave-host").value.trim();
+    if(!host) return;
+    q("ph3-wave-host").value = host;
+    var n = parseInt(q("ph3-wave-n") ? q("ph3-wave-n").value : "14", 10) || 14;
+    out.innerHTML = '<div class="sub" style="margin-top:8px">⏳ موج از پروب‌های ایران… (~۲۰ ثانیه)</div>';
+    try {
+      var r = await hget("/api/wave?host=" + encodeURIComponent(host) + "&packets=" + n + "&cc=IR", "wave");
+      if (r.j && r.j.ok === false) throw new Error("منبع اندازه‌گیری پاسخ نداد (" + (r.j.error||"?") + ")");
+      out.innerHTML = renderWave(r.j);
+      save("wave:" + host, r.j);
+    } catch(e){ err(out, e); }
+  }
+  if (q("ph3-wave-go")) q("ph3-wave-go").onclick = function(){ runWave(); };
+  [].slice.call(document.querySelectorAll("[data-ph3-wave]")).forEach(function(b){
+    b.onclick = function(){ runWave(b.getAttribute("data-ph3-wave")); };
+  });
+
+  /* ---------- 🎙 اتاق دو-دستگاهی (سیگنالینگ روی KV خودمان) ---------- */
+  var pc = null, dc = null, room = null, samples = [], rtclog = [];
+  function rlog(t){ rtclog.push((new Date()).toLocaleTimeString("fa-IR") + " — " + t); if(rtclog.length>9) rtclog.shift();
+    var el = q("ph3-rtc-out"); if(el) el.innerHTML = '<div class="sub" style="margin-top:8px">'+rtclog.map(esc).join("<br>")+'</div>' + rtcStatsHtml(); }
+  function randCode(){ var s=""; var A="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; for(var i=0;i<6;i++) s+=A[Math.floor(Math.random()*A.length)]; return s; }
+  function iceDone(p){ return new Promise(function(res){ if(p.iceGatheringState==="complete") return res();
+    var t = setTimeout(res, 3000); p.onicegatheringstatechange = function(){ if(p.iceGatheringState==="complete"){ clearTimeout(t); res(); } }; }); }
+  function rtcStatsHtml(){
+    if(!samples.length) return "";
+    var s = samples.slice().sort(function(a,b){return a-b;});
+    var avg = samples.reduce(function(a,b){return a+b;},0)/samples.length;
+    var j = 0; for(var i=1;i<samples.length;i++) j += Math.abs(samples[i]-samples[i-1]);
+    j = samples.length>1 ? j/(samples.length-1) : 0;
+    return '<div class="sub" style="margin-top:6px">نمونه‌ها: '+fa(samples.length)+' · کمینه '+rnd(s[0])+' · میانه '+rnd(s[Math.floor(s.length/2)])+
+      ' · بیشینه '+rnd(s[s.length-1])+' · میانگین '+rnd(avg)+' · <b>جیتر '+rnd(j)+'ms</b>' +
+      '<div class="mono" style="font-size:11px;opacity:.7;margin-top:4px">'+esc(samples.slice(-24).map(function(x){return x.toFixed(0);}).join(", "))+'</div></div>';
+  }
+  function hookDc(){
+    dc.onopen = function(){ rlog("کانال داده باز شد ✅ — حالا «موج ۴۰ بسته‌ای» را بزن"); };
+    dc.onmessage = function(ev){ var t = parseFloat(ev.data); if(!isNaN(t)){ samples.push(performance.now()-t); rlog("نمونهٔ "+fa(samples.length)); } };
+    dc.onclose = function(){ rlog("کانال بسته شد"); };
+  }
+  function newPc(){
+    return new RTCPeerConnection({ iceServers: [
+      { urls: "stun:stun.cloudflare.com:3478" }, { urls: "stun:stun.l.google.com:19302" } ] });
+  }
+  if (q("ph3-rtc-create")) q("ph3-rtc-create").onclick = async function(){
+    try {
+      room = (q("ph3-rtc-code").value || randCode()).toUpperCase(); q("ph3-rtc-code").value = room;
+      samples = []; pc = newPc(); dc = pc.createDataChannel("ph"); hookDc();
+      var off = await pc.createOffer(); await pc.setLocalDescription(off); await iceDone(pc);
+      await jpost("/api/rtc?code="+room, { role:"offer", data:{ sdp: pc.localDescription.sdp, type: pc.localDescription.type } });
+      rlog("اتاق ساخته شد: کد «"+room+"» — روی دستگاه دوم همین کد را بزن و «وصل شو»");
+      (async function wait(){ for(var i=0;i<24;i++){ await sleep(2500);
+        try { var a = await jget("/api/rtc?code="+room+"&role=answer"); if(a.data){ await pc.setRemoteDescription(a.data); rlog("دستگاه دوم وصل شد — منتظر باز شدن کانال…"); return; } } catch(e){}
+      } rlog("پاسخی نیامد (۱۵ دقیقه گذشت یا دستگاه دوم وصل نشد)"); })();
+    } catch(e){ rlog("خطا: " + (e.message||e)); }
+  };
+  if (q("ph3-rtc-join")) q("ph3-rtc-join").onclick = async function(){
+    try {
+      room = (q("ph3-rtc-code").value||"").toUpperCase(); if(!room) return rlog("اول کد اتاق را بزن");
+      var o = await jget("/api/rtc?code="+room+"&role=offer");
+      if(!o.data) return rlog("برای این کد پیشنهادی نیست (یا منقضی شده)");
+      samples = []; pc = newPc();
+      pc.ondatachannel = function(ev){ dc = ev.channel; hookDc(); };
+      await pc.setRemoteDescription(o.data);
+      var ans = await pc.createAnswer(); await pc.setLocalDescription(ans); await iceDone(pc);
+      await jpost("/api/rtc?code="+room, { role:"answer", data:{ sdp: pc.localDescription.sdp, type: pc.localDescription.type } });
+      rlog("پاسخ ثبت شد؛ منتظر اتصال…");
+    } catch(e){ rlog("خطا: " + (e.message||e)); }
+  };
+  if (q("ph3-rtc-wave")) q("ph3-rtc-wave").onclick = async function(){
+    if(!dc || dc.readyState !== "open") return rlog("کانال باز نیست — اول اتاق بساز/وصل شو");
+    samples = []; rlog("شروع موج ۴۰ بسته‌ای (هر ۵۰ms)…");
+    for (var i=0;i<40;i++){ try { dc.send(String(performance.now())); } catch(e){ break; } await sleep(50); }
+    await sleep(1200); rlog("موج تمام شد" + (samples.length ? " — "+fa(samples.length)+" پاسخ" : " — پاسخی نیامد (افت کامل؟)"));
+  };
+
+  /* ================== ⚡ رزولوشن تندرو ================== */
+  var RACERS = [
+    { id:"google", name:"گوگل", url:"https://dns.google/resolve" },
+    { id:"cloudflare", name:"کلادفلر", url:"https://cloudflare-dns.com/dns-query" },
+    { id:"adguard", name:"ادگارد", url:"https://dns.adguard-dns.com/resolve" },
+    { id:"nextdns", name:"NextDNS", url:"https://dns.nextdns.io/dns-query" },
+  ];
+  function netKey(){ var c = navigator.connection || {};
+    return (c.type || "net") + "|" + (c.effectiveType || "?") + "|" + (location.hostname||"local"); }
+  async function raceOne(r, name){
+    var t0 = performance.now(); var c = new AbortController();
+    var t = setTimeout(function(){ try{ c.abort(); }catch(e){} }, 4000);
+    try {
+      var res = await fetch(r.url + "?name=" + encodeURIComponent(name) + "&type=A",
+        { headers:{ accept:"application/dns-json" }, cache:"no-store", signal:c.signal });
+      clearTimeout(t);
+      var j = await res.json();
+      var ips = (j.Answer||[]).filter(function(a){ return a.type===1; }).map(function(a){ return a.data; });
+      return { id:r.id, name:r.name, ms: Math.round(performance.now()-t0), ips: ips, status: j.Status };
+    } catch(e){ clearTimeout(t); return { id:r.id, name:r.name, ms:null, err:"ناموفق" }; }
+  }
+  async function runRace(){
+    var out = q("ph3-race-out");
+    var name = (q("ph3-race-name").value||"discord.com").trim();
+    out.innerHTML = '<div class="sub" style="margin-top:8px">⏳ چهار رزولور هم‌زمان…</div>';
+    var res = await Promise.all(RACERS.map(function(r){ return raceOne(r, name); }));
+    var good = res.filter(function(x){ return x.ms != null; }).sort(function(a,b){ return a.ms-b.ms; });
+    var win = good[0];
+    var h = '<div class="ph-card" style="margin-top:8px"><b>'+(win ? "🏆 برنده: "+esc(win.name)+" — "+rnd(win.ms,0)+"ms" : "هیچ‌کدام پاسخ نداد")+'</b>';
+    h += tbl(["رزولور","زمان","آی‌پی"], res.map(function(x){
+      return [esc(x.name) + (win && x.id===win.id ? ' 🏆' : ''), x.ms==null ? '<span style="color:#f97316">'+esc(x.err||"—")+'</span>' : rnd(x.ms,0)+'ms',
+        x.ips && x.ips.length ? '<span class="mono" style="font-size:12px">'+esc(x.ips.join(", "))+'</span>' : "—"];
+    }));
+    h += '<div class="sub" style="margin-top:6px">شبکهٔ فعلی: <span class="mono">'+esc(netKey())+'</span></div></div>';
+    out.innerHTML = h;
+    if (win){ try{ localStorage.setItem("ph3.winner", JSON.stringify({ net: netKey(), id: win.id, name: win.name, ms: win.ms, at: Date.now() })); }catch(e){} }
+    var w = load("winner");
+    if (w) out.innerHTML += '<div class="sub" style="margin-top:6px">برندهٔ به‌خاطر‌ماندهٔ این شبکه: <b>'+esc(w.name)+'</b> ('+rnd(w.ms,0)+'ms · '+ago(w.at)+')'+
+      ' — در مرورگر نمی‌توانیم DNS سیستم را عوض کنیم، ولی «واقعیت خط» و همین سنجش‌ها از این ترتیب سود می‌برند.</div>';
+  }
+  if (q("ph3-race-go")) q("ph3-race-go").onclick = runRace;
+
+  /* ================== 📡 نقطهٔ کور ================== */
+  if (q("ph3-blind-status")) q("ph3-blind-status").onclick = async function(){
+    var out = q("ph3-blind-out");
+    var items = [];
+    ["filter:twitter.com","wave:1.1.1.1","pol","edns"].forEach(function(k){ var v = load(k); if(v) items.push([k, v.at]); });
+    try { var ks=[]; for(var i=0;i<localStorage.length;i++) ks.push(localStorage.key(i)); ks.forEach(function(k){ if(k.indexOf("ph3.")===0){ var v=load(k.slice(4)); if(v&&v.at) items.push([k.slice(4), v.at]); } }); } catch(e){}
+    var h = '<div class="ph-card" style="margin-top:8px"><b>حافظهٔ محلی (روی همین دستگاه)</b>' +
+      (items.length ? tbl(["کلید","تازگی"], items.slice(0,12).map(function(x){ return [esc(x[0]), ago(x[1])]; })) : '<div class="sub">چیزی ذخیره نشده — بعد از یک سنجش پر می‌شود.</div>') + '</div>';
+    if (navigator.serviceWorker && navigator.serviceWorker.controller){
+      var sw = await new Promise(function(res){
+        var mc = new MessageChannel(); mc.port1.onmessage = function(e){ res(e.data); };
+        navigator.serviceWorker.controller.postMessage({ type:"ph-status" }, [mc.port2]);
+        setTimeout(function(){ res(null); }, 1500);
+      });
+      if (sw) h += '<div class="ph-card" style="margin-top:8px"><b>سرویس‌ورکر (کش کهنه + صف)</b>' +
+        '<div class="sub">پاسخ‌های API در حافظه: '+fa((sw.items||[]).length)+' · در صف آپلود: '+fa(sw.queued||0)+'</div>' +
+        tbl(["مسیر","زمان کش"], (sw.items||[]).slice(0,10).map(function(x){ return [esc(x.path), x.at?ago(x.at):"—"]; })) + '</div>';
+      else h += '<div class="sub">سرویس‌ورکر پاسخ نداد (در نسخهٔ دسکتاپ یا حالت ناشناس ممکن است غیرفعال باشد).</div>';
+    } else {
+      h += '<div class="sub" style="margin-top:6px">سرویس‌ورکر فعال نیست (فایل APK آفلاین یا حالت ناشناس). در سایت نصب کن تا حالت آفلاین کار کند.</div>';
+    }
+    var c = navigator.connection || {};
+    h += '<div class="ph-card" style="margin-top:8px"><b>برآورد مرورگر از شبکه</b><div class="sub">نوع: '+esc(c.type||"?")+
+      ' · effectiveType: '+esc(c.effectiveType||"?")+' · RTT برآوردی: '+fa(c.rtt==null?"?":c.rtt)+'ms · downlink: '+esc(c.downlink==null?"?":c.downlink)+'Mbps · saveData: '+esc(String(!!c.saveData))+
+      '<br>منبع: Network Information API — <b>برآورد</b> است، نه اندازه‌گیری؛ پیشنهادِ حالت سبک را از همین می‌گیریم.</div>' +
+      '<div class="sub">حالت سبک فعلی: <b>'+(liteOn()?"روشن":"خاموش")+'</b> · هدج‌ها: '+fa(hstat.n)+' فراخوانی، '+fa(hstat.hedged)+' پشتیبان فعال‌شده</div></div>';
+    out.innerHTML = h;
+  };
+  function setLite(on){
+    try{ localStorage.setItem("ph3.lite", on?"1":"0"); }catch(e){}
+    var id="ph3-lite-style";
+    if (on){ if(!q(id)){ var s=document.createElement("style"); s.id=id;
+        s.textContent="*{animation:none!important;transition:none!important;scroll-behavior:auto!important}"; document.head.appendChild(s); } }
+    else { var old=q(id); if(old) old.remove(); }
+    if (q("ph3-lite")) q("ph3-lite").checked = !!on;
+  }
+  if (q("ph3-lite")){
+    q("ph3-lite").checked = liteOn();
+    q("ph3-lite").onchange = function(){ setLite(q("ph3-lite").checked); };
+    var c0 = navigator.connection || {};
+    if (!liteOn() && (c0.saveData || c0.effectiveType==="2g" || c0.effectiveType==="slow-2g")){
+      setLite(true);
+      var note = document.createElement("div"); note.className = "sub";
+      note.textContent = "مرورگر می‌گوید شبکه ضعیف است یا حالت کم‌مصرف روشن است → حالت سبک خودکار روشن شد.";
+      if (q("ph3-blind-out")) q("ph3-blind-out").appendChild(note);
+    }
+  }
+  if (q("ph3-blind-flush")) q("ph3-blind-flush").onclick = async function(){
+    var out = q("ph3-blind-out");
+    try {
+      if (navigator.serviceWorker && navigator.serviceWorker.registration && navigator.serviceWorker.registration.sync){
+        await navigator.serviceWorker.registration.sync.register("ph-flush");
+        out.innerHTML = '<div class="sub" style="margin-top:8px">✅ صف برای تخلیه زمان‌بندی شد (وقتی شبکه اجازه بدهد خودکار آپلود می‌شود).</div>';
+      } else {
+        out.innerHTML = '<div class="sub" style="margin-top:8px">این مرورگر Background Sync ندارد (فایرفاکس/iOS). صف پس از اتصال دوباره و باز شدن اپ تخلیه می‌شود.</div>';
+      }
+    } catch(e){ err(out, e); }
+  };
+
+  /* ================== 🧪 صف و سیاست اپراتور ================== */
+  async function ping(ms){ var t0 = performance.now();
+    try{ await fetch(ABS+"/api/ping?r="+Math.random(), {cache:"no-store"}); return performance.now()-t0; }catch(e){ return null; } }
+  async function samplePhase(n, loadKind){
+    var out = [], stop = false, loads = [];
+    if (loadKind === "down") loads.push(fetch("https://speed.cloudflare.com/__down?bytes=3000000", {cache:"no-store"}).catch(function(){}));
+    if (loadKind === "up"){
+      var blob = new Blob([new Uint8Array(400000)]);
+      loads.push(fetch("https://speed.cloudflare.com/__up", { method:"POST", body: blob }).catch(function(){}));
+    }
+    for (var i=0;i<n && !stop;i++){ var v = await ping(); if (v!=null) out.push(Math.round(v)); await sleep(220); }
+    return out;
+  }
+  function statsOf(a){ if(!a.length) return null; var s=a.slice().sort(function(x,y){return x-y;});
+    return { n:a.length, min:s[0], med:s[Math.floor(s.length/2)], max:s[s.length-1],
+      avg: Math.round(a.reduce(function(x,y){return x+y;},0)/a.length) }; }
+  function classify(idle, down, up){
+    if(!idle || !idle.length) return null;
+    var base = statsOf(idle).med;
+    var d = down.length ? statsOf(down).med - base : 0;
+    var u = up.length ? statsOf(up).med - base : 0;
+    var jitter = down.concat(up).length > 2 ? statsOf(down.concat(up)).max - base : 0;
+    var verdict, note, conf;
+    if (d > 40 && u > 40){ verdict = "صف‌بندی گلوگاه (بار‌بلاست)"; conf = Math.min(0.9, 0.5 + (d+u)/400);
+      note = "تأخیر با هر دو جهت بار بالا رفت: پدیدهٔ کلاسیک صف — راه‌حل واقعی SQM/CAKE روی روتر (تب 🛠️) و کاهش بار هم‌زمان."; }
+    else if (u > 30 && d < 15){ verdict = "گلوگاه آپلود"; conf = 0.75;
+      note = "بار آپلود تأخیر را می‌ترکاند ولی دانلود نه — در ایران رایج است. CAKE با سقف آپلودِ کمی پایین‌تر بیشترین اثر را دارد."; }
+    else if (d > 30 && u < 15){ verdict = "گلوگاه دانلود"; conf = 0.7; note = "صف سمت دانلود؛ تنظیم CAKE روی دانلود کمک می‌کند."; }
+    else if (jitter > 60 && d < 25 && u < 25){ verdict = "پراکندگی زیاد بدون سقف مشخص"; conf = 0.55;
+      note = "الگو بیشتر شبیه تداخل رادیویی/تغییر مسیر است تا صف. جای SNR پایین یا ازدحام سلولی را بررسی کن."; }
+    else { verdict = "تأخیر پایدار زیر بار"; conf = 0.5; note = "جهش معناداری دیده نشد؛ خط برای بازی آماده است."; }
+    return { base:base, d:Math.round(d), u:Math.round(u), verdict:verdict, note:note, conf:conf };
+  }
+  if (q("ph3-pol-go")) q("ph3-pol-go").onclick = async function(){
+    var out = q("ph3-pol-out");
+    out.innerHTML = '<div class="sub" style="margin-top:8px">⏳ فاز ۱/۳: بی‌بار…</div>';
+    var idle = await samplePhase(10, null);
+    out.innerHTML = '<div class="sub" style="margin-top:8px">⏳ فاز ۲/۳: بار دانلود…</div>';
+    var down = await samplePhase(10, "down");
+    out.innerHTML = '<div class="sub" style="margin-top:8px">⏳ فاز ۳/۳: بار آپلود…</div>';
+    var up = await samplePhase(10, "up");
+    var k = classify(idle, down, up);
+    var h = '<div class="ph-card" style="margin-top:8px"><b>'+(k?esc(k.verdict):"داده کافی نبود")+'</b>' +
+      (k ? ' <span class="ph-badge">اطمینان '+fa(Math.round(k.conf*100))+'٪</span>' : '') + '</div>';
+    h += tbl(["فاز","میانه","کمینه","بیشینه","نمونه"], [
+      ["بی‌بار", k?fa(k.base)+"ms":"—", idle.length?fa(statsOf(idle).min):"—", idle.length?fa(statsOf(idle).max):"—", fa(idle.length)],
+      ["بار دانلود", down.length?fa(statsOf(down).med)+"ms":"—", down.length?fa(statsOf(down).min):"—", down.length?fa(statsOf(down).max):"—", fa(down.length)],
+      ["بار آپلود", up.length?fa(statsOf(up).med)+"ms":"—", up.length?fa(statsOf(up).min):"—", up.length?fa(statsOf(up).max):"—", fa(up.length)],
+    ]);
+    if (k) h += '<div class="sub" style="margin-top:6px">جهش دانلود: <b>+'+fa(k.d)+'ms</b> · جهش آپلود: <b>+'+fa(k.u)+'ms</b><br>'+esc(k.note)+
+      '<br>این یک <b>استنباط</b> از سه منحنی است، نه حکم قطعی؛ برای قضاوت بهتر دو بار دیگر تکرار کن.</div>';
+    out.innerHTML = '<div class="ph-card" style="margin-top:8px"></div>' + h;
+    out.firstChild.innerHTML = '<b>نمای سه فاز</b><div class="sub">' + [["بی‌بار",idle],["دانلود",down],["آپلود",up]].map(function(x){
+      var s = statsOf(x[1]); if(!s) return "";
+      return esc(x[0]) + ": " + s.n + " نمونه، میانه " + fa(s.med) + "ms";
+    }).join(" · ") + '</div>';
+    save("pol", { at: Date.now(), idle: idle, down: down, up: up, k: k });
+  };
+  if (q("ph3-pol-edns")) q("ph3-pol-edns").onclick = async function(){
+    var out = q("ph3-pol-out");
+    out.innerHTML = '<div class="sub" style="margin-top:8px">⏳ تست TCP/53 از ایران… (~۷ ثانیه)</div>';
+    try {
+      var r = await hget("/api/edns", "edns");
+      var d = r.j; var v = d.verdict || {};
+      var h = '<div class="ph-card" style="margin-top:8px"><b>🧭 '+esc(v.fa||"—")+'</b> <span class="ph-badge">اطمینان '+fa(Math.round((v.conf||0)*100))+'٪</span>' +
+        '<div class="sub" style="margin-top:6px">'+esc(v.text||"")+'</div></div>';
+      h += '<div class="ph-card" style="margin-top:8px"><b>کوئری به ۸.۸.۸.۸ از داخل ایران — TCP در برابر UDP</b>' +
+        tbl(["شهر / شبکه","TCP/53","UDP/53","پاسخ TCP"], (d.tcp||[]).map(function(x, i){
+          var u = (d.udp||[])[i] || {};
+          return ['<b>'+esc(x.city||"?")+'</b> <span class="sub">'+esc(x.network||"")+'</span>',
+            x.ok ? '✅' : '❌ '+esc(x.err||"—"), u.ok ? '✅' : '❌ '+esc(u.err||"—"),
+            (x.a||[]).length ? '<span class="mono">'+esc(x.a.join(", "))+'</span>' : "—"];
+        })) + '</div>';
+      h += '<div class="sub" style="margin-top:6px">پاسخ DoH از لبه: '+rnd(d.doh_ms,0)+'ms · '+esc(d.note||"")+'</div>';
+      out.innerHTML = h; save("edns", d);
+    } catch(e){ err(out, e); }
+  };
+  if (q("ph3-pol-mtu")) q("ph3-pol-mtu").onclick = async function(){
+    var out = q("ph3-pol-out");
+    out.innerHTML = '<div class="sub" style="margin-top:8px">⏳ پویش اندازه‌های بسته…</div>';
+    var sizes = [1200, 1400, 1472, 1500, 8000, 20000];
+    var rows = [];
+    for (var i=0;i<sizes.length;i++){
+      var n = sizes[i], t0 = performance.now(), ok = true;
+      try { var r = await fetch("https://speed.cloudflare.com/__down?bytes="+n, {cache:"no-store"}); await r.arrayBuffer(); }
+      catch(e){ ok = false; }
+      rows.push([fa(n)+" بایت", ok ? "✅ " + rnd(performance.now()-t0, 0) + "ms" : "❌ ناموفق"]);
+    }
+    out.innerHTML = '<div class="ph-card" style="margin-top:8px"><b>📏 پویش مرزی اندازهٔ بسته (نشانه‌ای)</b>' +
+      tbl(["اندازه","نتیجه"], rows) +
+      '<div class="sub" style="margin-top:6px">این آزمون لایهٔ کاربرد است، نه MTU واقعی ICMP — «نشانه» می‌دهد نه «اثبات». اگر اندازه‌های بزرگ‌تر عمدتاً ناموفق یا بسیار کند بودند، ' +
+      'احتمال MTU سیاه‌چاله بالا می‌رود؛ درمانش در تب «🛠️ نسخهٔ مقاوم» است (tcp_mtu_probing=1).</div></div>';
+  };
+
+  /* ================== 🛠️ نسخهٔ مقاوم ================== */
+  var GENS = {
+    router: function(){ return [
+      "# 🧱 OpenWrt در نت بد — CAKE + cake-autorate + AQL",
+      "# مبنا: مستندات رسمی sqm-autorate و تیون AQL هستهٔ mac80211 (مقادیر پیش‌فرض: 5000/12000µs، آستانهٔ 24000µs)",
+      "opkg update && opkg install sqm-scripts luci-app-sqm",
+      "",
+      "# ۱) SQM با CAKE (piece_of_cake) روی اینترفیس WAN؛ بعد cake-autorate این مقادیر را زنده تنظیم می‌کند:",
+      "uci set sqm.eth1.enabled='1'; uci set sqm.eth1.interface='wan'",
+      "uci set sqm.eth1.qdisc='cake'; uci set sqm.eth1.script='piece_of_cake.qos'",
+      "uci set sqm.eth1.download='0'; uci set sqm.eth1.upload='0'   # را به autorate بسپار",
+      "uci commit sqm && /etc/init.d/sqm restart",
+      "",
+      "# ۲) cake-autorate (آپ/دانلود جدا، حدود دو بار در ثانیه):",
+      "git clone https://github.com/sqm-autorate/sqm-autorate /root/sqm-autorate",
+      "cd /root/sqm-autorate && ./install.sh    # بعد فایل config را با سرعت‌های واقعی خطت تنظیم کن",
+      "",
+      "# ۳) AQL — سقف صفِ آنتنی وای‌فای (کاهش تأخیر در شلوغی):",
+      "echo 5000 5000 > /sys/kernel/debug/ieee80211/phy0/aql_txq_limit   # AC به ترتیب 0..3",
+      "# نکتهٔ تجربی انجمن OpenWrt: در برخی چیپست‌ها خاموش‌کردن WED برای تأخیر بهتر است.",
+      "",
+      "# ۴) خاموش‌کردن power-save وای‌فای برای گیمر (تأخیر جیتردار را کم می‌کند):",
+      "iw dev wlan0 set power_save off",
+    ].join("\n"); },
+    dnsmasq: function(){ return [
+      "# 🧩 dnsmasq مقاوم (نسخهٔ ۲.۹۰+؛ این دو گزینه در مستندات رسمی همین امروز دیده شد)",
+      "# /etc/dnsmasq.conf",
+      "# تلاش مجدد خودِ رزولور با backoff نمایی — پیش‌فرض: شروع ۱۰۰۰ms، پایان ۱۰۰۰۰ms",
+      "fast-dns-retry=1000,10000",
+      "# اگر رکورد در کش هست ولی TTL تمام شده، همان را برگردان و در پس‌زمینه تازه کن",
+      "use-stale-cache=3600",
+      "# (اختیاری) پشتیبانی از DNSSEC — در ۲.۹۱+ خودش fast-dns-retries را روشن می‌کند",
+      "# dnssec",
+      "cache-size=1000",
+      "# بالا نگه‌داشتن TCP هم مهم است (پاسخ‌های بزرگ):",
+      "edns-packet-max=1232",
+    ].join("\n"); },
+    unbound: function(){ return [
+      "# 🧩 unbound مقاوم (رفتار رسمی RFC 8767)",
+      "# /etc/unbound/unbound.conf.d/resilient.conf  →  server:",
+      "prefetch: yes",
+      "serve-expired: yes",
+      "serve-expired-ttl: 86400          # یک روز (پیشنهاد RFC)",
+      "serve-expired-client-timeout: 0   # در نسخهٔ ۱.۲۳+ این را صفر کن تا کهنه را فوراً بدهد",
+      "# DNS Flag Day 2020: اندازهٔ امن ۱۲۳۲ = ۱۲۸۰ (حداقل MTU v6) − ۴۸ (هدر)",
+      "edns-buffer-size: 1232",
+      "cache-min-ttl: 60",
+    ].join("\n"); },
+    sysctl: function(){ return [
+      "# 🐧 لینوکس: سیاه‌چالهٔ MTU را خودکار دور بزن (RFC 4821)",
+      "net.ipv4.tcp_mtu_probing=1     # ۱ = فقط وقتی سیاه‌چاله دیده شود، ۲ = همیشه",
+      "net.ipv4.tcp_probe_interval=600 # هر ۱۰ دقیقه بازآزمایی",
+      "# صف منصفانه در سرور/روتر برای پینگ پایدارتر",
+      "net.core.default_qdisc=fq",
+      "# پنجره‌های TCP بزرگ‌تر (روی سرور پرسرعت و مسیر پرتأخیر):",
+      "net.ipv4.tcp_rmem=4096 87380 33554432",
+      "net.ipv4.tcp_wmem=4096 65536 33554432",
+      "",
+      "# 🪟 ویندوز (PowerShell ادمین) — MTU و RTT با بار:",
+      "netsh interface ipv4 show subinterfaces",
+      "netsh interface ipv4 set subinterface \"Wi-Fi\" mtu=1400 store=persistent   # اگر مقدار پایین‌تر پایدارتر بود",
+      "netsh int tcp set global autotuninglevel=normal",
+      "netsh int tcp set global rss=enabled",
+    ].join("\n"); },
+  };
+  [].slice.call(document.querySelectorAll("[data-ph3-gen]")).forEach(function(b){
+    b.onclick = function(){
+      var kind = b.getAttribute("data-ph3-gen");
+      var txt = (GENS[kind] || function(){ return ""; })();
+      var out = q("ph3-gen-out");
+      out.innerHTML = '<div class="ph-card" style="margin-top:8px"><div class="row" style="justify-content:space-between;align-items:center">' +
+        '<b>متن آماده</b><button class="wwbtn" id="ph3-gen-copy">📋 کپی</button></div>' +
+        '<pre class="mono" style="white-space:pre-wrap;direction:ltr;text-align:left;font-size:12px;background:var(--card2);padding:10px;border-radius:10px;margin-top:8px">'+esc(txt)+'</pre></div>';
+      var c = q("ph3-gen-copy");
+      if (c) c.onclick = function(){
+        if (navigator.clipboard) navigator.clipboard.writeText(txt).then(function(){ c.textContent = "✅ کپی شد"; }, function(){ c.textContent = "❌ نشد"; });
+        else c.textContent = "دستی انتخاب کن";
+      };
+    };
+  });
+  if (q("ph3-map")){
+    q("ph3-map").innerHTML = tbl(["نوع مسدودی","چه چیزی واقعاً کمک می‌کند","چه چیزی کمک نمی‌کند"], [
+      ["DNS (چاله/آلودگی)", "DNS رمزنگاری‌شده (DoH/DoT) یا رزولور سالم", "VPN و تونل — لازم نیست"],
+      ["آی‌پی مقصد مسدود", "مسیر دیگر (پروژه‌های مستقل عبور از فیلتر)", "هر تغییر DNS — IP را باز نمی‌کند"],
+      ["نام دامنه در TLS (SNI)", "ابزارهای مخصوص همین لایه (Xray/Hysteria2/Snowflake — پروژه‌های مستقل)", "DNS، MTU، تنظیم روتر"],
+      ["افت سرعت عمدی (throttle)", "تست در ساعت‌های مختلف + سنجش چند-پروتکلی", "تغییر DNS"],
+      ["صف/باربلاست خط خودت", "SQM/CAKE روی روتر + کم‌کردن بار هم‌زمان", "DNS و تونل"],
+      ["MTU سیاه‌چاله", "tcp_mtu_probing=1 (یا MTU پایین‌تر)", "DNS و تغییر رزولور"],
+    ]) + '<div class="sub" style="margin-top:6px">پینگ‌هاب طبق خط قرمز خودش تونل/VPN نمی‌سازد و DNS سیستم را عوض نمی‌کند؛ وظیفه‌اش <b>تشخیص لایه</b> با شاهد است تا وقتت را برای راه‌حلِ درست نگذاری.</div>';
+  }
+
+  /* ================== تب‌های تازه ================== */
+  var NEW3 = [["ph-p13","🕵️ فیلترینگ"],["ph-p14","🌊 موج و UDP"],["ph-p15","⚡ رزولوشن"],
+              ["ph-p16","📡 نقطهٔ کور"],["ph-p17","🧪 صف و سیاست"],["ph-p18","🛠️ نسخهٔ مقاوم"]];
+  var tabsBox = q("ph-tabs");
+  if (tabsBox){
+    NEW3.forEach(function(t){
+      var b = document.createElement("button"); b.type = "button"; b.className = "ph-tab";
+      b.textContent = t[1]; b.dataset.target = t[0]; tabsBox.appendChild(b);
+    });
+    NEW3.forEach(function(t){
+      var btn = [].slice.call(tabsBox.querySelectorAll(".ph-tab")).filter(function(b){ return b.dataset.target===t[0]; })[0];
+      if(!btn) return;
+      btn.onclick = function(){
+        [].slice.call(tabsBox.querySelectorAll(".ph-tab")).forEach(function(b){ b.className = "ph-tab" + (b.dataset.target===t[0] ? " on" : ""); });
+        [].slice.call(document.querySelectorAll(".ph-panel")).forEach(function(pn){ pn.className = "ph-panel" + (pn.id===t[0] ? " on" : ""); });
+        if (t[0]==="ph-p13"){ var c = load("filter:"+((q("ph3-flt-host")||{}).value||"twitter.com"));
+          if (c && q("ph3-flt-out") && !q("ph3-flt-out").innerHTML) q("ph3-flt-out").innerHTML = renderFilter(c.data, "از حافظهٔ دستگاه — " + ago(c.at)); }
+        if (t[0]==="ph-p14"){ var w2 = load("wave:"+((q("ph3-wave-host")||{}).value||"1.1.1.1"));
+          if (w2 && q("ph3-wave-out") && !q("ph3-wave-out").innerHTML) q("ph3-wave-out").innerHTML = renderWave(w2.data) + '<div class="sub">از حافظهٔ دستگاه — '+ago(w2.at)+'</div>'; }
+      };
+    });
+  }
+})();
+</script>
