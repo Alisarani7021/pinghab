@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
         fun isNative(): Boolean = true
 
         @JavascriptInterface
-        fun version(): String = "2.4"
+        fun version(): String = "2.5"
 
         // ---------- «حالت DNS روی گوشی» ----------
         @JavascriptInterface

@@ -335,7 +335,7 @@ def _nav_html():
         '<button data-nav="__drawer__"><i>☰</i><span>بیشتر</span></button>'
         '</div>'
         '<div class="ph-drawer" id="ph-drawer"><div class="ph-drawer-bg" data-close="1"></div><aside>'
-        '<div class="ph-dhead"><b>📡 پینگ‌هاب</b><span class="ph-badge mono">۲.۴</span>'
+        '<div class="ph-dhead"><b>📡 پینگ‌هاب</b><span class="ph-badge mono">۲.۵</span>'
         '<button class="wwbtn" data-close="1" style="min-height:36px">✕</button></div>'
         + "".join(items) +
         '</aside></div>'
@@ -343,6 +343,10 @@ def _nav_html():
 
 
 NAV_HTML = '<div id="ph-nav-root">' + _nav_html() + '</div>'
+
+# لایهٔ طراحی کاربر (round-6): پوستهٔ mn — نوار بالا/پایین + کشوی آکاردئونی + آیکون‌های SVG
+# فایل عیناً همان چیزی است که کاربر تحویل داد (web/ui-layer-mn.html) — دست‌کاری نشود.
+MN_LAYER = (ROOT / "web" / "ui-layer-mn.html").read_text(encoding="utf-8").strip() + "\n"
 
 NAV_JS = r"""
 <script id="ph-nav-script">
@@ -715,7 +719,7 @@ for page in PAGES:
     src = src.replace("</head>", DESIGN_CSS + "</head>", 1)
     src = src.replace("</head>", NAV_CSS + "</head>", 1)
     src = src.replace("</body>\n</html>", HERO_JS + "</body>\n</html>", 1)
-    src = src.replace("</body>\n</html>", NAV_HTML + NAV_JS + "</body>\n</html>", 1)
+    src = src.replace("</body>\n</html>", NAV_HTML + NAV_JS + MN_LAYER + "</body>\n</html>", 1)
     src, b1 = patch_bgp(src)
     src, b2 = patch_doh(src)
     src, b3 = patch_games(src)

@@ -438,6 +438,23 @@ def test(env: dict):
     except Exception as e:
         print("  ❌ nav-count:", e)
 
+    # --- لایهٔ طراحی کاربر (پوستهٔ mn) ---
+    print("\n  ── طراحی جدید کاربر (mn) ──")
+    count_in("/app لایهٔ CSS کاربر", f"{SITE}/app", 'id="mn-css"')
+    count_in("/app لایهٔ JS کاربر", f"{SITE}/app", 'id="mn-js"')
+    count_in("/app نوار بالا mn", f"{SITE}/app", "mn-bar")
+    count_in("/app منوی پایین mn (۵ خانه)", f"{SITE}/app", "mn-nav")
+    count_in("/app کشوی آکاردئونی mn", f"{SITE}/app", "mn-dr")
+    count_in("/app پوستهٔ قدیمی مخفی", f"{SITE}/app", "#ph-nav-root{display:none")
+    try:
+        st, raw = api(f"{SITE}/app", "x", "GET", None, {"Authorization": "", "User-Agent": "PingHab/1.0"}, raw=True, timeout=60)
+        body = raw if isinstance(raw, str) else raw.decode("utf-8", "ignore")
+        ok = body.count('mn-dr') >= 2 and 'mn-acc' not in body
+        results.append(("کشوی mn یکتاست", ok, str(body.count('mn-dr'))))
+        print(f"  {'✅' if ok else '❌'} {'کشوی mn یکتا':34s} {'':>5s}  n={body.count('mn-dr')}")
+    except Exception as e:
+        print("  ❌ mn-drawer:", e)
+
     # ثبت بی‌نام (تست) — نمونهٔ ساعت طلایی/روند هم ساخته می‌شود
     body = json.dumps({"province": "تست", "carrier": "تست", "resolver": "self-test", "ms": 42, "ok": True}).encode()
     api(f"{SITE}/api/report", "x", "POST", body, {"Authorization": "", "User-Agent": "PingHab/1.0", "Content-Type": "application/json"}, raw=True, timeout=30)
