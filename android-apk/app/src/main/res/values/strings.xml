@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">پینگ‌هاب</string>
     <string name="widget_desc">پینگ و آمادگی خط — ویجت پینگ‌هاب</string>
+    <string name="dns_title">حالت DNS روی گوشی</string>
 </resources>

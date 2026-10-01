@@ -400,6 +400,27 @@ def test(env: dict):
     count_in("/app سنجش واقعی سرور بازی در آمادگی", f"{SITE}/app", 'id="ph2-pf-gs"')
     count_in("/app پنل بازی‌های تأییدشده", f"{SITE}/app", "ph-gsvc")
 
+    # --- «حالت DNS روی گوشی» (دور چهارم) ---
+    print("\n  ── پینگ‌هاب ۲.۳ (حالت DNS روی گوشی) ──")
+    check("/api/changer (لیست رزولور حالت DNS)", f"{SITE}/api/changer")
+    check("/api/whoami (موقعیت/ASN خط)", f"{SITE}/api/whoami")
+    try:
+        st, raw = api(f"{SITE}/api/changer", "x", "GET", None,
+                      {"Authorization": "", "User-Agent": "PingHab/1.0"}, raw=True, timeout=60)
+        j = json.loads(raw)
+        rs = j.get("resolvers") or []
+        ir = [x for x in rs if x.get("kind") == "iran"]
+        dot = [x for x in rs if x.get("dot")]
+        ok = len(rs) >= 40 and len(ir) >= 10 and len(dot) >= 8
+        results.append(("کیفیت لیست changer", ok, f"{len(rs)}/{len(ir)}/{len(dot)}"))
+        print(f"  {'✅' if ok else '❌'} {'changer: کل/ایران/DoT':34s} {'':>5s}  {len(rs)}/{len(ir)}/{len(dot)}")
+    except Exception as e:
+        print("  ❌ changer-quality:", e)
+    count_in("/app پنل حالت DNS", f"{SITE}/app", 'id="ph-p20"')
+    count_in("/app دکمهٔ باز کردن حالت DNS", f"{SITE}/app", "ph4-dns-open")
+    count_in("/app لیست رزولور حالت DNS", f"{SITE}/app", "ph4-dns-list")
+    count_in("/docs مسیر changer", f"{SITE}/docs", "/api/changer")
+
     # ثبت بی‌نام (تست) — نمونهٔ ساعت طلایی/روند هم ساخته می‌شود
     body = json.dumps({"province": "تست", "carrier": "تست", "resolver": "self-test", "ms": 42, "ok": True}).encode()
     api(f"{SITE}/api/report", "x", "POST", body, {"Authorization": "", "User-Agent": "PingHab/1.0", "Content-Type": "application/json"}, raw=True, timeout=30)

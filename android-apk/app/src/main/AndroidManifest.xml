@@ -4,6 +4,11 @@
     <!-- فقط برای تست DoH از داخل اپ لازم است -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- «حالت DNS روی گوشی»: تونل محلیِ فقط-DNS (بدون عبور ترافیک از هیچ سروری) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="false"
@@ -39,5 +44,26 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/ping_widget_info" />
         </receiver>
+
+        <!-- صفحهٔ «حالت DNS روی گوشی»: انتخاب رزولور + داشبورد زنده (پینگ/پکت‌لاس/شهرها/بازی) -->
+        <activity
+            android:name=".DnsChangerActivity"
+            android:exported="false"
+            android:label="@string/dns_title"
+            android:configChanges="orientation|screenSize|keyboardHidden|locale|layoutDirection|uiMode" />
+
+        <!-- سرویس تونل محلیِ فقط-DNS: هیچ بایتی از ترافیک بازی/مرور از سرور ما عبور نمی‌کند -->
+        <service
+            android:name=".DnsVpnService"
+            android:exported="false"
+            android:permission="android.permission.BIND_VPN_SERVICE"
+            android:foregroundServiceType="dataSync|specialUse">
+            <intent-filter>
+                <action android:name="android.net.VpnService" />
+            </intent-filter>
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="dns-resolver-local" />
+        </service>
     </application>
 </manifest>

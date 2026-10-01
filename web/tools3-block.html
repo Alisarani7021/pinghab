@@ -155,6 +155,29 @@
     </div>
   </div>
 
+  <div class="ph-panel" id="ph-p20">
+    <div class="ph-card">
+      <b>🚀 حالت DNS روی گوشی — تغییردهندهٔ DNS بدون روت</b>
+      <div class="sub">یک دکمه: کوئری‌های DNS همین گوشی به رزولور انتخابی می‌روند (DoT رمزنگاری‌شده، و UDP برای رزولور بومی ایران)
+        و همین‌جا <b>پینگ، پکت‌لاس، نوسان</b> و وضعیت خط زنده دیده می‌شود.
+        <br>صادقانه: این <b>VPN ترافیکی نیست</b> — هیچ بایتی از بازی/مرور از هیچ سروری (از جمله سرور ما) عبور نمی‌کند؛ فقط مسیر DNS روی خود گوشی عوض می‌شود.
+        «DNS پینگ داخل مچ بازی را کم نمی‌کند» — زمان اتصال و پایداری نام‌یابی را بهتر می‌کند.</div>
+      <div id="ph4-dns-native"></div>
+      <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px">
+        <button class="wwbtn wwprimary" id="ph4-dns-open">📱 باز کردن صفحهٔ حالت DNS</button>
+        <button class="wwbtn" id="ph4-dns-stop">⛔️ قطع و برگشت به DNS شبکه</button>
+        <button class="wwbtn" id="ph4-dns-extra">🔁 وصل با «گرفتن DNS دستی اپ‌ها» هم</button>
+        <a class="wwbtn" href="/api/changer" target="_blank">🧾 دادهٔ خام رزولورها</a>
+      </div>
+      <div id="ph4-dns-status"></div>
+    </div>
+    <div class="ph-card">
+      <b>🧭 رزولورها — وصل‌شدن از همین‌جا</b>
+      <div class="sub">anycast جهانی (DoT) + بومی ایران (UDP) + رزولورهای کشوری. عددها را اپ روی خط خودت می‌سنجد؛ این‌جا فقط انتخاب می‌کنی.</div>
+      <div id="ph4-dns-list"></div>
+    </div>
+  </div>
+
 <!--PH3-SCRIPT-->
 <script>
 /* =========== 🧪 پینگ‌هاب ۲.۱ — کالبدشکافی فیلترینگ و مهندسیِ نتِ بد =========== */
@@ -962,7 +985,7 @@
   /* ================== تب‌های تازه ================== */
   var NEW3 = [["ph-p13","🕵️ فیلترینگ"],["ph-p14","🌊 موج و UDP"],["ph-p15","⚡ رزولوشن"],
               ["ph-p16","📡 نقطهٔ کور"],["ph-p17","🧪 صف و سیاست"],["ph-p18","🛠️ نسخهٔ مقاوم"],
-              ["ph-p19","📱 آزمون و ویجت"]];
+              ["ph-p19","📱 آزمون و ویجت"],["ph-p20","🚀 حالت DNS"]];
   var tabsBox = q("ph-tabs");
   if (tabsBox){
     NEW3.forEach(function(t){
@@ -987,5 +1010,91 @@
       };
     });
   }
+  /* ================= 🚀 حالت DNS روی گوشی (اپ اندروید) ================= */
+  var CHANGER = null;
+  function ph4Native(){ try { return (window.phNative && window.phNative.isNative && window.phNative.isNative()) ? window.phNative : null; } catch(e){ return null; } }
+  function ph4StatusJson(){ try { var n = ph4Native(); return JSON.parse(n && n.dnsStatus ? n.dnsStatus() : "{}"); } catch(e){ return {}; } }
+  function renderNativeBox(){
+    var n = ph4Native(), box = q("ph4-dns-native"); if (!box) return;
+    box.innerHTML = n
+      ? '<div class="ph-good">✅ این اپ اندروید است — دکمه‌ها همین‌جا کار می‌کنند (نسخهٔ پل: ' + esc(String(n.version ? n.version() : "?")) + ').</div>'
+      : '<div class="ph-box"><b>این قابلیت داخل اپ اندروید اجرا می‌شود.</b><div class="sub">در مرورگر نمی‌توانیم DNS سیستم را عوض کنیم (خط قرمز پروژه). APK را نصب کن؛ همین صفحه داخل اپ به دکمهٔ واقعی تبدیل می‌شود. لیست رزولورها این‌جا هم برای دیدن و کپی در دسترس است.</div>' +
+        '<a class="wwbtn" style="margin-top:8px" href="https://github.com/Alisarani7021/pinghab/releases/download/apk-latest/pinghab-latest.apk">⬇️ دانلود APK (نسخهٔ تازه)</a></div>';
+  }
+  function renderDnsStatus(){
+    var box = q("ph4-dns-status"); if (!box) return;
+    var s = ph4StatusJson();
+    if (!s || !s.running){
+      box.innerHTML = '<div class="sub" style="margin-top:8px">حالا خاموش است — DNS به حالت عادی شبکه برگشته. وقتی وصل شوی، این‌جا زنده می‌بینی: ' +
+        '<span class="ph-badge">پینگ DNS</span> <span class="ph-badge">پکت‌لاس</span> <span class="ph-badge">نوسان</span> <span class="ph-badge">تعداد کوئری</span></div>';
+      return;
+    }
+    var sec = s.since ? Math.floor((Date.now() - s.since)/1000) : 0;
+    box.innerHTML = '<div class="ph-card" style="margin-top:8px"><b>🟢 وصل: ' + esc(s.label||"—") + '</b> <span class="ph-badge">' +
+      fa(Math.floor(sec/60)) + ' دقیقه</span><table style="width:100%;font-size:13px;border-collapse:collapse;margin-top:6px">' +
+      '<tr><td>پینگ DNS (آخرین)</td><td><b>' + (s.last>=0 ? fa(s.last)+'ms' : "—") + '</b></td></tr>' +
+      '<tr><td>میانگین</td><td>' + (s.avg>=0 ? fa(s.avg)+'ms' : "—") + '</td></tr>' +
+      '<tr><td>نوسان (جیتر)</td><td>' + (s.jitter>=0 ? fa(s.jitter)+'ms' : "—") + '</td></tr>' +
+      '<tr><td>پکت‌لاس</td><td>' + fa(s.loss||0) + '٪ (' + fa(s.answered||0) + ' از ' + fa(s.sent||0) + ')</td></tr>' +
+      '</table>' + (s.error ? '<div class="ph-warn">' + esc(s.error) + '</div>' : '') + '</div>';
+  }
+  async function loadChanger(){
+    var box = q("ph4-dns-list"); if (!box) return;
+    box.innerHTML = '<div class="sub">در حال گرفتن لیست رزولورها…</div>';
+    try {
+      var d = await hget("/api/changer", "changer");
+      var j = d.j || {};
+      CHANGER = j;
+      var h = '<div class="sub">' + fa(j.count||0) + ' رزولور — جهانی: ' + fa((j.by_kind||{}).global||0) +
+        ' · ایران: ' + fa((j.by_kind||{}).iran||0) + ' · بومی کشورها: ' + fa((j.by_kind||{}).national||0) + '</div>';
+      h += '<table style="width:100%;font-size:12.5px;border-collapse:collapse"><tr><th>رزولور</th><th>آی‌پی</th><th>روش</th><th></th></tr>';
+      (j.resolvers||[]).forEach(function(r){
+        var kindFa = r.kind === "iran" ? "ایران" : (r.kind === "national" ? "بومی" : "جهانی");
+        h += '<tr><td>' + esc(r.fa) + ' <span class="ph-badge">' + esc(kindFa) + '</span></td>' +
+          '<td class="mono" style="font-size:11.5px">' + esc((r.ips||[]).slice(0,2).join(" · ")) + '</td>' +
+          '<td class="mono" style="font-size:11px">' + esc(r.dot ? ("DoT " + r.dot) : "UDP/53") + '</td>' +
+          '<td><button class="wwbtn wwcopy" data-ph4-connect="' + esc(r.id) + '">وصل شو</button></td></tr>';
+      });
+      h += '</table><div class="sub">' + esc((j.honesty||[])[0]||"") + '</div>';
+      box.innerHTML = h;
+      Array.prototype.forEach.call(box.querySelectorAll("[data-ph4-connect]"), function(b){
+        b.onclick = function(){
+          var id = b.getAttribute("data-ph4-connect");
+          var r = ((CHANGER||{}).resolvers||[]).filter(function(x){ return x.id === id; })[0];
+          var n = ph4Native();
+          if (!r) return;
+          if (!n){ box.insertAdjacentHTML("beforeend", '<div class="ph-warn">داخل مرورگر نمی‌شود؛ APK را نصب کن.</div>'); return; }
+          var ok = false;
+          try { ok = n.startDns(r.id, r.fa, (r.ips||[]).join(","), r.dot || "", r.sni || "", false); } catch(e){}
+          box.insertAdjacentHTML("beforeend", ok
+            ? '<div class="ph-good">درخواست اتصال به <b>' + esc(r.fa) + '</b> فرستاده شد (اگر پیام اجازهٔ اندروید آمد، تأیید کن).</div>'
+            : '<div class="ph-warn">اتصال شروع نشد — از صفحهٔ «حالت DNS» اطلاعات دقیق‌تر را ببین.</div>');
+          setTimeout(renderDnsStatus, 1500);
+        };
+      });
+    } catch(e){ box.innerHTML = '<div class="ph-warn">لیست نیامد: ' + esc(e.message) + '</div>'; }
+  }
+  if (q("ph4-dns-open")) q("ph4-dns-open").onclick = function(){
+    var n = ph4Native();
+    if (n && n.openDnsChanger) n.openDnsChanger();
+    else if (q("ph4-dns-status")) q("ph4-dns-status").innerHTML = '<div class="ph-warn">این دکمه داخل اپ اندروید کار می‌کند.</div>';
+  };
+  if (q("ph4-dns-stop")) q("ph4-dns-stop").onclick = function(){
+    var n = ph4Native();
+    if (n && n.stopDns) { n.stopDns(); setTimeout(renderDnsStatus, 800); }
+    else if (q("ph4-dns-status")) q("ph4-dns-status").innerHTML = '<div class="ph-warn">داخل مرورگر چیزی برای قطع‌کردن نیست.</div>';
+  };
+  if (q("ph4-dns-extra")) q("ph4-dns-extra").onclick = function(){
+    var n = ph4Native();
+    if (!n || !CHANGER) return;
+    var r = ((CHANGER.resolvers)||[])[0]; if (!r) return;
+    try { n.startDns(r.id, r.fa, (r.ips||[]).join(","), r.dot || "", r.sni || "", true); } catch(e){}
+    if (q("ph4-dns-status")) q("ph4-dns-status").innerHTML = '<div class="sub">با حالت «گرفتن DNS دستی اپ‌ها» درخواست رفت — یعنی کوئری‌هایی که به 8.8.8.8/1.1.1.1 هم می‌روند از این مسیر عبور می‌کنند.</div>';
+  };
+  renderNativeBox();
+  loadChanger();
+  renderDnsStatus();
+  setInterval(renderDnsStatus, 2000);
+
 })();
 </script>
