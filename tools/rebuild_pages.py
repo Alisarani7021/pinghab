@@ -383,7 +383,9 @@ NAV_JS = r"""
   var burger = $("#ph-burger"); if (burger) burger.onclick = openDrawer;
   document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeDrawer(); });
   window.phOpenDrawer = openDrawer;
-  setTimeout(function(){ show(current(), true); }, 150);
+  /* صفحهٔ خانه = حالت DNS (آیتم اول منوی پایین) */
+  var _h = (location.hash || "").replace("#", "");
+  setTimeout(function(){ show(_h ? _h : "ph-p20", true); }, 150);
 })();
 </script>
 """
