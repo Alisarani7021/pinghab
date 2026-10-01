@@ -566,7 +566,7 @@
         '<td class="num">' + (x.loss != null ? fa(x.loss) + "%" : "—") + '</td>' +
         '<td class="num">' + (x.n || 0) + '</td><td>' + trust + why + '</td></tr>';
     }).join("");
-    var probeTable = probeRows ? '<table style="margin-top:8px"><thead><tr><th>شهر</th><th>شبکه</th><th>میانگین</th><th>نوسان</th><th>افت</th><th>نمونه</th><th>اعتبار</th></tr></thead><tbody>' + probeRows + '</tbody></table>' : "";
+    var probeTable = probeRows ? '<div class="ph-tblwrap"><table style="margin-top:8px"><thead><tr><th>شهر</th><th>شبکه</th><th>میانگین</th><th>نوسان</th><th>افت</th><th>نمونه</th><th>اعتبار</th></tr></thead><tbody>' + probeRows + '</tbody></table></div>' : "";
     var reasons = [];
     (r.probes || []).forEach(function(x){ (x.reasons || []).forEach(function(rr){ if (reasons.indexOf(rr) < 0) reasons.push(rr); }); });
     return '<div class="ph-box" style="margin-top:8px">' + head +
@@ -749,9 +749,9 @@
     var el = q("ph6-sub-out");
     if (!subState.found.length){ el.innerHTML = subState.asked ? '<div class="sub">چیزی پیدا نشد (یا همه NXDOMAIN بودند).</div>' : ""; return; }
     el.innerHTML = '<div class="sub">✅ ' + fa(subState.found.length) + ' زیردامنهٔ موجود از ' + fa(subState.asked) + ' پرسش:</div>' +
-      '<table><thead><tr><th>زیردامنه</th><th>آدرس‌ها</th></tr></thead><tbody>' +
+      '<div class="ph-tblwrap"><table><thead><tr><th>زیردامنه</th><th>آدرس‌ها</th></tr></thead><tbody>' +
       subState.found.map(function(f){ return '<tr><td class="mono" dir="ltr">' + esc(f.name) + '</td><td class="mono" dir="ltr">' + esc(f.ips.join(", ")) + '</td></tr>'; }).join("") +
-      '</tbody></table>';
+      '</tbody></table></div>';
   }
   /* منبع فهرست: پیست کاربر | فایل کامل داخل اپ (gunzip در مرورگر) | فهرست پرتکرار تودرتو */
   function subWords(src){
@@ -1243,12 +1243,12 @@
       var d = await hget("/api/dohrace?host=" + encodeURIComponent(name));
       var j = d.j || {};
       var eh = '<div class="ph-card" id="ph3-edge-race"><b>🏁 مسابقهٔ رزولور از لبهٔ شبکه</b><div class="sub">مرجع مستقل از خط تو؛ اگر اپراتور DoH را بسته باشد، این‌جا باز هم عدد واقعی می‌بینی.</div>' +
-        '<table style="width:100%;font-size:13px;border-collapse:collapse;margin-top:8px"><tr><th>رزولور</th><th>زمان</th><th>کد</th><th>آی‌پی</th></tr>';
+        '<div class="ph-tblwrap"><table style="width:100%;font-size:13px;border-collapse:collapse;margin-top:8px"><tr><th>رزولور</th><th>زمان</th><th>کد</th><th>آی‌پی</th></tr>';
       (j.rows||[]).forEach(function(x){
         eh += '<tr><td>'+esc(x.name)+'</td><td>'+(x.ok ? rnd(x.ms,0)+'ms' : '<span class="ph-bad">'+esc(x.err||"—")+'</span>')+
           '</td><td>'+(x.rcode==null?"—":fa(x.rcode))+'</td><td class="mono" style="font-size:12px">'+esc((x.ips||[]).join(", ")||"—")+'</td></tr>';
       });
-      eh += '</table>' + (j.best ? '<div class="sub">پاسخ‌دهنده: <b>'+fa(j.answered)+' از '+fa(j.tried)+'</b> · تندترین: <b>'+esc(j.best.name)+'</b> ('+fa(j.best.ms)+'ms) · آی‌پی‌های متمایز: <b>'+fa(j.distinct_first_ips||0)+'</b></div>' : '') + '</div>';
+      eh += '</table></div>' + (j.best ? '<div class="sub">پاسخ‌دهنده: <b>'+fa(j.answered)+' از '+fa(j.tried)+'</b> · تندترین: <b>'+esc(j.best.name)+'</b> ('+fa(j.best.ms)+'ms) · آی‌پی‌های متمایز: <b>'+fa(j.distinct_first_ips||0)+'</b></div>' : '') + '</div>';
       var box = q("ph3-edge-race"); if (box) box.outerHTML = eh;
     } catch(e){ var box2 = q("ph3-edge-race"); if (box2) box2.innerHTML = '<b>🏁 مسابقهٔ لبه</b><div class="ph-warn">دسترسی نبود: '+esc(e.message)+'</div>'; }
   }
@@ -1273,24 +1273,24 @@
           (j.distinct.cities && j.distinct.cities.length ? ' · شهرها: ' + esc(j.distinct.cities.slice(0,4).join(" · ")) : '') + '</div>';
       }
       if ((j.groups||[]).length){
-        h += '<b style="display:block;margin-top:8px">رزولورهای بومی / معرفی‌شده</b><table style="width:100%;font-size:13px;border-collapse:collapse">' +
+        h += '<b style="display:block;margin-top:8px">رزولورهای بومی / معرفی‌شده</b><div class="ph-tblwrap"><table style="width:100%;font-size:13px;border-collapse:collapse">' +
           '<tr><th>نام</th><th>آی‌پی</th><th>DoH</th><th>وضعیت</th></tr>';
         j.groups.forEach(function(g){
           h += '<tr><td>'+esc(g.name)+'</td><td class="mono" style="font-size:12px">'+esc((g.ips||[]).slice(0,3).join(", "))+'</td>' +
             '<td class="mono" style="font-size:11px">'+esc(g.doh||"—")+'</td>' +
             '<td>'+(g.verified ? '<span class="ph-badge ph-chip-ok">تأییدشده</span>' : '<span class="ph-badge">کاندید</span>')+'</td></tr>';
         });
-        h += '</table>';
+        h += '</table></div>';
       }
       if ((j.servers||[]).length){
         h += '<b style="display:block;margin-top:8px">سرورهای ثبت‌شدهٔ همین کشور (بر پایهٔ اعتبار — بدون anycast سراسری)</b>' +
-          '<table style="width:100%;font-size:12.5px;border-collapse:collapse"><tr><th>آی‌پی</th><th>ASN</th><th>شرکت</th><th>شهر</th><th>نرم‌افزار</th><th>اعتبار</th></tr>';
+          '<div class="ph-tblwrap"><table style="width:100%;font-size:12.5px;border-collapse:collapse"><tr><th>آی‌پی</th><th>ASN</th><th>شرکت</th><th>شهر</th><th>نرم‌افزار</th><th>اعتبار</th></tr>';
         j.servers.forEach(function(s){
-          h += '<tr><td class="mono">'+esc(s.ip)+'</td><td class="mono">'+esc(s.asn||"—")+'</td><td>'+esc((s.as||"").slice(0,26))+
-            '</td><td>'+esc(s.city||"—")+'</td><td class="mono" style="font-size:11px">'+esc((s.sw||"—").slice(0,22))+
+          h += '<tr><td class="mono">'+esc(s.ip)+'</td><td class="mono">'+esc(s.asn||"—")+'</td><td class="wrap">'+esc((s.as||"").slice(0,26))+
+            '</td><td>'+esc(s.city||"—")+'</td><td class="mono wrap" style="font-size:11px">'+esc((s.sw||"—").slice(0,22))+
             '</td><td>'+rnd((s.reliability||0)*100,0)+'٪</td></tr>';
         });
-        h += '</table>';
+        h += '</table></div>';
       }
       h += '<div class="sub">'+esc(j.note||"")+'</div></div>';
       out.innerHTML = h;
@@ -1792,14 +1792,14 @@
     box.innerHTML = '<div class="sub">در حال سنجش از گره‌های ایران…</div>';
     hget("/api/gameping?ips=" + encodeURIComponent((PH4_SEL.ips||[])[0] || "") + "&cc=IR").then(function(d){
       var res = ((d.j||{}).results||[])[0] || {};
-      var h = '<table style="width:100%;font-size:12.5px;border-collapse:collapse;margin-top:8px"><tr><th>شهر</th><th>شبکهٔ پروب</th><th>میانگین</th><th>افت</th><th>اعتبار</th></tr>';
+      var h = '<div class="ph-tblwrap"><table style="width:100%;font-size:12.5px;border-collapse:collapse;margin-top:8px"><tr><th>شهر</th><th>شبکهٔ پروب</th><th>میانگین</th><th>افت</th><th>اعتبار</th></tr>';
       (res.rows||[]).forEach(function(x){
         var t = (x.sanity && x.sanity.trusted);
         h += '<tr><td>' + esc(x.city||"—") + '</td><td>' + esc((x.network||"").slice(0,20)) + '</td><td>' +
           (x.avg == null ? "—" : fa(Math.round(x.avg)) + "ms") + '</td><td>' + (x.loss == null ? "—" : fa(x.loss) + "٪") + '</td><td>' +
           (t ? '<span class="ph-badge ph-chip-ok">معتبر</span>' : '<span class="ph-badge ph-chip-no">نانشنه</span>') + '</td></tr>';
       });
-      h += '</table><div class="sub">پروب‌ها دیتاسنتری‌اند، نه خط موبایل؛ «نانشنه» = عددی که اثر شبکه را نشان نمی‌دهد.</div>';
+      h += '</table></div><div class="sub">پروب‌ها دیتاسنتری‌اند، نه خط موبایل؛ «نانشنه» = عددی که اثر شبکه را نشان نمی‌دهد.</div>';
       box.innerHTML = (res.rows && res.rows.length) ? h : '<div class="ph-warn">پاسخی نیامد — این رزولور از پروب‌های ایران ICMP نمی‌گیرد.</div>';
     }).catch(function(e){ box.innerHTML = '<div class="ph-warn">خطا: ' + esc(e.message) + '</div>'; });
   };

@@ -506,6 +506,46 @@ def test(env: dict):
         results.append(("اسکنر DNS", False, str(e)[:40]))
         print("  ❌ scanner-dns:", e)
 
+    print("\n  ── دور ۹: ضد ۵۰۰ شدن (KV امن) + جا شدن در قالب اپ ──")
+    count_in("/app تور ایمنی جدول‌ها", f"{SITE}/app", 'id="ph-fit9"')
+    count_in("/app جدول حقایق خوانا", f"{SITE}/app", "ph-facts")
+    count_in("/app قفل اسکرول افقی", f"{SITE}/app", "overflow-x:clip")
+    count_in("/app نشان ۲.۸", f"{SITE}/app", "۲.۸")
+    count_in("/app کاتالوگ داخل اسکرول‌پیچ", f"{SITE}/app", 'ph-tblwrap"><table><tr><th>نام</th>')
+    count_in("/app نوسان صادقانه (نه ۰ms)", f"{SITE}/app", 'r2.jit==null?"—"')
+    try:
+        dist = open(ROOT / "cloudflare" / "dist" / "worker.mjs", encoding="utf-8").read()
+        import re as _re
+        n_safe = len(_re.findall(r"kv(?:Put|Get|Del|List)\(env,", dist))
+        n_bare = len(_re.findall(r"env\.DNSRADAR_KV\.(?:put|get|delete|list)\(", dist))
+        ok = n_safe >= 70 and n_bare == 4
+        results.append(("ورکر: همهٔ KVها امن", ok, f"safe={n_safe} bare={n_bare}"))
+        print(f"  {'✅' if ok else '❌'} {'ورکر: همهٔ KVها امن':34s} {'':>5s}  safe={n_safe} bare={n_bare}(داخل هلپر)")
+    except Exception as e:
+        results.append(("ورکر: همهٔ KVها امن", False, str(e)[:40]))
+        print("  ❌ kv-safe:", e)
+    try:
+        st, raw = api(f"{SITE}/api/dohrace?host=example.com", "x", "GET", None,
+                      {"Authorization": "", "User-Agent": "PingHab/1.0"}, raw=True, timeout=90)
+        j = json.loads(raw)
+        ok = st == 200 and j.get("ok") and (j.get("answered") or 0) >= 1
+        results.append(("مسابقهٔ لبه: عدد واقعی", ok, f"answered={j.get('answered')}"))
+        print(f"  {'✅' if ok else '❌'} {'مسابقهٔ لبه live':34s} {str(st):>5s}  answered={j.get('answered')} best={(j.get('best') or {}).get('name')}")
+    except Exception as e:
+        results.append(("مسابقهٔ لبه live", False, str(e)[:40]))
+        print("  ❌ dohrace:", e)
+    try:
+        st, raw = api(f"{SITE}/api/gameping?ips=8.8.8.8&cc=IR", "x", "GET", None,
+                      {"Authorization": "", "User-Agent": "PingHab/1.0"}, raw=True, timeout=150)
+        j = json.loads(raw)
+        R0 = (j.get("results") or [{}])[0]
+        ok = st == 200 and j.get("ok") and ("rows" in R0 or "error" in R0)
+        results.append(("پینگ بازی: بدون ۵۰۰", ok, f"rows={len(R0.get('rows') or [])}"))
+        print(f"  {'✅' if ok else '❌'} {'پینگ بازی live':34s} {str(st):>5s}  rows={len(R0.get('rows') or [])} err={R0.get('error')}")
+    except Exception as e:
+        results.append(("پینگ بازی live", False, str(e)[:40]))
+        print("  ❌ gameping:", e)
+
     # ثبت بی‌نام (تست) — نمونهٔ ساعت طلایی/روند هم ساخته می‌شود
     body = json.dumps({"province": "تست", "carrier": "تست", "resolver": "self-test", "ms": 42, "ok": True}).encode()
     api(f"{SITE}/api/report", "x", "POST", body, {"Authorization": "", "User-Agent": "PingHab/1.0", "Content-Type": "application/json"}, raw=True, timeout=30)

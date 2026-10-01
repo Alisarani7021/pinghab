@@ -33,7 +33,7 @@ function v6Zone(ip) {
 async function asnInfoAny(env, ip) {
   if (!String(ip).includes(":")) return await asnInfo(env, ip);
   const key = "an6:" + ip;
-  const hit = await env.DNSRADAR_KV.get(key, "json");
+  const hit = await kvGet(env,key, "json");
   if (hit) return { ...hit, cache: "hit" };
   let out = { ip, source: null };
   const zone = v6Zone(ip);
@@ -48,7 +48,7 @@ async function asnInfoAny(env, ip) {
         source: "Team Cymru (DNS، v6)" };
     } else out.source = "این آی‌پی v6 ثبت عمومی در Team Cymru ندارد";
   }
-  await env.DNSRADAR_KV.put(key, JSON.stringify(out), { expirationTtl: 7 * 86400 });
+  await kvPut(env,key, JSON.stringify(out), { expirationTtl: 7 * 86400 });
   return out;
 }
 async function scanResolveHost(host) {
@@ -113,7 +113,6 @@ async function scannerOne(env, target, mode, cc, from, packets, qname) {
   }
   if (mode === "dns" || mode === "both") {
     const name = qname || "www.wikipedia.org";
-    /* نکتهٔ API: در نوع dns، «target» خودِ نامِ کوئری است و query.name پذیرفته نمی‌شود. */
     const d2 = await gpProbe(env, { type: "dns", target: name, locations, limit,
       measurementOptions: { query: { type: "A" }, resolver: ip, protocol: "UDP", port: 53 } }, 600);
     if (d2 && d2.results) {

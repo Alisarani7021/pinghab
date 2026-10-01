@@ -244,14 +244,16 @@
     q("ph-me-out").innerHTML = "در حال تشخیص…";
     try{
       ME = await jget("/api/geo");
-      var html = '<div class="ph-kv" style="margin-top:6px">'
-        + 'ASN: <b class="ph-mono">' + esc(ME.asn||"—") + "</b> · سازمان: <b>" + esc(ME.org||"—") + "</b><br>"
-        + 'شهرِ IP: <b>' + esc(ME.city||"—") + "</b> · استانِ IP: " + esc(ME.region||"—") + "<br>"
-        + 'لبهٔ کلادفلر: <b class="ph-mono">' + esc(ME.colo||"—") + "</b> · RTT خط تو تا لبه: <b>" + (ME.tcpRtt==null?"—":fa(ME.tcpRtt)+" ms") + "</b><br>";
-      if(ME.carrier) html += '📶 اپراتور تشخیص‌داده‌شده: <b>' + esc(ME.carrier.fa) + '</b> <span class="ph-badge">' + esc(ME.carrier.type) + ' · از ' + esc(ME.carrier.match) + "</span><br>";
-      else html += '📶 اپراتور خودکار تشخیص داده نشد — خودت انتخاب کن.<br>';
-      if(ME.province) html += '📍 نزدیک‌ترین استان: <b>' + esc(ME.province.fa) + "</b>" + (ME.province.exact ? "" : " <span class='ph-badge'>تقریبی</span>");
-      html += "</div>";
+      var meRows = [["ASN", '<b class="ph-mono">' + esc(ME.asn||"—") + "</b>"],
+        ["سازمان", "<b>" + esc(ME.org||"—") + "</b>"],
+        ["شهرِ IP", "<b>" + esc(ME.city||"—") + "</b>"],
+        ["استانِ IP", esc(ME.region||"—")],
+        ["لبهٔ کلادفلر", '<b class="ph-mono">' + esc(ME.colo||"—") + "</b>"],
+        ["RTT خط تو تا لبه", "<b>" + (ME.tcpRtt==null?"—":fa(ME.tcpRtt)+" ms") + "</b>"]];
+      if (ME.carrier) meRows.push(["📶 اپراتور", "<b>" + esc(ME.carrier.fa) + '</b> <span class="ph-badge">' + esc(ME.carrier.type) + " · از " + esc(ME.carrier.match) + "</span>"]);
+      else meRows.push(["📶 اپراتور", "خودکار تشخیص داده نشد — خودت انتخاب کن."]);
+      if (ME.province) meRows.push(["📍 نزدیک‌ترین استان", "<b>" + esc(ME.province.fa) + "</b>" + (ME.province.exact ? "" : " <span class='ph-badge'>تقریبی</span>")]);
+      var html = '<table class="ph-facts" style="margin-top:6px">' + meRows.map(function(rr){ return "<tr><td>" + rr[0] + "</td><td>" + rr[1] + "</td></tr>"; }).join("") + "</table>";
       q("ph-me-out").innerHTML = html;
       if(ME.carrier){ var opts = q("ph-car").options; for(var i=0;i<opts.length;i++){ if(opts[i].text === ME.carrier.fa){ q("ph-car").value = opts[i].value; break; } } }
       if(ME.province){ var po = q("ph-prov").options; for(var k=0;k<po.length;k++){ if(po[k].text === ME.province.fa){ q("ph-prov").value = po[k].value; fillCities(); break; } } }
@@ -404,13 +406,13 @@
     try{
       var d = await jget(url);
       var html = '<div class="sub">' + fa(d.matched) + " رزولور از " + fa(d.total) + " (فیلتر: " + esc((d.flags||[]).join(" · ")||"بدون فیلتر") + ")</div>"
-        + "<table><tr><th>نام</th><th>آدرس</th><th>DoH</th><th>پرچم‌ها</th><th>کپی</th></tr>";
+        + '<div class="ph-tblwrap"><table><tr><th>نام</th><th>آدرس</th><th>DoH</th><th>پرچم‌ها</th><th>کپی</th></tr>';
       d.items.forEach(function(r){
         html += "<tr><td>" + esc(r.n) + '</td><td class="ph-mono">' + esc(r.a||"—") + '</td><td class="ph-mono">' + esc((r.d||"—").slice(0,42)) + "</td>"
-          + "<td>" + esc((r.f||[]).join(" · ")||"—") + "</td>"
+          + '<td class="wrap">' + esc((r.f||[]).join(" · ")||"—") + "</td>"
           + '<td><button class="wwbtn wwcopy" data-c="' + esc(r.a||r.d||"") + '">کپی</button></td></tr>';
       });
-      html += "</table>";
+      html += "</table></div>";
       out.innerHTML = html;
       Array.prototype.forEach.call(out.querySelectorAll("[data-c]"), function(b){ b.onclick = function(){ copy(b, b.getAttribute("data-c")); }; });
     }catch(e){ out.textContent = "خطا: " + e.message; }
@@ -427,21 +429,21 @@
       if(!d.ok){ out.innerHTML = '<div class="ph-warn">خطا: ' + esc(d.error||"") + " " + esc(d.detail||"") + "</div>"; return; }
       var html = '<div class="sub">' + fa(d.probe_count) + " پروب · " + (d.cached ? "از کش" : "تازه") + "</div>";
       if(t === "ping" || t === "traceroute" || t === "http"){
-        html += "<table><tr><th>پروب</th><th>شبکه (ASN)</th><th>نتیجه</th></tr>";
+        html += '<div class="ph-tblwrap"><table><tr><th>پروب</th><th>شبکه (ASN)</th><th>نتیجه</th></tr>';
         (d.results||[]).forEach(function(r){
           var v = r.kind === "ping" ? (r.avg==null?"—":fa(r.avg.toFixed(1))+"ms · افت "+fa(r.loss)+"%")
                 : r.kind === "traceroute" ? fa((r.hops||[]).length)+" hop"
                 : (r.status!=null ? "HTTP "+fa(r.status) : "—");
           html += "<tr><td>" + esc(r.city||"?") + "</td><td>" + esc(String(r.network||"—").slice(0,24)) + " (" + esc(r.asn||"—") + ")</td><td>" + v + "</td></tr>";
         });
-        html += "</table>";
+        html += "</table></div>";
       } else {
-        html += "<table><tr><th>پروب</th><th>زمان</th><th>کد</th><th>پاسخ</th></tr>";
+        html += '<div class="ph-tblwrap"><table><tr><th>پروب</th><th>زمان</th><th>کد</th><th>پاسخ</th></tr>';
         (d.results||[]).forEach(function(r){
           html += "<tr><td>" + esc(r.city||"?") + "</td><td>" + (r.total==null?"—":fa(r.total.toFixed(0))+"ms") + "</td><td>" + esc(r.status||"—")
             + '</td><td class="ph-mono">' + esc((r.answers||[]).join(", ").slice(0,60)||"—") + "</td></tr>";
         });
-        html += "</table>";
+        html += "</table></div>";
       }
       html += '<div class="sub">⚠️ پروب‌های ایران دیتاسنتری‌اند (تهران)، نه خط موبایل — عمداً همین را می‌گوییم تا اشتباه نشود.</div>';
       out.innerHTML = html;

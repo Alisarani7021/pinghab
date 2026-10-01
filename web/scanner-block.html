@@ -360,7 +360,7 @@
         '<td class="num">' + (x.loss != null ? fa(x.loss) + "%" : "—") + '</td>' +
         '<td class="num">' + (x.n || 0) + '</td><td>' + trust + why + '</td></tr>';
     }).join("");
-    var probeTable = probeRows ? '<table style="margin-top:8px"><thead><tr><th>شهر</th><th>شبکه</th><th>میانگین</th><th>نوسان</th><th>افت</th><th>نمونه</th><th>اعتبار</th></tr></thead><tbody>' + probeRows + '</tbody></table>' : "";
+    var probeTable = probeRows ? '<div class="ph-tblwrap"><table style="margin-top:8px"><thead><tr><th>شهر</th><th>شبکه</th><th>میانگین</th><th>نوسان</th><th>افت</th><th>نمونه</th><th>اعتبار</th></tr></thead><tbody>' + probeRows + '</tbody></table></div>' : "";
     var reasons = [];
     (r.probes || []).forEach(function(x){ (x.reasons || []).forEach(function(rr){ if (reasons.indexOf(rr) < 0) reasons.push(rr); }); });
     return '<div class="ph-box" style="margin-top:8px">' + head +
@@ -543,9 +543,9 @@
     var el = q("ph6-sub-out");
     if (!subState.found.length){ el.innerHTML = subState.asked ? '<div class="sub">چیزی پیدا نشد (یا همه NXDOMAIN بودند).</div>' : ""; return; }
     el.innerHTML = '<div class="sub">✅ ' + fa(subState.found.length) + ' زیردامنهٔ موجود از ' + fa(subState.asked) + ' پرسش:</div>' +
-      '<table><thead><tr><th>زیردامنه</th><th>آدرس‌ها</th></tr></thead><tbody>' +
+      '<div class="ph-tblwrap"><table><thead><tr><th>زیردامنه</th><th>آدرس‌ها</th></tr></thead><tbody>' +
       subState.found.map(function(f){ return '<tr><td class="mono" dir="ltr">' + esc(f.name) + '</td><td class="mono" dir="ltr">' + esc(f.ips.join(", ")) + '</td></tr>'; }).join("") +
-      '</tbody></table>';
+      '</tbody></table></div>';
   }
   /* منبع فهرست: پیست کاربر | فایل کامل داخل اپ (gunzip در مرورگر) | فهرست پرتکرار تودرتو */
   function subWords(src){

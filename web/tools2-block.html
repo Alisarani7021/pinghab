@@ -245,7 +245,7 @@
     try{ clk = await clockCheck(); }catch(e){}
     var sp = null;
     try{ sp = await speedTest(3000000); }catch(e){}
-    var html = '<div class="ph-card" style="margin-top:8px"><table style="width:100%;font-size:13px;border-collapse:collapse">';
+    var html = '<div class="ph-card" style="margin-top:8px"><table class="ph-facts" style="width:100%;font-size:13px;border-collapse:collapse">';
     // رزولور
     if (res.resolver.ok && res.resolver.ip){
       html += factRow("🔍 رزولور واقعی خط تو", '<span class="mono">' + esc(res.resolver.ip) + '</span>',

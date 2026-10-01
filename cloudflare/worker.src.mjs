@@ -262,7 +262,7 @@ async function asnOf(env, ip) {
   if (isPrivate(ip)) return { asn: null, holder: "شبکهٔ داخلی (خصوصی)", kind: "private" };
   const ix = ixOf(ip);
   const key = "asn:" + ip;
-  try { const c = await env.DNSRADAR_KV.get(key); if (c) return JSON.parse(c); } catch {}
+  try { const c = await kvGet(env,key); if (c) return JSON.parse(c); } catch {}
   const intl = irInternalOf(ip);
   let out = { asn: null, holder: intl || null, kind: ix ? "ix" : (intl ? "internal" : "unknown") };
   try {
@@ -277,7 +277,7 @@ async function asnOf(env, ip) {
     if (/cloudflare/i.test(out.holder || "")) out.kind = "cloud";
     else if (/google|akamai|amazon|microsoft|fastly|meta|facebook|apple/i.test(out.holder || "")) out.kind = "cloud";
   }
-  try { await env.DNSRADAR_KV.put(key, JSON.stringify(out), { expirationTtl: 60 * 60 * 24 * 30 }); } catch {}
+  try { await kvPut(env,key, JSON.stringify(out), { expirationTtl: 60 * 60 * 24 * 30 }); } catch {}
   return out;
 }
 
@@ -286,13 +286,13 @@ async function radarGet(env, path) {
   const token = env.CF_API_TOKEN;
   if (!token) return { ok: false, error: "توکن Radar روی سرور تنظیم نشده" };
   const key = "rd:" + djb2(path);
-  try { const c = await env.DNSRADAR_KV.get(key); if (c) return { ok: true, cached: true, ...JSON.parse(c) }; } catch {}
+  try { const c = await kvGet(env,key); if (c) return { ok: true, cached: true, ...JSON.parse(c) }; } catch {}
   try {
     const r = await fetch("https://api.cloudflare.com/client/v4/radar/" + path, { headers: { Authorization: "Bearer " + token } });
     const j = await r.json().catch(() => null);
     if (!r.ok || !j || j.success === false) return { ok: false, error: "radar " + r.status + " " + String((j && j.errors && j.errors[0] && j.errors[0].message) || "") };
     const out = { result: j.result };
-    try { await env.DNSRADAR_KV.put(key, JSON.stringify(out), { expirationTtl: 900 }); } catch {}
+    try { await kvPut(env,key, JSON.stringify(out), { expirationTtl: 900 }); } catch {}
     return { ok: true, cached: false, ...out };
   } catch (e) { return { ok: false, error: "radar fetch: " + String(e?.name || e) }; }
 }
@@ -326,6 +326,59 @@ const EDGE_RESOLVERS = [
 /* ------------------------------------------------------------------ ابزارهای تازه */
 
 const djb2 = (str) => { let h = 5381; for (let i = 0; i < str.length; i++) h = ((h * 33) ^ str.charCodeAt(i)) >>> 0; return h.toString(36); };
+/* ---------- KV امن (دور ۹): تمام‌شدن سهمیهٔ روزانهٔ KV نباید هیچ درخواستی را ۵۰۰ کند ----------
+   هر خواندن/نوشتن داخل try/catch است؛ روی خطا null/false برمی‌گردد و مسیر بدون کش ادامه می‌یابد.
+   کش حافظه‌ای ۱۲۰ ثانیه‌ای هم تعداد نوشتن‌های واقعی را کم می‌کند (کلیدهای شمارنده مستثنا). */
+const MEMCACHE = new Map();
+function memGet(key) {
+  const e = MEMCACHE.get(key);
+  if (!e) return undefined;
+  if (Date.now() - e.at > e.ttl * 1000) { MEMCACHE.delete(key); return undefined; }
+  return e.val;
+}
+function memSet(key, val, ttl) {
+  try {
+    if (MEMCACHE.size > 800) MEMCACHE.delete(MEMCACHE.keys().next().value);
+    MEMCACHE.set(key, { at: Date.now(), ttl: ttl || 300, val });
+  } catch {}
+}
+// شمارنده‌ها (خواندن-تغییر-نوشتن) نباید از حافظه خوانده شوند تا آمار دقیق بماند
+const KV_NOMEM = (k) => typeof k === "string" && (k.startsWith("chb:") || k.startsWith("st:") || k.startsWith("hr:") || k.startsWith("d:2"));
+async function kvGet(env, key, type) {
+  if (!KV_NOMEM(key)) {
+    const m = memGet("g:" + key);
+    if (m !== undefined) {
+      if (type === "json") { try { return typeof m === "string" ? JSON.parse(m) : m; } catch { return null; } }
+      return m;
+    }
+  }
+  try {
+    const v = await env.DNSRADAR_KV.get(key, type || "text");
+    if (v !== null && v !== undefined && !KV_NOMEM(key)) {
+      try { memSet("g:" + key, typeof v === "string" ? v : JSON.stringify(v), 120); } catch {}
+    }
+    return v;
+  } catch { return null; }
+}
+async function kvPut(env, key, val, opts) {
+  if (!KV_NOMEM(key)) {
+    try {
+      if (memGet("g:" + key) === val) return true; // مقدار تکراری: نوشتن واقعی لازم نیست
+      const ttl = (opts && opts.expirationTtl) || 300;
+      memSet("g:" + key, val, Math.min(ttl, 600));
+    } catch {}
+  }
+  try { await env.DNSRADAR_KV.put(key, val, opts || {}); return true; }
+  catch { return false; }
+}
+async function kvDel(env, key) {
+  try { MEMCACHE.delete("g:" + key); } catch {}
+  try { await env.DNSRADAR_KV.delete(key); return true; } catch { return false; }
+}
+async function kvList(env, opts) {
+  try { return await env.DNSRADAR_KV.list(opts || {}); }
+  catch { return { keys: [], list_complete: true, cursor: undefined }; }
+}
 
 function carrierList() {
   return [].concat(
@@ -369,7 +422,7 @@ function nearestProvince(lat, lon) {
 /** پروکسی Globalping با کش KV — سنجش از داخل ایران و هر کشور دیگر */
 async function gpRun(env, payload, ttl = 900) {
   const key = "gp:v3:" + djb2(JSON.stringify(payload));   // v2: ساختار hops اصلاح شد
-  try { const c = await env.DNSRADAR_KV.get(key); if (c) return { ok: true, cached: true, ...JSON.parse(c) }; } catch {}
+  try { const c = await kvGet(env,key); if (c) return { ok: true, cached: true, ...JSON.parse(c) }; } catch {}
   let post;
   try {
     post = await fetch("https://api.globalping.io/v1/measurements", {
@@ -390,7 +443,7 @@ async function gpRun(env, payload, ttl = 900) {
   }
   if (!d) return { ok: false, error: "نتیجه نگرفت (تایم‌اوت)" };
   const out = gpSimplify(d, j.id);
-  try { await env.DNSRADAR_KV.put(key, JSON.stringify(out), { expirationTtl: ttl }); } catch {}
+  try { await kvPut(env,key, JSON.stringify(out), { expirationTtl: ttl }); } catch {}
   return { ok: true, cached: false, ...out };
 }
 function gpSimplify(d, id) {
@@ -735,7 +788,7 @@ async function botHandleUpdate(env, update) {
   // ذخیرهٔ کاربر
   if (msg?.from) {
     try {
-      await env.DNSRADAR_KV.put(`user:${msg.from.id}`, JSON.stringify({
+      await kvPut(env,`user:${msg.from.id}`, JSON.stringify({
         id: msg.from.id, username: msg.from.username, name: msg.from.first_name,
         lang: msg.from.language_code, ts: Date.now(),
       }), { expirationTtl: 60 * 60 * 24 * 180 });
@@ -769,7 +822,7 @@ async function botHandleUpdate(env, update) {
 
   if (msg.location) {
     const pr = nearestProvince(msg.location.latitude, msg.location.longitude);
-    await env.DNSRADAR_KV.put(`geo:${chatId}`, JSON.stringify({ province: pr?.fa || null, lat: msg.location.latitude,
+    await kvPut(env,`geo:${chatId}`, JSON.stringify({ province: pr?.fa || null, lat: msg.location.latitude,
       lon: msg.location.longitude, ts: Date.now() }), { expirationTtl: 60 * 60 * 24 * 365 });
     await tg(env, "sendMessage", { chat_id: chatId, parse_mode: "HTML", disable_web_page_preview: true,
       text: pr ? `📍 ثبت شد: <b>${esc(pr.fa)}</b> (نزدیک‌ترین مرکز استان، ~${pr.km} کیلومتر).\nاپراتورت را هم بگو: <code>/city ${esc(pr.fa)} ایرانسل</code>` : "📍 موقعیت ثبت شد.",
@@ -844,7 +897,7 @@ async function botHandleUpdate(env, update) {
 
   if (cmd === "/geo") {
     let saved = null;
-    try { const raw = await env.DNSRADAR_KV.get(`geo:${chatId}`); if (raw) saved = JSON.parse(raw); } catch {}
+    try { const raw = await kvGet(env,`geo:${chatId}`); if (raw) saved = JSON.parse(raw); } catch {}
     const me = await tg(env, "sendMessage", { chat_id: chatId, parse_mode: "HTML", disable_web_page_preview: true,
       text: ["📍 <b>جای من</b>",
         saved ? `ثبت‌شده: <b>${esc(saved.province || saved.city || "—")}</b>` : "هنوز چیزی ثبت نشده.",
@@ -860,7 +913,7 @@ async function botHandleUpdate(env, update) {
     const car = parts.slice(1).join(" ");
     const doc = { province: found ? found.fa : (parts[0] || null), city: parts[0] || null, carrier: car || null,
       lat: found?.lat ?? null, lon: found?.lon ?? null, ts: Date.now(), manual: true };
-    await env.DNSRADAR_KV.put(`geo:${chatId}`, JSON.stringify(doc), { expirationTtl: 60 * 60 * 24 * 365 });
+    await kvPut(env,`geo:${chatId}`, JSON.stringify(doc), { expirationTtl: 60 * 60 * 24 * 365 });
     await tg(env, "sendMessage", { chat_id: chatId, parse_mode: "HTML", reply_markup: mainKeyboard(),
       text: `✅ ثبت شد: <b>${esc(doc.city || "—")}</b>${doc.province && doc.province !== doc.city ? ` (استان ${esc(doc.province)})` : ""}${doc.carrier ? ` · <b>${esc(doc.carrier)}</b>` : ""}\n\nحالا در اپ، نتیجه‌ها را بی‌نام برای همین گروه ثبت کن.` });
     return;
@@ -883,7 +936,7 @@ async function botHandleUpdate(env, update) {
       return;
     }
     const doc = { chat: chatId, target, thr, maxJitter: maxJitter || 1e9, maxLoss, hours, ts: Date.now(), last: null };
-    await env.DNSRADAR_KV.put(`w:${chatId}:${target}`, JSON.stringify(doc));
+    await kvPut(env,`w:${chatId}:${target}`, JSON.stringify(doc));
     const cond = [`میانه > ${thr}ms`];
     if (maxJitter) cond.push(`نوسان > ${maxJitter}ms`);
     if (maxLoss < 50) cond.push(`افت > ${maxLoss}٪`);
@@ -895,21 +948,21 @@ async function botHandleUpdate(env, update) {
   if (cmd === "/unwatch") {
     const t = arg.trim();
     if (!t) {
-      const l = await env.DNSRADAR_KV.list({ prefix: `w:${chatId}:` });
-      for (const k of l.keys) await env.DNSRADAR_KV.delete(k.name);
+      const l = await kvList(env,{ prefix: `w:${chatId}:` });
+      for (const k of l.keys) await kvDel(env,k.name);
       await tg(env, "sendMessage", { chat_id: chatId, text: "🧹 همهٔ پایش‌های تو حذف شد.", reply_markup: mainKeyboard() });
       return;
     }
-    await env.DNSRADAR_KV.delete(`w:${chatId}:${t}`);
+    await kvDel(env,`w:${chatId}:${t}`);
     await tg(env, "sendMessage", { chat_id: chatId, parse_mode: "HTML", text: `حذف شد: <code>${esc(t)}</code>`, reply_markup: mainKeyboard() });
     return;
   }
   if (cmd === "/watching") {
-    const l = await env.DNSRADAR_KV.list({ prefix: `w:${chatId}:` });
+    const l = await kvList(env,{ prefix: `w:${chatId}:` });
     const lines = ["🔔 <b>پایش‌های فعال</b>"];
     for (const k of l.keys) {
-      const raw = await env.DNSRADAR_KV.get(k.name); if (!raw) continue;
-      const w = JSON.parse(raw);
+      const raw = await kvGet(env,k.name); if (!raw) continue;
+      let w; try { w = JSON.parse(raw); } catch { continue; }
       const extras = [];
       if (w.maxJitter && w.maxJitter < 1e8) extras.push(`نوسان≤${w.maxJitter}ms`);
       if (w.maxLoss != null && w.maxLoss < 50) extras.push(`افت≤${w.maxLoss}٪`);
@@ -924,11 +977,11 @@ async function botHandleUpdate(env, update) {
   if (cmd === "/stats") {
     const prov = arg.trim().split(/\s+/)[0] || "";
     const prefix = prov ? `st:${prov}:` : "st:";
-    const l = await env.DNSRADAR_KV.list({ prefix, limit: 400 });
+    const l = await kvList(env,{ prefix, limit: 400 });
     const rows = [];
     for (const k of l.keys) {
-      const raw = await env.DNSRADAR_KV.get(k.name); if (!raw) continue;
-      const parts = k.name.split(":"); const v = JSON.parse(raw);
+      const raw = await kvGet(env,k.name); if (!raw) continue;
+      const parts = k.name.split(":"); let v; try { v = JSON.parse(raw); } catch { continue; }
       rows.push({ p: parts[1], c: parts[2], r: parts.slice(3).join(":"), n: v.n, avg: v.avg });
     }
     rows.sort((a, b) => (a.avg ?? 1e9) - (b.avg ?? 1e9));
@@ -1075,10 +1128,10 @@ async function botHandleUpdate(env, update) {
 
 async function checkWatchers(env) {
   let list;
-  try { list = await env.DNSRADAR_KV.list({ prefix: "w:", limit: 500 }); } catch { return; }
+  try { list = await kvList(env,{ prefix: "w:", limit: 500 }); } catch { return; }
   const r = EDGE_RESOLVERS[0];
   for (const k of list.keys) {
-    const raw = await env.DNSRADAR_KV.get(k.name);
+    const raw = await kvGet(env,k.name);
     if (!raw) continue;
     let w; try { w = JSON.parse(raw); } catch { continue; }
     if (!w?.target || !w?.chat) continue;
@@ -1124,7 +1177,7 @@ async function checkWatchers(env) {
             "<i>از لبهٔ ما اندازه‌گیری شد؛ برای خط خودت اپ را باز کن.</i>" });
       } catch {}
     }
-    try { await env.DNSRADAR_KV.put(k.name, JSON.stringify(w)); } catch {}
+    try { await kvPut(env,k.name, JSON.stringify(w)); } catch {}
   }
 }
 
@@ -1183,7 +1236,7 @@ async function gpFetch(id) {
 }
 async function gpProbe(env, payload, ttl = 900) {
   const key = "wv:" + djb2(JSON.stringify(payload));
-  const hit = await env.DNSRADAR_KV.get(key, "json");
+  const hit = await kvGet(env,key, "json");
   if (hit) return hit;
   const s = await gpSubmit(payload);
   if (s.err) return { ok: false, error: s.err };
@@ -1191,7 +1244,7 @@ async function gpProbe(env, payload, ttl = 900) {
     await sleep(2200);
     const d = await gpFetch(s.id);
     if (d && d.status === "finished") {
-      await env.DNSRADAR_KV.put(key, JSON.stringify(d), { expirationTtl: ttl });
+      await kvPut(env,key, JSON.stringify(d), { expirationTtl: ttl });
       return d;
     }
     if (d && d.status === "failed") return { ok: false, error: "gp_failed" };
@@ -1228,19 +1281,19 @@ function gpHttpRows(d) {
 
 /* ------------------------- check-host (شاهد مکمل) ------------------------- */
 async function chAvailable(env) {
-  try { return !(await env.DNSRADAR_KV.get("ch:off")); } catch { return true; }
+  try { return !(await kvGet(env,"ch:off")); } catch { return true; }
 }
 async function chMarkOff(env) {
-  try { await env.DNSRADAR_KV.put("ch:off", String(Date.now()), { expirationTtl: 3600 }); } catch {}
+  try { await kvPut(env,"ch:off", String(Date.now()), { expirationTtl: 3600 }); } catch {}
 }
 
 async function chBudget(env, n) {
   if (!env || !env.DNSRADAR_KV) return true;
   try {
     const k = "chb:" + new Date(Date.now() + 3.5 * 3600 * 1000).toISOString().slice(0, 13);
-    const cur = parseInt((await env.DNSRADAR_KV.get(k)) || "0", 10) || 0;
+    const cur = parseInt((await kvGet(env,k)) || "0", 10) || 0;
     if (cur + n > 120) return false;
-    await env.DNSRADAR_KV.put(k, String(cur + n), { expirationTtl: 7200 });
+    await kvPut(env,k, String(cur + n), { expirationTtl: 7200 });
     return true;
   } catch { return true; }
 }
@@ -1309,7 +1362,7 @@ function chTcpRows(res, nodes) {
 /* ==================== /api/filter — چرا فیلتر است؟ ==================== */
 async function filterProbe(env, host) {
   const key = "flt:v2:" + host.toLowerCase();
-  const hit = await env.DNSRADAR_KV.get(key, "json");
+  const hit = await kvGet(env,key, "json");
   if (hit && Date.now() - (hit.at || 0) < 20 * 60 * 1000) return { ...hit, cache: "hit" };
   const chOpen = await chAvailable(env);
   const budget = chOpen && (await chBudget(env, 6));
@@ -1455,14 +1508,14 @@ async function filterProbe(env, host) {
       "هر حکم با درجهٔ اطمینان و شاهد خام منتشر می‌شود؛ «نشانه» را «اثبات» نمی‌نامیم.",
     ],
   };
-  await env.DNSRADAR_KV.put(key, JSON.stringify(out), { expirationTtl: 6 * 3600 });
+  await kvPut(env,key, JSON.stringify(out), { expirationTtl: 6 * 3600 });
   return out;
 }
 
 /* ==================== /api/vantage — نقطه‌به‌نقطه از شبکه‌های ایران ==================== */
 async function vantageProbe(env, host, near) {
   const key = "vnt:v2:" + host.toLowerCase() + (near ? ":n" : "");
-  const hit = await env.DNSRADAR_KV.get(key, "json");
+  const hit = await kvGet(env,key, "json");
   if (hit && Date.now() - (hit.at || 0) < 15 * 60 * 1000) return { ...hit, cache: "hit" };
 
   const pPing = gpProbe(env, { type: "ping", target: host, locations: [{ country: "IR" }], limit: 6,
@@ -1518,7 +1571,7 @@ async function vantageProbe(env, host, near) {
     note: "پینگ و HTTPS از شبکه‌های دیتاسنتری ایران؛ «تفاوت بهترین و بدترین شبکه» دقیقاً همان چیزی است که انتخاب رزولور/مسیر را معنادار می‌کند.",
     sources: ["Globalping"],
   };
-  await env.DNSRADAR_KV.put(key, JSON.stringify(out), { expirationTtl: 3600 });
+  await kvPut(env,key, JSON.stringify(out), { expirationTtl: 3600 });
   return out;
 }
 
@@ -1685,7 +1738,7 @@ function v6Zone(ip) {
 async function asnInfoAny(env, ip) {
   if (!String(ip).includes(":")) return await asnInfo(env, ip);
   const key = "an6:" + ip;
-  const hit = await env.DNSRADAR_KV.get(key, "json");
+  const hit = await kvGet(env,key, "json");
   if (hit) return { ...hit, cache: "hit" };
   let out = { ip, source: null };
   const zone = v6Zone(ip);
@@ -1700,7 +1753,7 @@ async function asnInfoAny(env, ip) {
         source: "Team Cymru (DNS، v6)" };
     } else out.source = "این آی‌پی v6 ثبت عمومی در Team Cymru ندارد";
   }
-  await env.DNSRADAR_KV.put(key, JSON.stringify(out), { expirationTtl: 7 * 86400 });
+  await kvPut(env,key, JSON.stringify(out), { expirationTtl: 7 * 86400 });
   return out;
 }
 async function scanResolveHost(host) {
@@ -1850,7 +1903,7 @@ async function dohTxt(name) {
 }
 async function asnInfo(env, ip) {
   const key = "an:" + ip;
-  const hit = await env.DNSRADAR_KV.get(key, "json");
+  const hit = await kvGet(env,key, "json");
   if (hit) return { ...hit, cache: "hit" };
   let out = { ip, source: null };
   const txt = await dohTxt(ip.split(".").reverse().join(".") + ".origin.asn.cymru.com");
@@ -1866,7 +1919,7 @@ async function asnInfo(env, ip) {
     if (alt && alt.asn) out = { ip, asn: alt.asn, holder: alt.holder || null, prefix: alt.prefix || null, cc: null, source: "RIPEstat (پشتیبان)" };
   }
   if (!out.asn) out.source = "ثبت عمومی ندارد";
-  await env.DNSRADAR_KV.put(key, JSON.stringify(out), { expirationTtl: 30 * 86400 });
+  await kvPut(env,key, JSON.stringify(out), { expirationTtl: 30 * 86400 });
   return out;
 }
 
@@ -1884,7 +1937,7 @@ function irCarrierByAsn(asn) {
 
 async function ixInfo(env, asn) {
   const key = "ixd:v2:" + asn;
-  const hit = await env.DNSRADAR_KV.get(key, "json");
+  const hit = await kvGet(env,key, "json");
   if (hit) return { ...hit, cache: "hit" };
   try {
     const r = await fetch(`https://www.peeringdb.com/api/netixlan?asn=${asn}`, {
@@ -1902,7 +1955,7 @@ async function ixInfo(env, asn) {
       note: rows.length ? "" :
         (iran ? `این ASN متعلق به «${iran.fa}» است${iran.plmn.length ? " (PLMN " + iran.plmn.join("، ") + ")" : ""} و رکورد peering عمومی در PeeringDB ندارد؛ برای این اپراتورها جدول محلی + مسیرهای اندازه‌گیری‌شدهٔ خودمان (/api/path) منبع اصلی است.`
               : "این ASN رکورد peering عمومی در PeeringDB ندارد — یعنی داده از این‌جا نمی‌آید، نه این‌که peering ندارد.") };
-    await env.DNSRADAR_KV.put(key, JSON.stringify(out), { expirationTtl: 7 * 86400 });
+    await kvPut(env,key, JSON.stringify(out), { expirationTtl: 7 * 86400 });
     return out;
   } catch { return { ok: false, asn, error: "pdb_net" }; }
 }
@@ -1910,7 +1963,7 @@ async function ixInfo(env, asn) {
 /* ==================== /api/ioda ==================== */
 async function iodaGet(env, cc, hours) {
   const key = "io:" + cc + ":" + hours;
-  const hit = await env.DNSRADAR_KV.get(key, "json");
+  const hit = await kvGet(env,key, "json");
   if (hit && Date.now() - (hit.at || 0) < 15 * 60 * 1000) return { ...hit, cache: "hit" };
   const until = Math.floor(Date.now() / 1000), from = until - Math.min(168, Math.max(1, hours || 24)) * 3600;
   try {
@@ -1922,7 +1975,7 @@ async function iodaGet(env, cc, hours) {
       scores: Object.fromEntries(Object.entries(e.scores || {}).map(([k, v]) => [k, Math.round(v * 1000) / 1000])) }));
     const out = { ok: true, cc, hours: hours || 24, rows, at: Date.now(), source: "IODA — Georgia Tech",
       note: "سیگنال‌های BGP و میانهٔ پینگ /۲۴ — مکمل رادار کلادفلر." };
-    await env.DNSRADAR_KV.put(key, JSON.stringify(out), { expirationTtl: 3600 });
+    await kvPut(env,key, JSON.stringify(out), { expirationTtl: 3600 });
     return out;
   } catch { return { ok: false, error: "ioda_net" }; }
 }
@@ -1930,7 +1983,7 @@ async function iodaGet(env, cc, hours) {
 /* ==================== /api/edns — TCP/53 از داخل ایران ==================== */
 async function ednsProbe(env) {
   const key = "edns:v2";
-  const hit = await env.DNSRADAR_KV.get(key, "json");
+  const hit = await kvGet(env,key, "json");
   if (hit && Date.now() - (hit.at || 0) < 30 * 60 * 1000) return { ...hit, cache: "hit" };
   const pTcp = gpProbe(env, { type: "dns", target: "cloudflare.com", locations: [{ country: "IR" }], limit: 4,
     measurementOptions: { resolver: "8.8.8.8", protocol: "TCP", port: 53 } }, 1800);
@@ -1959,7 +2012,7 @@ async function ednsProbe(env) {
   const out = { ok: true, at: Date.now(), cache: "miss", tcp: rowsTcp, udp: rowsUdp, verdict, doh_ms: dohMs,
     note: "۱۲۳۲ = ۱۲۸۰ (حداقل MTU آی‌پی‌وی‌۶) − ۴۸ بایت هدر — توصیهٔ DNS Flag Day 2020. آزمون با رزولور ۸.۸.۸.۸ از داخل ایران انجام می‌شود.",
     sources: ["Globalping", "DNS Flag Day 2020"] };
-  await env.DNSRADAR_KV.put(key, JSON.stringify(out), { expirationTtl: 3600 });
+  await kvPut(env,key, JSON.stringify(out), { expirationTtl: 3600 });
   return out;
 }
 
@@ -1973,11 +2026,11 @@ async function rtcHandle(env, request, url) {
     if (!["offer", "answer", "cand-o", "cand-a", "bye"].includes(role)) return json({ ok: false, error: "role نامعتبر" }, 400);
     const data = JSON.stringify(b.data ?? null);
     if (data.length > 12000) return json({ ok: false, error: "حجم زیاد" }, 413);
-    await env.DNSRADAR_KV.put(`rtc:${code}:${role}`, data, { expirationTtl: 900 });
+    await kvPut(env,`rtc:${code}:${role}`, data, { expirationTtl: 900 });
     return json({ ok: true, code, role, ttl: 900 });
   }
   const role = String(url.searchParams.get("role") || "").slice(0, 10).toLowerCase();
-  const raw = await env.DNSRADAR_KV.get(`rtc:${code}:${role}`);
+  const raw = await kvGet(env,`rtc:${code}:${role}`);
   let data = null; try { data = raw ? JSON.parse(raw) : null; } catch {}
   return json({ ok: true, code, role, data, note: "اتاق ۱۵ دقیقه عمر دارد؛ داده فقط بین دو دستگاه خودتان رد و بدل می‌شود." });
 }
@@ -2099,7 +2152,7 @@ const RACE_RESOLVERS = [
 ];
 async function dohRace(env, name) {
   const key = "dr:" + djb2(name);
-  const hit = await env.DNSRADAR_KV.get(key, "json");
+  const hit = await kvGet(env,key, "json");
   if (hit && Date.now() - (hit.at || 0) < 10 * 60 * 1000) return { ...hit, cache: "hit" };
   const one = async (r) => {
     const ctrl = new AbortController();
@@ -2127,7 +2180,7 @@ async function dohRace(env, name) {
     distinct_first_ips: distinct.length,
     note: "این مسابقه از «لبهٔ شبکهٔ کلادفلر» اجرا می‌شود، نه از خط تو — برای اینکه همیشه عدد واقعی داشته باشی حتی وقتی اپراتور DoH را می‌بندد. مسابقهٔ از خط خودت در همان بخش، جداگانه نمایش داده می‌شود.",
     sources: ["Cloudflare edge → DoH providers"] };
-  await env.DNSRADAR_KV.put(key, JSON.stringify(out), { expirationTtl: 1800 });
+  await kvPut(env,key, JSON.stringify(out), { expirationTtl: 1800 });
   return out;
 }
 
@@ -2306,23 +2359,24 @@ async function dohRace(env, name) {
         const ms = Math.max(0, Math.min(20000, Number(b.ms) || 0));
         const key = `st:${prov}:${carrier}:${res}`;
         let cur = { n: 0, ok: 0, sum: 0, min: null, max: null };
-        try { const raw = await env.DNSRADAR_KV.get(key); if (raw) cur = JSON.parse(raw); } catch {}
+        try { const raw = await kvGet(env,key); if (raw) cur = JSON.parse(raw); } catch {}
         cur.n++; cur.ok += b.ok === false ? 0 : 1; cur.sum += ms;
         cur.min = cur.min === null ? ms : Math.min(cur.min, ms);
         cur.max = cur.max === null ? ms : Math.max(cur.max, ms);
         cur.avg = Math.round((cur.sum / cur.n) * 10) / 10; cur.ts = Date.now();
-        await env.DNSRADAR_KV.put(key, JSON.stringify(cur));
+        const wMain = await kvPut(env,key, JSON.stringify(cur));
         // ساعت طلایی + روند روزانه (به وقت ایران: UTC+3:30)
         const ir = new Date(Date.now() + 3.5 * 3600 * 1000);
         const hh = ir.getUTCHours(), day = ir.toISOString().slice(0, 10);
+        let wAll = wMain;
         for (const hk of [`hr:${prov}:${carrier}:${hh}`, `d:${day}:${prov}:${carrier}`]) {
           let hcur = { n: 0, sum: 0, ok: 0 };
-          try { const hr = await env.DNSRADAR_KV.get(hk); if (hr) hcur = JSON.parse(hr); } catch {}
+          try { const hr = await kvGet(env,hk); if (hr) hcur = JSON.parse(hr); } catch {}
           hcur.n++; hcur.ok += b.ok === false ? 0 : 1; hcur.sum += ms;
           hcur.avg = Math.round((hcur.sum / hcur.n) * 10) / 10;
-          await env.DNSRADAR_KV.put(hk, JSON.stringify(hcur));
+          wAll = wAll && await kvPut(env,hk, JSON.stringify(hcur));
         }
-        return json({ ok: true, key, cur, hour: hh, day, note: "بی‌نام ذخیره شد: فقط استان/اپراتور/رزولور/عدد." });
+        return json({ ok: true, key, cur, hour: hh, day, persisted: !!wAll, note: wAll ? "بی‌نام ذخیره شد: فقط استان/اپراتور/رزولور/عدد." : "سهمیهٔ روزانهٔ ذخیره‌سازی سرور تمام شد؛ عدد روی صفحهٔ تو هست ولی در آمار جمعی ثبت نشد." });
       }
 
       /* --- آمار استانی/اپراتوری (آنچه کاربران دیگر ثبت کرده‌اند) --- */
@@ -2330,10 +2384,10 @@ async function dohRace(env, name) {
         const prov = (url.searchParams.get("province") || "").trim().slice(0, 24);
         const car = (url.searchParams.get("carrier") || "").trim().slice(0, 24);
         const prefix = (prov || car) ? `st:${prov}:${car}` : "st:";
-        const list = await env.DNSRADAR_KV.list({ prefix, limit: 500 });
+        const list = await kvList(env,{ prefix, limit: 500 });
         const rows = [];
         for (const k of list.keys) {
-          const raw = await env.DNSRADAR_KV.get(k.name);
+          const raw = await kvGet(env,k.name);
           if (!raw) continue;
           const parts = k.name.split(":");
           try { rows.push({ province: parts[1], carrier: parts[2], resolver: parts.slice(3).join(":"), ...JSON.parse(raw) }); } catch {}
@@ -2345,12 +2399,12 @@ async function dohRace(env, name) {
 
       /* --- جدول رده‌بندی استانی/اپراتوری --- */
       if (p === "/api/leaderboard") {
-        const list = await env.DNSRADAR_KV.list({ prefix: "st:", limit: 800 });
+        const list = await kvList(env,{ prefix: "st:", limit: 800 });
         const agg = new Map();
         for (const k of list.keys) {
-          const raw = await env.DNSRADAR_KV.get(k.name);
+          const raw = await kvGet(env,k.name);
           if (!raw) continue;
-          const parts = k.name.split(":"); const v = JSON.parse(raw);
+          const parts = k.name.split(":"); let v; try { v = JSON.parse(raw); } catch { continue; }
           const id = parts[1] + "|" + parts[2];
           const a = agg.get(id) || { province: parts[1], carrier: parts[2], n: 0, sum: 0, resolvers: new Set() };
           a.n += v.n || 0; a.sum += (v.avg || 0) * (v.n || 0); a.resolvers.add(parts.slice(3).join(":"));
@@ -2552,10 +2606,10 @@ async function dohRace(env, name) {
       if (p === "/api/golden") {
         const prov = (url.searchParams.get("province") || "").trim().slice(0, 24);
         const car = (url.searchParams.get("carrier") || "").trim().slice(0, 24);
-        const list = await env.DNSRADAR_KV.list({ prefix: `hr:${prov}:${car}`, limit: 800 });
+        const list = await kvList(env,{ prefix: `hr:${prov}:${car}`, limit: 800 });
         const hours = Array.from({ length: 24 }, () => ({ n: 0, sum: 0 }));
         for (const k of list.keys) {
-          const raw = await env.DNSRADAR_KV.get(k.name); if (!raw) continue;
+          const raw = await kvGet(env,k.name); if (!raw) continue;
           const hh = parseInt(k.name.split(":")[3], 10); if (!(hh >= 0 && hh < 24)) continue;
           let v; try { v = JSON.parse(raw); } catch { continue; }
           hours[hh].n += v.n || 0; hours[hh].sum += (v.avg || 0) * (v.n || 0);
@@ -2573,10 +2627,10 @@ async function dohRace(env, name) {
         const prov = (url.searchParams.get("province") || "").trim().slice(0, 24);
         const car = (url.searchParams.get("carrier") || "").trim().slice(0, 24);
         const days = Math.min(90, Math.max(7, parseInt(url.searchParams.get("days") || "30", 10) || 30));
-        const list = await env.DNSRADAR_KV.list({ prefix: `d:${prov}:${car}`, limit: 900 });
+        const list = await kvList(env,{ prefix: `d:${prov}:${car}`, limit: 900 });
         const byDay = new Map();
         for (const k of list.keys) {
-          const raw = await env.DNSRADAR_KV.get(k.name); if (!raw) continue;
+          const raw = await kvGet(env,k.name); if (!raw) continue;
           const day = k.name.split(":")[1]; if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) continue;
           let v; try { v = JSON.parse(raw); } catch { continue; }
           const a = byDay.get(day) || { n: 0, sum: 0, ok: 0 };
@@ -2612,10 +2666,10 @@ async function dohRace(env, name) {
 
       /* --- 📤 دادهٔ باز (بی‌نام): JSON یا CSV --- */
       if (p === "/api/export") {
-        const list = await env.DNSRADAR_KV.list({ prefix: "st:", limit: 1000 });
+        const list = await kvList(env,{ prefix: "st:", limit: 1000 });
         const rows = [];
         for (const k of list.keys) {
-          const raw = await env.DNSRADAR_KV.get(k.name); if (!raw) continue;
+          const raw = await kvGet(env,k.name); if (!raw) continue;
           const parts = k.name.split(":"); let v; try { v = JSON.parse(raw); } catch { continue; }
           rows.push({ province: parts[1], carrier: parts[2], resolver: parts.slice(3).join(":"),
             n: v.n || 0, ok: v.ok || 0, avg_ms: v.avg ?? null, min_ms: v.min ?? null, max_ms: v.max ?? null });
@@ -2640,12 +2694,12 @@ async function dohRace(env, name) {
           if (b.action === "create") {
             const code = "T" + shortId().slice(0, 5).toUpperCase();
             const doc = { code, name: String(b.name || "تیم بدون نام").slice(0, 30), created: Date.now(), members: [] };
-            await env.DNSRADAR_KV.put(`team:${code}`, JSON.stringify(doc), { expirationTtl: 60 * 60 * 24 * 90 });
+            await kvPut(env,`team:${code}`, JSON.stringify(doc), { expirationTtl: 60 * 60 * 24 * 90 });
             return json({ ok: true, ...doc });
           }
           if (b.action === "join") {
             const code = String(b.code || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 6);
-            const raw = await env.DNSRADAR_KV.get(`team:${code}`);
+            const raw = await kvGet(env,`team:${code}`);
             if (!raw) return json({ ok: false, error: "تیم پیدا نشد" }, 404);
             const doc = JSON.parse(raw);
             const uid = String(b.uid || "").slice(0, 24);
@@ -2653,25 +2707,25 @@ async function dohRace(env, name) {
             if (doc.members.length >= 20) return json({ ok: false, error: "تیم پر است (۲۰ نفر)" }, 400);
             doc.members.push({ uid, name: String(b.name || "بازیکن").slice(0, 24),
               province: String(b.province || "").slice(0, 24), carrier: String(b.carrier || "").slice(0, 24), ts: Date.now() });
-            await env.DNSRADAR_KV.put(`team:${code}`, JSON.stringify(doc), { expirationTtl: 60 * 60 * 24 * 90 });
+            await kvPut(env,`team:${code}`, JSON.stringify(doc), { expirationTtl: 60 * 60 * 24 * 90 });
             return json({ ok: true, ...doc });
           }
           return json({ ok: false, error: "action نامعتبر (create|join)" }, 400);
         }
         const code = (url.searchParams.get("code") || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 6);
         if (!code) return json({ ok: false, error: "کد تیم لازم است" }, 400);
-        const raw = await env.DNSRADAR_KV.get(`team:${code}`);
+        const raw = await kvGet(env,`team:${code}`);
         if (!raw) return json({ ok: false, error: "تیم پیدا نشد" }, 404);
         const doc = JSON.parse(raw);
         const provs = [...new Set((doc.members || []).map((m) => m.province).filter(Boolean))];
         const carriers = [...new Set((doc.members || []).map((m) => m.carrier).filter(Boolean))];
-        const list = await env.DNSRADAR_KV.list({ prefix: "st:", limit: 800 });
+        const list = await kvList(env,{ prefix: "st:", limit: 800 });
         const byRes = new Map();
         for (const k of list.keys) {
           const parts = k.name.split(":");
           if (provs.length && !provs.includes(parts[1])) continue;
           if (carriers.length && !carriers.includes(parts[2])) continue;
-          const r2 = await env.DNSRADAR_KV.get(k.name); if (!r2) continue;
+          const r2 = await kvGet(env,k.name); if (!r2) continue;
           let v; try { v = JSON.parse(r2); } catch { continue; }
           const res = parts.slice(3).join(":");
           const a = byRes.get(res) || { n: 0, sum: 0 };
@@ -2751,10 +2805,10 @@ e.respondWith(fetch(req).then(r=>{var cl=r.clone();caches.open(C).then(c=>c.put(
 
       /* --- 🩺 صفحهٔ وضعیت عمومی --- */
       if (p === "/status") {
-        const list = await env.DNSRADAR_KV.list({ prefix: "st:", limit: 400 });
+        const list = await kvList(env,{ prefix: "st:", limit: 400 });
         const rows = [];
         for (const k of list.keys) {
-          const raw = await env.DNSRADAR_KV.get(k.name); if (!raw) continue;
+          const raw = await kvGet(env,k.name); if (!raw) continue;
           const parts = k.name.split(":"); let v; try { v = JSON.parse(raw); } catch { continue; }
           rows.push({ province: parts[1], carrier: parts[2], resolver: parts.slice(3).join(":"), ...v });
         }
@@ -2766,10 +2820,10 @@ e.respondWith(fetch(req).then(r=>{var cl=r.clone();caches.open(C).then(c=>c.put(
 
       /* --- 📅 گزارش ماهانه (بهداشت اینترنت) --- */
       if (p === "/report") {
-        const list = await env.DNSRADAR_KV.list({ prefix: "st:", limit: 1000 });
+        const list = await kvList(env,{ prefix: "st:", limit: 1000 });
         const byProv = new Map(); let samples = 0, keyCount = 0;
         for (const k of list.keys) {
-          const raw = await env.DNSRADAR_KV.get(k.name); if (!raw) continue;
+          const raw = await kvGet(env,k.name); if (!raw) continue;
           const parts = k.name.split(":"); let v; try { v = JSON.parse(raw); } catch { continue; }
           keyCount++; samples += v.n || 0;
           const a = byProv.get(parts[1]) || { n: 0, sum: 0, carriers: new Set() };
@@ -2877,7 +2931,7 @@ e.respondWith(fetch(req).then(r=>{var cl=r.clone();caches.open(C).then(c=>c.put(
             ms: typeof r.ms === "number" ? Math.round(r.ms) : null,
           })),
         };
-        await env.DNSRADAR_KV.put(`r:${id}`, JSON.stringify(doc), { expirationTtl: 60 * 60 * 24 * 90 });
+        await kvPut(env,`r:${id}`, JSON.stringify(doc), { expirationTtl: 60 * 60 * 24 * 90 });
         const shareUrl = `${url.origin}/r/${id}`;
         const tgShare = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}` +
           `&text=${encodeURIComponent("نتیجهٔ تست DNS من در پینگ‌هاب:")}`;
@@ -2895,7 +2949,7 @@ e.respondWith(fetch(req).then(r=>{var cl=r.clone();caches.open(C).then(c=>c.put(
       /* --- صفحهٔ نتیجه --- */
       if (p.startsWith("/r/")) {
         const id = p.slice(3).replace(/[^a-z0-9]/g, "").slice(0, 12);
-        const raw = await env.DNSRADAR_KV.get(`r:${id}`);
+        const raw = await kvGet(env,`r:${id}`);
         if (!raw) return html(`<!DOCTYPE html><html lang="fa" dir="rtl"><body style="background:#070c18;color:#e9effb;
           font-family:Tahoma;text-align:center;padding:60px 20px">
           <h2>نتیجه پیدا نشد یا منقضی شده 🕐</h2>

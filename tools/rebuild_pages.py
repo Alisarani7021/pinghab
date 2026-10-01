@@ -60,6 +60,24 @@ h1{font-size:19px !important}
 .mn-g>button{padding:9px 6px 4px !important}
 .mn-g .ls>div{max-height:none}
 .mn-dr aside{width:min(88vw,340px) !important}
+/* ---- دور ۹: جا شدن در قالب اپ — هیچ‌چیز از عرض صفحه بیرون نزند ---- */
+html,body{overflow-x:hidden;overflow-x:clip}
+.wrap,.ph-panel{min-width:0 !important;max-width:100% !important}
+.ph-panel{overflow-x:hidden;overflow-x:clip}
+.ph-tblwrap{overflow-x:auto;max-width:100%}
+.ph-tblwrap table{margin:0;width:100%;min-width:0} /* باریک=بی‌اسکرول؛ پهن=خودکار پهن و اسکرول */
+.ph-tblwrap th,.ph-tblwrap td{white-space:nowrap}
+.ph-tblwrap td.wrap,.ph-tblwrap th.wrap{white-space:normal;min-width:120px}
+.mono,.ph-mono,code{overflow-wrap:anywhere;word-break:break-word}
+table.ph-facts{width:100%;border-collapse:collapse}
+table.ph-facts td{vertical-align:top;overflow-wrap:anywhere;word-break:break-word}
+@media (max-width:560px){
+table.ph-facts,table.ph-facts tbody,table.ph-facts tr,table.ph-facts td{display:block;width:100% !important}
+table.ph-facts tr{border-bottom:1px solid var(--line);padding:7px 2px}
+table.ph-facts tr:last-child{border-bottom:0}
+table.ph-facts td{border:0 !important;padding:2px 0 !important}
+table.ph-facts td:first-child{font-weight:800;color:var(--mut);font-size:11.5px}
+}
 </style>
 """
 
@@ -365,7 +383,7 @@ def _nav_html():
         '<button data-nav="__drawer__"><i>☰</i><span>بیشتر</span></button>'
         '</div>'
         '<div class="ph-drawer" id="ph-drawer"><div class="ph-drawer-bg" data-close="1"></div><aside>'
-        '<div class="ph-dhead"><b>📡 پینگ‌هاب</b><span class="ph-badge mono">۲.۷</span>'
+        '<div class="ph-dhead"><b>📡 پینگ‌هاب</b><span class="ph-badge mono">۲.۸</span>'
         '<button class="wwbtn" data-close="1" style="min-height:36px">✕</button></div>'
         + "".join(items) +
         '</aside></div>'
@@ -421,6 +439,45 @@ NAV_JS = r"""
   /* صفحهٔ خانه = حالت DNS (آیتم اول منوی پایین) */
   var _h = (location.hash || "").replace("#", "");
   setTimeout(function(){ show(_h ? _h : "ph-p20", true); }, 150);
+})();
+</script>
+"""
+
+FIT9_JS = r"""
+<script id="ph-fit9">
+/* دور ۹ — تور ایمنی چیدمان: هر جدولی که بیرون .ph-tblwrap رندر شود، خودکار داخل اسکرول‌پیچ
+   قرار می‌گیرد تا هیچ‌وقت صفحه (و منوی پایین) از عرض گوشی بیرون نزند. ph-facts مستثناست. */
+(function(){
+  if (window.__phFit9) return; window.__phFit9 = true;
+  function wrap(t){
+    if (!t || t.nodeType !== 1) return;
+    if (t.closest(".ph-tblwrap") || t.classList.contains("ph-facts") || t.closest("#ph-nav-root")) return;
+    var d = document.createElement("div"); d.className = "ph-tblwrap";
+    t.parentNode.insertBefore(d, t); d.appendChild(t);
+  }
+  function sweep(root){
+    if (!root || !root.querySelectorAll) return;
+    var ts = root.querySelectorAll("table");
+    for (var i = 0; i < ts.length; i++) wrap(ts[i]);
+  }
+  function boot(){
+    sweep(document);
+    try{
+      var mo = new MutationObserver(function(muts){
+        for (var i = 0; i < muts.length; i++){
+          var nodes = muts[i].addedNodes;
+          for (var j = 0; j < nodes.length; j++){
+            var n = nodes[j];
+            if (!n || n.nodeType !== 1) continue;
+            if (n.tagName === "TABLE") wrap(n); else sweep(n);
+          }
+        }
+      });
+      mo.observe(document.documentElement, { childList: true, subtree: true });
+    }catch(e){}
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
 })();
 </script>
 """
@@ -500,7 +557,7 @@ def patch_doh(src):
       var ms = good.map(function(x){ return x.ms; });
       var failWhy = !good.length ? ((rs[0] && rs[0].why) || "بی‌پاسخ") : null;
       rows.push({ id:DOH[i].id, name:DOH[i].name, ok:good.length>0, n:good.length,
-        p50: pct(ms,50), p95: pct(ms,95), jit: ms.length>1 ? Math.round((Math.max.apply(null,ms)-Math.min.apply(null,ms))) : 0,
+        p50: pct(ms,50), p95: pct(ms,95), jit: ms.length>1 ? Math.round((Math.max.apply(null,ms)-Math.min.apply(null,ms))) : null,
         ips: good.length ? good[0].ips : [], reach: re, why: failWhy });
     }
     LAST = rows;
@@ -517,7 +574,7 @@ def patch_doh(src):
         + "<td>" + reachTxt + "</td>"
         + "<td>" + (r2.p50==null?"—":fa(r2.p50.toFixed(0))+"ms") + "</td>"
         + "<td>" + (r2.p95==null?"—":fa(r2.p95.toFixed(0))+"ms") + "</td>"
-        + "<td>" + fa(r2.jit||0) + "ms</td>"
+        + "<td>" + (r2.jit==null?"—":fa(r2.jit)+"ms") + "</td>"
         + '<td class="ph-mono">' + esc((r2.ips||[]).slice(0,2).join(" · ")||"—") + "</td></tr>";
     });
     html += "</table></div>";
@@ -671,14 +728,14 @@ def patch_games(src):
         html += '<div class="ph-box" style="margin-top:8px"><b>' + esc(meta.loc||res.ip) + '</b> <span class="ph-mono">' + esc(res.ip) + '</span>';
         if (!res.rows || !res.rows.length){ html += '<div class="ph-warn">پاسخی نیامد — این سرور ICMP را می‌بندد یا مسیر بسته است. عدد نمی‌سازیم.</div>'; }
         else {
-          html += '<table style="margin-top:6px"><tr><th>شبکهٔ پروب</th><th>میانگین</th><th>نوسان</th><th>افت</th><th>اعتبار</th></tr>';
+          html += '<div class="ph-tblwrap"><table style="margin-top:6px"><tr><th>شبکهٔ پروب</th><th>میانگین</th><th>نوسان</th><th>افت</th><th>اعتبار</th></tr>';
           res.rows.forEach(function(x){
             var trust = (x.sanity && x.sanity.trusted) ? '<span class="ph-badge ph-chip-ok">معتبر</span>'
               : '<span class="ph-badge ph-chip-no">نانشنه</span> <span class="sub">' + esc((x.sanity && x.sanity.flags || []).join(" · ")) + '</span>';
             html += "<tr><td>" + esc(x.network||"—") + "</td><td>" + (x.avg==null?"—":fa(Math.round(x.avg))+"ms") + "</td>"
               + "<td>" + (x.jitter==null?"—":fa(Math.round(x.jitter))+"ms") + "</td><td>" + (x.loss==null?"—":fa(x.loss)+"٪") + "</td><td>" + trust + "</td></tr>";
           });
-          html += "</table>";
+          html += "</table></div>";
           if (res.summary) html += '<div class="sub">میانهٔ شبکه‌های معتبر: <b>' + (res.summary.median_ms==null?"—":fa(res.summary.median_ms)+"ms") +
             '</b> · پروب‌های نانشنه/بسته: ' + fa((res.summary.quantized||0)+(res.summary.icmp_filtered||0)) + '</div>';
         }
@@ -724,6 +781,49 @@ def patch_preflight_page(src):
     return tmp.read_text(encoding="utf-8"), ok
 
 
+def patch_round9(src):
+    """دور ۹: جدول‌ها داخل اسکرول‌پیچ + «خط من» و «واقعیت خط» به سطرهای خوانا."""
+    reps = [
+        ('+ "<table><tr><th>نام</th><th>آدرس</th><th>DoH</th><th>پرچم‌ها</th><th>کپی</th></tr>";',
+         '+ \'<div class="ph-tblwrap"><table><tr><th>نام</th><th>آدرس</th><th>DoH</th><th>پرچم‌ها</th><th>کپی</th></tr>\';'),
+        ('+ "<td>" + esc((r.f||[]).join(" · ")||"—") + "</td>"',
+         '+ \'<td class="wrap">\' + esc((r.f||[]).join(" · ")||"—") + "</td>"'),
+        ('+ \'<td><button class="wwbtn wwcopy" data-c="\' + esc(r.a||r.d||"") + \'">کپی</button></td></tr>\';\n      });\n      html += "</table>";',
+         '+ \'<td><button class="wwbtn wwcopy" data-c="\' + esc(r.a||r.d||"") + \'">کپی</button></td></tr>\';\n      });\n      html += "</table></div>";'),
+        ('html += "<table><tr><th>پروب</th><th>شبکه (ASN)</th><th>نتیجه</th></tr>";',
+         'html += \'<div class="ph-tblwrap"><table><tr><th>پروب</th><th>شبکه (ASN)</th><th>نتیجه</th></tr>\';'),
+        ('+ ")</td><td>" + v + "</td></tr>";\n        });\n        html += "</table>";\n      } else {',
+         '+ ")</td><td>" + v + "</td></tr>";\n        });\n        html += "</table></div>";\n      } else {'),
+        ('html += "<table><tr><th>پروب</th><th>زمان</th><th>کد</th><th>پاسخ</th></tr>";',
+         'html += \'<div class="ph-tblwrap"><table><tr><th>پروب</th><th>زمان</th><th>کد</th><th>پاسخ</th></tr>\';'),
+        ('+ \'</td><td class="ph-mono">\' + esc((r.answers||[]).join(", ").slice(0,60)||"—") + "</td></tr>";\n        });\n        html += "</table>";\n      }',
+         '+ \'</td><td class="ph-mono">\' + esc((r.answers||[]).join(", ").slice(0,60)||"—") + "</td></tr>";\n        });\n        html += "</table></div>";\n      }'),
+        ('<div class="ph-card" style="margin-top:8px"><table style="width:100%;font-size:13px;border-collapse:collapse">',
+         '<div class="ph-card" style="margin-top:8px"><table class="ph-facts" style="width:100%;font-size:13px;border-collapse:collapse">'),
+    ]
+    for old, new in reps:
+        assert src.count(old) == 1, old[:60]
+        src = src.replace(old, new, 1)
+    a = src.find('ME = await jget("/api/geo");')
+    b = src.find('q("ph-me-out").innerHTML = html;')
+    assert a != -1 and b != -1 and a < b, "me-out anchors"
+    mid = src[a:b]
+    assert "ph-kv" in mid and "نزدیک‌ترین استان" in mid, "me-out shape"
+    new_me = ('ME = await jget("/api/geo");\n'
+        '      var meRows = [["ASN", \'<b class="ph-mono">\' + esc(ME.asn||"—") + "</b>"],\n'
+        '        ["سازمان", "<b>" + esc(ME.org||"—") + "</b>"],\n'
+        '        ["شهرِ IP", "<b>" + esc(ME.city||"—") + "</b>"],\n'
+        '        ["استانِ IP", esc(ME.region||"—")],\n'
+        '        ["لبهٔ کلادفلر", \'<b class="ph-mono">\' + esc(ME.colo||"—") + "</b>"],\n'
+        '        ["RTT خط تو تا لبه", "<b>" + (ME.tcpRtt==null?"—":fa(ME.tcpRtt)+" ms") + "</b>"]];\n'
+        '      if (ME.carrier) meRows.push(["📶 اپراتور", "<b>" + esc(ME.carrier.fa) + \'</b> <span class="ph-badge">\' + esc(ME.carrier.type) + " · از " + esc(ME.carrier.match) + "</span>"]);\n'
+        '      else meRows.push(["📶 اپراتور", "خودکار تشخیص داده نشد — خودت انتخاب کن."]);\n'
+        '      if (ME.province) meRows.push(["📍 نزدیک‌ترین استان", "<b>" + esc(ME.province.fa) + "</b>" + (ME.province.exact ? "" : " <span class=\'ph-badge\'>تقریبی</span>")]);\n'
+        '      var html = \'<table class="ph-facts" style="margin-top:6px">\' + meRows.map(function(rr){ return "<tr><td>" + rr[0] + "</td><td>" + rr[1] + "</td></tr>"; }).join("") + "</table>";\n      ')
+    src = src[:a] + new_me + src[b:]
+    return src, True
+
+
 def inline_tools3(src):
     block = (ROOT / "web" / "tools3-block.html").read_text(encoding="utf-8")
     parts = block.split("<!--PH3-SCRIPT-->")
@@ -751,16 +851,17 @@ for page in PAGES:
     src = src.replace("</head>", NAV_CSS + "</head>", 1)
     src = src.replace("</head>", LAYOUT_CSS + "</head>", 1)
     src = src.replace("</body>\n</html>", HERO_JS + "</body>\n</html>", 1)
-    src = src.replace("</body>\n</html>", NAV_HTML + NAV_JS + MN_LAYER + "</body>\n</html>", 1)
+    src = src.replace("</body>\n</html>", NAV_HTML + NAV_JS + FIT9_JS + MN_LAYER + "</body>\n</html>", 1)
     src, b1 = patch_bgp(src)
     src, b2 = patch_doh(src)
     src, b3 = patch_games(src)
     src, b3b = patch_impact_fallback(src)
     src, b4 = patch_preflight_page(src)
+    src, b5 = patch_round9(src)
     src = inline_tools3(src)
     page.write_text(src, encoding="utf-8")
     n_panels = len(set(re.findall(r'id="ph-p(\d+)"', src)))
-    report.append(f"{page.name}: {len(src):,} bytes · panels={n_panels} · bgp={b1} doh={b2} games={b3} pf={b4}")
+    report.append(f"{page.name}: {len(src):,} bytes · panels={n_panels} · bgp={b1} doh={b2} games={b3} pf={b4} fit9={b5}")
 
 for r in report:
     print(r)
